@@ -20,28 +20,28 @@ class AddressObjectType
      *
      * @var int
      */
-    private $kod_t_st = 0;
+    protected $kod_t_st = 0;
 
     /**
      * @ORM\Column(type="integer")
      *
      * @var int
      */
-    private $level = 0;
+    protected $level = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $socrname = '';
+    protected $socrname = '';
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $scname = '';
+    protected $scname = '';
 
     public function setKod_t_st(int $kod_t_st): self
     {

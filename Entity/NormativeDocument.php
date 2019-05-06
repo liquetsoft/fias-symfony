@@ -21,35 +21,35 @@ class NormativeDocument
      *
      * @var UuidInterface
      */
-    private $normdocid;
+    protected $normdocid;
 
     /**
      * @ORM\Column(type="string", length=500)
      *
      * @var string
      */
-    private $docname = '';
+    protected $docname = '';
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
      */
-    private $docdate;
+    protected $docdate;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $docnum = '';
+    protected $docnum = '';
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $doctype = '';
+    protected $doctype = '';
 
     public function setNormdocid(UuidInterface $normdocid): self
     {

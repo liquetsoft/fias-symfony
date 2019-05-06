@@ -20,21 +20,21 @@ class RoomType
      *
      * @var int
      */
-    private $rmtypeid = 0;
+    protected $rmtypeid = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $shortname = '';
+    protected $shortname = '';
 
     public function setRmtypeid(int $rmtypeid): self
     {

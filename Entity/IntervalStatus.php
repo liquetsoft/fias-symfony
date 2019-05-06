@@ -20,14 +20,14 @@ class IntervalStatus
      *
      * @var int
      */
-    private $intvstatid = 0;
+    protected $intvstatid = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     public function setIntvstatid(int $intvstatid): self
     {

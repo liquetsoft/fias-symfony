@@ -20,14 +20,14 @@ class CurrentStatus
      *
      * @var int
      */
-    private $curentstid = 0;
+    protected $curentstid = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     public function setCurentstid(int $curentstid): self
     {

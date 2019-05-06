@@ -20,14 +20,14 @@ class ActualStatus
      *
      * @var int
      */
-    private $actstatid = 0;
+    protected $actstatid = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     public function setActstatid(int $actstatid): self
     {

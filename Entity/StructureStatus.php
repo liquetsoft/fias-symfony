@@ -20,21 +20,21 @@ class StructureStatus
      *
      * @var int
      */
-    private $strstatid = 0;
+    protected $strstatid = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $shortname = '';
+    protected $shortname = '';
 
     public function setStrstatid(int $strstatid): self
     {

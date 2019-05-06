@@ -21,119 +21,119 @@ class House
      *
      * @var UuidInterface
      */
-    private $houseid;
+    protected $houseid;
 
     /**
      * @ORM\Column(type="uuid")
      *
      * @var UuidInterface
      */
-    private $houseguid;
+    protected $houseguid;
 
     /**
      * @ORM\Column(type="uuid")
      *
      * @var UuidInterface
      */
-    private $aoguid;
+    protected $aoguid;
 
     /**
      * @ORM\Column(type="string", length=20)
      *
      * @var string
      */
-    private $housenum = '';
+    protected $housenum = '';
 
     /**
      * @ORM\Column(type="integer")
      *
      * @var int
      */
-    private $strstatus = 0;
+    protected $strstatus = 0;
 
     /**
      * @ORM\Column(type="integer")
      *
      * @var int
      */
-    private $eststatus = 0;
+    protected $eststatus = 0;
 
     /**
      * @ORM\Column(type="integer")
      *
      * @var int
      */
-    private $statstatus = 0;
+    protected $statstatus = 0;
 
     /**
      * @ORM\Column(type="string", length=4)
      *
      * @var string
      */
-    private $ifnsfl = '';
+    protected $ifnsfl = '';
 
     /**
      * @ORM\Column(type="string", length=4)
      *
      * @var string
      */
-    private $ifnsul = '';
+    protected $ifnsul = '';
 
     /**
      * @ORM\Column(type="string", length=11)
      *
      * @var string
      */
-    private $okato = '';
+    protected $okato = '';
 
     /**
      * @ORM\Column(type="string", length=11)
      *
      * @var string
      */
-    private $oktmo = '';
+    protected $oktmo = '';
 
     /**
      * @ORM\Column(type="string", length=6)
      *
      * @var string
      */
-    private $postalcode = '';
+    protected $postalcode = '';
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
      */
-    private $startdate;
+    protected $startdate;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
      */
-    private $enddate;
+    protected $enddate;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
      */
-    private $updatedate;
+    protected $updatedate;
 
     /**
      * @ORM\Column(type="integer")
      *
      * @var int
      */
-    private $counter = 0;
+    protected $counter = 0;
 
     /**
      * @ORM\Column(type="integer")
      *
      * @var int
      */
-    private $divtype = 0;
+    protected $divtype = 0;
 
     public function setHouseid(UuidInterface $houseid): self
     {

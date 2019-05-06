@@ -21,119 +21,119 @@ class Stead
      *
      * @var UuidInterface
      */
-    private $steadguid;
+    protected $steadguid;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $number = '';
+    protected $number = '';
 
     /**
      * @ORM\Column(type="string", length=2)
      *
      * @var string
      */
-    private $regioncode = '';
+    protected $regioncode = '';
 
     /**
      * @ORM\Column(type="string", length=6)
      *
      * @var string
      */
-    private $postalcode = '';
+    protected $postalcode = '';
 
     /**
      * @ORM\Column(type="string", length=4)
      *
      * @var string
      */
-    private $ifnsfl = '';
+    protected $ifnsfl = '';
 
     /**
      * @ORM\Column(type="string", length=4)
      *
      * @var string
      */
-    private $ifnsul = '';
+    protected $ifnsul = '';
 
     /**
      * @ORM\Column(type="string", length=11)
      *
      * @var string
      */
-    private $okato = '';
+    protected $okato = '';
 
     /**
      * @ORM\Column(type="string", length=11)
      *
      * @var string
      */
-    private $oktmo = '';
+    protected $oktmo = '';
 
     /**
      * @ORM\Column(type="uuid")
      *
      * @var UuidInterface
      */
-    private $parentguid;
+    protected $parentguid;
 
     /**
      * @ORM\Column(type="uuid")
      *
      * @var UuidInterface
      */
-    private $steadid;
+    protected $steadid;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $operstatus = '';
+    protected $operstatus = '';
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
      */
-    private $startdate;
+    protected $startdate;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
      */
-    private $enddate;
+    protected $enddate;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
      */
-    private $updatedate;
+    protected $updatedate;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $livestatus = '';
+    protected $livestatus = '';
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $divtype = '';
+    protected $divtype = '';
 
     /**
      * @ORM\Column(type="uuid")
      *
      * @var UuidInterface
      */
-    private $normdoc;
+    protected $normdoc;
 
     public function setSteadguid(UuidInterface $steadguid): self
     {

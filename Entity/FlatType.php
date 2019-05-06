@@ -20,21 +20,21 @@ class FlatType
      *
      * @var int
      */
-    private $fltypeid = 0;
+    protected $fltypeid = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $shortname = '';
+    protected $shortname = '';
 
     public function setFltypeid(int $fltypeid): self
     {

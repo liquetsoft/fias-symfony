@@ -21,91 +21,91 @@ class Room
      *
      * @var UuidInterface
      */
-    private $roomid;
+    protected $roomid;
 
     /**
      * @ORM\Column(type="uuid")
      *
      * @var UuidInterface
      */
-    private $roomguid;
+    protected $roomguid;
 
     /**
      * @ORM\Column(type="uuid")
      *
      * @var UuidInterface
      */
-    private $houseguid;
+    protected $houseguid;
 
     /**
      * @ORM\Column(type="string", length=2)
      *
      * @var string
      */
-    private $regioncode = '';
+    protected $regioncode = '';
 
     /**
      * @ORM\Column(type="string", length=50)
      *
      * @var string
      */
-    private $flatnumber = '';
+    protected $flatnumber = '';
 
     /**
      * @ORM\Column(type="integer")
      *
      * @var int
      */
-    private $flattype = 0;
+    protected $flattype = 0;
 
     /**
      * @ORM\Column(type="string", length=6)
      *
      * @var string
      */
-    private $postalcode = '';
+    protected $postalcode = '';
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
      */
-    private $startdate;
+    protected $startdate;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
      */
-    private $enddate;
+    protected $enddate;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
      */
-    private $updatedate;
+    protected $updatedate;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $operstatus = '';
+    protected $operstatus = '';
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $livestatus = '';
+    protected $livestatus = '';
 
     /**
      * @ORM\Column(type="uuid")
      *
      * @var UuidInterface
      */
-    private $normdoc;
+    protected $normdoc;
 
     public function setRoomid(UuidInterface $roomid): self
     {

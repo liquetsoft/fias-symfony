@@ -20,14 +20,14 @@ class CenterStatus
      *
      * @var int
      */
-    private $centerstid = 0;
+    protected $centerstid = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     public function setCenterstid(int $centerstid): self
     {

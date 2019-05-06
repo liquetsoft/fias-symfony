@@ -20,14 +20,14 @@ class NormativeDocumentType
      *
      * @var int
      */
-    private $ndtypeid = 0;
+    protected $ndtypeid = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     public function setNdtypeid(int $ndtypeid): self
     {

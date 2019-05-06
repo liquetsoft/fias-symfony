@@ -20,14 +20,14 @@ class EstateStatus
      *
      * @var int
      */
-    private $eststatid = 0;
+    protected $eststatid = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     public function setEststatid(int $eststatid): self
     {

@@ -202,7 +202,7 @@ class EntityGenerator
         }
 
         $property->setValue($defaultValue);
-        $property->setVisibility('private');
+        $property->setVisibility('protected');
         $property->addComment("{$column}\n");
         $property->addComment("@var {$varType}");
     }

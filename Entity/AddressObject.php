@@ -21,245 +21,245 @@ class AddressObject
      *
      * @var UuidInterface
      */
-    private $aoid;
+    protected $aoid;
 
     /**
      * @ORM\Column(type="uuid")
      *
      * @var UuidInterface
      */
-    private $aoguid;
+    protected $aoguid;
 
     /**
      * @ORM\Column(type="uuid")
      *
      * @var UuidInterface
      */
-    private $parentguid;
+    protected $parentguid;
 
     /**
      * @ORM\Column(type="uuid")
      *
      * @var UuidInterface
      */
-    private $nextid;
+    protected $nextid;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $formalname = '';
+    protected $formalname = '';
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $offname = '';
+    protected $offname = '';
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $shortname = '';
+    protected $shortname = '';
 
     /**
      * @ORM\Column(type="integer")
      *
      * @var int
      */
-    private $aolevel = 0;
+    protected $aolevel = 0;
 
     /**
      * @ORM\Column(type="string", length=2)
      *
      * @var string
      */
-    private $regioncode = '';
+    protected $regioncode = '';
 
     /**
      * @ORM\Column(type="string", length=3)
      *
      * @var string
      */
-    private $areacode = '';
+    protected $areacode = '';
 
     /**
      * @ORM\Column(type="string", length=1)
      *
      * @var string
      */
-    private $autocode = '';
+    protected $autocode = '';
 
     /**
      * @ORM\Column(type="string", length=3)
      *
      * @var string
      */
-    private $citycode = '';
+    protected $citycode = '';
 
     /**
      * @ORM\Column(type="string", length=3)
      *
      * @var string
      */
-    private $ctarcode = '';
+    protected $ctarcode = '';
 
     /**
      * @ORM\Column(type="string", length=4)
      *
      * @var string
      */
-    private $placecode = '';
+    protected $placecode = '';
 
     /**
      * @ORM\Column(type="string", length=4)
      *
      * @var string
      */
-    private $plancode = '';
+    protected $plancode = '';
 
     /**
      * @ORM\Column(type="string", length=4)
      *
      * @var string
      */
-    private $streetcode = '';
+    protected $streetcode = '';
 
     /**
      * @ORM\Column(type="string", length=4)
      *
      * @var string
      */
-    private $extrcode = '';
+    protected $extrcode = '';
 
     /**
      * @ORM\Column(type="string", length=3)
      *
      * @var string
      */
-    private $sextcode = '';
+    protected $sextcode = '';
 
     /**
      * @ORM\Column(type="string", length=15)
      *
      * @var string
      */
-    private $plaincode = '';
+    protected $plaincode = '';
 
     /**
      * @ORM\Column(type="integer")
      *
      * @var int
      */
-    private $currstatus = 0;
+    protected $currstatus = 0;
 
     /**
      * @ORM\Column(type="integer")
      *
      * @var int
      */
-    private $actstatus = 0;
+    protected $actstatus = 0;
 
     /**
      * @ORM\Column(type="integer")
      *
      * @var int
      */
-    private $livestatus = 0;
+    protected $livestatus = 0;
 
     /**
      * @ORM\Column(type="integer")
      *
      * @var int
      */
-    private $centstatus = 0;
+    protected $centstatus = 0;
 
     /**
      * @ORM\Column(type="integer")
      *
      * @var int
      */
-    private $operstatus = 0;
+    protected $operstatus = 0;
 
     /**
      * @ORM\Column(type="string", length=4)
      *
      * @var string
      */
-    private $ifnsfl = '';
+    protected $ifnsfl = '';
 
     /**
      * @ORM\Column(type="string", length=4)
      *
      * @var string
      */
-    private $ifnsul = '';
+    protected $ifnsul = '';
 
     /**
      * @ORM\Column(type="string", length=4)
      *
      * @var string
      */
-    private $terrifnsfl = '';
+    protected $terrifnsfl = '';
 
     /**
      * @ORM\Column(type="string", length=4)
      *
      * @var string
      */
-    private $terrifnsul = '';
+    protected $terrifnsul = '';
 
     /**
      * @ORM\Column(type="string", length=11)
      *
      * @var string
      */
-    private $okato = '';
+    protected $okato = '';
 
     /**
      * @ORM\Column(type="string", length=11)
      *
      * @var string
      */
-    private $oktmo = '';
+    protected $oktmo = '';
 
     /**
      * @ORM\Column(type="string", length=6)
      *
      * @var string
      */
-    private $postalcode = '';
+    protected $postalcode = '';
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
      */
-    private $startdate;
+    protected $startdate;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
      */
-    private $enddate;
+    protected $enddate;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
      */
-    private $updatedate;
+    protected $updatedate;
 
     /**
      * @ORM\Column(type="integer")
      *
      * @var int
      */
-    private $divtype = 0;
+    protected $divtype = 0;
 
     public function setAoid(UuidInterface $aoid): self
     {
