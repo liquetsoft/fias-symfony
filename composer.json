@@ -29,6 +29,9 @@
             "/Tests/"
         ]
     },
+    "suggest": {
+        "ramsey/uuid-doctrine": "to use uuid types in doctrine"
+    },
     "repositories": [
         {
             "type": "git",
