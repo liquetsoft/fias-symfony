@@ -1,0 +1,56 @@
+services:
+
+
+
+    liquetsoft_fias.informer.soap:
+        class: SoapClient
+        arguments:
+            - '%liquetsoft_fias.informer_wsdl%'
+            - {exceptions: true}
+
+    liquetsoft_fias.informer.service:
+        class: Liquetsoft\Fias\Component\FiasInformer\SoapFiasInformer
+        arguments:
+            - '@liquetsoft_fias.informer.soap'
+
+    Liquetsoft\Fias\Component\FiasInformer\FiasInformer:
+        alias: liquetsoft_fias.informer.service
+
+
+
+    liquetsoft_fias.downloader.service:
+        class: Liquetsoft\Fias\Component\Downloader\CurlDownloader
+
+    Liquetsoft\Fias\Component\Downloader\Downloader:
+        alias: liquetsoft_fias.downloader.service
+
+
+
+    liquetsoft_fias.unpacker.service:
+        class: Liquetsoft\Fias\Component\Unpacker\RarUnpacker
+
+    Liquetsoft\Fias\Component\Unpacker\Unpacker:
+        alias: liquetsoft_fias.unpacker.service
+
+
+
+    liquetsoft_fias.xml_reader.service:
+        class: Liquetsoft\Fias\Component\XmlReader\BaseXmlReader
+
+    Liquetsoft\Fias\Component\XmlReader\XmlReader:
+        alias: liquetsoft_fias.xml_reader.service
+
+
+
+    liquetsoft_fias.serializer.serializer:
+        class: Liquetsoft\Fias\Component\Serializer\FiasSerializer
+
+
+
+    liquetsoft_fias.entity_registry.service:
+        class: Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry
+        arguments:
+            - '%liquetsoft_fias.registry_yaml%'
+
+    Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry:
+        alias: liquetsoft_fias.entity_registry.service

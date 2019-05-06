@@ -1,0 +1,38 @@
+{
+    "name": "liquetsoft/fias-symfony",
+    "type": "symfony-bundle",
+    "description": "Symfony bundle for FIAS database importer.",
+    "keywords": ["php", "fias", "symfony"],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.2.0",
+        "liquetsoft/fias-component": "^1.0",
+        "symfony/framework-bundle": "^4.2",
+        "doctrine/doctrine-bundle": "^1.4",
+        "doctrine/orm": "^2.4",
+        "ramsey/uuid": "^3.8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5",
+        "symfony/phpunit-bridge": "^4.0",
+        "fzaninotto/faker": "^1.7",
+        "friendsofphp/php-cs-fixer": "^2.11",
+        "sebastian/phpcpd": "*",
+        "vimeo/psalm": "^3.0",
+        "nette/php-generator": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Liquetsoft\\Fias\\Symfony\\FiasBundle\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/liquetsoft/fias-symfony"
+        }
+    ]
+}

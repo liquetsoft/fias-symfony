@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+    php:
+        container_name: liquetsoft-fias-php
+        restart: 'no'
+        build:
+            context: php
+        volumes:
+            - ${DOCKER_APP_PATH}:/var/app:cached
