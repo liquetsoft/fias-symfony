@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\FiasBundle\FiasEntity;
+namespace Liquetsoft\Fias\Symfony\FiasBundle\Entity;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,8 +11,7 @@ use Ramsey\Uuid\UuidInterface;
 /**
  * Нормативные документы.
  *
- * @ORM\Table(name="liquetsoft_fias_normativedocument")
- * @ORM\Entity
+ * @ORM\MappedSuperclass
  */
 class NormativeDocument
 {

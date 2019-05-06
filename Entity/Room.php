@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\FiasBundle\FiasEntity;
+namespace Liquetsoft\Fias\Symfony\FiasBundle\Entity;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,8 +11,7 @@ use Ramsey\Uuid\UuidInterface;
 /**
  * Комнаты.
  *
- * @ORM\Table(name="liquetsoft_fias_room")
- * @ORM\Entity
+ * @ORM\MappedSuperclass
  */
 class Room
 {

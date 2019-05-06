@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\FiasBundle\FiasEntity;
+namespace Liquetsoft\Fias\Symfony\FiasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Статусы.
  *
- * @ORM\Table(name="liquetsoft_fias_intervalstatus")
- * @ORM\Entity
+ * @ORM\MappedSuperclass
  */
-class IntervalStatus
+class ActualStatus
 {
     /**
      * @ORM\Id
@@ -21,7 +20,7 @@ class IntervalStatus
      *
      * @var int
      */
-    private $intvstatid = 0;
+    private $actstatid = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -30,16 +29,16 @@ class IntervalStatus
      */
     private $name = '';
 
-    public function setIntvstatid(int $intvstatid): self
+    public function setActstatid(int $actstatid): self
     {
-        $this->intvstatid = $intvstatid;
+        $this->actstatid = $actstatid;
 
         return $this;
     }
 
-    public function getIntvstatid(): int
+    public function getActstatid(): int
     {
-        return $this->intvstatid;
+        return $this->actstatid;
     }
 
     public function setName(string $name): self

@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\FiasBundle\FiasEntity;
+namespace Liquetsoft\Fias\Symfony\FiasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Типы нормативных документов.
  *
- * @ORM\Table(name="liquetsoft_fias_normativedocumenttype")
- * @ORM\Entity
+ * @ORM\MappedSuperclass
  */
 class NormativeDocumentType
 {

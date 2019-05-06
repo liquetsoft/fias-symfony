@@ -150,19 +150,7 @@ class EntityGenerator
             $class->addComment("{$description}.\n");
         }
 
-        $tableName = strtolower($descriptor->getName());
-        $table = '@ORM\Table(';
-        $table .= 'name="liquetsoft_fias_' . $tableName . '"';
-        if ($indexes) {
-            $table .= ', indexes={';
-            foreach ($indexes as $index) {
-                $table .= '@ORM\Index(name="' . $tableName . '_' . $index . '", columns={"' . $index . '"})';
-            }
-            $table .= '}';
-        }
-        $table .= ')';
-        $class->addComment($table);
-        $class->addComment("@ORM\Entity\n");
+        $class->addComment("@ORM\MappedSuperclass\n");
     }
 
     /**

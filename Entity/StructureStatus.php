@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\FiasBundle\FiasEntity;
+namespace Liquetsoft\Fias\Symfony\FiasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Типы комнат.
+ * Статусы.
  *
- * @ORM\Table(name="liquetsoft_fias_roomtype")
- * @ORM\Entity
+ * @ORM\MappedSuperclass
  */
-class RoomType
+class StructureStatus
 {
     /**
      * @ORM\Id
@@ -21,7 +20,7 @@ class RoomType
      *
      * @var int
      */
-    private $rmtypeid = 0;
+    private $strstatid = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -37,16 +36,16 @@ class RoomType
      */
     private $shortname = '';
 
-    public function setRmtypeid(int $rmtypeid): self
+    public function setStrstatid(int $strstatid): self
     {
-        $this->rmtypeid = $rmtypeid;
+        $this->strstatid = $strstatid;
 
         return $this;
     }
 
-    public function getRmtypeid(): int
+    public function getStrstatid(): int
     {
-        return $this->rmtypeid;
+        return $this->strstatid;
     }
 
     public function setName(string $name): self

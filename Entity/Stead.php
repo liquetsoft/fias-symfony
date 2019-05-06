@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\FiasBundle\FiasEntity;
+namespace Liquetsoft\Fias\Symfony\FiasBundle\Entity;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Дома.
+ * Земельные участки.
  *
- * @ORM\Table(name="liquetsoft_fias_house")
- * @ORM\Entity
+ * @ORM\MappedSuperclass
  */
-class House
+class Stead
 {
     /**
      * @ORM\Id
@@ -22,49 +21,28 @@ class House
      *
      * @var UuidInterface
      */
-    private $houseid;
+    private $steadguid;
 
     /**
-     * @ORM\Column(type="uuid")
-     *
-     * @var UuidInterface
-     */
-    private $houseguid;
-
-    /**
-     * @ORM\Column(type="uuid")
-     *
-     * @var UuidInterface
-     */
-    private $aoguid;
-
-    /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $housenum = '';
+    private $number = '';
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=2)
      *
-     * @var int
+     * @var string
      */
-    private $strstatus = 0;
+    private $regioncode = '';
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=6)
      *
-     * @var int
+     * @var string
      */
-    private $eststatus = 0;
-
-    /**
-     * @ORM\Column(type="integer")
-     *
-     * @var int
-     */
-    private $statstatus = 0;
+    private $postalcode = '';
 
     /**
      * @ORM\Column(type="string", length=4)
@@ -95,11 +73,25 @@ class House
     private $oktmo = '';
 
     /**
-     * @ORM\Column(type="string", length=6)
+     * @ORM\Column(type="uuid")
+     *
+     * @var UuidInterface
+     */
+    private $parentguid;
+
+    /**
+     * @ORM\Column(type="uuid")
+     *
+     * @var UuidInterface
+     */
+    private $steadid;
+
+    /**
+     * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $postalcode = '';
+    private $operstatus = '';
 
     /**
      * @ORM\Column(type="datetime")
@@ -123,101 +115,72 @@ class House
     private $updatedate;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      *
-     * @var int
+     * @var string
      */
-    private $counter = 0;
+    private $livestatus = '';
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      *
-     * @var int
+     * @var string
      */
-    private $divtype = 0;
+    private $divtype = '';
 
-    public function setHouseid(UuidInterface $houseid): self
+    /**
+     * @ORM\Column(type="uuid")
+     *
+     * @var UuidInterface
+     */
+    private $normdoc;
+
+    public function setSteadguid(UuidInterface $steadguid): self
     {
-        $this->houseid = $houseid;
+        $this->steadguid = $steadguid;
 
         return $this;
     }
 
-    public function getHouseid(): UuidInterface
+    public function getSteadguid(): UuidInterface
     {
-        return $this->houseid;
+        return $this->steadguid;
     }
 
-    public function setHouseguid(UuidInterface $houseguid): self
+    public function setNumber(string $number): self
     {
-        $this->houseguid = $houseguid;
+        $this->number = $number;
 
         return $this;
     }
 
-    public function getHouseguid(): UuidInterface
+    public function getNumber(): string
     {
-        return $this->houseguid;
+        return $this->number;
     }
 
-    public function setAoguid(UuidInterface $aoguid): self
+    public function setRegioncode(string $regioncode): self
     {
-        $this->aoguid = $aoguid;
+        $this->regioncode = $regioncode;
 
         return $this;
     }
 
-    public function getAoguid(): UuidInterface
+    public function getRegioncode(): string
     {
-        return $this->aoguid;
+        return $this->regioncode;
     }
 
-    public function setHousenum(string $housenum): self
+    public function setPostalcode(string $postalcode): self
     {
-        $this->housenum = $housenum;
+        $this->postalcode = $postalcode;
 
         return $this;
     }
 
-    public function getHousenum(): string
+    public function getPostalcode(): string
     {
-        return $this->housenum;
-    }
-
-    public function setStrstatus(int $strstatus): self
-    {
-        $this->strstatus = $strstatus;
-
-        return $this;
-    }
-
-    public function getStrstatus(): int
-    {
-        return $this->strstatus;
-    }
-
-    public function setEststatus(int $eststatus): self
-    {
-        $this->eststatus = $eststatus;
-
-        return $this;
-    }
-
-    public function getEststatus(): int
-    {
-        return $this->eststatus;
-    }
-
-    public function setStatstatus(int $statstatus): self
-    {
-        $this->statstatus = $statstatus;
-
-        return $this;
-    }
-
-    public function getStatstatus(): int
-    {
-        return $this->statstatus;
+        return $this->postalcode;
     }
 
     public function setIfnsfl(string $ifnsfl): self
@@ -268,16 +231,40 @@ class House
         return $this->oktmo;
     }
 
-    public function setPostalcode(string $postalcode): self
+    public function setParentguid(UuidInterface $parentguid): self
     {
-        $this->postalcode = $postalcode;
+        $this->parentguid = $parentguid;
 
         return $this;
     }
 
-    public function getPostalcode(): string
+    public function getParentguid(): UuidInterface
     {
-        return $this->postalcode;
+        return $this->parentguid;
+    }
+
+    public function setSteadid(UuidInterface $steadid): self
+    {
+        $this->steadid = $steadid;
+
+        return $this;
+    }
+
+    public function getSteadid(): UuidInterface
+    {
+        return $this->steadid;
+    }
+
+    public function setOperstatus(string $operstatus): self
+    {
+        $this->operstatus = $operstatus;
+
+        return $this;
+    }
+
+    public function getOperstatus(): string
+    {
+        return $this->operstatus;
     }
 
     public function setStartdate(DateTimeInterface $startdate): self
@@ -316,27 +303,39 @@ class House
         return $this->updatedate;
     }
 
-    public function setCounter(int $counter): self
+    public function setLivestatus(string $livestatus): self
     {
-        $this->counter = $counter;
+        $this->livestatus = $livestatus;
 
         return $this;
     }
 
-    public function getCounter(): int
+    public function getLivestatus(): string
     {
-        return $this->counter;
+        return $this->livestatus;
     }
 
-    public function setDivtype(int $divtype): self
+    public function setDivtype(string $divtype): self
     {
         $this->divtype = $divtype;
 
         return $this;
     }
 
-    public function getDivtype(): int
+    public function getDivtype(): string
     {
         return $this->divtype;
+    }
+
+    public function setNormdoc(UuidInterface $normdoc): self
+    {
+        $this->normdoc = $normdoc;
+
+        return $this;
+    }
+
+    public function getNormdoc(): UuidInterface
+    {
+        return $this->normdoc;
     }
 }

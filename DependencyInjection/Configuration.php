@@ -35,25 +35,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('source')->end()
                         ->end()
                     ->end()
-                    ->defaultValue([
-                        'ActualStatus' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\ActualStatus',
-                        'AddressObject' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\AddressObject',
-                        'AddressObjectType' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\AddressObjectType',
-                        'CenterStatus' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\CenterStatus',
-                        'CurrentStatus' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\CurrentStatus',
-                        'EstateStatus' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\EstateStatus',
-                        'FlatType' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\FlatType',
-                        'House' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\House',
-                        'HouseStateStatus' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\HouseStateStatus',
-                        'IntervalStatus' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\IntervalStatus',
-                        'NormativeDocument' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\NormativeDocument',
-                        'NormativeDocumentType' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\NormativeDocumentType',
-                        'OperationStatus' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\OperationStatus',
-                        'Room' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\Room',
-                        'RoomType' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\RoomType',
-                        'Stead' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\Stead',
-                        'StructureStatus' => 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity\\StructureStatus',
-                    ])
+                    ->defaultValue([])
                 ->end()
             ->end()
         ;

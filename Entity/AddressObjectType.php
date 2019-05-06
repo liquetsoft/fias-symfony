@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\FiasBundle\FiasEntity;
+namespace Liquetsoft\Fias\Symfony\FiasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Типы объектов в адресах.
  *
- * @ORM\Table(name="liquetsoft_fias_addressobjecttype")
- * @ORM\Entity
+ * @ORM\MappedSuperclass
  */
 class AddressObjectType
 {

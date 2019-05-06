@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\FiasBundle\FiasEntity;
+namespace Liquetsoft\Fias\Symfony\FiasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Статусы.
  *
- * @ORM\Table(name="liquetsoft_fias_housestatestatus")
- * @ORM\Entity
+ * @ORM\MappedSuperclass
  */
-class HouseStateStatus
+class CurrentStatus
 {
     /**
      * @ORM\Id
@@ -21,7 +20,7 @@ class HouseStateStatus
      *
      * @var int
      */
-    private $housestid = 0;
+    private $curentstid = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -30,16 +29,16 @@ class HouseStateStatus
      */
     private $name = '';
 
-    public function setHousestid(int $housestid): self
+    public function setCurentstid(int $curentstid): self
     {
-        $this->housestid = $housestid;
+        $this->curentstid = $curentstid;
 
         return $this;
     }
 
-    public function getHousestid(): int
+    public function getCurentstid(): int
     {
-        return $this->housestid;
+        return $this->curentstid;
     }
 
     public function setName(string $name): self

@@ -8,7 +8,7 @@ $entitiesYaml = $root . '/vendor/liquetsoft/fias-component/resources/fias_entiti
 
 require_once $root . '/vendor/autoload.php';
 
-$dir = $root . '/FiasEntity';
+$dir = $root . '/Entity';
 if (!is_dir($dir)) {
     mkdir($dir, 0777, true);
 }
@@ -17,5 +17,5 @@ $registry = new YamlEntityRegistry($entitiesYaml);
 $generator = new EntityGenerator($registry);
 
 $dirObject = new SplFileInfo($dir);
-$namespace = 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\FiasEntity';
+$namespace = 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\Entity';
 $generator->run($dirObject, $namespace);

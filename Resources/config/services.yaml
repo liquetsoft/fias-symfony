@@ -54,3 +54,14 @@ services:
 
     Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry:
         alias: liquetsoft_fias.entity_registry.service
+
+
+
+    liquetsoft_fias.entity_manager.service:
+        class: Liquetsoft\Fias\Component\EntityManager\BaseEntityManager
+        arguments:
+            - '@liquetsoft_fias.entity_registry.service'
+            - '%liquetsoft_fias.entity_bindings%'
+
+    Liquetsoft\Fias\Component\EntityManager\EntityManager:
+        alias: liquetsoft_fias.entity_manager.service
