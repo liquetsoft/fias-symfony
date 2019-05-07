@@ -12,7 +12,7 @@ use Symfony\Component\Config\FileLocator;
 /**
  * Класс расширения для предоставления бандлом сервисов.
  */
-class FiasExtension extends Extension
+class LiquetsoftFiasExtension extends Extension
 {
     /**
      * @inheritdoc
