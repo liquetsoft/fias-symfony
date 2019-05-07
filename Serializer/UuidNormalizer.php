@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\FiasBundle\Serializer;
+namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer;
 
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;

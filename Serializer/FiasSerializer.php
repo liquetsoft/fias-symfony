@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\FiasBundle\Serializer;
+namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer;
 
 use Liquetsoft\Fias\Component\Serializer\FiasNameConverter;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;

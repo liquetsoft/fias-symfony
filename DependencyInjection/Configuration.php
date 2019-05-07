@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\FiasBundle\DependencyInjection;
+namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

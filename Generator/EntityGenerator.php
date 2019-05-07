@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\FiasBundle\Generator;
+namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator;
 
 use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;

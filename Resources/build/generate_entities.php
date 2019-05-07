@@ -1,6 +1,6 @@
 <?php
 
-use Liquetsoft\Fias\Symfony\FiasBundle\Generator\EntityGenerator;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator\EntityGenerator;
 use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
 
 $root = dirname(dirname(__DIR__));
@@ -17,5 +17,5 @@ $registry = new YamlEntityRegistry($entitiesYaml);
 $generator = new EntityGenerator($registry);
 
 $dirObject = new SplFileInfo($dir);
-$namespace = 'Liquetsoft\\Fias\\Symfony\\FiasBundle\\Entity';
+$namespace = 'Liquetsoft\\Fias\\Symfony\\LiquetsoftFiasBundle\\Entity';
 $generator->run($dirObject, $namespace);

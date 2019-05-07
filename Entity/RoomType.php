@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\FiasBundle\Entity;
+namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

@@ -43,7 +43,7 @@ services:
 
 
     liquetsoft_fias.serializer.serializer:
-        class: Liquetsoft\Fias\Symfony\FiasBundle\Serializer\FiasSerializer
+        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\FiasSerializer
 
 
 

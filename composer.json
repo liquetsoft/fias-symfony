@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Liquetsoft\\Fias\\Symfony\\FiasBundle\\": ""
+            "Liquetsoft\\Fias\\Symfony\\LiquetsoftFiasBundle\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"

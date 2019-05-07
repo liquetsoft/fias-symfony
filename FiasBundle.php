@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\FiasBundle;
+namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Класс бандла symfony.
  */
-class FiasBundle extends Bundle
+class LiquetsoftFiasBundle extends Bundle
 {
 }
