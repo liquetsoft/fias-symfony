@@ -70,6 +70,8 @@ services:
 
     liquetsoft_fias.storage.service:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\DoctrineStorage
+        arguments:
+            - '@doctrine'
 
     Liquetsoft\Fias\Component\Storage\Storage\Storage:
         alias: liquetsoft_fias.storage.service

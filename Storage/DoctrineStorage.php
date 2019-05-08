@@ -5,12 +5,27 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
 use Liquetsoft\Fias\Component\Storage\Storage;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Объект, который сохраняет данные ФИАС с помощью Doctrine.
  */
 class DoctrineStorage implements Storage
 {
+    /**
+     * @var ObjectManager
+     */
+    protected $em;
+
+    /**
+     * @param ManagerRegistry $doctrine
+     */
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->em = $doctrine->getManager();
+    }
+
     /**
      * @inheritdoc
      */
