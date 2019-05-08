@@ -19,7 +19,7 @@ class AddressObjectType
      *
      * @var int
      */
-    protected $kod_t_st = 0;
+    protected $kodtst = 0;
 
     /**
      * @ORM\Column(type="integer")
@@ -42,16 +42,16 @@ class AddressObjectType
      */
     protected $scname = '';
 
-    public function setKod_t_st(int $kod_t_st): self
+    public function setKodtst(int $kodtst): self
     {
-        $this->kod_t_st = $kod_t_st;
+        $this->kodtst = $kodtst;
 
         return $this;
     }
 
-    public function getKod_t_st(): int
+    public function getKodtst(): int
     {
-        return $this->kod_t_st;
+        return $this->kodtst;
     }
 
     public function setLevel(int $level): self

@@ -314,6 +314,6 @@ class EntityGenerator
      */
     protected function unifyColumnName(string $name): string
     {
-        return trim(strtolower($name));
+        return trim(strtolower(str_replace('_', '', $name)));
     }
 }
