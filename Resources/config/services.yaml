@@ -129,11 +129,25 @@ services:
                 - '@liquetsoft_fias.task.data.delete'
             $cleanupTask: '@liquetsoft_fias.task.cleanup'
 
+    liquetsoft_fias.pipe.install_from_folder:
+        class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
+        arguments:
+            $tasks:
+                - '@liquetsoft_fias.task.data.insert'
+                - '@liquetsoft_fias.task.data.delete'
+
 
 
     liquetsoft_fias.command.install:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\InstallCommand
         arguments:
             - '@liquetsoft_fias.pipe.install'
+        tags:
+            - { name: 'console.command' }
+
+    liquetsoft_fias.command.install_from_file:
+        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\InstallFromFolderCommand
+        arguments:
+            - '@liquetsoft_fias.pipe.install_from_folder'
         tags:
             - { name: 'console.command' }

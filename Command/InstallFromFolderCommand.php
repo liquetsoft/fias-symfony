@@ -5,21 +5,25 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
+use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use SplFileInfo;
 
 /**
- * Команда, которая запускает полную установку ФИАС.
+ * Команда, которая запускает полную установку ФИАС из xml файлов,
+ * сохраненных на локальном диске.
  */
-class InstallCommand extends Command
+class InstallFromFolderCommand extends Command
 {
     /**
      * @var string
      */
-    protected static $defaultName = 'liquetsoft:fias:install';
+    protected static $defaultName = 'liquetsoft:fias:install_from_folder';
 
     /**
      * @var Pipe
@@ -41,7 +45,10 @@ class InstallCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Installs full version of FIAS from scratch.');
+        $this
+            ->setDescription('Installs full version of FIAS from folder.')
+            ->addArgument('folder', InputArgument::REQUIRED, 'Path to folder on local system with FIAS xmls.')
+        ;
     }
 
     /**
@@ -51,9 +58,16 @@ class InstallCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->note('Installing full version of FIAS.');
+        $folder = $input->getArgument('folder');
+        if (is_array($folder)) {
+            $folder = reset($folder);
+        }
+        $folder = (string) $folder;
+
+        $io->note("Installing full version of FIAS from '{$folder}' folder.");
 
         $state = new ArrayState;
+        $state->setAndLockParameter(Task::EXTRACT_TO_FOLDER_PARAM, new SplFileInfo($folder));
         $this->pipeline->run($state);
 
         $io->success('Full version of FIAS installed.');
