@@ -73,7 +73,7 @@ services:
         arguments:
             - '@doctrine'
 
-    Liquetsoft\Fias\Component\Storage\Storage\Storage:
+    Liquetsoft\Fias\Component\Storage\Storage:
         alias: liquetsoft_fias.storage.service
 
 
