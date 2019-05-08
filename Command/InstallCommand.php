@@ -52,10 +52,12 @@ class InstallCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $io->note('Installing full version of FIAS.');
+        $start = microtime(true);
 
         $state = new ArrayState;
         $this->pipeline->run($state);
 
-        $io->success('Full version of FIAS installed.');
+        $total = round(microtime(true) - $start, 4);
+        $io->success("Full version of FIAS installed after {$total} s.");
     }
 }
