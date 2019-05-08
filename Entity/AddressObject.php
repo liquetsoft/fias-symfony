@@ -24,23 +24,23 @@ class AddressObject
     protected $aoid;
 
     /**
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=true)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
     protected $aoguid;
 
     /**
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=true)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
     protected $parentguid;
 
     /**
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=true)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
     protected $nextid;
 
@@ -273,38 +273,38 @@ class AddressObject
         return $this->aoid;
     }
 
-    public function setAoguid(UuidInterface $aoguid): self
+    public function setAoguid(?UuidInterface $aoguid): self
     {
         $this->aoguid = $aoguid;
 
         return $this;
     }
 
-    public function getAoguid(): UuidInterface
+    public function getAoguid(): ?UuidInterface
     {
         return $this->aoguid;
     }
 
-    public function setParentguid(UuidInterface $parentguid): self
+    public function setParentguid(?UuidInterface $parentguid): self
     {
         $this->parentguid = $parentguid;
 
         return $this;
     }
 
-    public function getParentguid(): UuidInterface
+    public function getParentguid(): ?UuidInterface
     {
         return $this->parentguid;
     }
 
-    public function setNextid(UuidInterface $nextid): self
+    public function setNextid(?UuidInterface $nextid): self
     {
         $this->nextid = $nextid;
 
         return $this;
     }
 
-    public function getNextid(): UuidInterface
+    public function getNextid(): ?UuidInterface
     {
         return $this->nextid;
     }
