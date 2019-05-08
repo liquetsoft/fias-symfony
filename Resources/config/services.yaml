@@ -72,6 +72,7 @@ services:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\DoctrineStorage
         arguments:
             - '@doctrine'
+            - '%liquetsoft_fias.insert_batch_count%'
 
     Liquetsoft\Fias\Component\Storage\Storage:
         alias: liquetsoft_fias.storage.service

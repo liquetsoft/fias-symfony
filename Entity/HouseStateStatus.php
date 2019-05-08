@@ -16,7 +16,6 @@ class HouseStateStatus
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
      *
      * @var int
      */

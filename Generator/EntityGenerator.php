@@ -168,7 +168,7 @@ class EntityGenerator
                 $varType = 'int' . ($field->isNullable() ? '|null' : '');
                 $column = '@ORM\Column(type="integer"' . ($field->isNullable() ? ', nullable=true' : '') . ')';
                 if ($field->isPrimary()) {
-                    $column = "@ORM\Id\n{$column}\n@ORM\GeneratedValue";
+                    $column = "@ORM\Id\n{$column}";
                 }
                 break;
             case 'string_uuid':

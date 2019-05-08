@@ -19,11 +19,22 @@ class DoctrineStorage implements Storage
     protected $em;
 
     /**
+     * @var int
+     */
+    protected $insertBatch = 0;
+
+    /**
+     * @var int
+     */
+    protected $insertCount = 0;
+
+    /**
      * @param ManagerRegistry $doctrine
      */
-    public function __construct(ManagerRegistry $doctrine)
+    public function __construct(ManagerRegistry $doctrine, int $insertBatch = 800)
     {
         $this->em = $doctrine->getManager();
+        $this->insertBatch = $insertBatch;
     }
 
     /**
@@ -38,6 +49,8 @@ class DoctrineStorage implements Storage
      */
     public function stop(): void
     {
+        $this->em->flush();
+        $this->em->clear();
     }
 
     /**
@@ -45,6 +58,14 @@ class DoctrineStorage implements Storage
      */
     public function insert(object $entity): void
     {
+        $this->em->persist($entity);
+        ++$this->insertCount;
+
+        if ($this->insertCount === $this->insertBatch) {
+            $this->insertCount = 0;
+            $this->em->flush();
+            $this->em->clear();
+        }
     }
 
     /**
