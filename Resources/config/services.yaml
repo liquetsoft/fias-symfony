@@ -86,18 +86,34 @@ services:
 
     liquetsoft_fias.task.inform.full:
         class: Liquetsoft\Fias\Component\Pipeline\Task\InformFullTask
+        arguments:
+            - '@liquetsoft_fias.informer.service'
 
     liquetsoft_fias.task.download:
         class: Liquetsoft\Fias\Component\Pipeline\Task\DownloadTask
+        arguments:
+            - '@liquetsoft_fias.downloader.service'
 
     liquetsoft_fias.task.unpack:
         class: Liquetsoft\Fias\Component\Pipeline\Task\UnpackTask
+        arguments:
+            - '@liquetsoft_fias.unpacker.service'
 
     liquetsoft_fias.task.data.insert:
         class: Liquetsoft\Fias\Component\Pipeline\Task\DataInsertTask
+        arguments:
+            - '@liquetsoft_fias.entity_manager.service'
+            - '@liquetsoft_fias.xml_reader.service'
+            - '@liquetsoft_fias.storage.service'
+            - '@liquetsoft_fias.serializer.serializer'
 
     liquetsoft_fias.task.data.delete:
         class: Liquetsoft\Fias\Component\Pipeline\Task\DataDeleteTask
+        arguments:
+            - '@liquetsoft_fias.entity_manager.service'
+            - '@liquetsoft_fias.xml_reader.service'
+            - '@liquetsoft_fias.storage.service'
+            - '@liquetsoft_fias.serializer.serializer'
 
 
 
