@@ -73,16 +73,10 @@ class DoctrineStorage implements Storage
      */
     public function delete(object $entity): void
     {
-        $meta = $this->em->getClassMetadata(get_class($entity));
-        $name = $meta->getName();
-        $id = $meta->getIdentifierValues($entity);
-
-        $databaseEntity = $this->em->find($name, $id);
-        if ($databaseEntity) {
-            $this->em->remove($databaseEntity);
-            $this->em->flush();
-            $this->em->clear();
-        }
+        $mergedEntity = $this->em->merge($entity);
+        $this->em->remove($mergedEntity);
+        $this->em->flush();
+        $this->em->clear();
     }
 
     /**
@@ -90,5 +84,8 @@ class DoctrineStorage implements Storage
      */
     public function upsert(object $entity): void
     {
+        $this->em->merge($entity);
+        $this->em->flush();
+        $this->em->clear();
     }
 }
