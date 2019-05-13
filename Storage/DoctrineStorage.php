@@ -88,4 +88,11 @@ class DoctrineStorage implements Storage
         $this->em->flush();
         $this->em->clear();
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function truncate(string $entityClassName): void
+    {
+    }
 }

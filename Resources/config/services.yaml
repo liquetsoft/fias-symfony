@@ -102,6 +102,12 @@ services:
         arguments:
             - '@liquetsoft_fias.unpacker.service'
 
+    liquetsoft_fias.task.truncate:
+        class: Liquetsoft\Fias\Component\Pipeline\Task\TruncateTask
+        arguments:
+            - '@liquetsoft_fias.entity_manager.service'
+            - '@liquetsoft_fias.storage.service'
+
     liquetsoft_fias.task.data.insert:
         class: Liquetsoft\Fias\Component\Pipeline\Task\DataInsertTask
         arguments:
@@ -128,6 +134,7 @@ services:
                 - '@liquetsoft_fias.task.inform.full'
                 - '@liquetsoft_fias.task.download'
                 - '@liquetsoft_fias.task.unpack'
+                - '@liquetsoft_fias.task.truncate'
                 - '@liquetsoft_fias.task.data.insert'
                 - '@liquetsoft_fias.task.data.delete'
             $cleanupTask: '@liquetsoft_fias.task.cleanup'
@@ -136,6 +143,7 @@ services:
         class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
         arguments:
             $tasks:
+                - '@liquetsoft_fias.task.truncate'
                 - '@liquetsoft_fias.task.data.insert'
                 - '@liquetsoft_fias.task.data.delete'
 
