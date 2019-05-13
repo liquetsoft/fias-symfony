@@ -7,6 +7,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 use Liquetsoft\Fias\Component\Storage\Storage;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Объект, который сохраняет данные ФИАС с помощью Doctrine.
@@ -94,5 +95,11 @@ class DoctrineStorage implements Storage
      */
     public function truncate(string $entityClassName): void
     {
+        $meta = $this->em->getClassMetadata($entityClassName);
+        $name = $meta->getName();
+
+        if ($this->em instanceof EntityManager) {
+            $this->em->createQuery("DELETE {$name} p")->execute();
+        }
     }
 }
