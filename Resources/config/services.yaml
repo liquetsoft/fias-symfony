@@ -162,3 +162,10 @@ services:
             - '@liquetsoft_fias.pipe.install_from_folder'
         tags:
             - { name: 'console.command' }
+
+    liquetsoft_fias.command.truncate:
+        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\TruncateCommand
+        arguments:
+            - '@liquetsoft_fias.task.truncate'
+        tags:
+            - { name: 'console.command' }
