@@ -10,6 +10,7 @@ use Liquetsoft\Fias\Component\FiasInformer\InformerResponseBase;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FiasVersion;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityRepository;
 use RuntimeException;
 
 /**
@@ -54,8 +55,17 @@ class DoctrineVersionManager implements VersionManager
      */
     public function getCurrentVersion(): InformerResponse
     {
-        $entity = $this->getEntityClassName();
+        $entityClassName = $this->getEntityClassName();
+        $repo = $this->em->getRepository($entityClassName);
         $response = new InformerResponseBase;
+
+        if ($repo instanceof EntityRepository) {
+            $entity = $repo->findOneBy([], ['createdAt' => 'DESC']);
+            if ($entity instanceof FiasVersion) {
+                $response->setVersion($entity->getVersion());
+                $response->setUrl($entity->getUrl());
+            }
+        }
 
         return $response;
     }
