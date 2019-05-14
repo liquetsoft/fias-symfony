@@ -42,9 +42,20 @@ class DoctrineVersionManager implements VersionManager
      * {@inheritdoc}
      *
      * @throws RuntimeException
+     *
+     * @psalm-suppress InvalidStringClass
      */
     public function setCurrentVersion(InformerResponse $info): VersionManager
     {
+        $entityClassName = $this->getEntityClassName();
+        $entity = new $entityClassName;
+
+        $entity->setVersion($info->getVersion());
+        $entity->setUrl($info->getUrl());
+        $this->em->persist($entity);
+        $this->em->flush();
+        $this->em->clear();
+
         return $this;
     }
 
