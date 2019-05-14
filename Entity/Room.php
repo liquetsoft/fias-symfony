@@ -24,16 +24,16 @@ class Room
     protected $roomid;
 
     /**
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=true)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
     protected $roomguid;
 
     /**
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=true)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
     protected $houseguid;
 
@@ -101,9 +101,9 @@ class Room
     protected $livestatus = '';
 
     /**
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=true)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
     protected $normdoc;
 
@@ -119,26 +119,26 @@ class Room
         return $this->roomid;
     }
 
-    public function setRoomguid(UuidInterface $roomguid): self
+    public function setRoomguid(?UuidInterface $roomguid): self
     {
         $this->roomguid = $roomguid;
 
         return $this;
     }
 
-    public function getRoomguid(): UuidInterface
+    public function getRoomguid(): ?UuidInterface
     {
         return $this->roomguid;
     }
 
-    public function setHouseguid(UuidInterface $houseguid): self
+    public function setHouseguid(?UuidInterface $houseguid): self
     {
         $this->houseguid = $houseguid;
 
         return $this;
     }
 
-    public function getHouseguid(): UuidInterface
+    public function getHouseguid(): ?UuidInterface
     {
         return $this->houseguid;
     }
@@ -251,14 +251,14 @@ class Room
         return $this->livestatus;
     }
 
-    public function setNormdoc(UuidInterface $normdoc): self
+    public function setNormdoc(?UuidInterface $normdoc): self
     {
         $this->normdoc = $normdoc;
 
         return $this;
     }
 
-    public function getNormdoc(): UuidInterface
+    public function getNormdoc(): ?UuidInterface
     {
         return $this->normdoc;
     }

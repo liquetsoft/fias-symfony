@@ -73,16 +73,16 @@ class Stead
     protected $oktmo = '';
 
     /**
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=true)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
     protected $parentguid;
 
     /**
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=true)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
     protected $steadid;
 
@@ -129,9 +129,9 @@ class Stead
     protected $divtype = '';
 
     /**
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=true)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
     protected $normdoc;
 
@@ -231,26 +231,26 @@ class Stead
         return $this->oktmo;
     }
 
-    public function setParentguid(UuidInterface $parentguid): self
+    public function setParentguid(?UuidInterface $parentguid): self
     {
         $this->parentguid = $parentguid;
 
         return $this;
     }
 
-    public function getParentguid(): UuidInterface
+    public function getParentguid(): ?UuidInterface
     {
         return $this->parentguid;
     }
 
-    public function setSteadid(UuidInterface $steadid): self
+    public function setSteadid(?UuidInterface $steadid): self
     {
         $this->steadid = $steadid;
 
         return $this;
     }
 
-    public function getSteadid(): UuidInterface
+    public function getSteadid(): ?UuidInterface
     {
         return $this->steadid;
     }
@@ -327,14 +327,14 @@ class Stead
         return $this->divtype;
     }
 
-    public function setNormdoc(UuidInterface $normdoc): self
+    public function setNormdoc(?UuidInterface $normdoc): self
     {
         $this->normdoc = $normdoc;
 
         return $this;
     }
 
-    public function getNormdoc(): UuidInterface
+    public function getNormdoc(): ?UuidInterface
     {
         return $this->normdoc;
     }

@@ -24,16 +24,16 @@ class House
     protected $houseid;
 
     /**
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=true)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
     protected $houseguid;
 
     /**
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=true)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
     protected $aoguid;
 
@@ -147,26 +147,26 @@ class House
         return $this->houseid;
     }
 
-    public function setHouseguid(UuidInterface $houseguid): self
+    public function setHouseguid(?UuidInterface $houseguid): self
     {
         $this->houseguid = $houseguid;
 
         return $this;
     }
 
-    public function getHouseguid(): UuidInterface
+    public function getHouseguid(): ?UuidInterface
     {
         return $this->houseguid;
     }
 
-    public function setAoguid(UuidInterface $aoguid): self
+    public function setAoguid(?UuidInterface $aoguid): self
     {
         $this->aoguid = $aoguid;
 
         return $this;
     }
 
-    public function getAoguid(): UuidInterface
+    public function getAoguid(): ?UuidInterface
     {
         return $this->aoguid;
     }
