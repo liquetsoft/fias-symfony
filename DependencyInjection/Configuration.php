@@ -28,6 +28,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('informer_wsdl')->defaultValue('http://fias.nalog.ru/WebServices/Public/DownloadService.asmx?WSDL')->end()
                 ->scalarNode('registry_yaml')->defaultValue('%kernel.root_dir%/../vendor/liquetsoft/fias-component/resources/fias_entities.yaml')->end()
                 ->scalarNode('temp_dir')->defaultValue('%kernel.cache_dir%/fias')->end()
+                ->scalarNode('version_manager_entity')->defaultValue('')->end()
                 ->scalarNode('insert_batch_count')->defaultValue(800)->end()
                 ->arrayNode('entity_bindings')
                     ->useAttributeAsKey('name')

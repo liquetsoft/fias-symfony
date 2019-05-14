@@ -82,7 +82,8 @@ services:
     liquetsoft_fias.version_manager.service:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\VersionManager\DoctrineVersionManager
         arguments:
-            - '@doctrine'
+            $doctrine: '@doctrine'
+            $entityClassName: '%liquetsoft_fias.version_manager_entity%'
 
     Liquetsoft\Fias\Component\VersionManager\VersionManager:
         alias: liquetsoft_fias.version_manager.service
@@ -170,6 +171,7 @@ services:
                 - '@liquetsoft_fias.task.data.truncate'
                 - '@liquetsoft_fias.task.data.insert'
                 - '@liquetsoft_fias.task.data.delete'
+                - '@liquetsoft_fias.task.version.set'
             $cleanupTask: '@liquetsoft_fias.task.cleanup'
 
     liquetsoft_fias.pipe.install_from_folder:
