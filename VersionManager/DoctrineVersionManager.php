@@ -10,7 +10,7 @@ use Liquetsoft\Fias\Component\FiasInformer\InformerResponseBase;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FiasVersion;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
-use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * Объект, который сохраняет текущую версию ФИАС с помощью doctrine.
@@ -30,25 +30,17 @@ class DoctrineVersionManager implements VersionManager
     /**
      * @param ManagerRegistry $doctrine
      * @param string          $entityClassName
-     *
-     * @throws InvalidArgumentException
      */
     public function __construct(ManagerRegistry $doctrine, string $entityClassName)
     {
         $this->em = $doctrine->getManager();
-
-        $trimmedEntityClassName = trim($entityClassName, " \t\n\r\0\x0B\\");
-        if (!is_subclass_of($trimmedEntityClassName, FiasVersion::class)) {
-            throw new InvalidArgumentException(
-                "Entity class must be a child of '" . FiasVersion::class . "' class."
-            );
-        }
-
-        $this->entityClassName = $trimmedEntityClassName;
+        $this->entityClassName = $entityClassName;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
+     *
+     * @throws RuntimeException
      */
     public function setCurrentVersion(InformerResponse $info): VersionManager
     {
@@ -56,12 +48,34 @@ class DoctrineVersionManager implements VersionManager
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
+     *
+     * @throws RuntimeException
      */
     public function getCurrentVersion(): InformerResponse
     {
         $response = new InformerResponseBase;
 
         return $response;
+    }
+
+    /**
+     * Возвращает класс сущности для обращения к Doctrine.
+     *
+     * @return string
+     *
+     * @throws RuntimeException
+     */
+    protected function getEntityClassName()
+    {
+        $trimmedEntityClassName = trim($this->entityClassName, " \t\n\r\0\x0B\\");
+
+        if (!is_subclass_of($trimmedEntityClassName, FiasVersion::class)) {
+            throw new RuntimeException(
+                "Entity class must be a child of '" . FiasVersion::class . "' class."
+            );
+        }
+
+        return $trimmedEntityClassName;
     }
 }
