@@ -54,6 +54,7 @@ class DoctrineVersionManager implements VersionManager
      */
     public function getCurrentVersion(): InformerResponse
     {
+        $entity = $this->getEntityClassName();
         $response = new InformerResponseBase;
 
         return $response;
@@ -72,7 +73,8 @@ class DoctrineVersionManager implements VersionManager
 
         if (!is_subclass_of($trimmedEntityClassName, FiasVersion::class)) {
             throw new RuntimeException(
-                "Entity class must be a child of '" . FiasVersion::class . "' class."
+                "Entity class must be a child of '" . FiasVersion::class . "' class, got '{$trimmedEntityClassName}'."
+                . " Please check that 'liquetsoft_fias.version_manager_entity' parameter is properly configured."
             );
         }
 
