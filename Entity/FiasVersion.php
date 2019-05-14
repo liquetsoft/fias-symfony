@@ -32,7 +32,7 @@ class FiasVersion
      *
      * @ORM\Column(type="datetime")
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
     protected $createdAt;
 
