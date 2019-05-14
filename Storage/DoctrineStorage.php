@@ -31,6 +31,7 @@ class DoctrineStorage implements Storage
 
     /**
      * @param ManagerRegistry $doctrine
+     * @param int             $insertBatch
      */
     public function __construct(ManagerRegistry $doctrine, int $insertBatch = 800)
     {
