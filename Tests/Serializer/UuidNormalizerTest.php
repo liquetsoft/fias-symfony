@@ -10,7 +10,6 @@ use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\UuidFactory;
-use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 
 /**
