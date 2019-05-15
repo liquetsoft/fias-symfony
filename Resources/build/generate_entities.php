@@ -1,6 +1,7 @@
 <?php
 
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator\EntityGenerator;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator\TestGenerator;
 use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
 
 $root = dirname(dirname(__DIR__));
@@ -13,9 +14,20 @@ if (!is_dir($dir)) {
     mkdir($dir, 0777, true);
 }
 
+$testDir = $root . '/Tests/Entity';
+if (!is_dir($testDir)) {
+    mkdir($testDir, 0777, true);
+}
+
 $registry = new YamlEntityRegistry($entitiesYaml);
-$generator = new EntityGenerator($registry);
 
 $dirObject = new SplFileInfo($dir);
 $namespace = 'Liquetsoft\\Fias\\Symfony\\LiquetsoftFiasBundle\\Entity';
+$generator = new EntityGenerator($registry);
 $generator->run($dirObject, $namespace);
+
+$testDirObject = new SplFileInfo($testDir);
+$namespace = 'Liquetsoft\\Fias\\Symfony\\LiquetsoftFiasBundle\\Tests\\Entity';
+$baseNamespace = 'Liquetsoft\\Fias\\Symfony\\LiquetsoftFiasBundle\\Entity';
+$testGenerator = new TestGenerator($registry);
+$testGenerator->run($testDirObject, $namespace, $baseNamespace);
