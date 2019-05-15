@@ -20,12 +20,6 @@
         <!-- level 3 issues - slightly lazy code writing, but provably low false-negatives -->
 
         <InternalMethod errorLevel="info" />
-        <DeprecatedMethod errorLevel="suppress" />
-        <DeprecatedProperty errorLevel="suppress" />
-        <DeprecatedClass errorLevel="suppress" />
-        <DeprecatedConstant errorLevel="suppress" />
-        <DeprecatedInterface errorLevel="suppress" />
-        <DeprecatedTrait errorLevel="suppress" />
 
         <MissingClosureReturnType errorLevel="info" />
         <MissingReturnType errorLevel="info" />

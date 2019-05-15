@@ -2,7 +2,7 @@
 
 <phpunit colors="true" bootstrap="vendor/autoload.php">
     <testsuites>
-        <testsuite name="FiasBundle tests suit">
+        <testsuite name="LiquetsoftFiasBundle tests suit">
             <directory>./Tests</directory>
         </testsuite>
     </testsuites>
