@@ -21,7 +21,7 @@ class FiasSerializerTest extends BaseCase
     public function testDenormalize()
     {
         $uuidString = $this->createFakeData()->uuid;
-        $data = '<ActualStatus ACTSTATID="2" NAME="Не актуальный" TESTDATE="2019-10-10T10:10:10.02" KOD_T_ST="10" uuid="' . $uuidString . '"/>';
+        $data = '<ActualStatus ACTSTATID="2" NAME="&#x41D;&#x435; &#x430;&#x43A;&#x442;&#x443;&#x430;&#x43B;&#x44C;&#x43D;&#x44B;&#x439;" TESTDATE="2019-10-10T10:10:10.02" KOD_T_ST="10" uuid="' . $uuidString . '"/>';
         $serializer = new FiasSerializer;
 
         $object = $serializer->deserialize($data, FiasSerializerObject::class, 'xml');
