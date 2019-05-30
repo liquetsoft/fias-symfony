@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManager;
 use Ramsey\Uuid\UuidInterface;
 use DateTimeInterface;
 use RuntimeException;
+use Exception;
 
 /**
  * Объект, который сохраняет данные ФИАС с помощью Doctrine.
@@ -37,7 +38,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      * @param ManagerRegistry $doctrine
      * @param int             $insertBatch
      */
-    public function __construct(ManagerRegistry $doctrine, int $insertBatch = 800)
+    public function __construct(ManagerRegistry $doctrine, int $insertBatch = 1000)
     {
         $em = $doctrine->getManager();
         if (!($em instanceof EntityManager)) {
@@ -110,6 +111,41 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      * @throws RuntimeException
      */
     protected function bulkInsert(string $tableName, array $data): void
+    {
+        try {
+            $this->prepareAndRunBulkInsert($tableName, $data);
+        } catch (Exception $e) {
+            $this->prepareAndRunBulkSafely($tableName, $data);
+        }
+    }
+
+    /**
+     * В случае исключения при множественной вставке, пробуем вставку по одной
+     * записи, чтобы не откатывать весь блок записей.
+     *
+     * @param string  $table
+     * @param mixed[] $data
+     */
+    protected function prepareAndRunBulkSafely(string $tableName, array $data): void
+    {
+        foreach ($data as $item) {
+            try {
+                $this->prepareAndRunBulkInsert($tableName, [$item]);
+            } catch (Exception $e) {
+                //@TODO залогировать исключение
+            }
+        }
+    }
+
+    /**
+     * Непосредственное создание и запуск запроса на исполнение.
+     *
+     * @param string  $tableName
+     * @param mixed[] $data
+     *
+     * @throws RuntimeException
+     */
+    protected function prepareAndRunBulkInsert(string $tableName, array $data): void
     {
         $dataSample = reset($data);
 
