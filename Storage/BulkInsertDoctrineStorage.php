@@ -6,6 +6,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Ramsey\Uuid\UuidInterface;
 use DateTimeInterface;
 use RuntimeException;
@@ -114,7 +115,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     {
         try {
             $this->prepareAndRunBulkInsert($tableName, $data);
-        } catch (Exception $e) {
+        } catch (UniqueConstraintViolationException $e) {
             $this->prepareAndRunBulkSafely($tableName, $data);
         }
     }
@@ -122,6 +123,9 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     /**
      * В случае исключения при множественной вставке, пробуем вставку по одной
      * записи, чтобы не откатывать весь блок записей.
+     *
+     * Только для некоторых случаев:
+     *    - повторяющийся первичный ключ
      *
      * @param string  $table
      * @param mixed[] $data
