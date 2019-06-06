@@ -8,7 +8,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\StructureStatus;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
- * Тест для сущности 'Статусы'.
+ * Тест для сущности 'Перечень видов строений'.
  */
 class StructureStatusTest extends EntityCase
 {

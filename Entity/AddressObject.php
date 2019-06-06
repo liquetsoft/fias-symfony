@@ -9,13 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Адреса.
+ * Реестр адресообразующих элементов.
  *
  * @ORM\MappedSuperclass
  */
 class AddressObject
 {
     /**
+     * Уникальный идентификатор записи. Ключевое поле.
+     *
      * @ORM\Id
      * @ORM\Column(type="uuid")
      *
@@ -24,6 +26,8 @@ class AddressObject
     protected $aoid;
 
     /**
+     * Глобальный уникальный идентификатор адресного объекта.
+     *
      * @ORM\Column(type="uuid", nullable=true)
      *
      * @var UuidInterface|null
@@ -31,6 +35,8 @@ class AddressObject
     protected $aoguid;
 
     /**
+     * Идентификатор объекта родительского объекта.
+     *
      * @ORM\Column(type="uuid", nullable=true)
      *
      * @var UuidInterface|null
@@ -38,6 +44,17 @@ class AddressObject
     protected $parentguid;
 
     /**
+     * Идентификатор записи связывания с предыдушей исторической записью.
+     *
+     * @ORM\Column(type="uuid", nullable=true)
+     *
+     * @var UuidInterface|null
+     */
+    protected $previd;
+
+    /**
+     * Идентификатор записи  связывания с последующей исторической записью.
+     *
      * @ORM\Column(type="uuid", nullable=true)
      *
      * @var UuidInterface|null
@@ -45,6 +62,17 @@ class AddressObject
     protected $nextid;
 
     /**
+     * Код адресного объекта одной строкой с признаком актуальности из КЛАДР 4.0.
+     *
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
+     */
+    protected $code;
+
+    /**
+     * Формализованное наименование.
+     *
      * @ORM\Column(type="string", length=255)
      *
      * @var string
@@ -52,6 +80,8 @@ class AddressObject
     protected $formalname = '';
 
     /**
+     * Официальное наименование.
+     *
      * @ORM\Column(type="string", length=255)
      *
      * @var string
@@ -59,6 +89,8 @@ class AddressObject
     protected $offname = '';
 
     /**
+     * Краткое наименование типа объекта.
+     *
      * @ORM\Column(type="string", length=255)
      *
      * @var string
@@ -66,6 +98,8 @@ class AddressObject
     protected $shortname = '';
 
     /**
+     * Уровень адресного объекта.
+     *
      * @ORM\Column(type="integer")
      *
      * @var int
@@ -73,6 +107,8 @@ class AddressObject
     protected $aolevel = 0;
 
     /**
+     * Код региона.
+     *
      * @ORM\Column(type="string", length=2)
      *
      * @var string
@@ -80,6 +116,8 @@ class AddressObject
     protected $regioncode = '';
 
     /**
+     * Код района.
+     *
      * @ORM\Column(type="string", length=3)
      *
      * @var string
@@ -87,6 +125,8 @@ class AddressObject
     protected $areacode = '';
 
     /**
+     * Код автономии.
+     *
      * @ORM\Column(type="string", length=1)
      *
      * @var string
@@ -94,6 +134,8 @@ class AddressObject
     protected $autocode = '';
 
     /**
+     * Код города.
+     *
      * @ORM\Column(type="string", length=3)
      *
      * @var string
@@ -101,6 +143,8 @@ class AddressObject
     protected $citycode = '';
 
     /**
+     * Код внутригородского района.
+     *
      * @ORM\Column(type="string", length=3)
      *
      * @var string
@@ -108,6 +152,8 @@ class AddressObject
     protected $ctarcode = '';
 
     /**
+     * Код населенного пункта.
+     *
      * @ORM\Column(type="string", length=4)
      *
      * @var string
@@ -115,6 +161,8 @@ class AddressObject
     protected $placecode = '';
 
     /**
+     * Код элемента планировочной структуры.
+     *
      * @ORM\Column(type="string", length=4)
      *
      * @var string
@@ -122,6 +170,8 @@ class AddressObject
     protected $plancode = '';
 
     /**
+     * Код улицы.
+     *
      * @ORM\Column(type="string", length=4)
      *
      * @var string
@@ -129,6 +179,8 @@ class AddressObject
     protected $streetcode = '';
 
     /**
+     * Код дополнительного адресообразующего элемента.
+     *
      * @ORM\Column(type="string", length=4)
      *
      * @var string
@@ -136,6 +188,8 @@ class AddressObject
     protected $extrcode = '';
 
     /**
+     * Код подчиненного дополнительного адресообразующего элемента.
+     *
      * @ORM\Column(type="string", length=3)
      *
      * @var string
@@ -143,6 +197,8 @@ class AddressObject
     protected $sextcode = '';
 
     /**
+     * Код адресного объекта из КЛАДР 4.0 одной строкой без признака актуальности (последних двух цифр).
+     *
      * @ORM\Column(type="string", length=15)
      *
      * @var string
@@ -150,6 +206,8 @@ class AddressObject
     protected $plaincode = '';
 
     /**
+     * Статус актуальности КЛАДР 4 (последние две цифры в коде).
+     *
      * @ORM\Column(type="integer")
      *
      * @var int
@@ -157,6 +215,8 @@ class AddressObject
     protected $currstatus = 0;
 
     /**
+     * Статус актуальности адресного объекта ФИАС. Актуальный адрес на текущую дату. Обычно последняя запись об адресном объекте.
+     *
      * @ORM\Column(type="integer")
      *
      * @var int
@@ -164,6 +224,8 @@ class AddressObject
     protected $actstatus = 0;
 
     /**
+     * Признак действующего адресного объекта.
+     *
      * @ORM\Column(type="integer")
      *
      * @var int
@@ -171,6 +233,8 @@ class AddressObject
     protected $livestatus = 0;
 
     /**
+     * Статус центра.
+     *
      * @ORM\Column(type="integer")
      *
      * @var int
@@ -178,6 +242,8 @@ class AddressObject
     protected $centstatus = 0;
 
     /**
+     * Статус действия над записью – причина появления записи.
+     *
      * @ORM\Column(type="integer")
      *
      * @var int
@@ -185,6 +251,8 @@ class AddressObject
     protected $operstatus = 0;
 
     /**
+     * Код ИФНС ФЛ.
+     *
      * @ORM\Column(type="string", length=4)
      *
      * @var string
@@ -192,6 +260,8 @@ class AddressObject
     protected $ifnsfl = '';
 
     /**
+     * Код ИФНС ЮЛ.
+     *
      * @ORM\Column(type="string", length=4)
      *
      * @var string
@@ -199,6 +269,8 @@ class AddressObject
     protected $ifnsul = '';
 
     /**
+     * Код территориального участка ИФНС ФЛ.
+     *
      * @ORM\Column(type="string", length=4)
      *
      * @var string
@@ -206,6 +278,8 @@ class AddressObject
     protected $terrifnsfl = '';
 
     /**
+     * Код территориального участка ИФНС ЮЛ.
+     *
      * @ORM\Column(type="string", length=4)
      *
      * @var string
@@ -213,6 +287,8 @@ class AddressObject
     protected $terrifnsul = '';
 
     /**
+     * OKATO.
+     *
      * @ORM\Column(type="string", length=11)
      *
      * @var string
@@ -220,6 +296,8 @@ class AddressObject
     protected $okato = '';
 
     /**
+     * OKTMO.
+     *
      * @ORM\Column(type="string", length=11)
      *
      * @var string
@@ -227,6 +305,8 @@ class AddressObject
     protected $oktmo = '';
 
     /**
+     * Почтовый индекс.
+     *
      * @ORM\Column(type="string", length=6)
      *
      * @var string
@@ -234,6 +314,8 @@ class AddressObject
     protected $postalcode = '';
 
     /**
+     * Начало действия записи.
+     *
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
@@ -241,6 +323,8 @@ class AddressObject
     protected $startdate;
 
     /**
+     * Окончание действия записи.
+     *
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
@@ -248,6 +332,8 @@ class AddressObject
     protected $enddate;
 
     /**
+     * Дата  внесения (обновления) записи.
+     *
      * @ORM\Column(type="datetime")
      *
      * @var DateTimeInterface
@@ -255,6 +341,8 @@ class AddressObject
     protected $updatedate;
 
     /**
+     * Признак адресации.
+     *
      * @ORM\Column(type="integer")
      *
      * @var int
@@ -297,6 +385,18 @@ class AddressObject
         return $this->parentguid;
     }
 
+    public function setPrevid(?UuidInterface $previd): self
+    {
+        $this->previd = $previd;
+
+        return $this;
+    }
+
+    public function getPrevid(): ?UuidInterface
+    {
+        return $this->previd;
+    }
+
     public function setNextid(?UuidInterface $nextid): self
     {
         $this->nextid = $nextid;
@@ -307,6 +407,18 @@ class AddressObject
     public function getNextid(): ?UuidInterface
     {
         return $this->nextid;
+    }
+
+    public function setCode(?string $code): self
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
     }
 
     public function setFormalname(string $formalname): self

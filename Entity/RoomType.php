@@ -7,7 +7,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Типы комнат.
+ * Перечень типов комнат.
  *
  * @ORM\MappedSuperclass
  */

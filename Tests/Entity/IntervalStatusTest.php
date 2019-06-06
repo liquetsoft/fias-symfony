@@ -8,7 +8,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\IntervalStatus;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
- * Тест для сущности 'Статусы'.
+ * Тест для сущности 'Перечень возможных значений интервалов домов (обычный, четный, нечетный)'.
  */
 class IntervalStatusTest extends EntityCase
 {

@@ -145,7 +145,7 @@ class EntityGenerator
             }
         }
 
-        $description = trim($descriptor->getDescription(), " \t\n\r\0\x0B.");
+        $description = ucfirst(trim($descriptor->getDescription(), " \t\n\r\0\x0B."));
         if ($description) {
             $class->addComment("{$description}.\n");
         }
@@ -203,6 +203,10 @@ class EntityGenerator
 
         $property->setValue($defaultValue);
         $property->setVisibility('protected');
+        if ($field->getDescription()) {
+            $description = ucfirst(rtrim($field->getDescription(), " \t\n\r\0\x0B.")) . '.';
+            $property->addComment("{$description}\n");
+        }
         $property->addComment("{$column}\n");
         $property->addComment("@var {$varType}");
     }

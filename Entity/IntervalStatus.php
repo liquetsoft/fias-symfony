@@ -7,7 +7,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Статусы.
+ * Перечень возможных значений интервалов домов (обычный, четный, нечетный).
  *
  * @ORM\MappedSuperclass
  */

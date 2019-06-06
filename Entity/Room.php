@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Комнаты.
+ * Сведения о помещениях (квартирах, офисах, комнатах и т.д.).
  *
  * @ORM\MappedSuperclass
  */

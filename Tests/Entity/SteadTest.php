@@ -10,7 +10,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Тест для сущности 'Земельные участки'.
+ * Тест для сущности 'Сведения о земельных участках'.
  */
 class SteadTest extends EntityCase
 {

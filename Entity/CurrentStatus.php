@@ -7,7 +7,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Статусы.
+ * Перечень статусов актуальности записи адресного элемента по классификатору КЛАДР4.0.
  *
  * @ORM\MappedSuperclass
  */

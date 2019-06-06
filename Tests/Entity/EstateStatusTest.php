@@ -8,7 +8,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\EstateStatus;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
- * Тест для сущности 'Статусы'.
+ * Тест для сущности 'Перечень возможных видов владений'.
  */
 class EstateStatusTest extends EntityCase
 {

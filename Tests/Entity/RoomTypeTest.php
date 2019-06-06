@@ -8,7 +8,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\RoomType;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
- * Тест для сущности 'Типы комнат'.
+ * Тест для сущности 'Перечень типов комнат'.
  */
 class RoomTypeTest extends EntityCase
 {

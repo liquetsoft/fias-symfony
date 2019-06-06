@@ -8,7 +8,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\OperationStatus;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
- * Тест для сущности 'Статусы'.
+ * Тест для сущности 'Перечень кодов операций над адресными объектами'.
  */
 class OperationStatusTest extends EntityCase
 {

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Дома.
+ * Элементы адреса, идентифицирующие адресуемые объекты.
  *
  * @ORM\MappedSuperclass
  */

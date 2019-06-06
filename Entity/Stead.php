@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Земельные участки.
+ * Сведения о земельных участках.
  *
  * @ORM\MappedSuperclass
  */

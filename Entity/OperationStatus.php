@@ -7,7 +7,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Статусы.
+ * Перечень кодов операций над адресными объектами.
  *
  * @ORM\MappedSuperclass
  */

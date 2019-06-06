@@ -10,7 +10,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Тест для сущности 'Нормативные документы'.
+ * Тест для сущности 'Сведения по нормативному документу, являющемуся основанием присвоения адресному элементу наименования'.
  */
 class NormativeDocumentTest extends EntityCase
 {

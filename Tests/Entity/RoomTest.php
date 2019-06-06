@@ -10,7 +10,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Тест для сущности 'Комнаты'.
+ * Тест для сущности 'Сведения о помещениях (квартирах, офисах, комнатах и т.д.)'.
  */
 class RoomTest extends EntityCase
 {

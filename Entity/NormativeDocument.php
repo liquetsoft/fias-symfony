@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Нормативные документы.
+ * Сведения по нормативному документу, являющемуся основанием присвоения адресному элементу наименования.
  *
  * @ORM\MappedSuperclass
  */

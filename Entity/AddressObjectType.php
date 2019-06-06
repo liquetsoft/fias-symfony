@@ -7,7 +7,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Типы объектов в адресах.
+ * Перечень полных, сокращённых наименований типов адресных элементов и уровней их классификациих.
  *
  * @ORM\MappedSuperclass
  */
