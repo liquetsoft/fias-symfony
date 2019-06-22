@@ -138,19 +138,25 @@ class EntityGenerator
      */
     protected function decorateClass(ClassType $class, EntityDescriptor $descriptor): void
     {
-        $indexes = [];
-        foreach ($descriptor->getFields() as $field) {
-            if ($field->isIndex()) {
-                $indexes[] = $this->unifyColumnName($field->getName());
-            }
-        }
-
         $description = ucfirst(trim($descriptor->getDescription(), " \t\n\r\0\x0B."));
         if ($description) {
             $class->addComment("{$description}.\n");
         }
 
         $class->addComment("@ORM\MappedSuperclass\n");
+
+        $indexes = [];
+        $indexPrefix = $this->unifyColumnName($descriptor->getName());
+        foreach ($descriptor->getFields() as $field) {
+            if ($field->isIndex()) {
+                $column = $this->unifyColumnName($field->getName());
+                $indexes[] = "@ORM\Index(name=\"{$indexPrefix}_{$column}_idx\", columns={\"{$column}\"})";
+            }
+        }
+        if ($indexes) {
+            $table = '@ORM\Table(indexes={' . implode(',', $indexes) . '})';
+            $class->addComment($table);
+        }
     }
 
     /**

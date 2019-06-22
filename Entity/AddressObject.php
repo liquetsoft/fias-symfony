@@ -12,6 +12,8 @@ use Ramsey\Uuid\UuidInterface;
  * Реестр адресообразующих элементов.
  *
  * @ORM\MappedSuperclass
+ *
+ * @ORM\Table(indexes={@ORM\Index(name="addressobject_aoguid_idx", columns={"aoguid"})})
  */
 class AddressObject
 {
