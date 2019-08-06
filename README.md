@@ -33,13 +33,14 @@
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddressObject as LiquetsoftAddressObject;
 
     /**
      * Адреса.
      *
      * @ORM\Entity(repositoryClass="App\Repository\AddressObjectRepository")
      */
-    class AddressObject extends \Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddressObject
+    class AddressObject extends LiquetsoftAddressObject
     {
     }
     ```
@@ -74,13 +75,14 @@
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FiasVersion as LiquetsoftFiasVersion;
 
     /**
      * Сущность, которая хранит текущую версию ФИАС.
      *
      * @ORM\Entity
      */
-    class FiasVersion extends \Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FiasVersion
+    class FiasVersion extends LiquetsoftFiasVersion
     {
     }
     ```
