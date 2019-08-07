@@ -127,7 +127,7 @@
 7. По умолчанию для записи используется `Doctrine`, что может быть довольно медленно, хоть и дает возможность использовать все преимущества `Doctrine`, например, события. В качестве альтернативы предлагается использовать `bulk insert`, он значительно быстрее, но не использует события:
 
     ```yaml
-    # config/packages/liquetsoft_fias.yaml
+    # config/services.yaml
     services:
         # заменяем сервис для записи на сервис, который использует bulk insert
         liquetsoft_fias.storage.service:
@@ -135,29 +135,6 @@
             arguments:
                 - '@doctrine'
                 - '%liquetsoft_fias.insert_batch_count%'
-
-    liquetsoft_fias:
-        # сущность, которая хранит версии ФИАС
-        version_manager_entity: App\Entity\FiasVersion
-        # массив, в котором указывается какие сущности в какой объект преобразовывать
-        entity_bindings:
-            ActualStatus: App\Entity\ActualStatus
-            AddressObject: App\Entity\AddressObject
-            AddressObjectType: App\Entity\AddressObjectType
-            CenterStatus: App\Entity\CenterStatus
-            CurrentStatus: App\Entity\CurrentStatus
-            EstateStatus: App\Entity\EstateStatus
-            FlatType: App\Entity\FlatType
-            House: App\Entity\House
-            HouseStateStatus: App\Entity\HouseStateStatus
-            IntervalStatus: App\Entity\IntervalStatus
-            NormativeDocument: App\Entity\NormativeDocument
-            NormativeDocumentType: App\Entity\NormativeDocumentType
-            OperationStatus: App\Entity\OperationStatus
-            Room: App\Entity\Room
-            RoomType: App\Entity\RoomType
-            Stead: App\Entity\Stead
-            StructureStatus: App\Entity\StructureStatus
     ```
 
 8. Поскольку для записи в БД используется `Doctrine`, нужно отключить логгирование запросов, иначе скрипт падает с переполнением памяти:
