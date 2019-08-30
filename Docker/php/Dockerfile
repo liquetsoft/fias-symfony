@@ -21,10 +21,12 @@ RUN docker-php-ext-install pdo_pgsql zip pcntl sockets soap \
     && docker-php-ext-enable xdebug \
     && pecl install rar \
     && docker-php-ext-enable rar \
-    && docker-php-source delete
+    && docker-php-source delete \
+    && echo 'date.timezone=Europe/London' >> /usr/local/etc/php/conf.d/php-date.ini
 
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && mkdir -p /.composer && chmod -Rf 777 /.composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && mkdir -p /.composer && chmod -Rf 777 /.composer
 
 
 WORKDIR /var/app

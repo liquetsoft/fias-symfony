@@ -7,4 +7,4 @@ services:
         build:
             context: php
         volumes:
-            - ${DOCKER_APP_PATH}:/var/app:cached
+            - ./../:/var/app:cached
