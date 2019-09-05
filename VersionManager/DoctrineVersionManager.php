@@ -88,7 +88,7 @@ class DoctrineVersionManager implements VersionManager
      *
      * @throws RuntimeException
      */
-    protected function getEntityClassName()
+    protected function getEntityClassName(): string
     {
         $trimmedEntityClassName = trim($this->entityClassName, " \t\n\r\0\x0B\\");
 
