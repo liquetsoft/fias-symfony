@@ -127,7 +127,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      * Только для некоторых случаев:
      *    - повторяющийся первичный ключ
      *
-     * @param string  $table
+     * @param string  $tableName
      * @param mixed[] $data
      */
     protected function prepareAndRunBulkSafely(string $tableName, array $data): void
