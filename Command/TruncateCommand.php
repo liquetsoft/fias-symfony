@@ -42,7 +42,7 @@ class TruncateCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Truncates storages for binded entities.');
+        $this->setDescription('Truncates storage for binded entities.');
     }
 
     /**
@@ -57,6 +57,6 @@ class TruncateCommand extends Command
         $state = new ArrayState;
         $this->truncateTask->run($state);
 
-        $io->success('Storages truncated.');
+        $io->success('Storage truncated.');
     }
 }
