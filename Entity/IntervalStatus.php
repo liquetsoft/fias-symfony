@@ -15,14 +15,14 @@ class IntervalStatus
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
     protected $intvstatid = 0;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      *
      * @var string
      */

@@ -7,7 +7,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Перечень полных, сокращённых наименований типов адресных элементов и уровней их классификациих.
+ * Перечень полных, сокращённых наименований типов адресных элементов и уровней их классификации.
  *
  * @ORM\MappedSuperclass
  */
@@ -15,28 +15,28 @@ class AddressObjectType
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
     protected $kodtst = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
     protected $level = 0;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      *
      * @var string
      */
     protected $socrname = '';
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      *
      * @var string
      */

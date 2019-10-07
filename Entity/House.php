@@ -17,7 +17,7 @@ class House
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=false)
      *
      * @var UuidInterface
      */
@@ -38,98 +38,98 @@ class House
     protected $aoguid;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=false)
      *
      * @var string
      */
     protected $housenum = '';
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
     protected $strstatus = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
     protected $eststatus = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
     protected $statstatus = 0;
 
     /**
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="string", length=4, nullable=false)
      *
      * @var string
      */
     protected $ifnsfl = '';
 
     /**
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="string", length=4, nullable=false)
      *
      * @var string
      */
     protected $ifnsul = '';
 
     /**
-     * @ORM\Column(type="string", length=11)
+     * @ORM\Column(type="string", length=11, nullable=false)
      *
      * @var string
      */
     protected $okato = '';
 
     /**
-     * @ORM\Column(type="string", length=11)
+     * @ORM\Column(type="string", length=11, nullable=false)
      *
      * @var string
      */
     protected $oktmo = '';
 
     /**
-     * @ORM\Column(type="string", length=6)
+     * @ORM\Column(type="string", length=6, nullable=false)
      *
      * @var string
      */
     protected $postalcode = '';
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      *
      * @var DateTimeInterface
      */
     protected $startdate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      *
      * @var DateTimeInterface
      */
     protected $enddate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      *
      * @var DateTimeInterface
      */
     protected $updatedate;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
     protected $counter = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */

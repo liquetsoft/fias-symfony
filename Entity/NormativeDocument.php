@@ -17,35 +17,35 @@ class NormativeDocument
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=false)
      *
      * @var UuidInterface
      */
     protected $normdocid;
 
     /**
-     * @ORM\Column(type="string", length=1000)
+     * @ORM\Column(type="string", length=1000, nullable=false)
      *
      * @var string
      */
     protected $docname = '';
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      *
      * @var DateTimeInterface
      */
     protected $docdate;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      *
      * @var string
      */
     protected $docnum = '';
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      *
      * @var string
      */

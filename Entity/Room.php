@@ -17,7 +17,7 @@ class Room
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=false)
      *
      * @var UuidInterface
      */
@@ -38,63 +38,63 @@ class Room
     protected $houseguid;
 
     /**
-     * @ORM\Column(type="string", length=2)
+     * @ORM\Column(type="string", length=2, nullable=false)
      *
      * @var string
      */
     protected $regioncode = '';
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=false)
      *
      * @var string
      */
     protected $flatnumber = '';
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
     protected $flattype = 0;
 
     /**
-     * @ORM\Column(type="string", length=6)
+     * @ORM\Column(type="string", length=6, nullable=false)
      *
      * @var string
      */
     protected $postalcode = '';
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      *
      * @var DateTimeInterface
      */
     protected $startdate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      *
      * @var DateTimeInterface
      */
     protected $enddate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      *
      * @var DateTimeInterface
      */
     protected $updatedate;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      *
      * @var string
      */
     protected $operstatus = '';
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      *
      * @var string
      */

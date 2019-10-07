@@ -21,7 +21,7 @@ class AddressObject
      * Уникальный идентификатор записи. Ключевое поле.
      *
      * @ORM\Id
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="uuid", nullable=false)
      *
      * @var UuidInterface
      */
@@ -75,7 +75,7 @@ class AddressObject
     /**
      * Формализованное наименование.
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      *
      * @var string
      */
@@ -84,7 +84,7 @@ class AddressObject
     /**
      * Официальное наименование.
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      *
      * @var string
      */
@@ -93,7 +93,7 @@ class AddressObject
     /**
      * Краткое наименование типа объекта.
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      *
      * @var string
      */
@@ -102,7 +102,7 @@ class AddressObject
     /**
      * Уровень адресного объекта.
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
@@ -111,7 +111,7 @@ class AddressObject
     /**
      * Код региона.
      *
-     * @ORM\Column(type="string", length=2)
+     * @ORM\Column(type="string", length=2, nullable=false)
      *
      * @var string
      */
@@ -120,7 +120,7 @@ class AddressObject
     /**
      * Код района.
      *
-     * @ORM\Column(type="string", length=3)
+     * @ORM\Column(type="string", length=3, nullable=false)
      *
      * @var string
      */
@@ -129,7 +129,7 @@ class AddressObject
     /**
      * Код автономии.
      *
-     * @ORM\Column(type="string", length=1)
+     * @ORM\Column(type="string", length=1, nullable=false)
      *
      * @var string
      */
@@ -138,7 +138,7 @@ class AddressObject
     /**
      * Код города.
      *
-     * @ORM\Column(type="string", length=3)
+     * @ORM\Column(type="string", length=3, nullable=false)
      *
      * @var string
      */
@@ -147,7 +147,7 @@ class AddressObject
     /**
      * Код внутригородского района.
      *
-     * @ORM\Column(type="string", length=3)
+     * @ORM\Column(type="string", length=3, nullable=false)
      *
      * @var string
      */
@@ -156,7 +156,7 @@ class AddressObject
     /**
      * Код населенного пункта.
      *
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="string", length=4, nullable=false)
      *
      * @var string
      */
@@ -165,7 +165,7 @@ class AddressObject
     /**
      * Код элемента планировочной структуры.
      *
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="string", length=4, nullable=false)
      *
      * @var string
      */
@@ -174,7 +174,7 @@ class AddressObject
     /**
      * Код улицы.
      *
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="string", length=4, nullable=false)
      *
      * @var string
      */
@@ -183,7 +183,7 @@ class AddressObject
     /**
      * Код дополнительного адресообразующего элемента.
      *
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="string", length=4, nullable=false)
      *
      * @var string
      */
@@ -192,7 +192,7 @@ class AddressObject
     /**
      * Код подчиненного дополнительного адресообразующего элемента.
      *
-     * @ORM\Column(type="string", length=3)
+     * @ORM\Column(type="string", length=3, nullable=false)
      *
      * @var string
      */
@@ -201,7 +201,7 @@ class AddressObject
     /**
      * Код адресного объекта из КЛАДР 4.0 одной строкой без признака актуальности (последних двух цифр).
      *
-     * @ORM\Column(type="string", length=15)
+     * @ORM\Column(type="string", length=15, nullable=false)
      *
      * @var string
      */
@@ -210,7 +210,7 @@ class AddressObject
     /**
      * Статус актуальности КЛАДР 4 (последние две цифры в коде).
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
@@ -219,7 +219,7 @@ class AddressObject
     /**
      * Статус актуальности адресного объекта ФИАС. Актуальный адрес на текущую дату. Обычно последняя запись об адресном объекте.
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
@@ -228,7 +228,7 @@ class AddressObject
     /**
      * Признак действующего адресного объекта.
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
@@ -237,7 +237,7 @@ class AddressObject
     /**
      * Статус центра.
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
@@ -246,7 +246,7 @@ class AddressObject
     /**
      * Статус действия над записью – причина появления записи.
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
@@ -255,7 +255,7 @@ class AddressObject
     /**
      * Код ИФНС ФЛ.
      *
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="string", length=4, nullable=false)
      *
      * @var string
      */
@@ -264,7 +264,7 @@ class AddressObject
     /**
      * Код ИФНС ЮЛ.
      *
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="string", length=4, nullable=false)
      *
      * @var string
      */
@@ -273,7 +273,7 @@ class AddressObject
     /**
      * Код территориального участка ИФНС ФЛ.
      *
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="string", length=4, nullable=false)
      *
      * @var string
      */
@@ -282,7 +282,7 @@ class AddressObject
     /**
      * Код территориального участка ИФНС ЮЛ.
      *
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="string", length=4, nullable=false)
      *
      * @var string
      */
@@ -291,7 +291,7 @@ class AddressObject
     /**
      * OKATO.
      *
-     * @ORM\Column(type="string", length=11)
+     * @ORM\Column(type="string", length=11, nullable=false)
      *
      * @var string
      */
@@ -300,7 +300,7 @@ class AddressObject
     /**
      * OKTMO.
      *
-     * @ORM\Column(type="string", length=11)
+     * @ORM\Column(type="string", length=11, nullable=false)
      *
      * @var string
      */
@@ -309,7 +309,7 @@ class AddressObject
     /**
      * Почтовый индекс.
      *
-     * @ORM\Column(type="string", length=6)
+     * @ORM\Column(type="string", length=6, nullable=false)
      *
      * @var string
      */
@@ -318,7 +318,7 @@ class AddressObject
     /**
      * Начало действия записи.
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      *
      * @var DateTimeInterface
      */
@@ -327,16 +327,16 @@ class AddressObject
     /**
      * Окончание действия записи.
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      *
      * @var DateTimeInterface
      */
     protected $enddate;
 
     /**
-     * Дата  внесения (обновления) записи.
+     * Дата внесения (обновления) записи.
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      *
      * @var DateTimeInterface
      */
@@ -345,7 +345,7 @@ class AddressObject
     /**
      * Признак адресации.
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */

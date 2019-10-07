@@ -172,7 +172,7 @@ class EntityGenerator
             case 'int':
                 $defaultValue = $field->isNullable() ? null : 0;
                 $varType = 'int' . ($field->isNullable() ? '|null' : '');
-                $column = '@ORM\Column(type="integer"' . ($field->isNullable() ? ', nullable=true' : '') . ')';
+                $column = '@ORM\Column(type="integer"' . ($field->isNullable() ? ', nullable=true' : ', nullable=false') . ')';
                 if ($field->isPrimary()) {
                     $column = "@ORM\Id\n{$column}";
                 }
@@ -181,7 +181,7 @@ class EntityGenerator
                 $defaultValue = null;
                 $varType = 'UuidInterface' . ($field->isNullable() ? '|null' : '');
                 $column = '@ORM\Column(type="uuid"';
-                $column .= $field->isNullable() ? ', nullable=true' : '';
+                $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
                 $column .= ')';
                 if ($field->isPrimary()) {
                     $column = "@ORM\Id\n{$column}";
@@ -191,7 +191,7 @@ class EntityGenerator
                 $defaultValue = null;
                 $varType = 'DateTimeInterface' . ($field->isNullable() ? '|null' : '');
                 $column = '@ORM\Column(type="datetime"';
-                $column .= $field->isNullable() ? ', nullable=true' : '';
+                $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
                 $column .= ')';
                 break;
             default:
@@ -199,7 +199,7 @@ class EntityGenerator
                 $varType = 'string' . ($field->isNullable() ? '|null' : '');
                 $column = '@ORM\Column(type="string"';
                 $column .= $field->getLength() ? ", length={$field->getLength()}" : '';
-                $column .= $field->isNullable() ? ', nullable=true' : '';
+                $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
                 $column .= ')';
                 if ($field->isPrimary()) {
                     $column = "@ORM\Id\n{$column}";

@@ -8,7 +8,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddressObjectType;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
- * Тест для сущности 'Перечень полных, сокращённых наименований типов адресных элементов и уровней их классификациих'.
+ * Тест для сущности 'Перечень полных, сокращённых наименований типов адресных элементов и уровней их классификации'.
  */
 class AddressObjectTypeTest extends EntityCase
 {
