@@ -173,6 +173,7 @@ services:
                 - '@liquetsoft_fias.task.data.delete'
                 - '@liquetsoft_fias.task.version.set'
             $cleanupTask: '@liquetsoft_fias.task.cleanup'
+            $logger: '@logger'
 
     liquetsoft_fias.pipe.install_from_folder:
         class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
@@ -181,6 +182,7 @@ services:
                 - '@liquetsoft_fias.task.data.truncate'
                 - '@liquetsoft_fias.task.data.insert'
                 - '@liquetsoft_fias.task.data.delete'
+            $logger: '@logger'
 
     liquetsoft_fias.pipe.update:
         class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
@@ -195,6 +197,7 @@ services:
                 - '@liquetsoft_fias.task.data.delete'
                 - '@liquetsoft_fias.task.version.set'
             $cleanupTask: '@liquetsoft_fias.task.cleanup'
+            $logger: '@logger'
 
 
 

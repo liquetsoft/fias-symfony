@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManager;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use Ramsey\Uuid\UuidInterface;
 use DateTimeInterface;
 use RuntimeException;
@@ -27,6 +29,13 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     protected $em;
 
     /**
+     * Объект для логгирования данных.
+     *
+     * @var LoggerInterface|null
+     */
+    protected $logger;
+
+    /**
      * Сохраненные в памяти данные для мнодественной вставки.
      *
      * Массив вида 'имя таблицы' => 'массив массивов данных для вставки'.
@@ -39,7 +48,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      * @param ManagerRegistry $doctrine
      * @param int             $insertBatch
      */
-    public function __construct(ManagerRegistry $doctrine, int $insertBatch = 1000)
+    public function __construct(ManagerRegistry $doctrine, int $insertBatch = 1000, ?LoggerInterface $logger = null)
     {
         $em = $doctrine->getManager();
         if (!($em instanceof EntityManager)) {
@@ -50,6 +59,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
         $this->em = $em;
 
         $this->insertBatch = $insertBatch;
+        $this->logger = $logger;
     }
 
     /**
@@ -69,10 +79,10 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
         $meta = $this->em->getClassMetadata(get_class($entity));
 
         $table = $meta->getTableName();
-        $fileds = $meta->getFieldNames();
+        $fields = $meta->getFieldNames();
 
         $insertArray = [];
-        foreach ($fileds as $field) {
+        foreach ($fields as $field) {
             $value = $meta->getFieldValue($entity, $field);
             if ($value instanceof DateTimeInterface) {
                 $value = $value->format('Y-m-d H:i:s');
@@ -115,7 +125,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     {
         try {
             $this->prepareAndRunBulkInsert($tableName, $data);
-        } catch (UniqueConstraintViolationException $e) {
+        } catch (DBALException $e) {
             $this->prepareAndRunBulkSafely($tableName, $data);
         }
     }
@@ -136,7 +146,15 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
             try {
                 $this->prepareAndRunBulkInsert($tableName, [$item]);
             } catch (Exception $e) {
-                //@TODO залогировать исключение
+                $this->log(
+                    LogLevel::ERROR,
+                    "Error while inserting item to '{$tableName}' table. Item wasn't proceed.",
+                    [
+                        'table' => $tableName,
+                        'error_message' => $e->getMessage(),
+                        'item' => $data,
+                    ]
+                );
             }
         }
     }
@@ -148,6 +166,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      * @param mixed[] $data
      *
      * @throws RuntimeException
+     * @throws DBALException
      */
     protected function prepareAndRunBulkInsert(string $tableName, array $data): void
     {
@@ -167,5 +186,19 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
         }
 
         $stmt->execute();
+    }
+
+    /**
+     * Запись сообщения в лог.
+     *
+     * @param string $errorLevel
+     * @param string $message
+     * @param array  $context
+     */
+    protected function log(string $errorLevel, string $message, array $context = []): void
+    {
+        if ($this->logger) {
+            $this->logger->log($errorLevel, $message, $context);
+        }
     }
 }
