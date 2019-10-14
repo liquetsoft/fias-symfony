@@ -59,11 +59,11 @@ class Room
     protected $flattype = 0;
 
     /**
-     * @ORM\Column(type="string", length=6, nullable=false)
+     * @ORM\Column(type="string", length=6, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $postalcode = '';
+    protected $postalcode;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
@@ -179,14 +179,14 @@ class Room
         return $this->flattype;
     }
 
-    public function setPostalcode(string $postalcode): self
+    public function setPostalcode(?string $postalcode): self
     {
         $this->postalcode = $postalcode;
 
         return $this;
     }
 
-    public function getPostalcode(): string
+    public function getPostalcode(): ?string
     {
         return $this->postalcode;
     }

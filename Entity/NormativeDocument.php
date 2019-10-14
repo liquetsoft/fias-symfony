@@ -24,25 +24,25 @@ class NormativeDocument
     protected $normdocid;
 
     /**
-     * @ORM\Column(type="string", length=1000, nullable=false)
+     * @ORM\Column(type="string", length=1000, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $docname = '';
+    protected $docname;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
     protected $docdate;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $docnum = '';
+    protected $docnum;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
@@ -63,38 +63,38 @@ class NormativeDocument
         return $this->normdocid;
     }
 
-    public function setDocname(string $docname): self
+    public function setDocname(?string $docname): self
     {
         $this->docname = $docname;
 
         return $this;
     }
 
-    public function getDocname(): string
+    public function getDocname(): ?string
     {
         return $this->docname;
     }
 
-    public function setDocdate(DateTimeInterface $docdate): self
+    public function setDocdate(?DateTimeInterface $docdate): self
     {
         $this->docdate = $docdate;
 
         return $this;
     }
 
-    public function getDocdate(): DateTimeInterface
+    public function getDocdate(): ?DateTimeInterface
     {
         return $this->docdate;
     }
 
-    public function setDocnum(string $docnum): self
+    public function setDocnum(?string $docnum): self
     {
         $this->docnum = $docnum;
 
         return $this;
     }
 
-    public function getDocnum(): string
+    public function getDocnum(): ?string
     {
         return $this->docnum;
     }

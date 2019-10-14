@@ -38,11 +38,11 @@ class House
     protected $aoguid;
 
     /**
-     * @ORM\Column(type="string", length=20, nullable=false)
+     * @ORM\Column(type="string", length=20, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $housenum = '';
+    protected $housenum;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
@@ -66,39 +66,39 @@ class House
     protected $statstatus = 0;
 
     /**
-     * @ORM\Column(type="string", length=4, nullable=false)
+     * @ORM\Column(type="string", length=4, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $ifnsfl = '';
+    protected $ifnsfl;
 
     /**
-     * @ORM\Column(type="string", length=4, nullable=false)
+     * @ORM\Column(type="string", length=4, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $ifnsul = '';
+    protected $ifnsul;
 
     /**
-     * @ORM\Column(type="string", length=11, nullable=false)
+     * @ORM\Column(type="string", length=11, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $okato = '';
+    protected $okato;
 
     /**
-     * @ORM\Column(type="string", length=11, nullable=false)
+     * @ORM\Column(type="string", length=11, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $oktmo = '';
+    protected $oktmo;
 
     /**
-     * @ORM\Column(type="string", length=6, nullable=false)
+     * @ORM\Column(type="string", length=6, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $postalcode = '';
+    protected $postalcode;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
@@ -171,14 +171,14 @@ class House
         return $this->aoguid;
     }
 
-    public function setHousenum(string $housenum): self
+    public function setHousenum(?string $housenum): self
     {
         $this->housenum = $housenum;
 
         return $this;
     }
 
-    public function getHousenum(): string
+    public function getHousenum(): ?string
     {
         return $this->housenum;
     }
@@ -219,62 +219,62 @@ class House
         return $this->statstatus;
     }
 
-    public function setIfnsfl(string $ifnsfl): self
+    public function setIfnsfl(?string $ifnsfl): self
     {
         $this->ifnsfl = $ifnsfl;
 
         return $this;
     }
 
-    public function getIfnsfl(): string
+    public function getIfnsfl(): ?string
     {
         return $this->ifnsfl;
     }
 
-    public function setIfnsul(string $ifnsul): self
+    public function setIfnsul(?string $ifnsul): self
     {
         $this->ifnsul = $ifnsul;
 
         return $this;
     }
 
-    public function getIfnsul(): string
+    public function getIfnsul(): ?string
     {
         return $this->ifnsul;
     }
 
-    public function setOkato(string $okato): self
+    public function setOkato(?string $okato): self
     {
         $this->okato = $okato;
 
         return $this;
     }
 
-    public function getOkato(): string
+    public function getOkato(): ?string
     {
         return $this->okato;
     }
 
-    public function setOktmo(string $oktmo): self
+    public function setOktmo(?string $oktmo): self
     {
         $this->oktmo = $oktmo;
 
         return $this;
     }
 
-    public function getOktmo(): string
+    public function getOktmo(): ?string
     {
         return $this->oktmo;
     }
 
-    public function setPostalcode(string $postalcode): self
+    public function setPostalcode(?string $postalcode): self
     {
         $this->postalcode = $postalcode;
 
         return $this;
     }
 
-    public function getPostalcode(): string
+    public function getPostalcode(): ?string
     {
         return $this->postalcode;
     }

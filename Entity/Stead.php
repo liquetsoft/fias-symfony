@@ -24,11 +24,11 @@ class Stead
     protected $steadguid;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $number = '';
+    protected $number;
 
     /**
      * @ORM\Column(type="string", length=2, nullable=false)
@@ -38,11 +38,11 @@ class Stead
     protected $regioncode = '';
 
     /**
-     * @ORM\Column(type="string", length=6, nullable=false)
+     * @ORM\Column(type="string", length=6, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $postalcode = '';
+    protected $postalcode;
 
     /**
      * @ORM\Column(type="string", length=4, nullable=false)
@@ -147,14 +147,14 @@ class Stead
         return $this->steadguid;
     }
 
-    public function setNumber(string $number): self
+    public function setNumber(?string $number): self
     {
         $this->number = $number;
 
         return $this;
     }
 
-    public function getNumber(): string
+    public function getNumber(): ?string
     {
         return $this->number;
     }
@@ -171,14 +171,14 @@ class Stead
         return $this->regioncode;
     }
 
-    public function setPostalcode(string $postalcode): self
+    public function setPostalcode(?string $postalcode): self
     {
         $this->postalcode = $postalcode;
 
         return $this;
     }
 
-    public function getPostalcode(): string
+    public function getPostalcode(): ?string
     {
         return $this->postalcode;
     }

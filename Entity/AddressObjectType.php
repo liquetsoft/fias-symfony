@@ -36,11 +36,11 @@ class AddressObjectType
     protected $socrname = '';
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $scname = '';
+    protected $scname;
 
     public function setKodtst(int $kodtst): self
     {
@@ -78,14 +78,14 @@ class AddressObjectType
         return $this->socrname;
     }
 
-    public function setScname(string $scname): self
+    public function setScname(?string $scname): self
     {
         $this->scname = $scname;
 
         return $this;
     }
 
-    public function getScname(): string
+    public function getScname(): ?string
     {
         return $this->scname;
     }

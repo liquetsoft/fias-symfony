@@ -29,11 +29,11 @@ class StructureStatus
     protected $name = '';
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $shortname = '';
+    protected $shortname;
 
     public function setStrstatid(int $strstatid): self
     {
@@ -59,14 +59,14 @@ class StructureStatus
         return $this->name;
     }
 
-    public function setShortname(string $shortname): self
+    public function setShortname(?string $shortname): self
     {
         $this->shortname = $shortname;
 
         return $this;
     }
 
-    public function getShortname(): string
+    public function getShortname(): ?string
     {
         return $this->shortname;
     }

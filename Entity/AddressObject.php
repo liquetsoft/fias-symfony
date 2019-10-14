@@ -201,11 +201,11 @@ class AddressObject
     /**
      * Код адресного объекта из КЛАДР 4.0 одной строкой без признака актуальности (последних двух цифр).
      *
-     * @ORM\Column(type="string", length=15, nullable=false)
+     * @ORM\Column(type="string", length=15, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $plaincode = '';
+    protected $plaincode;
 
     /**
      * Статус актуальности КЛАДР 4 (последние две цифры в коде).
@@ -255,65 +255,65 @@ class AddressObject
     /**
      * Код ИФНС ФЛ.
      *
-     * @ORM\Column(type="string", length=4, nullable=false)
+     * @ORM\Column(type="string", length=4, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $ifnsfl = '';
+    protected $ifnsfl;
 
     /**
      * Код ИФНС ЮЛ.
      *
-     * @ORM\Column(type="string", length=4, nullable=false)
+     * @ORM\Column(type="string", length=4, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $ifnsul = '';
+    protected $ifnsul;
 
     /**
      * Код территориального участка ИФНС ФЛ.
      *
-     * @ORM\Column(type="string", length=4, nullable=false)
+     * @ORM\Column(type="string", length=4, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $terrifnsfl = '';
+    protected $terrifnsfl;
 
     /**
      * Код территориального участка ИФНС ЮЛ.
      *
-     * @ORM\Column(type="string", length=4, nullable=false)
+     * @ORM\Column(type="string", length=4, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $terrifnsul = '';
+    protected $terrifnsul;
 
     /**
      * OKATO.
      *
-     * @ORM\Column(type="string", length=11, nullable=false)
+     * @ORM\Column(type="string", length=11, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $okato = '';
+    protected $okato;
 
     /**
      * OKTMO.
      *
-     * @ORM\Column(type="string", length=11, nullable=false)
+     * @ORM\Column(type="string", length=11, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $oktmo = '';
+    protected $oktmo;
 
     /**
      * Почтовый индекс.
      *
-     * @ORM\Column(type="string", length=6, nullable=false)
+     * @ORM\Column(type="string", length=6, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $postalcode = '';
+    protected $postalcode;
 
     /**
      * Начало действия записи.
@@ -591,14 +591,14 @@ class AddressObject
         return $this->sextcode;
     }
 
-    public function setPlaincode(string $plaincode): self
+    public function setPlaincode(?string $plaincode): self
     {
         $this->plaincode = $plaincode;
 
         return $this;
     }
 
-    public function getPlaincode(): string
+    public function getPlaincode(): ?string
     {
         return $this->plaincode;
     }
@@ -663,86 +663,86 @@ class AddressObject
         return $this->operstatus;
     }
 
-    public function setIfnsfl(string $ifnsfl): self
+    public function setIfnsfl(?string $ifnsfl): self
     {
         $this->ifnsfl = $ifnsfl;
 
         return $this;
     }
 
-    public function getIfnsfl(): string
+    public function getIfnsfl(): ?string
     {
         return $this->ifnsfl;
     }
 
-    public function setIfnsul(string $ifnsul): self
+    public function setIfnsul(?string $ifnsul): self
     {
         $this->ifnsul = $ifnsul;
 
         return $this;
     }
 
-    public function getIfnsul(): string
+    public function getIfnsul(): ?string
     {
         return $this->ifnsul;
     }
 
-    public function setTerrifnsfl(string $terrifnsfl): self
+    public function setTerrifnsfl(?string $terrifnsfl): self
     {
         $this->terrifnsfl = $terrifnsfl;
 
         return $this;
     }
 
-    public function getTerrifnsfl(): string
+    public function getTerrifnsfl(): ?string
     {
         return $this->terrifnsfl;
     }
 
-    public function setTerrifnsul(string $terrifnsul): self
+    public function setTerrifnsul(?string $terrifnsul): self
     {
         $this->terrifnsul = $terrifnsul;
 
         return $this;
     }
 
-    public function getTerrifnsul(): string
+    public function getTerrifnsul(): ?string
     {
         return $this->terrifnsul;
     }
 
-    public function setOkato(string $okato): self
+    public function setOkato(?string $okato): self
     {
         $this->okato = $okato;
 
         return $this;
     }
 
-    public function getOkato(): string
+    public function getOkato(): ?string
     {
         return $this->okato;
     }
 
-    public function setOktmo(string $oktmo): self
+    public function setOktmo(?string $oktmo): self
     {
         $this->oktmo = $oktmo;
 
         return $this;
     }
 
-    public function getOktmo(): string
+    public function getOktmo(): ?string
     {
         return $this->oktmo;
     }
 
-    public function setPostalcode(string $postalcode): self
+    public function setPostalcode(?string $postalcode): self
     {
         $this->postalcode = $postalcode;
 
         return $this;
     }
 
-    public function getPostalcode(): string
+    public function getPostalcode(): ?string
     {
         return $this->postalcode;
     }
