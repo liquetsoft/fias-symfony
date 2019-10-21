@@ -124,6 +124,11 @@ services:
             - '@liquetsoft_fias.entity_manager.service'
             - '@liquetsoft_fias.storage.service'
 
+    liquetsoft_fias.task.data.select_files:
+        class: Liquetsoft\Fias\Component\Pipeline\Task\SelectFilesToProceedTask
+        arguments:
+            - '@liquetsoft_fias.entity_manager.service'
+
     liquetsoft_fias.task.data.insert:
         class: Liquetsoft\Fias\Component\Pipeline\Task\DataInsertTask
         arguments:
@@ -169,6 +174,7 @@ services:
                 - '@liquetsoft_fias.task.download'
                 - '@liquetsoft_fias.task.unpack'
                 - '@liquetsoft_fias.task.data.truncate'
+                - '@liquetsoft_fias.task.data.select_files'
                 - '@liquetsoft_fias.task.data.insert'
                 - '@liquetsoft_fias.task.data.delete'
                 - '@liquetsoft_fias.task.version.set'
@@ -180,6 +186,7 @@ services:
         arguments:
             $tasks:
                 - '@liquetsoft_fias.task.data.truncate'
+                - '@liquetsoft_fias.task.data.select_files'
                 - '@liquetsoft_fias.task.data.insert'
                 - '@liquetsoft_fias.task.data.delete'
             $cleanupTask:
@@ -194,6 +201,7 @@ services:
                 - '@liquetsoft_fias.task.inform.delta'
                 - '@liquetsoft_fias.task.download'
                 - '@liquetsoft_fias.task.unpack'
+                - '@liquetsoft_fias.task.data.select_files'
                 - '@liquetsoft_fias.task.data.upsert'
                 - '@liquetsoft_fias.task.data.delete'
                 - '@liquetsoft_fias.task.version.set'
