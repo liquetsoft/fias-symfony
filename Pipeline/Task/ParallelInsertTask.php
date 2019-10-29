@@ -57,8 +57,15 @@ class ParallelInsertTask implements Task
         foreach ($filesByThreads as $threadNumber => $threadFiles) {
             $threadParams = $threadFiles;
             $threadParams['kernel'] = $this->kernelClass;
+            $threadParamsJson = json_encode($threadParams);
 
-            $task = new ParallelTask($this->createTaskCallback(), $threadParams, $threadNumber);
+            $task = new ParallelTask(
+                $this->createTaskCallback(),
+                [
+                    $threadParamsJson
+                ],
+                $threadNumber
+            );
 
             $this->parallelTasksPool->addTask($task);
         }
@@ -73,7 +80,8 @@ class ParallelInsertTask implements Task
      */
     protected function createTaskCallback(): Closure
     {
-        return function (array $params) {
+        return function ($paramsString) {
+            $params = json_decode($paramsString, true);
             (new ParallelInsertCallback($params['kernel'] ?? '', $params))->run();
         };
     }
