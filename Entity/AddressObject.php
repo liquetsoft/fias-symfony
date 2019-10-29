@@ -37,7 +37,7 @@ class AddressObject
     protected $aoguid;
 
     /**
-     * Идентификатор объекта родительского объекта.
+     * Идентификатор родительского объекта.
      *
      * @ORM\Column(type="uuid", nullable=true)
      *
@@ -55,7 +55,7 @@ class AddressObject
     protected $previd;
 
     /**
-     * Идентификатор записи  связывания с последующей исторической записью.
+     * Идентификатор записи связывания с последующей исторической записью.
      *
      * @ORM\Column(type="uuid", nullable=true)
      *
