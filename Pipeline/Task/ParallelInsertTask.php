@@ -10,6 +10,7 @@ use Liquetsoft\Fias\Component\Pipeline\State\State;
 use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use Liquetsoft\Fias\Component\Parallel\ParallelTask;
 use Liquetsoft\Fias\Component\EntityManager\EntityManager;
+use SplFileInfo;
 use Closure;
 
 /**
@@ -153,11 +154,12 @@ class ParallelInsertTask implements Task
     protected function getDescriptor(string $fileName, string $paramName): ?EntityDescriptor
     {
         $descriptor = null;
+        $fileInfo = new SplFileInfo($fileName);
 
         if ($paramName === Task::FILES_TO_INSERT_PARAM) {
-            $descriptor = $this->entityManager->getDescriptorByInsertFile($fileName);
+            $descriptor = $this->entityManager->getDescriptorByInsertFile($fileInfo->getFilename());
         } elseif ($paramName === Task::FILES_TO_DELETE_PARAM) {
-            $descriptor = $this->entityManager->getDescriptorByDeleteFile($fileName);
+            $descriptor = $this->entityManager->getDescriptorByDeleteFile($fileInfo->getFilename());
         }
 
         return $descriptor;
