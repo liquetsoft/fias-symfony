@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
-use Liquetsoft\Fias\Component\Storage\Storage;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
+use Liquetsoft\Fias\Component\Storage\Storage;
 
 /**
  * Объект, который сохраняет данные ФИАС с помощью Doctrine.

@@ -6,11 +6,11 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Serializer;
 
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\UuidNormalizer;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\BaseCase;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidFactory;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
-use Ramsey\Uuid\UuidInterface;
-use Ramsey\Uuid\UuidFactory;
-use Ramsey\Uuid\Uuid;
 
 /**
  * Тест для объекта, который сериализует/десериализует uuid.

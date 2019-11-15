@@ -1,8 +1,8 @@
 <?php
 
+use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator\EntityGenerator;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator\TestGenerator;
-use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
 
 $root = dirname(dirname(__DIR__));
 $entitiesYaml = $root . '/vendor/liquetsoft/fias-component/resources/fias_entities.yaml';

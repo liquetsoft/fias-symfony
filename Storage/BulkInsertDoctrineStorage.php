@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
+use DateTimeInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManager;
+use Exception;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Ramsey\Uuid\UuidInterface;
-use DateTimeInterface;
 use RuntimeException;
-use Exception;
 
 /**
  * Объект, который сохраняет данные ФИАС с помощью Doctrine.

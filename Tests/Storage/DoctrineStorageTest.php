@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Serializer;
 
-use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\DoctrineStorage;
-use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\BaseCase;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\AbstractQuery;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\DoctrineStorage;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\BaseCase;
 
 /**
  * Тест для хранилища, которое использует Doctrine.
