@@ -133,7 +133,7 @@
         liquetsoft_fias.storage.service:
             class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\BulkInsertDoctrineStorage
             arguments:
-                - '@doctrine'
+                - '@doctrine.orm.entity_manager'
                 - '%liquetsoft_fias.insert_batch_count%'
     ```
 
