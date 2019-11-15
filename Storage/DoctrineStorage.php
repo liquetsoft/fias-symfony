@@ -113,10 +113,7 @@ class DoctrineStorage implements Storage
     {
         $meta = $this->em->getClassMetadata($entityClassName);
         $name = $meta->getName();
-
-        if ($this->em instanceof EntityManager) {
-            $this->em->createQuery("DELETE {$name} p")->execute();
-        }
+        $this->em->createQuery("DELETE {$name} p")->execute();
     }
 
     /**
