@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
-use RuntimeException;
 use Throwable;
 
 /**
@@ -32,18 +30,11 @@ class DoctrineStorage implements Storage
     protected $insertCount = 0;
 
     /**
-     * @param ManagerRegistry $doctrine
-     * @param int             $insertBatch
+     * @param EntityManager $em
+     * @param int           $insertBatch
      */
-    public function __construct(ManagerRegistry $doctrine, int $insertBatch = 1000)
+    public function __construct(EntityManager $em, int $insertBatch = 1000)
     {
-        $em = $doctrine->getManager();
-        if (!($em instanceof EntityManager)) {
-            throw new RuntimeException(
-                "Storage can only be used with '" . EntityManager::class . "'"
-            );
-        }
-
         $this->em = $em;
         $this->insertBatch = $insertBatch;
     }
@@ -135,7 +126,6 @@ class DoctrineStorage implements Storage
      *
      * @return object
      *
-     * @throws StorageException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
@@ -145,8 +135,8 @@ class DoctrineStorage implements Storage
         $mergedEntity = null;
         $className = get_class($entity);
         $identifiers = $this->getIdentifiersFromEntity($entity);
-
         $entityFromDoctrine = $this->em->find($className, $identifiers);
+
         if ($entityFromDoctrine) {
             $mergedEntity = $this->mergeEntities($entityFromDoctrine, $entity);
         } else {
@@ -163,18 +153,12 @@ class DoctrineStorage implements Storage
      * @param object $entity
      *
      * @return array
-     *
-     * @throws StorageException
      */
     private function getIdentifiersFromEntity(object $entity): array
     {
         $className = get_class($entity);
         $meta = $this->em->getClassMetadata($className);
         $identifiers = $meta->getIdentifierValues($entity);
-
-        if (empty($identifiers)) {
-            throw new StorageException("Can't find identifiers to merge entity.");
-        }
 
         return $identifiers;
     }
