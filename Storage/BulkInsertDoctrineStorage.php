@@ -7,7 +7,6 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 use DateTimeInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\DBAL\DBALException;
-use Doctrine\ORM\EntityManager;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
@@ -23,11 +22,6 @@ use RuntimeException;
  */
 class BulkInsertDoctrineStorage extends DoctrineStorage
 {
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
     /**
      * Объект для логгирования данных.
      *
@@ -45,20 +39,13 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     protected $insertData = [];
 
     /**
-     * @param ManagerRegistry $doctrine
-     * @param int             $insertBatch
+     * @param ManagerRegistry      $doctrine
+     * @param int                  $insertBatch
+     * @param LoggerInterface|null $logger
      */
     public function __construct(ManagerRegistry $doctrine, int $insertBatch = 1000, ?LoggerInterface $logger = null)
     {
-        $em = $doctrine->getManager();
-        if (!($em instanceof EntityManager)) {
-            throw new RuntimeException(
-                "Bulk insert can only be used with '" . EntityManager::class . "'"
-            );
-        }
-        $this->em = $em;
-
-        $this->insertBatch = $insertBatch;
+        parent::__construct($doctrine, $insertBatch);
         $this->logger = $logger;
     }
 
