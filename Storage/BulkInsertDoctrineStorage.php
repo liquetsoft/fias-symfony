@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
+use DateTimeInterface;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManager;
+use Exception;
+use Liquetsoft\Fias\Component\Exception\StorageException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Ramsey\Uuid\UuidInterface;
-use DateTimeInterface;
 use RuntimeException;
-use Exception;
+use Throwable;
 
 /**
  * Объект, который сохраняет данные ФИАС с помощью Doctrine.
@@ -23,11 +24,6 @@ use Exception;
  */
 class BulkInsertDoctrineStorage extends DoctrineStorage
 {
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
     /**
      * Объект для логгирования данных.
      *
@@ -45,20 +41,13 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     protected $insertData = [];
 
     /**
-     * @param ManagerRegistry $doctrine
-     * @param int             $insertBatch
+     * @param EntityManager        $em
+     * @param int                  $insertBatch
+     * @param LoggerInterface|null $logger
      */
-    public function __construct(ManagerRegistry $doctrine, int $insertBatch = 1000, ?LoggerInterface $logger = null)
+    public function __construct(EntityManager $em, int $insertBatch = 1000, ?LoggerInterface $logger = null)
     {
-        $em = $doctrine->getManager();
-        if (!($em instanceof EntityManager)) {
-            throw new RuntimeException(
-                "Bulk insert can only be used with '" . EntityManager::class . "'"
-            );
-        }
-        $this->em = $em;
-
-        $this->insertBatch = $insertBatch;
+        parent::__construct($em, $insertBatch);
         $this->logger = $logger;
     }
 
@@ -76,25 +65,29 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      */
     public function insert(object $entity): void
     {
-        $meta = $this->em->getClassMetadata(get_class($entity));
+        try {
+            $meta = $this->em->getClassMetadata(get_class($entity));
 
-        $table = $meta->getTableName();
-        $fields = $meta->getFieldNames();
+            $table = $meta->getTableName();
+            $fields = $meta->getFieldNames();
 
-        $insertArray = [];
-        foreach ($fields as $field) {
-            $value = $meta->getFieldValue($entity, $field);
-            if ($value instanceof DateTimeInterface) {
-                $value = $value->format('Y-m-d H:i:s');
-            } elseif ($value instanceof UuidInterface) {
-                $value = $value->toString();
+            $insertArray = [];
+            foreach ($fields as $field) {
+                $value = $meta->getFieldValue($entity, $field);
+                if ($value instanceof DateTimeInterface) {
+                    $value = $value->format('Y-m-d H:i:s');
+                } elseif ($value instanceof UuidInterface) {
+                    $value = $value->toString();
+                }
+                $column = $meta->getColumnName($field);
+                $insertArray[$column] = $value;
             }
-            $column = $meta->getColumnName($field);
-            $insertArray[$column] = $value;
-        }
 
-        $this->insertData[$table][] = $insertArray;
-        $this->checkAndFlushInsert(false);
+            $this->insertData[$table][] = $insertArray;
+            $this->checkAndFlushInsert(false);
+        } catch (Throwable $e) {
+            throw new StorageException($e->getMessage(), 0, $e);
+        }
     }
 
     /**

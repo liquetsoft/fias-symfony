@@ -2,139 +2,84 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Serializer;
+namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Storage;
 
-use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\DoctrineStorage;
-use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\BaseCase;
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\AbstractQuery;
+use Liquetsoft\Fias\Component\Exception\StorageException;
+use Liquetsoft\Fias\Component\Storage\Storage;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\DoctrineStorage;
+use RuntimeException;
+use stdClass;
 
 /**
- * Тест для хранилища, которое использует Doctrine.
+ * Тест для проверки записи данных в базу.
  */
-class DoctrineStorageTest extends BaseCase
+class DoctrineStorageTest extends AbstractDoctrineStorageTest
 {
     /**
-     * Проверяет, что начало и завершение операций вызовут flush и clear.
+     * Проверяет перехват исключения при завершении записи.
      */
-    public function testStartStop()
+    public function testStopException()
     {
-        $em = $this->getMockBuilder(ObjectManager::class)->disableOriginalConstructor()->getMock();
-        $em->expects($this->at(0))->method('flush');
-        $em->expects($this->at(1))->method('clear');
+        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
+        $em->method('flush')->will($this->throwException(new RuntimeException()));
 
-        $doctrine = $this->getMockBuilder(ManagerRegistry::class)->disableOriginalConstructor()->getMock();
-        $doctrine->method('getManager')->will($this->returnValue($em));
+        $storage = $this->createStorage($em);
 
-        $storage = new DoctrineStorage($doctrine);
-
-        $storage->start();
+        $this->expectException(StorageException::class);
         $storage->stop();
     }
 
     /**
-     * Проверяет метод для добавления записей.
+     * Проверяет перехват исключения при вставке записей в БД.
      */
-    public function testInsert()
+    public function testInsertException()
     {
-        $object = new \stdClass;
-        $object1 = new \stdClass;
-        $object2 = new \stdClass;
-        $object3 = new \stdClass;
-
-        $em = $this->getMockBuilder(ObjectManager::class)->disableOriginalConstructor()->getMock();
-        $em->expects($this->at(0))->method('persist')->with($this->identicalTo($object));
-        $em->expects($this->at(1))->method('persist')->with($this->identicalTo($object1));
-        $em->expects($this->at(2))->method('flush');
-        $em->expects($this->at(3))->method('clear');
-        $em->expects($this->at(4))->method('persist')->with($this->identicalTo($object2));
-        $em->expects($this->at(5))->method('persist')->with($this->identicalTo($object3));
-        $em->expects($this->at(6))->method('flush');
-        $em->expects($this->at(7))->method('clear');
-
-        $doctrine = $this->getMockBuilder(ManagerRegistry::class)->disableOriginalConstructor()->getMock();
-        $doctrine->method('getManager')->will($this->returnValue($em));
-
-        $storage = new DoctrineStorage($doctrine, 2);
-
-        $storage->insert($object);
-        $storage->insert($object1);
-        $storage->insert($object2);
-        $storage->insert($object3);
-    }
-
-    /**
-     * Проверяет метод для удаления записей.
-     */
-    public function testDelete()
-    {
-        $object = new \stdClass;
-        $mergedObject = new \stdClass;
-
-        $em = $this->getMockBuilder(ObjectManager::class)->disableOriginalConstructor()->getMock();
-        $em->expects($this->at(0))->method('merge')->with($this->identicalTo($object))->will($this->returnValue($mergedObject));
-        $em->expects($this->at(1))->method('remove')->with($this->identicalTo($mergedObject));
-        $em->expects($this->at(2))->method('flush');
-        $em->expects($this->at(3))->method('clear');
-
-        $doctrine = $this->getMockBuilder(ManagerRegistry::class)->disableOriginalConstructor()->getMock();
-        $doctrine->method('getManager')->will($this->returnValue($em));
-
-        $storage = new DoctrineStorage($doctrine);
-
-        $storage->delete($object);
-    }
-
-    /**
-     * Проверяет метод для обноления старой или создания новой записи.
-     */
-    public function testUpsert()
-    {
-        $object = new \stdClass;
-
-        $em = $this->getMockBuilder(ObjectManager::class)->disableOriginalConstructor()->getMock();
-        $em->expects($this->at(0))->method('merge')->with($this->identicalTo($object));
-        $em->expects($this->at(1))->method('flush');
-        $em->expects($this->at(2))->method('clear');
-
-        $doctrine = $this->getMockBuilder(ManagerRegistry::class)->disableOriginalConstructor()->getMock();
-        $doctrine->method('getManager')->will($this->returnValue($em));
-
-        $storage = new DoctrineStorage($doctrine);
-
-        $storage->upsert($object);
-    }
-
-    /**
-     * Проверяет метод для очистки таблицы.
-     */
-    public function testTruncate()
-    {
-        $entityClassName = 'EntityTest';
-        $name = 'NameTest';
-
-        $query = $this->getMockBuilder(AbstractQuery::class)->disableOriginalConstructor()->getMock();
-        $query->expects($this->once())->method('execute');
-
-        $meta = $this->getMockBuilder(ClassMetadata::class)->disableOriginalConstructor()->getMock();
-        $meta->method('getName')->will($this->returnValue($name));
-
         $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
-        $em->expects($this->once())->method('getClassMetadata')
-            ->with($this->identicalTo($entityClassName))
-            ->will($this->returnValue($meta));
-        $em->expects($this->once())->method('createQuery')
-            ->with($this->identicalTo("DELETE {$name} p"))
-            ->will($this->returnValue($query));
+        $em->method('persist')->will($this->throwException(new RuntimeException()));
 
-        $doctrine = $this->getMockBuilder(ManagerRegistry::class)->disableOriginalConstructor()->getMock();
-        $doctrine->method('getManager')->will($this->returnValue($em));
+        $storage = $this->createStorage($em);
 
-        $storage = new DoctrineStorage($doctrine, 2);
+        $this->expectException(StorageException::class);
+        $storage->insert(new stdClass());
+    }
 
-        $storage->truncate($entityClassName);
+    /**
+     * Проверяет перехват исключения при удалении записей в БД.
+     */
+    public function testDeleteException()
+    {
+        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
+        $em->method('getClassMetadata')->will($this->throwException(new RuntimeException()));
+
+        $storage = $this->createStorage($em);
+
+        $this->expectException(StorageException::class);
+        $storage->delete(new stdClass());
+    }
+
+    /**
+     * Проверяет перехват исключения при обновлении записей в БД.
+     */
+    public function testUpsertException()
+    {
+        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
+        $em->method('persist')->will($this->throwException(new RuntimeException()));
+        $em->method('getClassMetadata')->will($this->throwException(new RuntimeException()));
+
+        $storage = $this->createStorage($em);
+
+        $this->expectException(StorageException::class);
+        $storage->upsert(new stdClass());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function createStorage(?EntityManager $em = null, int $batch = 1): Storage
+    {
+        $em = $em ?: $this->getEntityManager();
+
+        return new DoctrineStorage($em, $batch);
     }
 }

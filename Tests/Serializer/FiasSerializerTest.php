@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Serializer;
 
+use DateTime;
+use DateTimeInterface;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\BaseCase;
 use Ramsey\Uuid\UuidInterface;
-use DateTimeInterface;
-use DateTime;
 
 /**
  * Тест для объекта, который сереализует данные из ФИАС.

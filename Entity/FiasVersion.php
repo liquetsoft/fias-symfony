@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use DateTimeInterface;
 use DateTime;
+use DateTimeInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Сущность, которая хранит текущую версию ФИАС.

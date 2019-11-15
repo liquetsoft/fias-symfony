@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\DependencyInjection;
 
+use Exception;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\Config\FileLocator;
 
 /**
  * Класс расширения для предоставления бандлом сервисов.
@@ -15,7 +16,9 @@ use Symfony\Component\Config\FileLocator;
 class LiquetsoftFiasExtension extends Extension
 {
     /**
-     * @inheritdoc
+     * {@inheritDoc}
+     *
+     * @throws Exception
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -25,6 +28,9 @@ class LiquetsoftFiasExtension extends Extension
 
     /**
      * Регистрирует параметры конфигов бандла.
+     *
+     * @param array            $configs
+     * @param ContainerBuilder $container
      */
     protected function loadConfigurationToContainer(array $configs, ContainerBuilder $container): void
     {
@@ -37,6 +43,10 @@ class LiquetsoftFiasExtension extends Extension
 
     /**
      * Регистрирует сервисы бандла.
+     *
+     * @param ContainerBuilder $container
+     *
+     * @throws Exception
      */
     protected function loadServicesToContainer(ContainerBuilder $container): void
     {

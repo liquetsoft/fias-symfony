@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Serializer;
 
-use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\VersionManager\DoctrineVersionManager;
-use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\BaseCase;
-use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FiasVersion;
-use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
+use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FiasVersion;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\BaseCase;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\VersionManager\DoctrineVersionManager;
 use RuntimeException;
 
 /**

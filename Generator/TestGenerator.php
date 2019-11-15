@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator;
 
-use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
+use InvalidArgumentException;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
+use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
+use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
-use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PsrPrinter;
-use SplFileInfo;
-use InvalidArgumentException;
 use RuntimeException;
+use SplFileInfo;
 use Throwable;
 
 /**
