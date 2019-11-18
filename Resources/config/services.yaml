@@ -90,6 +90,22 @@ services:
 
 
 
+    liquetsoft_fias.files.paralleling_dispatcher:
+        class: Liquetsoft\Fias\Component\FilesDispatcher\EntityFileDispatcher
+        arguments:
+            $entityManager: '@liquetsoft_fias.entity_manager.service'
+            $entitiesToParallel:
+                - AddressObject
+                - House
+                - Stead
+                - Room
+                - NormativeDocument
+
+    Liquetsoft\Fias\Component\FilesDispatcher\FilesDispatcher:
+        alias: liquetsoft_fias.files.paralleling_dispatcher
+
+
+
     liquetsoft_fias.task.cleanup:
         class: Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask
 
@@ -163,6 +179,14 @@ services:
         arguments:
             - '@liquetsoft_fias.version_manager.service'
 
+    liquetsoft_fias.task.symfony_process_switcher:
+        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Pipeline\Task\SymfonyProcessSwitchTask
+        arguments:
+            $filesDispatcher: '@liquetsoft_fias.files.paralleling_dispatcher'
+            $pathToBin: '%liquetsoft_fias.path_to_console_bin%'
+            $commandName: '%liquetsoft_fias.paralleling_running_command%'
+            $numberOfParallel: '%liquetsoft_fias.number_of_parallel%'
+
 
 
     liquetsoft_fias.pipe.install:
@@ -208,6 +232,30 @@ services:
             $cleanupTask: '@liquetsoft_fias.task.cleanup'
             $logger: '@logger'
 
+    liquetsoft_fias.pipe.install_parallel:
+        class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
+        arguments:
+            $tasks:
+                - '@liquetsoft_fias.task.prepare.folder'
+                - '@liquetsoft_fias.task.inform.full'
+                - '@liquetsoft_fias.task.download'
+                - '@liquetsoft_fias.task.unpack'
+                - '@liquetsoft_fias.task.data.truncate'
+                - '@liquetsoft_fias.task.data.select_files'
+                - '@liquetsoft_fias.task.symfony_process_switcher'
+                - '@liquetsoft_fias.task.version.set'
+            $cleanupTask: '@liquetsoft_fias.task.cleanup'
+            $logger: '@logger'
+
+    liquetsoft_fias.pipe.install_parallel_running:
+        class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
+        arguments:
+            $tasks:
+                - '@liquetsoft_fias.task.data.insert'
+                - '@liquetsoft_fias.task.data.delete'
+            $cleanupTask: null
+            $logger: '@logger'
+
 
 
     liquetsoft_fias.command.install:
@@ -235,5 +283,19 @@ services:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\UpdateCommand
         arguments:
             - '@liquetsoft_fias.pipe.update'
+        tags:
+            - { name: 'console.command' }
+
+    liquetsoft_fias.command.install_parallel:
+        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\InstallParallelCommand
+        arguments:
+            - '@liquetsoft_fias.pipe.install_parallel'
+        tags:
+            - { name: 'console.command' }
+
+    liquetsoft_fias.command.install_parallel_running:
+        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\InstallParallelRunningCommand
+        arguments:
+            - '@liquetsoft_fias.pipe.install_parallel_running'
         tags:
             - { name: 'console.command' }
