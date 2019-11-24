@@ -31,7 +31,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('version_manager_entity')->defaultValue('')->end()
                 ->scalarNode('insert_batch_count')->defaultValue(800)->end()
                 ->scalarNode('path_to_console_bin')->defaultValue('%kernel.root_dir%/../bin/console')->end()
-                ->scalarNode('number_of_parallel')->defaultValue(6)->end()
+                ->scalarNode('number_of_parallel')->defaultValue(5)->end()
                 ->scalarNode('paralleling_running_command')->defaultValue('liquetsoft:fias:install_parallel_running')->end()
                 ->arrayNode('entity_bindings')
                     ->useAttributeAsKey('name')
