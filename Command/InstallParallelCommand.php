@@ -4,25 +4,22 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 
-use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
-use Liquetsoft\Fias\Component\Pipeline\Task\Task;
-use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Команда, которая обновляет ФИАС с текущей версии до самой свежей.
+ * Команда, которая запускает полную установку ФИАС в параллельных процессах.
  */
-class UpdateCommand extends Command
+class InstallParallelCommand extends Command
 {
     /**
      * @var string
      */
-    protected static $defaultName = 'liquetsoft:fias:update';
+    protected static $defaultName = 'liquetsoft:fias:install_parallel';
 
     /**
      * @var Pipe
@@ -44,7 +41,7 @@ class UpdateCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Updates FIAS to latest version.');
+        $this->setDescription('Installs full version of FIAS from scratch in parallel processes.');
     }
 
     /**
@@ -54,27 +51,14 @@ class UpdateCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->note('Updating FIAS.');
+        $io->note('Installing full version of FIAS in parallel processes.');
         $start = microtime(true);
 
-        do {
-            $state = new ArrayState;
-            $this->pipeline->run($state);
-
-            $info = $state->getParameter(Task::FIAS_INFO_PARAM);
-            if (!($info instanceof InformerResponse)) {
-                throw new RuntimeException(
-                    "There is no '" . Task::FIAS_INFO_PARAM . "' parameter in state."
-                );
-            }
-
-            if ($info->hasResult()) {
-                $io->note("Updated to version '{$info->getVersion()}'.");
-            }
-        } while ($info->hasResult());
+        $state = new ArrayState;
+        $this->pipeline->run($state);
 
         $total = round(microtime(true) - $start, 4);
-        $io->success("FIAS updated after {$total} s.");
+        $io->success("Full version of FIAS installed after {$total} s.");
 
         return 0;
     }

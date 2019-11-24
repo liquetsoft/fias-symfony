@@ -243,7 +243,7 @@ class EntityGenerator
 
         $parameterName = $this->unifyColumnName($field->getName());
         $parameter = $method->addParameter($parameterName);
-        $parameter->setTypeHint($paramHint);
+        $parameter->setType($paramHint);
         if ($field->isNullable()) {
             $parameter->setNullable();
         }

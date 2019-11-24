@@ -47,7 +47,7 @@ class InstallCommand extends Command
     /**
      * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -59,5 +59,7 @@ class InstallCommand extends Command
 
         $total = round(microtime(true) - $start, 4);
         $io->success("Full version of FIAS installed after {$total} s.");
+
+        return 0;
     }
 }
