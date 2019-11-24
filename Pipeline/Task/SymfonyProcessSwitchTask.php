@@ -109,7 +109,7 @@ class SymfonyProcessSwitchTask implements Task, LoggableTask
     protected function waitTillProcessesComplete(array $processes): void
     {
         do {
-            sleep(20);
+            sleep(1);
             $isProcessesFinished = true;
             foreach ($processes as $process) {
                 if ($process->isRunning()) {
