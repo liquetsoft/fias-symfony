@@ -52,7 +52,7 @@ class InstallParallelRunningCommand extends Command
     /**
      * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $filesToInsert = $input->getArgument('files_to_insert');
         if (is_array($filesToInsert)) {
@@ -70,5 +70,7 @@ class InstallParallelRunningCommand extends Command
         $state->setAndLockParameter(Task::FILES_TO_INSERT_PARAM, $filesToInsert);
         $state->setAndLockParameter(Task::FILES_TO_DELETE_PARAM, $filesToDelete);
         $this->pipeline->run($state);
+
+        return 0;
     }
 }

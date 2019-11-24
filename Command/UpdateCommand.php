@@ -50,7 +50,7 @@ class UpdateCommand extends Command
     /**
      * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -75,5 +75,7 @@ class UpdateCommand extends Command
 
         $total = round(microtime(true) - $start, 4);
         $io->success("FIAS updated after {$total} s.");
+
+        return 0;
     }
 }

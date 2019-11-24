@@ -48,7 +48,7 @@ class TruncateCommand extends Command
     /**
      * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -58,5 +58,7 @@ class TruncateCommand extends Command
         $this->truncateTask->run($state);
 
         $io->success('Storage truncated.');
+
+        return 0;
     }
 }
