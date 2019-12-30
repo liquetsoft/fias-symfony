@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests;
 
 use Doctrine\Common\Annotations\AnnotationException;
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\Setup;
@@ -26,22 +24,17 @@ abstract class DoctrineTestCase extends BaseCase
     private $entityManager;
 
     /**
-     * @var EntityManager|null
-     */
-    private $internalEntityManager;
-
-    /**
      * Проверяет, что сущность существует в базе данных.
      *
      * @param object $entity
      * @param string $message
      *
      * @throws AnnotationException
+     * @throws MappingException
      * @throws ORMException
      * @throws ToolsException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
-     * @throws MappingException
      */
     public function assertDoctrineHasEntity(object $entity, $message = 'Failed asserting that entity can be found by Doctrine.'): void
     {
@@ -84,11 +77,11 @@ abstract class DoctrineTestCase extends BaseCase
      * @param string $message
      *
      * @throws AnnotationException
+     * @throws MappingException
      * @throws ORMException
      * @throws ToolsException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
-     * @throws MappingException
      */
     public function assertDoctrineHasNotEntity(object $entity, $message = "Failed asserting that entity can't be found by Doctrine."): void
     {
@@ -112,9 +105,9 @@ abstract class DoctrineTestCase extends BaseCase
      * @param object $entity
      *
      * @throws AnnotationException
+     * @throws MappingException
      * @throws ORMException
      * @throws ToolsException
-     * @throws MappingException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function persistEntity(object $entity): void
@@ -157,19 +150,6 @@ abstract class DoctrineTestCase extends BaseCase
      */
     private function createEntityManager(): EntityManager
     {
-        $paths = [
-            __DIR__ . '/MockEntities',
-        ];
-
-        $cache = new ArrayCache();
-
-        $driver = new AnnotationDriver(new AnnotationReader(), $paths);
-
-        $config = Setup::createAnnotationMetadataConfiguration($paths, false);
-        $config->setMetadataCacheImpl($cache);
-        $config->setQueryCacheImpl($cache);
-        $config->setMetadataDriverImpl($driver);
-
         $connection = [
             'driver' => getenv('DB_DRIVER'),
             'path' => getenv('DB_PATH'),
@@ -177,6 +157,15 @@ abstract class DoctrineTestCase extends BaseCase
             'password' => getenv('DB_PASSWORD'),
             'dbname' => getenv('DB_NAME'),
         ];
+
+        $paths = [
+            __DIR__ . '/MockEntities',
+        ];
+        $isDevMode = true;
+        $proxyDir = null;
+        $cache = new ArrayCache();
+        $useSimpleAnnotationReader = false;
+        $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
 
         $em = EntityManager::create($connection, $config);
 
