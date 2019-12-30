@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Serializer;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FiasVersion;
@@ -30,17 +29,14 @@ class DoctrineVersionManagerTest extends BaseCase
         $info->method('getVersion')->will($this->returnValue($version));
         $info->method('getUrl')->will($this->returnValue($url));
 
-        $em = $this->getMockBuilder(ObjectManager::class)->disableOriginalConstructor()->getMock();
+        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $em->expects($this->at(0))->method('persist')->with($this->callback(function ($entity) use ($version, $url) {
             return $entity->getVersion() === $version && $entity->getUrl() === $url;
         }));
         $em->expects($this->at(1))->method('flush');
         $em->expects($this->at(2))->method('clear');
 
-        $doctrine = $this->getMockBuilder(ManagerRegistry::class)->disableOriginalConstructor()->getMock();
-        $doctrine->method('getManager')->will($this->returnValue($em));
-
-        $versionManager = new DoctrineVersionManager($doctrine, DoctrineVersionManagerMockObject::class);
+        $versionManager = new DoctrineVersionManager($em, DoctrineVersionManagerMockObject::class);
         $versionManager->setCurrentVersion($info);
     }
 
@@ -50,11 +46,9 @@ class DoctrineVersionManagerTest extends BaseCase
     public function testSetCurrentVersionWrongEntityException()
     {
         $info = $this->getMockBuilder(InformerResponse::class)->getMock();
-        $em = $this->getMockBuilder(ObjectManager::class)->disableOriginalConstructor()->getMock();
-        $doctrine = $this->getMockBuilder(ManagerRegistry::class)->disableOriginalConstructor()->getMock();
-        $doctrine->method('getManager')->will($this->returnValue($em));
+        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
 
-        $versionManager = new DoctrineVersionManager($doctrine, 'test');
+        $versionManager = new DoctrineVersionManager($em, 'test');
 
         $this->expectException(RuntimeException::class);
         $versionManager->setCurrentVersion($info);
@@ -75,15 +69,12 @@ class DoctrineVersionManagerTest extends BaseCase
         $repo = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
         $repo->method('findOneBy')->will($this->returnValue($item));
 
-        $em = $this->getMockBuilder(ObjectManager::class)->disableOriginalConstructor()->getMock();
+        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $em->method('getRepository')->will($this->returnCallback(function ($class) use ($repo) {
             return $class === DoctrineVersionManagerMockObject::class ? $repo : null;
         }));
 
-        $doctrine = $this->getMockBuilder(ManagerRegistry::class)->disableOriginalConstructor()->getMock();
-        $doctrine->method('getManager')->will($this->returnValue($em));
-
-        $versionManager = new DoctrineVersionManager($doctrine, DoctrineVersionManagerMockObject::class);
+        $versionManager = new DoctrineVersionManager($em, DoctrineVersionManagerMockObject::class);
         $versionResponse = $versionManager->getCurrentVersion();
 
         $this->assertSame($version, $versionResponse->getVersion());
@@ -95,11 +86,9 @@ class DoctrineVersionManagerTest extends BaseCase
      */
     public function testGetCurrentVersionWrongEntityException()
     {
-        $em = $this->getMockBuilder(ObjectManager::class)->disableOriginalConstructor()->getMock();
-        $doctrine = $this->getMockBuilder(ManagerRegistry::class)->disableOriginalConstructor()->getMock();
-        $doctrine->method('getManager')->will($this->returnValue($em));
+        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
 
-        $versionManager = new DoctrineVersionManager($doctrine, 'test');
+        $versionManager = new DoctrineVersionManager($em, 'test');
 
         $this->expectException(RuntimeException::class);
         $versionResponse = $versionManager->getCurrentVersion();
