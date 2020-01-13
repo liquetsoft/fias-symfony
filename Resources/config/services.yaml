@@ -2,16 +2,10 @@ services:
 
 
 
-    liquetsoft_fias.informer.soap:
-        class: SoapClient
-        arguments:
-            - '%liquetsoft_fias.informer_wsdl%'
-            - {exceptions: true}
-
     liquetsoft_fias.informer.service:
         class: Liquetsoft\Fias\Component\FiasInformer\SoapFiasInformer
         arguments:
-            - '@liquetsoft_fias.informer.soap'
+            - '%liquetsoft_fias.informer_wsdl%'
 
     Liquetsoft\Fias\Component\FiasInformer\FiasInformer:
         alias: liquetsoft_fias.informer.service

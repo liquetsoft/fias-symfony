@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.2.0",
-        "liquetsoft/fias-component": "^3.3",
+        "liquetsoft/fias-component": "^3.4",
         "symfony/framework-bundle": "^4.2",
         "doctrine/doctrine-bundle": "^1.4",
         "doctrine/orm": "^2.4",
@@ -29,9 +29,6 @@
         "exclude-from-classmap": [
             "/Tests/"
         ]
-    },
-    "suggest": {
-        "ramsey/uuid-doctrine": "to use uuid types in doctrine"
     },
     "repositories": [
         {
