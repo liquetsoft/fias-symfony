@@ -31,6 +31,29 @@ abstract class AbstractDoctrineStorageTest extends DoctrineTestCase
     abstract protected function createStorage(?EntityManager $em = null, int $batch = 1): Storage;
 
     /**
+     * Проверяет, что хранилище верно определяет сущности doctrine.
+     */
+    public function testSupports()
+    {
+        $storage = $this->createStorage();
+        $entity = new MockEntity();
+
+        $this->assertTrue($storage->supports($entity));
+        $this->assertFalse($storage->supports($this));
+    }
+
+    /**
+     * Проверяет, что хранилище верно определяет классы ущностей doctrine.
+     */
+    public function testSupportsClass()
+    {
+        $storage = $this->createStorage();
+
+        $this->assertTrue($storage->supportsClass(MockEntity::class));
+        $this->assertFalse($storage->supportsClass(get_class($this)));
+    }
+
+    /**
      * Проверяет вставку записей в БД.
      */
     public function testInsert()
