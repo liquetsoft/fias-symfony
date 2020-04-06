@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\MappingException;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
 use Throwable;
@@ -84,7 +83,7 @@ class DoctrineStorage implements Storage
             try {
                 $this->em->getClassMetadata($trimmedClass);
                 $this->supportedClasses[$trimmedClass] = true;
-            } catch (MappingException $e) {
+            } catch (Throwable $e) {
                 $this->supportedClasses[$trimmedClass] = false;
             }
         }

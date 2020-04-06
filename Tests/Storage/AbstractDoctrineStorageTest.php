@@ -51,6 +51,7 @@ abstract class AbstractDoctrineStorageTest extends DoctrineTestCase
 
         $this->assertTrue($storage->supportsClass(MockEntity::class));
         $this->assertFalse($storage->supportsClass(get_class($this)));
+        $this->assertFalse($storage->supportsClass('non_existed_123'));
     }
 
     /**
