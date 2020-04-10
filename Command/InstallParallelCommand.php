@@ -19,7 +19,7 @@ class InstallParallelCommand extends Command
     /**
      * @var string
      */
-    protected static $defaultName = 'liquetsoft:fias:install_parallel';
+    protected static $defaultName = 'liquetsoft:fias:install';
 
     /**
      * @var Pipe
