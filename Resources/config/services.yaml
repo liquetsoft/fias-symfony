@@ -20,15 +20,8 @@ services:
 
 
 
-    liquetsoft_fias.unpacker.command_template:
-        class: Liquetsoft\Fias\Component\Process\TemplateProcess
-        arguments:
-            - 'unrar x {{source}} {{destination}}'
-
     liquetsoft_fias.unpacker.service:
-        class: Liquetsoft\Fias\Component\Unpacker\ProcessUnpacker
-        arguments:
-            - '@liquetsoft_fias.unpacker.command_template'
+        class: Liquetsoft\Fias\Component\Unpacker\ZipUnpacker
 
     Liquetsoft\Fias\Component\Unpacker\Unpacker:
         alias: liquetsoft_fias.unpacker.service
