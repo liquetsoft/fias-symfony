@@ -202,19 +202,12 @@
 Замена разархиватора
 --------------------
 
-Из-за проблем с установкой ext-rar в php7.3 и выше, была добавлена возможность распаковывать архивы с помощью командной строки. Для замены нужно определить команду для распаковки и заменить сервис разархивации:
+Из-за проблем с установкой ext-rar в php7.3 и выше, для распаковки архива использована консольная утилита unrar. Тем не менее, разархиватор можно легко заменить:
 
 ```yaml
 # config/services.yaml
 services:
-    # определяем сервис с консольной командой для запуска
-    liquetsoft_fias.unpacker.command_template:
-        class: Liquetsoft\Fias\Component\Process\TemplateProcess
-        arguments:
-            - 'unrar x {{source}} {{destination}}'
     # заменяем сервис, который распаковывает rar
     liquetsoft_fias.unpacker.service:
-        class: Liquetsoft\Fias\Component\Unpacker\ProcessUnpacker
-        arguments:
-            - '@liquetsoft_fias.unpacker.command_template'
+        class: My\Awesome\Unrar
 ```
