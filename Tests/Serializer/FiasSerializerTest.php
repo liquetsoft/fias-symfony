@@ -21,7 +21,16 @@ class FiasSerializerTest extends BaseCase
     public function testDenormalize()
     {
         $uuidString = $this->createFakeData()->uuid;
-        $data = '<ActualStatus ACTSTATID="2" NAME="&#x41D;&#x435; &#x430;&#x43A;&#x442;&#x443;&#x430;&#x43B;&#x44C;&#x43D;&#x44B;&#x439;" TESTDATE="2019-10-10T10:10:10.02" KOD_T_ST="10" uuid="' . $uuidString . '"/>';
+        $data = <<<EOT
+<ActualStatus
+    ACTSTATID="2"
+    NAME="&#x41D;&#x435; &#x430;&#x43A;&#x442;&#x443;&#x430;&#x43B;&#x44C;&#x43D;&#x44B;&#x439;"
+    TESTDATE="2019-10-10T10:10:10.02"
+    KOD_T_ST="10"
+    uuid="{$uuidString}"
+    EMPTYSTRINGINT=""
+/>
+EOT;
         $serializer = new FiasSerializer;
 
         $object = $serializer->deserialize($data, FiasSerializerObject::class, 'xml');
@@ -33,6 +42,7 @@ class FiasSerializerTest extends BaseCase
         $this->assertEquals(new DateTime('2019-10-10T10:10:10.02'), $object->getTestDate());
         $this->assertInstanceOf(UuidInterface::class, $object->getUuid());
         $this->assertSame($uuidString, $object->getUuid()->toString());
+        $this->assertSame(0, $object->getEmptyStringInt());
     }
 }
 
@@ -46,6 +56,7 @@ class FiasSerializerObject
     private $testDate;
     private $kodtst;
     private $uuid;
+    private $emptyStringInt = 0;
 
     public function setActstatid(int $ACTSTATID)
     {
@@ -95,5 +106,15 @@ class FiasSerializerObject
     public function getUuid()
     {
         return $this->uuid;
+    }
+
+    public function setEmptyStringInt(int $emptyStringInt)
+    {
+        $this->emptyStringInt = $emptyStringInt;
+    }
+
+    public function getEmptyStringInt()
+    {
+        return $this->emptyStringInt;
     }
 }
