@@ -210,11 +210,11 @@ class AddressObject
     /**
      * Статус актуальности КЛАДР 4 (последние две цифры в коде).
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=true)
      *
-     * @var int
+     * @var int|null
      */
-    protected $currstatus = 0;
+    protected $currstatus;
 
     /**
      * Статус актуальности адресного объекта ФИАС. Актуальный адрес на текущую дату. Обычно последняя запись об адресном объекте.
@@ -603,14 +603,14 @@ class AddressObject
         return $this->plaincode;
     }
 
-    public function setCurrstatus(int $currstatus): self
+    public function setCurrstatus(?int $currstatus): self
     {
         $this->currstatus = $currstatus;
 
         return $this;
     }
 
-    public function getCurrstatus(): int
+    public function getCurrstatus(): ?int
     {
         return $this->currstatus;
     }
