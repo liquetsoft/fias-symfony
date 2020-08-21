@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Kernel;
  */
 class Configuration implements ConfigurationInterface
 {
-    const CONFIG_NAME = 'liquetsoft_fias';
+    public const CONFIG_NAME = 'liquetsoft_fias';
 
     /**
      * {@inheritdoc}

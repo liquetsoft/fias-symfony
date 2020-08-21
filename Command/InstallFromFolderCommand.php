@@ -20,19 +20,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class InstallFromFolderCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected static $defaultName = 'liquetsoft:fias:install_from_folder';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    protected Pipe $pipeline;
 
-    /**
-     * @param Pipe $pipeline
-     */
     public function __construct(Pipe $pipeline)
     {
         $this->pipeline = $pipeline;

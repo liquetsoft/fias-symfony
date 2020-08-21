@@ -16,19 +16,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class InstallParallelCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected static $defaultName = 'liquetsoft:fias:install';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    protected Pipe $pipeline;
 
-    /**
-     * @param Pipe $pipeline
-     */
     public function __construct(Pipe $pipeline)
     {
         $this->pipeline = $pipeline;

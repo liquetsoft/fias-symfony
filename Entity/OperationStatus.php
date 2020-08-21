@@ -21,7 +21,7 @@ class OperationStatus
      *
      * @var int
      */
-    protected $operstatid = 0;
+    protected int $operstatid = 0;
 
     /**
      * Наименование
@@ -45,7 +45,7 @@ class OperationStatus
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     public function setOperstatid(int $operstatid): self
     {

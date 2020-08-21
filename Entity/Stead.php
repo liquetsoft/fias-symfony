@@ -20,9 +20,9 @@ class Stead
      *
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
-    protected $steadguid;
+    protected ?UuidInterface $steadguid = null;
 
     /**
      * Номер земельного участка.
@@ -31,7 +31,7 @@ class Stead
      *
      * @var string|null
      */
-    protected $number;
+    protected ?string $number = null;
 
     /**
      * Код региона.
@@ -40,7 +40,7 @@ class Stead
      *
      * @var string
      */
-    protected $regioncode = '';
+    protected string $regioncode = '';
 
     /**
      * Почтовый индекс.
@@ -49,7 +49,7 @@ class Stead
      *
      * @var string|null
      */
-    protected $postalcode;
+    protected ?string $postalcode = null;
 
     /**
      * Код ИФНС ФЛ.
@@ -58,7 +58,7 @@ class Stead
      *
      * @var string|null
      */
-    protected $ifnsfl;
+    protected ?string $ifnsfl = null;
 
     /**
      * Код ИФНС ЮЛ.
@@ -67,7 +67,7 @@ class Stead
      *
      * @var string|null
      */
-    protected $ifnsul;
+    protected ?string $ifnsul = null;
 
     /**
      * OKATO.
@@ -76,7 +76,7 @@ class Stead
      *
      * @var string|null
      */
-    protected $okato;
+    protected ?string $okato = null;
 
     /**
      * OKTMO.
@@ -85,7 +85,7 @@ class Stead
      *
      * @var string|null
      */
-    protected $oktmo;
+    protected ?string $oktmo = null;
 
     /**
      * Идентификатор объекта родительского объекта.
@@ -94,7 +94,7 @@ class Stead
      *
      * @var UuidInterface|null
      */
-    protected $parentguid;
+    protected ?UuidInterface $parentguid = null;
 
     /**
      * Уникальный идентификатор записи. Ключевое поле.
@@ -102,9 +102,9 @@ class Stead
      * @ORM\Id
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
-    protected $steadid;
+    protected ?UuidInterface $steadid = null;
 
     /**
      * Статус действия над записью – причина появления записи (см. описание таблицы OperationStatus):
@@ -127,34 +127,34 @@ class Stead
      *
      * @var int
      */
-    protected $operstatus = 0;
+    protected int $operstatus = 0;
 
     /**
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime", nullable=false)
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
-    protected $startdate;
+    protected ?DateTimeInterface $startdate = null;
 
     /**
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime", nullable=false)
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
-    protected $enddate;
+    protected ?DateTimeInterface $enddate = null;
 
     /**
      * Дата  внесения записи.
      *
      * @ORM\Column(type="datetime", nullable=false)
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
-    protected $updatedate;
+    protected ?DateTimeInterface $updatedate = null;
 
     /**
      * Признак действующего адресного объекта.
@@ -163,7 +163,7 @@ class Stead
      *
      * @var int
      */
-    protected $livestatus = 0;
+    protected int $livestatus = 0;
 
     /**
      * Тип адресации:
@@ -175,7 +175,7 @@ class Stead
      *
      * @var int
      */
-    protected $divtype = 0;
+    protected int $divtype = 0;
 
     /**
      * Внешний ключ на нормативный документ.
@@ -184,7 +184,7 @@ class Stead
      *
      * @var UuidInterface|null
      */
-    protected $normdoc;
+    protected ?UuidInterface $normdoc = null;
 
     /**
      * Код территориального участка ИФНС ФЛ.
@@ -193,7 +193,7 @@ class Stead
      *
      * @var string|null
      */
-    protected $terrifnsfl;
+    protected ?string $terrifnsfl = null;
 
     /**
      * Код территориального участка ИФНС ЮЛ.
@@ -202,7 +202,7 @@ class Stead
      *
      * @var string|null
      */
-    protected $terrifnsul;
+    protected ?string $terrifnsul = null;
 
     /**
      * Идентификатор записи связывания с предыдушей исторической записью.
@@ -211,7 +211,7 @@ class Stead
      *
      * @var UuidInterface|null
      */
-    protected $previd;
+    protected ?UuidInterface $previd = null;
 
     /**
      * Идентификатор записи  связывания с последующей исторической записью.
@@ -220,7 +220,7 @@ class Stead
      *
      * @var UuidInterface|null
      */
-    protected $nextid;
+    protected ?UuidInterface $nextid = null;
 
     /**
      * Кадастровый номер.
@@ -229,7 +229,7 @@ class Stead
      *
      * @var string|null
      */
-    protected $cadnum;
+    protected ?string $cadnum = null;
 
     public function setSteadguid(UuidInterface $steadguid): self
     {
@@ -238,7 +238,7 @@ class Stead
         return $this;
     }
 
-    public function getSteadguid(): UuidInterface
+    public function getSteadguid(): ?UuidInterface
     {
         return $this->steadguid;
     }
@@ -346,7 +346,7 @@ class Stead
         return $this;
     }
 
-    public function getSteadid(): UuidInterface
+    public function getSteadid(): ?UuidInterface
     {
         return $this->steadid;
     }
@@ -370,7 +370,7 @@ class Stead
         return $this;
     }
 
-    public function getStartdate(): DateTimeInterface
+    public function getStartdate(): ?DateTimeInterface
     {
         return $this->startdate;
     }
@@ -382,7 +382,7 @@ class Stead
         return $this;
     }
 
-    public function getEnddate(): DateTimeInterface
+    public function getEnddate(): ?DateTimeInterface
     {
         return $this->enddate;
     }
@@ -394,7 +394,7 @@ class Stead
         return $this;
     }
 
-    public function getUpdatedate(): DateTimeInterface
+    public function getUpdatedate(): ?DateTimeInterface
     {
         return $this->updatedate;
     }

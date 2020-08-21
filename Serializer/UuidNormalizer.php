@@ -17,10 +17,7 @@ use Throwable;
  */
 class UuidNormalizer implements NormalizerInterface, DenormalizerInterface
 {
-    /**
-     * @var UuidFactory
-     */
-    protected $uuidFactory;
+    protected UuidFactory $uuidFactory;
 
     public function __construct()
     {
@@ -28,7 +25,7 @@ class UuidNormalizer implements NormalizerInterface, DenormalizerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws InvalidArgumentException
      */
@@ -42,7 +39,7 @@ class UuidNormalizer implements NormalizerInterface, DenormalizerInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function supportsNormalization($data, $format = null)
     {
@@ -50,11 +47,11 @@ class UuidNormalizer implements NormalizerInterface, DenormalizerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws NotNormalizableValueException
      */
-    public function denormalize($data, $class, $format = null, array $context = [])
+    public function denormalize($data, $type, $format = null, array $context = [])
     {
         if ('' === $data || null === $data) {
             throw new NotNormalizableValueException(
@@ -76,7 +73,7 @@ class UuidNormalizer implements NormalizerInterface, DenormalizerInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function supportsDenormalization($data, $type, $format = null)
     {

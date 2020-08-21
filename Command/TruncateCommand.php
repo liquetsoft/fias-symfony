@@ -17,19 +17,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class TruncateCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected static $defaultName = 'liquetsoft:fias:truncate';
 
-    /**
-     * @var Task
-     */
-    protected $truncateTask;
+    protected Task $truncateTask;
 
-    /**
-     * @param Task $truncateTask
-     */
     public function __construct(Task $truncateTask)
     {
         $this->truncateTask = $truncateTask;

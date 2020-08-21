@@ -21,7 +21,7 @@ class ActualStatus
      *
      * @var int
      */
-    protected $actstatid = 0;
+    protected int $actstatid = 0;
 
     /**
      * Наименование
@@ -32,7 +32,7 @@ class ActualStatus
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     public function setActstatid(int $actstatid): self
     {

@@ -21,14 +21,8 @@ use Throwable;
  */
 class TestGenerator
 {
-    /**
-     * @var EntityRegistry
-     */
-    protected $registry;
+    protected EntityRegistry $registry;
 
-    /**
-     * @param EntityRegistry $registry
-     */
     public function __construct(EntityRegistry $registry)
     {
         $this->registry = $registry;

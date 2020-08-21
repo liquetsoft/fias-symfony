@@ -19,20 +19,10 @@ use Throwable;
  */
 class DoctrineVersionManager implements VersionManager
 {
-    /**
-     * @var EntityManager
-     */
-    protected $em;
+    protected EntityManager $em;
 
-    /**
-     * @var string
-     */
-    protected $entityClassName;
+    protected string $entityClassName;
 
-    /**
-     * @param EntityManager $em
-     * @param string        $entityClassName
-     */
     public function __construct(EntityManager $em, string $entityClassName)
     {
         $this->em = $em;
@@ -89,7 +79,7 @@ class DoctrineVersionManager implements VersionManager
      *
      * @psalm-suppress InvalidStringClass
      */
-    protected function getEntity(): FiasVersion
+    private function getEntity(): FiasVersion
     {
         $className = $this->getEntityClassName();
         $entity = new $className();
@@ -108,10 +98,8 @@ class DoctrineVersionManager implements VersionManager
      * Возвращает объект репозитория для сущности.
      *
      * @return EntityRepository
-     *
-     * @psalm-suppress DeprecatedClass
      */
-    protected function getEntityRepository(): EntityRepository
+    private function getEntityRepository(): EntityRepository
     {
         $entityClassName = $this->getEntityClassName();
 
@@ -130,7 +118,7 @@ class DoctrineVersionManager implements VersionManager
      *
      * @throws RuntimeException
      */
-    protected function getEntityClassName(): string
+    private function getEntityClassName(): string
     {
         $trimmedEntityClassName = trim($this->entityClassName, " \t\n\r\0\x0B\\");
 

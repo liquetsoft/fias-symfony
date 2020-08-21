@@ -21,7 +21,7 @@ class CenterStatus
      *
      * @var int
      */
-    protected $centerstid = 0;
+    protected int $centerstid = 0;
 
     /**
      * Наименование.
@@ -30,7 +30,7 @@ class CenterStatus
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     public function setCenterstid(int $centerstid): self
     {

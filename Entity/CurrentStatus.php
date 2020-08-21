@@ -21,7 +21,7 @@ class CurrentStatus
      *
      * @var int
      */
-    protected $curentstid = 0;
+    protected int $curentstid = 0;
 
     /**
      * Наименование (0 - актуальный, 1-50, 2-98 – исторический (кроме 51), 51 - переподчиненный, 99 - несуществующий).
@@ -30,7 +30,7 @@ class CurrentStatus
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     public function setCurentstid(int $curentstid): self
     {

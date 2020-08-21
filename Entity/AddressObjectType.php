@@ -21,7 +21,7 @@ class AddressObjectType
      *
      * @var string
      */
-    protected $kodtst = '';
+    protected string $kodtst = '';
 
     /**
      * Уровень адресного объекта.
@@ -30,7 +30,7 @@ class AddressObjectType
      *
      * @var int
      */
-    protected $level = 0;
+    protected int $level = 0;
 
     /**
      * Полное наименование типа объекта.
@@ -39,7 +39,7 @@ class AddressObjectType
      *
      * @var string
      */
-    protected $socrname = '';
+    protected string $socrname = '';
 
     /**
      * Краткое наименование типа объекта.
@@ -48,7 +48,7 @@ class AddressObjectType
      *
      * @var string|null
      */
-    protected $scname;
+    protected ?string $scname = null;
 
     public function setKodtst(string $kodtst): self
     {

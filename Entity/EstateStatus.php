@@ -21,7 +21,7 @@ class EstateStatus
      *
      * @var int
      */
-    protected $eststatid = 0;
+    protected int $eststatid = 0;
 
     /**
      * Наименование.
@@ -30,7 +30,7 @@ class EstateStatus
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * Краткое наименование.
@@ -39,7 +39,7 @@ class EstateStatus
      *
      * @var string|null
      */
-    protected $shortname;
+    protected ?string $shortname = null;
 
     public function setEststatid(int $eststatid): self
     {

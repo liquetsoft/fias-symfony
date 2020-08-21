@@ -21,7 +21,7 @@ class FlatType
      *
      * @var int
      */
-    protected $fltypeid = 0;
+    protected int $fltypeid = 0;
 
     /**
      * Наименование.
@@ -30,7 +30,7 @@ class FlatType
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * Краткое наименование.
@@ -39,7 +39,7 @@ class FlatType
      *
      * @var string|null
      */
-    protected $shortname;
+    protected ?string $shortname = null;
 
     public function setFltypeid(int $fltypeid): self
     {

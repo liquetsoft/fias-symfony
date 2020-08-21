@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\TransactionRequiredException;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
 use Throwable;
@@ -14,30 +17,14 @@ use Throwable;
  */
 class DoctrineStorage implements Storage
 {
-    /**
-     * @var EntityManager
-     */
-    protected $em;
+    protected EntityManager $em;
 
-    /**
-     * @var int
-     */
-    protected $insertBatch = 0;
+    protected int $insertBatch = 0;
 
-    /**
-     * @var int
-     */
-    protected $insertCount = 0;
+    protected int $insertCount = 0;
 
-    /**
-     * @var array
-     */
-    protected $supportedClasses = [];
+    protected array $supportedClasses = [];
 
-    /**
-     * @param EntityManager $em
-     * @param int           $insertBatch
-     */
     public function __construct(EntityManager $em, int $insertBatch = 1000)
     {
         $this->em = $em;
@@ -45,14 +32,14 @@ class DoctrineStorage implements Storage
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function start(): void
     {
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function stop(): void
     {
@@ -92,7 +79,7 @@ class DoctrineStorage implements Storage
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function insert(object $entity): void
     {
@@ -110,7 +97,7 @@ class DoctrineStorage implements Storage
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function delete(object $entity): void
     {
@@ -125,7 +112,7 @@ class DoctrineStorage implements Storage
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function upsert(object $entity): void
     {
@@ -139,7 +126,7 @@ class DoctrineStorage implements Storage
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function truncate(string $entityClassName): void
     {
@@ -155,9 +142,9 @@ class DoctrineStorage implements Storage
      *
      * @return object
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Doctrine\ORM\TransactionRequiredException
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws TransactionRequiredException
      */
     private function mergeEntityToDoctrine(object $entity): object
     {

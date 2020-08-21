@@ -21,27 +21,27 @@ class Room
      * @ORM\Id
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
-    protected $roomid;
+    protected ?UuidInterface $roomid = null;
 
     /**
      * Глобальный уникальный идентификатор адресного объекта (помещения).
      *
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
-    protected $roomguid;
+    protected ?UuidInterface $roomguid = null;
 
     /**
      * Идентификатор родительского объекта (дома).
      *
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
-    protected $houseguid;
+    protected ?UuidInterface $houseguid = null;
 
     /**
      * Код региона.
@@ -50,7 +50,7 @@ class Room
      *
      * @var string
      */
-    protected $regioncode = '';
+    protected string $regioncode = '';
 
     /**
      * Номер помещения или офиса.
@@ -59,7 +59,7 @@ class Room
      *
      * @var string
      */
-    protected $flatnumber = '';
+    protected string $flatnumber = '';
 
     /**
      * Тип помещения.
@@ -68,7 +68,7 @@ class Room
      *
      * @var int
      */
-    protected $flattype = 0;
+    protected int $flattype = 0;
 
     /**
      * Почтовый индекс.
@@ -77,34 +77,34 @@ class Room
      *
      * @var string|null
      */
-    protected $postalcode;
+    protected ?string $postalcode = null;
 
     /**
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime", nullable=false)
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
-    protected $startdate;
+    protected ?DateTimeInterface $startdate = null;
 
     /**
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime", nullable=false)
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
-    protected $enddate;
+    protected ?DateTimeInterface $enddate = null;
 
     /**
      * Дата  внесения записи.
      *
      * @ORM\Column(type="datetime", nullable=false)
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
-    protected $updatedate;
+    protected ?DateTimeInterface $updatedate = null;
 
     /**
      * Статус действия над записью – причина появления записи (см. описание таблицы OperationStatus):
@@ -127,7 +127,7 @@ class Room
      *
      * @var int
      */
-    protected $operstatus = 0;
+    protected int $operstatus = 0;
 
     /**
      * Признак действующего адресного объекта.
@@ -136,7 +136,7 @@ class Room
      *
      * @var int
      */
-    protected $livestatus = 0;
+    protected int $livestatus = 0;
 
     /**
      * Внешний ключ на нормативный документ.
@@ -145,7 +145,7 @@ class Room
      *
      * @var UuidInterface|null
      */
-    protected $normdoc;
+    protected ?UuidInterface $normdoc = null;
 
     /**
      * Номер комнаты.
@@ -154,7 +154,7 @@ class Room
      *
      * @var string|null
      */
-    protected $roomnumber;
+    protected ?string $roomnumber = null;
 
     /**
      * Тип комнаты.
@@ -163,7 +163,7 @@ class Room
      *
      * @var int|null
      */
-    protected $roomtype;
+    protected ?int $roomtype = null;
 
     /**
      * Идентификатор записи связывания с предыдушей исторической записью.
@@ -172,7 +172,7 @@ class Room
      *
      * @var UuidInterface|null
      */
-    protected $previd;
+    protected ?UuidInterface $previd = null;
 
     /**
      * Идентификатор записи  связывания с последующей исторической записью.
@@ -181,7 +181,7 @@ class Room
      *
      * @var UuidInterface|null
      */
-    protected $nextid;
+    protected ?UuidInterface $nextid = null;
 
     /**
      * Кадастровый номер помещения.
@@ -190,7 +190,7 @@ class Room
      *
      * @var string|null
      */
-    protected $cadnum;
+    protected ?string $cadnum = null;
 
     /**
      * Кадастровый номер комнаты в помещении.
@@ -199,7 +199,7 @@ class Room
      *
      * @var string|null
      */
-    protected $roomcadnum;
+    protected ?string $roomcadnum = null;
 
     public function setRoomid(UuidInterface $roomid): self
     {
@@ -208,7 +208,7 @@ class Room
         return $this;
     }
 
-    public function getRoomid(): UuidInterface
+    public function getRoomid(): ?UuidInterface
     {
         return $this->roomid;
     }
@@ -220,7 +220,7 @@ class Room
         return $this;
     }
 
-    public function getRoomguid(): UuidInterface
+    public function getRoomguid(): ?UuidInterface
     {
         return $this->roomguid;
     }
@@ -232,7 +232,7 @@ class Room
         return $this;
     }
 
-    public function getHouseguid(): UuidInterface
+    public function getHouseguid(): ?UuidInterface
     {
         return $this->houseguid;
     }
@@ -292,7 +292,7 @@ class Room
         return $this;
     }
 
-    public function getStartdate(): DateTimeInterface
+    public function getStartdate(): ?DateTimeInterface
     {
         return $this->startdate;
     }
@@ -304,7 +304,7 @@ class Room
         return $this;
     }
 
-    public function getEnddate(): DateTimeInterface
+    public function getEnddate(): ?DateTimeInterface
     {
         return $this->enddate;
     }
@@ -316,7 +316,7 @@ class Room
         return $this;
     }
 
-    public function getUpdatedate(): DateTimeInterface
+    public function getUpdatedate(): ?DateTimeInterface
     {
         return $this->updatedate;
     }

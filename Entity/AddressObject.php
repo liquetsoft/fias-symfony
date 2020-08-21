@@ -23,18 +23,18 @@ class AddressObject
      * @ORM\Id
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
-    protected $aoid;
+    protected ?UuidInterface $aoid = null;
 
     /**
      * Глобальный уникальный идентификатор адресного объекта.
      *
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
-    protected $aoguid;
+    protected ?UuidInterface $aoguid = null;
 
     /**
      * Идентификатор объекта родительского объекта.
@@ -43,7 +43,7 @@ class AddressObject
      *
      * @var UuidInterface|null
      */
-    protected $parentguid;
+    protected ?UuidInterface $parentguid = null;
 
     /**
      * Идентификатор записи связывания с предыдушей исторической записью.
@@ -52,7 +52,7 @@ class AddressObject
      *
      * @var UuidInterface|null
      */
-    protected $previd;
+    protected ?UuidInterface $previd = null;
 
     /**
      * Идентификатор записи  связывания с последующей исторической записью.
@@ -61,7 +61,7 @@ class AddressObject
      *
      * @var UuidInterface|null
      */
-    protected $nextid;
+    protected ?UuidInterface $nextid = null;
 
     /**
      * Код адресного объекта одной строкой с признаком актуальности из КЛАДР 4.0.
@@ -70,7 +70,7 @@ class AddressObject
      *
      * @var string|null
      */
-    protected $code;
+    protected ?string $code = null;
 
     /**
      * Формализованное наименование.
@@ -79,7 +79,7 @@ class AddressObject
      *
      * @var string
      */
-    protected $formalname = '';
+    protected string $formalname = '';
 
     /**
      * Официальное наименование.
@@ -88,7 +88,7 @@ class AddressObject
      *
      * @var string|null
      */
-    protected $offname;
+    protected ?string $offname = null;
 
     /**
      * Краткое наименование типа объекта.
@@ -97,7 +97,7 @@ class AddressObject
      *
      * @var string
      */
-    protected $shortname = '';
+    protected string $shortname = '';
 
     /**
      * Уровень адресного объекта.
@@ -106,7 +106,7 @@ class AddressObject
      *
      * @var int
      */
-    protected $aolevel = 0;
+    protected int $aolevel = 0;
 
     /**
      * Код региона.
@@ -115,7 +115,7 @@ class AddressObject
      *
      * @var string
      */
-    protected $regioncode = '';
+    protected string $regioncode = '';
 
     /**
      * Код района.
@@ -124,7 +124,7 @@ class AddressObject
      *
      * @var string
      */
-    protected $areacode = '';
+    protected string $areacode = '';
 
     /**
      * Код автономии.
@@ -133,7 +133,7 @@ class AddressObject
      *
      * @var string
      */
-    protected $autocode = '';
+    protected string $autocode = '';
 
     /**
      * Код города.
@@ -142,7 +142,7 @@ class AddressObject
      *
      * @var string
      */
-    protected $citycode = '';
+    protected string $citycode = '';
 
     /**
      * Код внутригородского района.
@@ -151,7 +151,7 @@ class AddressObject
      *
      * @var string
      */
-    protected $ctarcode = '';
+    protected string $ctarcode = '';
 
     /**
      * Код населенного пункта.
@@ -160,7 +160,7 @@ class AddressObject
      *
      * @var string
      */
-    protected $placecode = '';
+    protected string $placecode = '';
 
     /**
      * Код элемента планировочной структуры.
@@ -169,7 +169,7 @@ class AddressObject
      *
      * @var string
      */
-    protected $plancode = '';
+    protected string $plancode = '';
 
     /**
      * Код улицы.
@@ -178,7 +178,7 @@ class AddressObject
      *
      * @var string|null
      */
-    protected $streetcode;
+    protected ?string $streetcode = null;
 
     /**
      * Код дополнительного адресообразующего элемента.
@@ -187,7 +187,7 @@ class AddressObject
      *
      * @var string
      */
-    protected $extrcode = '';
+    protected string $extrcode = '';
 
     /**
      * Код подчиненного дополнительного адресообразующего элемента.
@@ -196,7 +196,7 @@ class AddressObject
      *
      * @var string
      */
-    protected $sextcode = '';
+    protected string $sextcode = '';
 
     /**
      * Код адресного объекта из КЛАДР 4.0 одной строкой без признака актуальности (последних двух цифр).
@@ -205,7 +205,7 @@ class AddressObject
      *
      * @var string|null
      */
-    protected $plaincode;
+    protected ?string $plaincode = null;
 
     /**
      * Статус актуальности КЛАДР 4 (последние две цифры в коде).
@@ -214,7 +214,7 @@ class AddressObject
      *
      * @var int|null
      */
-    protected $currstatus;
+    protected ?int $currstatus = null;
 
     /**
      * Статус актуальности адресного объекта ФИАС. Актуальный адрес на текущую дату. Обычно последняя запись об адресном объекте.
@@ -225,7 +225,7 @@ class AddressObject
      *
      * @var int
      */
-    protected $actstatus = 0;
+    protected int $actstatus = 0;
 
     /**
      * Признак действующего адресного объекта.
@@ -234,7 +234,7 @@ class AddressObject
      *
      * @var int
      */
-    protected $livestatus = 0;
+    protected int $livestatus = 0;
 
     /**
      * Статус центра.
@@ -243,7 +243,7 @@ class AddressObject
      *
      * @var int
      */
-    protected $centstatus = 0;
+    protected int $centstatus = 0;
 
     /**
      * Статус действия над записью – причина появления записи (см. описание таблицы OperationStatus):
@@ -266,7 +266,7 @@ class AddressObject
      *
      * @var int
      */
-    protected $operstatus = 0;
+    protected int $operstatus = 0;
 
     /**
      * Код ИФНС ФЛ.
@@ -275,7 +275,7 @@ class AddressObject
      *
      * @var string|null
      */
-    protected $ifnsfl;
+    protected ?string $ifnsfl = null;
 
     /**
      * Код ИФНС ЮЛ.
@@ -284,7 +284,7 @@ class AddressObject
      *
      * @var string|null
      */
-    protected $ifnsul;
+    protected ?string $ifnsul = null;
 
     /**
      * Код территориального участка ИФНС ФЛ.
@@ -293,7 +293,7 @@ class AddressObject
      *
      * @var string|null
      */
-    protected $terrifnsfl;
+    protected ?string $terrifnsfl = null;
 
     /**
      * Код территориального участка ИФНС ЮЛ.
@@ -302,7 +302,7 @@ class AddressObject
      *
      * @var string|null
      */
-    protected $terrifnsul;
+    protected ?string $terrifnsul = null;
 
     /**
      * OKATO.
@@ -311,7 +311,7 @@ class AddressObject
      *
      * @var string|null
      */
-    protected $okato;
+    protected ?string $okato = null;
 
     /**
      * OKTMO.
@@ -320,7 +320,7 @@ class AddressObject
      *
      * @var string|null
      */
-    protected $oktmo;
+    protected ?string $oktmo = null;
 
     /**
      * Почтовый индекс.
@@ -329,34 +329,34 @@ class AddressObject
      *
      * @var string|null
      */
-    protected $postalcode;
+    protected ?string $postalcode = null;
 
     /**
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime", nullable=false)
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
-    protected $startdate;
+    protected ?DateTimeInterface $startdate = null;
 
     /**
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime", nullable=false)
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
-    protected $enddate;
+    protected ?DateTimeInterface $enddate = null;
 
     /**
      * Дата  внесения записи.
      *
      * @ORM\Column(type="datetime", nullable=false)
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
-    protected $updatedate;
+    protected ?DateTimeInterface $updatedate = null;
 
     /**
      * Тип адресации:
@@ -368,7 +368,7 @@ class AddressObject
      *
      * @var int
      */
-    protected $divtype = 0;
+    protected int $divtype = 0;
 
     /**
      * Внешний ключ на нормативный документ.
@@ -377,7 +377,7 @@ class AddressObject
      *
      * @var UuidInterface|null
      */
-    protected $normdoc;
+    protected ?UuidInterface $normdoc = null;
 
     public function setAoid(UuidInterface $aoid): self
     {
@@ -386,7 +386,7 @@ class AddressObject
         return $this;
     }
 
-    public function getAoid(): UuidInterface
+    public function getAoid(): ?UuidInterface
     {
         return $this->aoid;
     }
@@ -398,7 +398,7 @@ class AddressObject
         return $this;
     }
 
-    public function getAoguid(): UuidInterface
+    public function getAoguid(): ?UuidInterface
     {
         return $this->aoguid;
     }
@@ -782,7 +782,7 @@ class AddressObject
         return $this;
     }
 
-    public function getStartdate(): DateTimeInterface
+    public function getStartdate(): ?DateTimeInterface
     {
         return $this->startdate;
     }
@@ -794,7 +794,7 @@ class AddressObject
         return $this;
     }
 
-    public function getEnddate(): DateTimeInterface
+    public function getEnddate(): ?DateTimeInterface
     {
         return $this->enddate;
     }
@@ -806,7 +806,7 @@ class AddressObject
         return $this;
     }
 
-    public function getUpdatedate(): DateTimeInterface
+    public function getUpdatedate(): ?DateTimeInterface
     {
         return $this->updatedate;
     }

@@ -21,7 +21,7 @@ class RoomType
      *
      * @var int
      */
-    protected $rmtypeid = 0;
+    protected int $rmtypeid = 0;
 
     /**
      * Наименование.
@@ -30,7 +30,7 @@ class RoomType
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * Краткое наименование.
@@ -39,7 +39,7 @@ class RoomType
      *
      * @var string|null
      */
-    protected $shortname;
+    protected ?string $shortname = null;
 
     public function setRmtypeid(int $rmtypeid): self
     {

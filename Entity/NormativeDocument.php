@@ -21,9 +21,9 @@ class NormativeDocument
      * @ORM\Id
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
-    protected $normdocid;
+    protected ?UuidInterface $normdocid = null;
 
     /**
      * Наименование документа.
@@ -32,7 +32,7 @@ class NormativeDocument
      *
      * @var string|null
      */
-    protected $docname;
+    protected ?string $docname = null;
 
     /**
      * Дата документа.
@@ -41,7 +41,7 @@ class NormativeDocument
      *
      * @var DateTimeInterface|null
      */
-    protected $docdate;
+    protected ?DateTimeInterface $docdate = null;
 
     /**
      * Номер документа.
@@ -50,7 +50,7 @@ class NormativeDocument
      *
      * @var string|null
      */
-    protected $docnum;
+    protected ?string $docnum = null;
 
     /**
      * Тип документа.
@@ -59,7 +59,7 @@ class NormativeDocument
      *
      * @var int
      */
-    protected $doctype = 0;
+    protected int $doctype = 0;
 
     /**
      * Идентификатор образа (внешний ключ).
@@ -68,7 +68,7 @@ class NormativeDocument
      *
      * @var UuidInterface|null
      */
-    protected $docimgid;
+    protected ?UuidInterface $docimgid = null;
 
     public function setNormdocid(UuidInterface $normdocid): self
     {
@@ -77,7 +77,7 @@ class NormativeDocument
         return $this;
     }
 
-    public function getNormdocid(): UuidInterface
+    public function getNormdocid(): ?UuidInterface
     {
         return $this->normdocid;
     }

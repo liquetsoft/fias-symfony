@@ -21,7 +21,7 @@ class StructureStatus
      *
      * @var int
      */
-    protected $strstatid = 0;
+    protected int $strstatid = 0;
 
     /**
      * Наименование.
@@ -30,7 +30,7 @@ class StructureStatus
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * Краткое наименование.
@@ -39,7 +39,7 @@ class StructureStatus
      *
      * @var string|null
      */
-    protected $shortname;
+    protected ?string $shortname = null;
 
     public function setStrstatid(int $strstatid): self
     {

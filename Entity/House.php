@@ -21,27 +21,27 @@ class House
      * @ORM\Id
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
-    protected $houseid;
+    protected ?UuidInterface $houseid = null;
 
     /**
      * Глобальный уникальный идентификатор дома.
      *
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
-    protected $houseguid;
+    protected ?UuidInterface $houseguid = null;
 
     /**
      * Guid записи родительского объекта (улицы, города, населенного пункта и т.п.).
      *
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
-    protected $aoguid;
+    protected ?UuidInterface $aoguid = null;
 
     /**
      * Номер дома.
@@ -50,7 +50,7 @@ class House
      *
      * @var string|null
      */
-    protected $housenum;
+    protected ?string $housenum = null;
 
     /**
      * Признак строения.
@@ -59,7 +59,7 @@ class House
      *
      * @var int|null
      */
-    protected $strstatus;
+    protected ?int $strstatus = null;
 
     /**
      * Признак владения.
@@ -68,7 +68,7 @@ class House
      *
      * @var int
      */
-    protected $eststatus = 0;
+    protected int $eststatus = 0;
 
     /**
      * Состояние дома.
@@ -77,7 +77,7 @@ class House
      *
      * @var int
      */
-    protected $statstatus = 0;
+    protected int $statstatus = 0;
 
     /**
      * Код ИФНС ФЛ.
@@ -86,7 +86,7 @@ class House
      *
      * @var string|null
      */
-    protected $ifnsfl;
+    protected ?string $ifnsfl = null;
 
     /**
      * Код ИФНС ЮЛ.
@@ -95,7 +95,7 @@ class House
      *
      * @var string|null
      */
-    protected $ifnsul;
+    protected ?string $ifnsul = null;
 
     /**
      * OKATO.
@@ -104,7 +104,7 @@ class House
      *
      * @var string|null
      */
-    protected $okato;
+    protected ?string $okato = null;
 
     /**
      * OKTMO.
@@ -113,7 +113,7 @@ class House
      *
      * @var string|null
      */
-    protected $oktmo;
+    protected ?string $oktmo = null;
 
     /**
      * Почтовый индекс.
@@ -122,34 +122,34 @@ class House
      *
      * @var string|null
      */
-    protected $postalcode;
+    protected ?string $postalcode = null;
 
     /**
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime", nullable=false)
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
-    protected $startdate;
+    protected ?DateTimeInterface $startdate = null;
 
     /**
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime", nullable=false)
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
-    protected $enddate;
+    protected ?DateTimeInterface $enddate = null;
 
     /**
      * Дата время внесения записи.
      *
      * @ORM\Column(type="datetime", nullable=false)
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
-    protected $updatedate;
+    protected ?DateTimeInterface $updatedate = null;
 
     /**
      * Счетчик записей домов для КЛАДР 4.
@@ -158,7 +158,7 @@ class House
      *
      * @var int
      */
-    protected $counter = 0;
+    protected int $counter = 0;
 
     /**
      * Тип адресации:
@@ -170,7 +170,7 @@ class House
      *
      * @var int
      */
-    protected $divtype = 0;
+    protected int $divtype = 0;
 
     /**
      * Код региона.
@@ -179,7 +179,7 @@ class House
      *
      * @var string|null
      */
-    protected $regioncode;
+    protected ?string $regioncode = null;
 
     /**
      * Код территориального участка ИФНС ФЛ.
@@ -188,7 +188,7 @@ class House
      *
      * @var string|null
      */
-    protected $terrifnsfl;
+    protected ?string $terrifnsfl = null;
 
     /**
      * Код территориального участка ИФНС ЮЛ.
@@ -197,7 +197,7 @@ class House
      *
      * @var string|null
      */
-    protected $terrifnsul;
+    protected ?string $terrifnsul = null;
 
     /**
      * Номер корпуса.
@@ -206,7 +206,7 @@ class House
      *
      * @var string|null
      */
-    protected $buildnum;
+    protected ?string $buildnum = null;
 
     /**
      * Номер строения.
@@ -215,7 +215,7 @@ class House
      *
      * @var string|null
      */
-    protected $strucnum;
+    protected ?string $strucnum = null;
 
     /**
      * Внешний ключ на нормативный документ.
@@ -224,7 +224,7 @@ class House
      *
      * @var UuidInterface|null
      */
-    protected $normdoc;
+    protected ?UuidInterface $normdoc = null;
 
     /**
      * Кадастровый номер.
@@ -233,7 +233,7 @@ class House
      *
      * @var string|null
      */
-    protected $cadnum;
+    protected ?string $cadnum = null;
 
     public function setHouseid(UuidInterface $houseid): self
     {
@@ -242,7 +242,7 @@ class House
         return $this;
     }
 
-    public function getHouseid(): UuidInterface
+    public function getHouseid(): ?UuidInterface
     {
         return $this->houseid;
     }
@@ -254,7 +254,7 @@ class House
         return $this;
     }
 
-    public function getHouseguid(): UuidInterface
+    public function getHouseguid(): ?UuidInterface
     {
         return $this->houseguid;
     }
@@ -266,7 +266,7 @@ class House
         return $this;
     }
 
-    public function getAoguid(): UuidInterface
+    public function getAoguid(): ?UuidInterface
     {
         return $this->aoguid;
     }
@@ -386,7 +386,7 @@ class House
         return $this;
     }
 
-    public function getStartdate(): DateTimeInterface
+    public function getStartdate(): ?DateTimeInterface
     {
         return $this->startdate;
     }
@@ -398,7 +398,7 @@ class House
         return $this;
     }
 
-    public function getEnddate(): DateTimeInterface
+    public function getEnddate(): ?DateTimeInterface
     {
         return $this->enddate;
     }
@@ -410,7 +410,7 @@ class House
         return $this;
     }
 
-    public function getUpdatedate(): DateTimeInterface
+    public function getUpdatedate(): ?DateTimeInterface
     {
         return $this->updatedate;
     }

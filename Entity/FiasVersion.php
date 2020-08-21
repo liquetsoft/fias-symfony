@@ -22,7 +22,7 @@ class FiasVersion
      *
      * @var int
      */
-    protected $version = 0;
+    protected int $version = 0;
 
     /**
      * Ссылка для загрузки указанной версии ФИАС.
@@ -31,16 +31,16 @@ class FiasVersion
      *
      * @var string
      */
-    protected $url = '';
+    protected string $url = '';
 
     /**
      * Дата создания.
      *
      * @ORM\Column(type="datetime", nullable=false)
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
-    protected $created;
+    protected ?DateTimeInterface $created = null;
 
     public function setVersion(int $version): self
     {
@@ -73,7 +73,7 @@ class FiasVersion
         return $this;
     }
 
-    public function getCreated(): DateTimeInterface
+    public function getCreated(): ?DateTimeInterface
     {
         return $this->created;
     }

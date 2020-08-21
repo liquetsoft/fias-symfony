@@ -21,7 +21,7 @@ class NormativeDocumentType
      *
      * @var int
      */
-    protected $ndtypeid = 0;
+    protected int $ndtypeid = 0;
 
     /**
      * Наименование типа нормативного документа.
@@ -30,7 +30,7 @@ class NormativeDocumentType
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     public function setNdtypeid(int $ndtypeid): self
     {

@@ -19,19 +19,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class UpdateCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected static $defaultName = 'liquetsoft:fias:update';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    protected Pipe $pipeline;
 
-    /**
-     * @param Pipe $pipeline
-     */
     public function __construct(Pipe $pipeline)
     {
         $this->pipeline = $pipeline;
