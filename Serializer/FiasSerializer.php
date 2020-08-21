@@ -18,13 +18,13 @@ class FiasSerializer extends \Liquetsoft\Fias\Component\Serializer\FiasSerialize
     {
         if ($normalizers === null) {
             $normalizers = [
-                new UuidNormalizer,
-                new DateTimeNormalizer,
+                new UuidNormalizer(),
+                new DateTimeNormalizer(),
                 new ObjectNormalizer(
                     null,
-                    new FiasNameConverter,
+                    new FiasNameConverter(),
                     null,
-                    new ReflectionExtractor,
+                    new ReflectionExtractor(),
                     null,
                     null,
                     [

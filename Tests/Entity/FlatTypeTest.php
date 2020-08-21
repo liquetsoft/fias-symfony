@@ -8,7 +8,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FlatType;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
- * Тест для сущности 'Перечень типов помещения или офиса'.
+ * Тест для сущности 'Тип помещения'.
  */
 class FlatTypeTest extends EntityCase
 {
@@ -17,7 +17,7 @@ class FlatTypeTest extends EntityCase
      */
     protected function createEntity()
     {
-        return new FlatType;
+        return new FlatType();
     }
 
     /**

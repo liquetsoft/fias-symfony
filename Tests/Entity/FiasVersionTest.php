@@ -4,43 +4,21 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 
-use DateTimeInterface;
+use DateTime;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FiasVersion;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
- * Тест для сущности 'Текущаяверсия ФИАС'.
+ * Тест для сущности 'Версия ФИАС'.
  */
 class FiasVersionTest extends EntityCase
 {
-    /**
-     * Пустой тест ради покрытия.
-     */
-    public function testGetId()
-    {
-        $entity = $this->createEntity();
-
-        $this->assertNull($entity->getId());
-    }
-
-    /**
-     * Проверяет, что в событии задается дата создания.
-     */
-    public function testOnPrePersist()
-    {
-        $entity = $this->createEntity();
-
-        $this->assertNull($entity->getCreatedAt());
-        $entity->onPrePersist();
-        $this->assertInstanceOf(DateTimeInterface::class, $entity->getCreatedAt());
-    }
-
     /**
      * @inheritdoc
      */
     protected function createEntity()
     {
-        return new FiasVersion;
+        return new FiasVersion();
     }
 
     /**
@@ -49,8 +27,9 @@ class FiasVersionTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'version' => $this->createFakeData()->numberBetween(1, 100000),
-            'url' => $this->createFakeData()->url,
+            'version' => $this->createFakeData()->numberBetween(1, 1000000),
+            'url' => $this->createFakeData()->word,
+            'created' => new DateTime(),
         ];
     }
 }

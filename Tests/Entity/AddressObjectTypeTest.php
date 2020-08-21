@@ -8,7 +8,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddressObjectType;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
- * Тест для сущности 'Перечень полных, сокращённых наименований типов адресных элементов и уровней их классификации'.
+ * Тест для сущности 'Тип адресного объекта'.
  */
 class AddressObjectTypeTest extends EntityCase
 {
@@ -17,7 +17,7 @@ class AddressObjectTypeTest extends EntityCase
      */
     protected function createEntity()
     {
-        return new AddressObjectType;
+        return new AddressObjectType();
     }
 
     /**
@@ -26,7 +26,7 @@ class AddressObjectTypeTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'kodtst' => $this->createFakeData()->numberBetween(1, 1000000),
+            'kodtst' => $this->createFakeData()->word,
             'level' => $this->createFakeData()->numberBetween(1, 1000000),
             'socrname' => $this->createFakeData()->word,
             'scname' => $this->createFakeData()->word,

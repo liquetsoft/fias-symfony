@@ -54,7 +54,7 @@ class TruncateCommand extends Command
 
         $io->note('Truncating storage for binded entities.');
 
-        $state = new ArrayState;
+        $state = new ArrayState();
         $this->truncateTask->run($state);
 
         $io->success('Storage truncated.');

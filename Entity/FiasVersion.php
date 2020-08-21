@@ -4,76 +4,43 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
-use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Сущность, которая хранит текущую версию ФИАС.
+ * Версия ФИАС.
  *
  * @ORM\MappedSuperclass
- * @ORM\HasLifecycleCallbacks
  */
 class FiasVersion
 {
     /**
-     * Уникальный идентификатор записи.
+     * Номер версии ФИАС.
      *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\Column(type="integer", nullable=false)
      *
-     * @var int|null
+     * @var int
      */
-    protected $id;
+    protected $version = 0;
+
+    /**
+     * Ссылка для загрузки указанной версии ФИАС.
+     *
+     * @ORM\Column(type="string", nullable=false)
+     *
+     * @var string
+     */
+    protected $url = '';
 
     /**
      * Дата создания.
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeInterface
      */
-    protected $createdAt;
-
-    /**
-     * Версия ФИАС.
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @var int
-     */
-    protected $version;
-
-    /**
-     * Ссылка на архив с обновлениями для данной версии.
-     *
-     * @ORM\Column(type="string")
-     *
-     * @var string
-     */
-    protected $url;
-
-    public function __construct()
-    {
-        $this->version = 0;
-        $this->url = '';
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getCreatedAt(): ?DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function getVersion(): int
-    {
-        return $this->version;
-    }
+    protected $created;
 
     public function setVersion(int $version): self
     {
@@ -82,9 +49,9 @@ class FiasVersion
         return $this;
     }
 
-    public function getUrl(): string
+    public function getVersion(): int
     {
-        return $this->url;
+        return $this->version;
     }
 
     public function setUrl(string $url): self
@@ -94,15 +61,20 @@ class FiasVersion
         return $this;
     }
 
-    /**
-     * Событие, которое срабатывает при добавлении записи в бд.
-     *
-     * Задает дату и время создания.
-     *
-     * @ORM\PrePersist
-     */
-    public function onPrePersist(): void
+    public function getUrl(): string
     {
-        $this->createdAt = new DateTime;
+        return $this->url;
+    }
+
+    public function setCreated(DateTimeInterface $created): self
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    public function getCreated(): DateTimeInterface
+    {
+        return $this->created;
     }
 }

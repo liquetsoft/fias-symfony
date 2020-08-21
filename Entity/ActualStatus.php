@@ -7,13 +7,15 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Перечень статусов актуальности записи адресного элемента по ФИАС.
+ * Статус актуальности ФИАС.
  *
  * @ORM\MappedSuperclass
  */
 class ActualStatus
 {
     /**
+     * Идентификатор статуса (ключ).
+     *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      *
@@ -22,7 +24,11 @@ class ActualStatus
     protected $actstatid = 0;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * Наименование
+     * 0 – Не актуальный
+     * 1 – Актуальный (последняя запись по адресному объекту).
+     *
+     * @ORM\Column(type="string", length=100, nullable=false)
      *
      * @var string
      */

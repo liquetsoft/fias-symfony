@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\VersionManager;
 
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
@@ -48,6 +49,7 @@ class DoctrineVersionManager implements VersionManager
         $entity = $this->getEntity();
         $entity->setVersion($info->getVersion());
         $entity->setUrl($info->getUrl());
+        $entity->setCreated(new DateTime());
 
         try {
             $this->em->persist($entity);
@@ -67,7 +69,7 @@ class DoctrineVersionManager implements VersionManager
      */
     public function getCurrentVersion(): InformerResponse
     {
-        $response = new InformerResponseBase;
+        $response = new InformerResponseBase();
 
         $entity = $this->getEntityRepository()->findOneBy([], ['createdAt' => 'DESC']);
         if ($entity instanceof FiasVersion) {
@@ -90,7 +92,7 @@ class DoctrineVersionManager implements VersionManager
     protected function getEntity(): FiasVersion
     {
         $className = $this->getEntityClassName();
-        $entity = new $className;
+        $entity = new $className();
 
         if (!($entity instanceof FiasVersion)) {
             throw new RuntimeException(

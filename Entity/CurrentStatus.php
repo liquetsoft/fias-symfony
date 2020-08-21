@@ -7,13 +7,15 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Перечень статусов актуальности записи адресного элемента по классификатору КЛАДР4.0.
+ * Статус актуальности КЛАДР 4.0.
  *
  * @ORM\MappedSuperclass
  */
 class CurrentStatus
 {
     /**
+     * Идентификатор статуса (ключ).
+     *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      *
@@ -22,7 +24,9 @@ class CurrentStatus
     protected $curentstid = 0;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * Наименование (0 - актуальный, 1-50, 2-98 – исторический (кроме 51), 51 - переподчиненный, 99 - несуществующий).
+     *
+     * @ORM\Column(type="string", length=100, nullable=false)
      *
      * @var string
      */

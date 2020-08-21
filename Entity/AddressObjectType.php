@@ -7,21 +7,25 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Перечень полных, сокращённых наименований типов адресных элементов и уровней их классификации.
+ * Тип адресного объекта.
  *
  * @ORM\MappedSuperclass
  */
 class AddressObjectType
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
+     * Ключевое поле.
      *
-     * @var int
+     * @ORM\Id
+     * @ORM\Column(type="string", length=4, nullable=false)
+     *
+     * @var string
      */
-    protected $kodtst = 0;
+    protected $kodtst = '';
 
     /**
+     * Уровень адресного объекта.
+     *
      * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
@@ -29,27 +33,31 @@ class AddressObjectType
     protected $level = 0;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * Полное наименование типа объекта.
+     *
+     * @ORM\Column(type="string", length=50, nullable=false)
      *
      * @var string
      */
     protected $socrname = '';
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * Краткое наименование типа объекта.
+     *
+     * @ORM\Column(type="string", length=10, nullable=true)
      *
      * @var string|null
      */
     protected $scname;
 
-    public function setKodtst(int $kodtst): self
+    public function setKodtst(string $kodtst): self
     {
         $this->kodtst = $kodtst;
 
         return $this;
     }
 
-    public function getKodtst(): int
+    public function getKodtst(): string
     {
         return $this->kodtst;
     }

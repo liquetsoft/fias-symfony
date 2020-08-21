@@ -10,7 +10,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Тест для сущности 'Сведения о земельных участках'.
+ * Тест для сущности 'Классификатор земельных участков'.
  */
 class SteadTest extends EntityCase
 {
@@ -19,7 +19,7 @@ class SteadTest extends EntityCase
      */
     protected function createEntity()
     {
-        return new Stead;
+        return new Stead();
     }
 
     /**
@@ -38,13 +38,18 @@ class SteadTest extends EntityCase
             'oktmo' => $this->createFakeData()->word,
             'parentguid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
             'steadid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
-            'operstatus' => $this->createFakeData()->word,
-            'startdate' => new DateTime,
-            'enddate' => new DateTime,
-            'updatedate' => new DateTime,
-            'livestatus' => $this->createFakeData()->word,
-            'divtype' => $this->createFakeData()->word,
+            'operstatus' => $this->createFakeData()->numberBetween(1, 1000000),
+            'startdate' => new DateTime(),
+            'enddate' => new DateTime(),
+            'updatedate' => new DateTime(),
+            'livestatus' => $this->createFakeData()->numberBetween(1, 1000000),
+            'divtype' => $this->createFakeData()->numberBetween(1, 1000000),
             'normdoc' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
+            'terrifnsfl' => $this->createFakeData()->word,
+            'terrifnsul' => $this->createFakeData()->word,
+            'previd' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
+            'nextid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
+            'cadnum' => $this->createFakeData()->word,
         ];
     }
 }

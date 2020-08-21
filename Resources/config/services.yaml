@@ -42,9 +42,9 @@ services:
 
 
     liquetsoft_fias.entity_registry.service:
-        class: Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry
+        class: Liquetsoft\Fias\Component\EntityRegistry\PhpArrayFileRegistry
         arguments:
-            - '%liquetsoft_fias.registry_yaml%'
+            - '%liquetsoft_fias.registry_path%'
 
     Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry:
         alias: liquetsoft_fias.entity_registry.service

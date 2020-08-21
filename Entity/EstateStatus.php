@@ -7,13 +7,15 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Перечень возможных видов владений.
+ * Признак владения.
  *
  * @ORM\MappedSuperclass
  */
 class EstateStatus
 {
     /**
+     * Признак владения.
+     *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      *
@@ -22,11 +24,22 @@ class EstateStatus
     protected $eststatid = 0;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * Наименование.
+     *
+     * @ORM\Column(type="string", length=20, nullable=false)
      *
      * @var string
      */
     protected $name = '';
+
+    /**
+     * Краткое наименование.
+     *
+     * @ORM\Column(type="string", length=20, nullable=true)
+     *
+     * @var string|null
+     */
+    protected $shortname;
 
     public function setEststatid(int $eststatid): self
     {
@@ -50,5 +63,17 @@ class EstateStatus
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function setShortname(?string $shortname): self
+    {
+        $this->shortname = $shortname;
+
+        return $this;
+    }
+
+    public function getShortname(): ?string
+    {
+        return $this->shortname;
     }
 }

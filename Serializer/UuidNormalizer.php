@@ -24,7 +24,7 @@ class UuidNormalizer implements NormalizerInterface, DenormalizerInterface
 
     public function __construct()
     {
-        $this->uuidFactory = new UuidFactory;
+        $this->uuidFactory = new UuidFactory();
     }
 
     /**

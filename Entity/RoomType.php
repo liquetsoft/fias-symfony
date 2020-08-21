@@ -7,13 +7,15 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Перечень типов комнат.
+ * Тип комнаты.
  *
  * @ORM\MappedSuperclass
  */
 class RoomType
 {
     /**
+     * Тип комнаты.
+     *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      *
@@ -22,18 +24,22 @@ class RoomType
     protected $rmtypeid = 0;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * Наименование.
+     *
+     * @ORM\Column(type="string", length=20, nullable=false)
      *
      * @var string
      */
     protected $name = '';
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * Краткое наименование.
      *
-     * @var string
+     * @ORM\Column(type="string", length=20, nullable=true)
+     *
+     * @var string|null
      */
-    protected $shortname = '';
+    protected $shortname;
 
     public function setRmtypeid(int $rmtypeid): self
     {
@@ -59,14 +65,14 @@ class RoomType
         return $this->name;
     }
 
-    public function setShortname(string $shortname): self
+    public function setShortname(?string $shortname): self
     {
         $this->shortname = $shortname;
 
         return $this;
     }
 
-    public function getShortname(): string
+    public function getShortname(): ?string
     {
         return $this->shortname;
     }

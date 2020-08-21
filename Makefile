@@ -10,18 +10,14 @@ docker_compose_bin := $(shell command -v docker-compose 2> /dev/null)
 docker_compose_yml := Docker/docker-compose.yml
 user_id := $(shell id -u)
 
-.PHONY : help pull build push login test clean \
-         app-pull app app-push\
-         sources-pull sources sources-push\
-         nginx-pull nginx nginx-push\
-         up down restart shell install
+.PHONY : build shell buildEntities test fixer linter
 .DEFAULT_GOAL := build
 
 # --- [ Development tasks ] -------------------------------------------------------------------------------------------
 
 build: ## Build container and install composer libs
 	$(docker_compose_bin) --file "$(docker_compose_yml)" build
-	$(docker_compose_bin) --file "$(docker_compose_yml)" run --rm -u $(user_id) "$(php_container_name)" composer install
+	$(docker_compose_bin) --file "$(docker_compose_yml)" run --rm -u $(user_id) "$(php_container_name)" composer update
 
 shell: ## Runs shell in container
 	$(docker_compose_bin) --file "$(docker_compose_yml)" run --rm -u $(user_id) "$(php_container_name)" /bin/bash

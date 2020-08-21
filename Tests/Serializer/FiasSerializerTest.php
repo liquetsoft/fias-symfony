@@ -31,7 +31,7 @@ class FiasSerializerTest extends BaseCase
     EMPTYSTRINGINT=""
 />
 EOT;
-        $serializer = new FiasSerializer;
+        $serializer = new FiasSerializer();
 
         $object = $serializer->deserialize($data, FiasSerializerObject::class, 'xml');
 

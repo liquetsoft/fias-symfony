@@ -9,13 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Элементы адреса, идентифицирующие адресуемые объекты.
+ * Сведения по номерам домов улиц городов и населенных пунктов.
  *
  * @ORM\MappedSuperclass
  */
 class House
 {
     /**
+     * Уникальный идентификатор записи дома.
+     *
      * @ORM\Id
      * @ORM\Column(type="uuid", nullable=false)
      *
@@ -24,20 +26,26 @@ class House
     protected $houseid;
 
     /**
-     * @ORM\Column(type="uuid", nullable=true)
+     * Глобальный уникальный идентификатор дома.
      *
-     * @var UuidInterface|null
+     * @ORM\Column(type="uuid", nullable=false)
+     *
+     * @var UuidInterface
      */
     protected $houseguid;
 
     /**
-     * @ORM\Column(type="uuid", nullable=true)
+     * Guid записи родительского объекта (улицы, города, населенного пункта и т.п.).
      *
-     * @var UuidInterface|null
+     * @ORM\Column(type="uuid", nullable=false)
+     *
+     * @var UuidInterface
      */
     protected $aoguid;
 
     /**
+     * Номер дома.
+     *
      * @ORM\Column(type="string", length=20, nullable=true)
      *
      * @var string|null
@@ -45,13 +53,17 @@ class House
     protected $housenum;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
+     * Признак строения.
      *
-     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     *
+     * @var int|null
      */
-    protected $strstatus = 0;
+    protected $strstatus;
 
     /**
+     * Признак владения.
+     *
      * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
@@ -59,6 +71,8 @@ class House
     protected $eststatus = 0;
 
     /**
+     * Состояние дома.
+     *
      * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
@@ -66,6 +80,8 @@ class House
     protected $statstatus = 0;
 
     /**
+     * Код ИФНС ФЛ.
+     *
      * @ORM\Column(type="string", length=4, nullable=true)
      *
      * @var string|null
@@ -73,6 +89,8 @@ class House
     protected $ifnsfl;
 
     /**
+     * Код ИФНС ЮЛ.
+     *
      * @ORM\Column(type="string", length=4, nullable=true)
      *
      * @var string|null
@@ -80,6 +98,8 @@ class House
     protected $ifnsul;
 
     /**
+     * OKATO.
+     *
      * @ORM\Column(type="string", length=11, nullable=true)
      *
      * @var string|null
@@ -87,6 +107,8 @@ class House
     protected $okato;
 
     /**
+     * OKTMO.
+     *
      * @ORM\Column(type="string", length=11, nullable=true)
      *
      * @var string|null
@@ -94,6 +116,8 @@ class House
     protected $oktmo;
 
     /**
+     * Почтовый индекс.
+     *
      * @ORM\Column(type="string", length=6, nullable=true)
      *
      * @var string|null
@@ -101,6 +125,8 @@ class House
     protected $postalcode;
 
     /**
+     * Начало действия записи.
+     *
      * @ORM\Column(type="datetime", nullable=false)
      *
      * @var DateTimeInterface
@@ -108,6 +134,8 @@ class House
     protected $startdate;
 
     /**
+     * Окончание действия записи.
+     *
      * @ORM\Column(type="datetime", nullable=false)
      *
      * @var DateTimeInterface
@@ -115,6 +143,8 @@ class House
     protected $enddate;
 
     /**
+     * Дата время внесения записи.
+     *
      * @ORM\Column(type="datetime", nullable=false)
      *
      * @var DateTimeInterface
@@ -122,6 +152,8 @@ class House
     protected $updatedate;
 
     /**
+     * Счетчик записей домов для КЛАДР 4.
+     *
      * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
@@ -129,11 +161,79 @@ class House
     protected $counter = 0;
 
     /**
+     * Тип адресации:
+     * 0 - не определено
+     * 1 - муниципальный;
+     * 2 - административно-территориальный.
+     *
      * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
     protected $divtype = 0;
+
+    /**
+     * Код региона.
+     *
+     * @ORM\Column(type="string", length=2, nullable=true)
+     *
+     * @var string|null
+     */
+    protected $regioncode;
+
+    /**
+     * Код территориального участка ИФНС ФЛ.
+     *
+     * @ORM\Column(type="string", length=4, nullable=true)
+     *
+     * @var string|null
+     */
+    protected $terrifnsfl;
+
+    /**
+     * Код территориального участка ИФНС ЮЛ.
+     *
+     * @ORM\Column(type="string", length=4, nullable=true)
+     *
+     * @var string|null
+     */
+    protected $terrifnsul;
+
+    /**
+     * Номер корпуса.
+     *
+     * @ORM\Column(type="string", length=50, nullable=true)
+     *
+     * @var string|null
+     */
+    protected $buildnum;
+
+    /**
+     * Номер строения.
+     *
+     * @ORM\Column(type="string", length=50, nullable=true)
+     *
+     * @var string|null
+     */
+    protected $strucnum;
+
+    /**
+     * Внешний ключ на нормативный документ.
+     *
+     * @ORM\Column(type="uuid", nullable=true)
+     *
+     * @var UuidInterface|null
+     */
+    protected $normdoc;
+
+    /**
+     * Кадастровый номер.
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     *
+     * @var string|null
+     */
+    protected $cadnum;
 
     public function setHouseid(UuidInterface $houseid): self
     {
@@ -147,26 +247,26 @@ class House
         return $this->houseid;
     }
 
-    public function setHouseguid(?UuidInterface $houseguid): self
+    public function setHouseguid(UuidInterface $houseguid): self
     {
         $this->houseguid = $houseguid;
 
         return $this;
     }
 
-    public function getHouseguid(): ?UuidInterface
+    public function getHouseguid(): UuidInterface
     {
         return $this->houseguid;
     }
 
-    public function setAoguid(?UuidInterface $aoguid): self
+    public function setAoguid(UuidInterface $aoguid): self
     {
         $this->aoguid = $aoguid;
 
         return $this;
     }
 
-    public function getAoguid(): ?UuidInterface
+    public function getAoguid(): UuidInterface
     {
         return $this->aoguid;
     }
@@ -183,14 +283,14 @@ class House
         return $this->housenum;
     }
 
-    public function setStrstatus(int $strstatus): self
+    public function setStrstatus(?int $strstatus): self
     {
         $this->strstatus = $strstatus;
 
         return $this;
     }
 
-    public function getStrstatus(): int
+    public function getStrstatus(): ?int
     {
         return $this->strstatus;
     }
@@ -337,5 +437,89 @@ class House
     public function getDivtype(): int
     {
         return $this->divtype;
+    }
+
+    public function setRegioncode(?string $regioncode): self
+    {
+        $this->regioncode = $regioncode;
+
+        return $this;
+    }
+
+    public function getRegioncode(): ?string
+    {
+        return $this->regioncode;
+    }
+
+    public function setTerrifnsfl(?string $terrifnsfl): self
+    {
+        $this->terrifnsfl = $terrifnsfl;
+
+        return $this;
+    }
+
+    public function getTerrifnsfl(): ?string
+    {
+        return $this->terrifnsfl;
+    }
+
+    public function setTerrifnsul(?string $terrifnsul): self
+    {
+        $this->terrifnsul = $terrifnsul;
+
+        return $this;
+    }
+
+    public function getTerrifnsul(): ?string
+    {
+        return $this->terrifnsul;
+    }
+
+    public function setBuildnum(?string $buildnum): self
+    {
+        $this->buildnum = $buildnum;
+
+        return $this;
+    }
+
+    public function getBuildnum(): ?string
+    {
+        return $this->buildnum;
+    }
+
+    public function setStrucnum(?string $strucnum): self
+    {
+        $this->strucnum = $strucnum;
+
+        return $this;
+    }
+
+    public function getStrucnum(): ?string
+    {
+        return $this->strucnum;
+    }
+
+    public function setNormdoc(?UuidInterface $normdoc): self
+    {
+        $this->normdoc = $normdoc;
+
+        return $this;
+    }
+
+    public function getNormdoc(): ?UuidInterface
+    {
+        return $this->normdoc;
+    }
+
+    public function setCadnum(?string $cadnum): self
+    {
+        $this->cadnum = $cadnum;
+
+        return $this;
+    }
+
+    public function getCadnum(): ?string
+    {
+        return $this->cadnum;
     }
 }

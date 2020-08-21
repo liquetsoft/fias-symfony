@@ -67,7 +67,7 @@ class InstallFromFolderCommand extends Command
         $io->note("Installing full version of FIAS from '{$folder}' folder.");
         $start = microtime(true);
 
-        $state = new ArrayState;
+        $state = new ArrayState();
         $state->setAndLockParameter(Task::EXTRACT_TO_FOLDER_PARAM, new SplFileInfo($folder));
         $this->pipeline->run($state);
 

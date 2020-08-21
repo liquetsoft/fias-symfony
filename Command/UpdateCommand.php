@@ -58,7 +58,7 @@ class UpdateCommand extends Command
         $start = microtime(true);
 
         do {
-            $state = new ArrayState;
+            $state = new ArrayState();
             $this->pipeline->run($state);
 
             $info = $state->getParameter(Task::FIAS_INFO_PARAM);

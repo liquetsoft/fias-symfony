@@ -8,7 +8,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\EstateStatus;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
- * Тест для сущности 'Перечень возможных видов владений'.
+ * Тест для сущности 'Признак владения'.
  */
 class EstateStatusTest extends EntityCase
 {
@@ -17,7 +17,7 @@ class EstateStatusTest extends EntityCase
      */
     protected function createEntity()
     {
-        return new EstateStatus;
+        return new EstateStatus();
     }
 
     /**
@@ -28,6 +28,7 @@ class EstateStatusTest extends EntityCase
         return [
             'eststatid' => $this->createFakeData()->numberBetween(1, 1000000),
             'name' => $this->createFakeData()->word,
+            'shortname' => $this->createFakeData()->word,
         ];
     }
 }

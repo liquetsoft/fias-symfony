@@ -8,7 +8,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\CenterStatus;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
- * Тест для сущности 'Перечень возможных статусов (центров) адресных объектов административных единиц'.
+ * Тест для сущности 'Статус центра'.
  */
 class CenterStatusTest extends EntityCase
 {
@@ -17,7 +17,7 @@ class CenterStatusTest extends EntityCase
      */
     protected function createEntity()
     {
-        return new CenterStatus;
+        return new CenterStatus();
     }
 
     /**
