@@ -7,49 +7,57 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Перечень полных, сокращённых наименований типов адресных элементов и уровней их классификации.
+ * Тип адресного объекта.
  *
  * @ORM\MappedSuperclass
  */
 class AddressObjectType
 {
     /**
+     * Ключевое поле.
+     *
      * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
-     */
-    protected $kodtst = 0;
-
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
-     */
-    protected $level = 0;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=4, nullable=false)
      *
      * @var string
      */
-    protected $socrname = '';
+    protected string $kodtst = '';
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * Уровень адресного объекта.
+     *
+     * @ORM\Column(type="integer", nullable=false)
+     *
+     * @var int
+     */
+    protected int $level = 0;
+
+    /**
+     * Полное наименование типа объекта.
+     *
+     * @ORM\Column(type="string", length=50, nullable=false)
+     *
+     * @var string
+     */
+    protected string $socrname = '';
+
+    /**
+     * Краткое наименование типа объекта.
+     *
+     * @ORM\Column(type="string", length=10, nullable=true)
      *
      * @var string|null
      */
-    protected $scname;
+    protected ?string $scname = null;
 
-    public function setKodtst(int $kodtst): self
+    public function setKodtst(string $kodtst): self
     {
         $this->kodtst = $kodtst;
 
         return $this;
     }
 
-    public function getKodtst(): int
+    public function getKodtst(): string
     {
         return $this->kodtst;
     }

@@ -21,14 +21,8 @@ use Throwable;
  */
 class TestGenerator
 {
-    /**
-     * @var EntityRegistry
-     */
-    protected $registry;
+    protected EntityRegistry $registry;
 
-    /**
-     * @param EntityRegistry $registry
-     */
     public function __construct(EntityRegistry $registry)
     {
         $this->registry = $registry;
@@ -91,7 +85,7 @@ class TestGenerator
         $name = ucfirst($descriptor->getName()) . 'Test';
         $fullPath = "{$dir->getPathname()}/{$name}.php";
 
-        $phpFile = new PhpFile;
+        $phpFile = new PhpFile();
         $phpFile->setStrictTypes();
 
         $namespace = $phpFile->addNamespace($namespace);
@@ -103,7 +97,7 @@ class TestGenerator
         $createEntityMethod = $class->addMethod('createEntity');
         $createEntityMethod->addComment("@inheritdoc\n");
         $createEntityMethod->setVisibility('protected');
-        $createEntityMethod->setBody("return new {$baseName};");
+        $createEntityMethod->setBody("return new {$baseName}();");
 
         $accessors = "return [\n";
         foreach ($descriptor->getFields() as $field) {
@@ -115,7 +109,7 @@ class TestGenerator
             } elseif ($type === 'string_uuid') {
                 $value = '$this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock()';
             } elseif ($type === 'string_date') {
-                $value = 'new DateTime';
+                $value = 'new DateTime()';
             }
             $accessors .= "    '{$name}' => {$value},\n";
         }
@@ -126,7 +120,7 @@ class TestGenerator
         $accessorsProviderMethod->setBody($accessors);
         $accessorsProviderMethod->addComment("@inheritdoc\n");
 
-        file_put_contents($fullPath, (new PsrPrinter)->printFile($phpFile));
+        file_put_contents($fullPath, (new PsrPrinter())->printFile($phpFile));
     }
 
     /**

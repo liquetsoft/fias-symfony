@@ -47,7 +47,6 @@
 
     Список доступных суперклассов:
 
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\ActualStatus`,
     * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\ActualStatus`
     * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddressObject`
     * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddressObjectType`
@@ -56,8 +55,6 @@
     * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\EstateStatus`
     * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FlatType`
     * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\House`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\HouseStateStatus`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\IntervalStatus`
     * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\NormativeDocument`
     * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\NormativeDocumentType`
     * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\OperationStatus`
@@ -113,8 +110,6 @@
             EstateStatus: App\Entity\EstateStatus
             FlatType: App\Entity\FlatType
             House: App\Entity\House
-            HouseStateStatus: App\Entity\HouseStateStatus
-            IntervalStatus: App\Entity\IntervalStatus
             NormativeDocument: App\Entity\NormativeDocument
             NormativeDocumentType: App\Entity\NormativeDocumentType
             OperationStatus: App\Entity\OperationStatus
@@ -135,6 +130,7 @@
             arguments:
                 - '@doctrine.orm.entity_manager'
                 - '%liquetsoft_fias.insert_batch_count%'
+                - '@logger'
     ```
 
 8. Поскольку для записи в БД используется `Doctrine`, нужно отключить логгирование запросов, иначе скрипт падает с переполнением памяти:

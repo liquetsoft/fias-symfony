@@ -8,7 +8,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\NormativeDocumentType;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
- * Тест для сущности 'Типы нормативных документов'.
+ * Тест для сущности 'Тип нормативного документа'.
  */
 class NormativeDocumentTypeTest extends EntityCase
 {
@@ -17,7 +17,7 @@ class NormativeDocumentTypeTest extends EntityCase
      */
     protected function createEntity()
     {
-        return new NormativeDocumentType;
+        return new NormativeDocumentType();
     }
 
     /**

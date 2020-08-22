@@ -18,10 +18,7 @@ use Doctrine\ORM\Tools\ToolsException;
  */
 abstract class DoctrineTestCase extends BaseCase
 {
-    /**
-     * @var EntityManager|null
-     */
-    private $entityManager;
+    private ?EntityManager $entityManager = null;
 
     /**
      * Проверяет, что сущность существует в базе данных.

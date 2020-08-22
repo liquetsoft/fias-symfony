@@ -34,7 +34,7 @@ class LiquetsoftFiasExtension extends Extension
      */
     protected function loadConfigurationToContainer(array $configs, ContainerBuilder $container): void
     {
-        $configuration = new Configuration;
+        $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
         foreach ($config as $key => $value) {
             $container->setParameter(Configuration::CONFIG_NAME . '.' . $key, $value);

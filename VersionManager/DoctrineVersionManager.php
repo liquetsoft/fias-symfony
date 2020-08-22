@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\VersionManager;
 
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
@@ -18,20 +19,10 @@ use Throwable;
  */
 class DoctrineVersionManager implements VersionManager
 {
-    /**
-     * @var EntityManager
-     */
-    protected $em;
+    protected EntityManager $em;
 
-    /**
-     * @var string
-     */
-    protected $entityClassName;
+    protected string $entityClassName;
 
-    /**
-     * @param EntityManager $em
-     * @param string        $entityClassName
-     */
     public function __construct(EntityManager $em, string $entityClassName)
     {
         $this->em = $em;
@@ -48,6 +39,7 @@ class DoctrineVersionManager implements VersionManager
         $entity = $this->getEntity();
         $entity->setVersion($info->getVersion());
         $entity->setUrl($info->getUrl());
+        $entity->setCreated(new DateTime());
 
         try {
             $this->em->persist($entity);
@@ -67,7 +59,7 @@ class DoctrineVersionManager implements VersionManager
      */
     public function getCurrentVersion(): InformerResponse
     {
-        $response = new InformerResponseBase;
+        $response = new InformerResponseBase();
 
         $entity = $this->getEntityRepository()->findOneBy([], ['createdAt' => 'DESC']);
         if ($entity instanceof FiasVersion) {
@@ -87,10 +79,10 @@ class DoctrineVersionManager implements VersionManager
      *
      * @psalm-suppress InvalidStringClass
      */
-    protected function getEntity(): FiasVersion
+    private function getEntity(): FiasVersion
     {
         $className = $this->getEntityClassName();
-        $entity = new $className;
+        $entity = new $className();
 
         if (!($entity instanceof FiasVersion)) {
             throw new RuntimeException(
@@ -106,10 +98,8 @@ class DoctrineVersionManager implements VersionManager
      * Возвращает объект репозитория для сущности.
      *
      * @return EntityRepository
-     *
-     * @psalm-suppress DeprecatedClass
      */
-    protected function getEntityRepository(): EntityRepository
+    private function getEntityRepository(): EntityRepository
     {
         $entityClassName = $this->getEntityClassName();
 
@@ -128,7 +118,7 @@ class DoctrineVersionManager implements VersionManager
      *
      * @throws RuntimeException
      */
-    protected function getEntityClassName(): string
+    private function getEntityClassName(): string
     {
         $trimmedEntityClassName = trim($this->entityClassName, " \t\n\r\0\x0B\\");
 

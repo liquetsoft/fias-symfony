@@ -7,33 +7,39 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Перечень видов строений.
+ * Признак строения.
  *
  * @ORM\MappedSuperclass
  */
 class StructureStatus
 {
     /**
+     * Признак строения.
+     *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
-    protected $strstatid = 0;
+    protected int $strstatid = 0;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * Наименование.
+     *
+     * @ORM\Column(type="string", length=20, nullable=false)
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * Краткое наименование.
+     *
+     * @ORM\Column(type="string", length=20, nullable=true)
      *
      * @var string|null
      */
-    protected $shortname;
+    protected ?string $shortname = null;
 
     public function setStrstatid(int $strstatid): self
     {

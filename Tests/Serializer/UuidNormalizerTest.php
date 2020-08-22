@@ -23,9 +23,9 @@ class UuidNormalizerTest extends BaseCase
     public function testNormalize()
     {
         $uuidString = $this->createFakeData()->uuid;
-        $uuid = (new UuidFactory)->fromString($uuidString);
+        $uuid = (new UuidFactory())->fromString($uuidString);
 
-        $normalizer = new UuidNormalizer;
+        $normalizer = new UuidNormalizer();
 
         $this->assertSame($uuidString, $normalizer->normalize($uuid));
     }
@@ -36,7 +36,7 @@ class UuidNormalizerTest extends BaseCase
      */
     public function testNormalizeWrongObjectException()
     {
-        $normalizer = new UuidNormalizer;
+        $normalizer = new UuidNormalizer();
 
         $this->expectException(InvalidArgumentException::class);
         $normalizer->normalize('123');
@@ -48,12 +48,12 @@ class UuidNormalizerTest extends BaseCase
      */
     public function testSupportsNormalization()
     {
-        $uuid = (new UuidFactory)->fromString($this->createFakeData()->uuid);
+        $uuid = (new UuidFactory())->fromString($this->createFakeData()->uuid);
 
-        $normalizer = new UuidNormalizer;
+        $normalizer = new UuidNormalizer();
 
         $this->assertTrue($normalizer->supportsNormalization($uuid));
-        $this->assertFalse($normalizer->supportsNormalization(new \stdClass));
+        $this->assertFalse($normalizer->supportsNormalization(new \stdClass()));
         $this->assertFalse($normalizer->supportsNormalization('123'));
         $this->assertFalse($normalizer->supportsNormalization(null));
         $this->assertFalse($normalizer->supportsNormalization(false));
@@ -66,7 +66,7 @@ class UuidNormalizerTest extends BaseCase
     {
         $uuidString = $this->createFakeData()->uuid;
 
-        $normalizer = new UuidNormalizer;
+        $normalizer = new UuidNormalizer();
         $uuid = $normalizer->denormalize($uuidString, 'test');
 
         $this->assertInstanceOf(UuidInterface::class, $uuid);
@@ -79,7 +79,7 @@ class UuidNormalizerTest extends BaseCase
      */
     public function testDenormalizeEmptyStringException()
     {
-        $normalizer = new UuidNormalizer;
+        $normalizer = new UuidNormalizer();
 
         $this->expectException(NotNormalizableValueException::class);
         $uuid = $normalizer->denormalize('', 'test');
@@ -91,7 +91,7 @@ class UuidNormalizerTest extends BaseCase
      */
     public function testDenormalizeWrongStringException()
     {
-        $normalizer = new UuidNormalizer;
+        $normalizer = new UuidNormalizer();
 
         $this->expectException(NotNormalizableValueException::class);
         $uuid = $normalizer->denormalize('test', 'test');
@@ -103,7 +103,7 @@ class UuidNormalizerTest extends BaseCase
      */
     public function testSupportsDenormalization()
     {
-        $normalizer = new UuidNormalizer;
+        $normalizer = new UuidNormalizer();
         $uuidString = $this->createFakeData()->uuid;
 
         $this->assertTrue($normalizer->supportsDenormalization('test', Uuid::class));

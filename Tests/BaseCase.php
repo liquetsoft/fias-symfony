@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests;
 
+use Faker\Factory;
+use Faker\Generator;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -11,10 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class BaseCase extends TestCase
 {
-    /**
-     * @var \Faker\Generator|null
-     */
-    private $faker;
+    private ?Generator $faker = null;
 
     /**
      * Возвращает объект php faker для генерации случайных данных.
@@ -23,12 +22,12 @@ abstract class BaseCase extends TestCase
      * запросе, для всех последующих запросов возвращает тот же самый инстанс,
      * который был создан в первый раз.
      *
-     * @return \Faker\Generator
+     * @return Generator
      */
-    public function createFakeData(): \Faker\Generator
+    public function createFakeData(): Generator
     {
         if ($this->faker === null) {
-            $this->faker = \Faker\Factory::create();
+            $this->faker = Factory::create();
         }
 
         return $this->faker;

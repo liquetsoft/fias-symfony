@@ -9,131 +9,227 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Сведения о земельных участках.
+ * Классификатор земельных участков.
  *
  * @ORM\MappedSuperclass
  */
 class Stead
 {
     /**
-     * @ORM\Id
+     * Глобальный уникальный идентификатор адресного объекта (земельного участка).
+     *
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
-    protected $steadguid;
+    protected ?UuidInterface $steadguid = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * Номер земельного участка.
+     *
+     * @ORM\Column(type="string", length=120, nullable=true)
      *
      * @var string|null
      */
-    protected $number;
+    protected ?string $number = null;
 
     /**
+     * Код региона.
+     *
      * @ORM\Column(type="string", length=2, nullable=false)
      *
      * @var string
      */
-    protected $regioncode = '';
+    protected string $regioncode = '';
 
     /**
+     * Почтовый индекс.
+     *
      * @ORM\Column(type="string", length=6, nullable=true)
      *
      * @var string|null
      */
-    protected $postalcode;
+    protected ?string $postalcode = null;
 
     /**
-     * @ORM\Column(type="string", length=4, nullable=false)
+     * Код ИФНС ФЛ.
      *
-     * @var string
-     */
-    protected $ifnsfl = '';
-
-    /**
-     * @ORM\Column(type="string", length=4, nullable=false)
+     * @ORM\Column(type="string", length=4, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $ifnsul = '';
+    protected ?string $ifnsfl = null;
 
     /**
-     * @ORM\Column(type="string", length=11, nullable=false)
+     * Код ИФНС ЮЛ.
      *
-     * @var string
-     */
-    protected $okato = '';
-
-    /**
-     * @ORM\Column(type="string", length=11, nullable=false)
+     * @ORM\Column(type="string", length=4, nullable=true)
      *
-     * @var string
+     * @var string|null
      */
-    protected $oktmo = '';
+    protected ?string $ifnsul = null;
 
     /**
+     * OKATO.
+     *
+     * @ORM\Column(type="string", length=11, nullable=true)
+     *
+     * @var string|null
+     */
+    protected ?string $okato = null;
+
+    /**
+     * OKTMO.
+     *
+     * @ORM\Column(type="string", length=11, nullable=true)
+     *
+     * @var string|null
+     */
+    protected ?string $oktmo = null;
+
+    /**
+     * Идентификатор объекта родительского объекта.
+     *
      * @ORM\Column(type="uuid", nullable=true)
      *
      * @var UuidInterface|null
      */
-    protected $parentguid;
+    protected ?UuidInterface $parentguid = null;
 
     /**
+     * Уникальный идентификатор записи. Ключевое поле.
+     *
+     * @ORM\Id
+     * @ORM\Column(type="uuid", nullable=false)
+     *
+     * @var UuidInterface|null
+     */
+    protected ?UuidInterface $steadid = null;
+
+    /**
+     * Статус действия над записью – причина появления записи (см. описание таблицы OperationStatus):
+     * 01 – Инициация;
+     * 10 – Добавление;
+     * 20 – Изменение;
+     * 21 – Групповое изменение;
+     * 30 – Удаление;
+     * 31 - Удаление вследствие удаления вышестоящего объекта;
+     * 40 – Присоединение адресного объекта (слияние);
+     * 41 – Переподчинение вследствие слияния вышестоящего объекта;
+     * 42 - Прекращение существования вследствие присоединения к другому адресному объекту;
+     * 43 - Создание нового адресного объекта в результате слияния адресных объектов;
+     * 50 – Переподчинение;
+     * 51 – Переподчинение вследствие переподчинения вышестоящего объекта;
+     * 60 – Прекращение существования вследствие дробления;
+     * 61 – Создание нового адресного объекта в результате дробления.
+     *
+     * @ORM\Column(type="integer", nullable=false)
+     *
+     * @var int
+     */
+    protected int $operstatus = 0;
+
+    /**
+     * Начало действия записи.
+     *
+     * @ORM\Column(type="datetime", nullable=false)
+     *
+     * @var DateTimeInterface|null
+     */
+    protected ?DateTimeInterface $startdate = null;
+
+    /**
+     * Окончание действия записи.
+     *
+     * @ORM\Column(type="datetime", nullable=false)
+     *
+     * @var DateTimeInterface|null
+     */
+    protected ?DateTimeInterface $enddate = null;
+
+    /**
+     * Дата  внесения записи.
+     *
+     * @ORM\Column(type="datetime", nullable=false)
+     *
+     * @var DateTimeInterface|null
+     */
+    protected ?DateTimeInterface $updatedate = null;
+
+    /**
+     * Признак действующего адресного объекта.
+     *
+     * @ORM\Column(type="integer", nullable=false)
+     *
+     * @var int
+     */
+    protected int $livestatus = 0;
+
+    /**
+     * Тип адресации:
+     * 0 - не определено
+     * 1 - муниципальный;
+     * 2 - административно-территориальный.
+     *
+     * @ORM\Column(type="integer", nullable=false)
+     *
+     * @var int
+     */
+    protected int $divtype = 0;
+
+    /**
+     * Внешний ключ на нормативный документ.
+     *
      * @ORM\Column(type="uuid", nullable=true)
      *
      * @var UuidInterface|null
      */
-    protected $steadid;
+    protected ?UuidInterface $normdoc = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * Код территориального участка ИФНС ФЛ.
      *
-     * @var string
-     */
-    protected $operstatus = '';
-
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="string", length=4, nullable=true)
      *
-     * @var DateTimeInterface
+     * @var string|null
      */
-    protected $startdate;
+    protected ?string $terrifnsfl = null;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * Код территориального участка ИФНС ЮЛ.
      *
-     * @var DateTimeInterface
-     */
-    protected $enddate;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="string", length=4, nullable=true)
      *
-     * @var DateTimeInterface
+     * @var string|null
      */
-    protected $updatedate;
+    protected ?string $terrifnsul = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * Идентификатор записи связывания с предыдушей исторической записью.
      *
-     * @var string
-     */
-    protected $livestatus = '';
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     *
-     * @var string
-     */
-    protected $divtype = '';
-
-    /**
      * @ORM\Column(type="uuid", nullable=true)
      *
      * @var UuidInterface|null
      */
-    protected $normdoc;
+    protected ?UuidInterface $previd = null;
+
+    /**
+     * Идентификатор записи  связывания с последующей исторической записью.
+     *
+     * @ORM\Column(type="uuid", nullable=true)
+     *
+     * @var UuidInterface|null
+     */
+    protected ?UuidInterface $nextid = null;
+
+    /**
+     * Кадастровый номер.
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     *
+     * @var string|null
+     */
+    protected ?string $cadnum = null;
 
     public function setSteadguid(UuidInterface $steadguid): self
     {
@@ -142,7 +238,7 @@ class Stead
         return $this;
     }
 
-    public function getSteadguid(): UuidInterface
+    public function getSteadguid(): ?UuidInterface
     {
         return $this->steadguid;
     }
@@ -183,50 +279,50 @@ class Stead
         return $this->postalcode;
     }
 
-    public function setIfnsfl(string $ifnsfl): self
+    public function setIfnsfl(?string $ifnsfl): self
     {
         $this->ifnsfl = $ifnsfl;
 
         return $this;
     }
 
-    public function getIfnsfl(): string
+    public function getIfnsfl(): ?string
     {
         return $this->ifnsfl;
     }
 
-    public function setIfnsul(string $ifnsul): self
+    public function setIfnsul(?string $ifnsul): self
     {
         $this->ifnsul = $ifnsul;
 
         return $this;
     }
 
-    public function getIfnsul(): string
+    public function getIfnsul(): ?string
     {
         return $this->ifnsul;
     }
 
-    public function setOkato(string $okato): self
+    public function setOkato(?string $okato): self
     {
         $this->okato = $okato;
 
         return $this;
     }
 
-    public function getOkato(): string
+    public function getOkato(): ?string
     {
         return $this->okato;
     }
 
-    public function setOktmo(string $oktmo): self
+    public function setOktmo(?string $oktmo): self
     {
         $this->oktmo = $oktmo;
 
         return $this;
     }
 
-    public function getOktmo(): string
+    public function getOktmo(): ?string
     {
         return $this->oktmo;
     }
@@ -243,7 +339,7 @@ class Stead
         return $this->parentguid;
     }
 
-    public function setSteadid(?UuidInterface $steadid): self
+    public function setSteadid(UuidInterface $steadid): self
     {
         $this->steadid = $steadid;
 
@@ -255,14 +351,14 @@ class Stead
         return $this->steadid;
     }
 
-    public function setOperstatus(string $operstatus): self
+    public function setOperstatus(int $operstatus): self
     {
         $this->operstatus = $operstatus;
 
         return $this;
     }
 
-    public function getOperstatus(): string
+    public function getOperstatus(): int
     {
         return $this->operstatus;
     }
@@ -274,7 +370,7 @@ class Stead
         return $this;
     }
 
-    public function getStartdate(): DateTimeInterface
+    public function getStartdate(): ?DateTimeInterface
     {
         return $this->startdate;
     }
@@ -286,7 +382,7 @@ class Stead
         return $this;
     }
 
-    public function getEnddate(): DateTimeInterface
+    public function getEnddate(): ?DateTimeInterface
     {
         return $this->enddate;
     }
@@ -298,31 +394,31 @@ class Stead
         return $this;
     }
 
-    public function getUpdatedate(): DateTimeInterface
+    public function getUpdatedate(): ?DateTimeInterface
     {
         return $this->updatedate;
     }
 
-    public function setLivestatus(string $livestatus): self
+    public function setLivestatus(int $livestatus): self
     {
         $this->livestatus = $livestatus;
 
         return $this;
     }
 
-    public function getLivestatus(): string
+    public function getLivestatus(): int
     {
         return $this->livestatus;
     }
 
-    public function setDivtype(string $divtype): self
+    public function setDivtype(int $divtype): self
     {
         $this->divtype = $divtype;
 
         return $this;
     }
 
-    public function getDivtype(): string
+    public function getDivtype(): int
     {
         return $this->divtype;
     }
@@ -337,5 +433,65 @@ class Stead
     public function getNormdoc(): ?UuidInterface
     {
         return $this->normdoc;
+    }
+
+    public function setTerrifnsfl(?string $terrifnsfl): self
+    {
+        $this->terrifnsfl = $terrifnsfl;
+
+        return $this;
+    }
+
+    public function getTerrifnsfl(): ?string
+    {
+        return $this->terrifnsfl;
+    }
+
+    public function setTerrifnsul(?string $terrifnsul): self
+    {
+        $this->terrifnsul = $terrifnsul;
+
+        return $this;
+    }
+
+    public function getTerrifnsul(): ?string
+    {
+        return $this->terrifnsul;
+    }
+
+    public function setPrevid(?UuidInterface $previd): self
+    {
+        $this->previd = $previd;
+
+        return $this;
+    }
+
+    public function getPrevid(): ?UuidInterface
+    {
+        return $this->previd;
+    }
+
+    public function setNextid(?UuidInterface $nextid): self
+    {
+        $this->nextid = $nextid;
+
+        return $this;
+    }
+
+    public function getNextid(): ?UuidInterface
+    {
+        return $this->nextid;
+    }
+
+    public function setCadnum(?string $cadnum): self
+    {
+        $this->cadnum = $cadnum;
+
+        return $this;
+    }
+
+    public function getCadnum(): ?string
+    {
+        return $this->cadnum;
     }
 }

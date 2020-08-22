@@ -7,26 +7,30 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Перечень возможных статусов (центров) адресных объектов административных единиц.
+ * Статус центра.
  *
  * @ORM\MappedSuperclass
  */
 class CenterStatus
 {
     /**
+     * Идентификатор статуса.
+     *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
-    protected $centerstid = 0;
+    protected int $centerstid = 0;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * Наименование.
+     *
+     * @ORM\Column(type="string", length=100, nullable=false)
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     public function setCenterstid(int $centerstid): self
     {

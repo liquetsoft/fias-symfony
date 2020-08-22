@@ -16,19 +16,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class InstallParallelCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected static $defaultName = 'liquetsoft:fias:install';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    protected Pipe $pipeline;
 
-    /**
-     * @param Pipe $pipeline
-     */
     public function __construct(Pipe $pipeline)
     {
         $this->pipeline = $pipeline;
@@ -54,7 +45,7 @@ class InstallParallelCommand extends Command
         $io->note('Installing full version of FIAS in parallel processes.');
         $start = microtime(true);
 
-        $state = new ArrayState;
+        $state = new ArrayState();
         $this->pipeline->run($state);
 
         $total = round(microtime(true) - $start, 4);

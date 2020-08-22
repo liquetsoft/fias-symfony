@@ -19,7 +19,7 @@ class NormativeDocumentTest extends EntityCase
      */
     protected function createEntity()
     {
-        return new NormativeDocument;
+        return new NormativeDocument();
     }
 
     /**
@@ -30,9 +30,10 @@ class NormativeDocumentTest extends EntityCase
         return [
             'normdocid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
             'docname' => $this->createFakeData()->word,
-            'docdate' => new DateTime,
+            'docdate' => new DateTime(),
             'docnum' => $this->createFakeData()->word,
-            'doctype' => $this->createFakeData()->word,
+            'doctype' => $this->createFakeData()->numberBetween(1, 1000000),
+            'docimgid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
         ];
     }
 }

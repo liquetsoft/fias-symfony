@@ -17,19 +17,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class InstallParallelRunningCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected static $defaultName = 'liquetsoft:fias:install_parallel_running';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    protected Pipe $pipeline;
 
-    /**
-     * @param Pipe $pipeline
-     */
     public function __construct(Pipe $pipeline)
     {
         $this->pipeline = $pipeline;
@@ -66,7 +57,7 @@ class InstallParallelRunningCommand extends Command
         }
         $filesToDelete = json_decode((string) $filesToDelete, true);
 
-        $state = new ArrayState;
+        $state = new ArrayState();
         $state->setAndLockParameter(Task::FILES_TO_INSERT_PARAM, $filesToInsert);
         $state->setAndLockParameter(Task::FILES_TO_DELETE_PARAM, $filesToDelete);
         $this->pipeline->run($state);

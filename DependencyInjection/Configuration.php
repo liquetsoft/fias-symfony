@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Kernel;
  */
 class Configuration implements ConfigurationInterface
 {
-    const CONFIG_NAME = 'liquetsoft_fias';
+    public const CONFIG_NAME = 'liquetsoft_fias';
 
     /**
      * {@inheritdoc}
@@ -28,7 +28,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder->getRootNode()
             ->children()
                 ->scalarNode('informer_wsdl')->defaultValue('http://fias.nalog.ru/WebServices/Public/DownloadService.asmx?WSDL')->end()
-                ->scalarNode('registry_yaml')->defaultValue("{$rootDir}/vendor/liquetsoft/fias-component/resources/fias_entities.yaml")->end()
+                ->scalarNode('registry_path')->defaultValue(null)->end()
                 ->scalarNode('temp_dir')->defaultValue('%kernel.cache_dir%/fias')->end()
                 ->scalarNode('version_manager_entity')->defaultValue('')->end()
                 ->scalarNode('insert_batch_count')->defaultValue(800)->end()

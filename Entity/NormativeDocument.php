@@ -16,40 +16,59 @@ use Ramsey\Uuid\UuidInterface;
 class NormativeDocument
 {
     /**
+     * Идентификатор нормативного документа.
+     *
      * @ORM\Id
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
-    protected $normdocid;
+    protected ?UuidInterface $normdocid = null;
 
     /**
+     * Наименование документа.
+     *
      * @ORM\Column(type="string", length=1000, nullable=true)
      *
      * @var string|null
      */
-    protected $docname;
+    protected ?string $docname = null;
 
     /**
+     * Дата документа.
+     *
      * @ORM\Column(type="datetime", nullable=true)
      *
      * @var DateTimeInterface|null
      */
-    protected $docdate;
+    protected ?DateTimeInterface $docdate = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * Номер документа.
+     *
+     * @ORM\Column(type="string", length=250, nullable=true)
      *
      * @var string|null
      */
-    protected $docnum;
+    protected ?string $docnum = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * Тип документа.
      *
-     * @var string
+     * @ORM\Column(type="integer", nullable=false)
+     *
+     * @var int
      */
-    protected $doctype = '';
+    protected int $doctype = 0;
+
+    /**
+     * Идентификатор образа (внешний ключ).
+     *
+     * @ORM\Column(type="uuid", nullable=true)
+     *
+     * @var UuidInterface|null
+     */
+    protected ?UuidInterface $docimgid = null;
 
     public function setNormdocid(UuidInterface $normdocid): self
     {
@@ -58,7 +77,7 @@ class NormativeDocument
         return $this;
     }
 
-    public function getNormdocid(): UuidInterface
+    public function getNormdocid(): ?UuidInterface
     {
         return $this->normdocid;
     }
@@ -99,15 +118,27 @@ class NormativeDocument
         return $this->docnum;
     }
 
-    public function setDoctype(string $doctype): self
+    public function setDoctype(int $doctype): self
     {
         $this->doctype = $doctype;
 
         return $this;
     }
 
-    public function getDoctype(): string
+    public function getDoctype(): int
     {
         return $this->doctype;
+    }
+
+    public function setDocimgid(?UuidInterface $docimgid): self
+    {
+        $this->docimgid = $docimgid;
+
+        return $this;
+    }
+
+    public function getDocimgid(): ?UuidInterface
+    {
+        return $this->docimgid;
     }
 }

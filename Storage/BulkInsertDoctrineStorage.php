@@ -24,12 +24,7 @@ use Throwable;
  */
 class BulkInsertDoctrineStorage extends DoctrineStorage
 {
-    /**
-     * Объект для логгирования данных.
-     *
-     * @var LoggerInterface|null
-     */
-    protected $logger;
+    protected ?LoggerInterface $logger;
 
     /**
      * Сохраненные в памяти данные для множественной вставки.
@@ -38,7 +33,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      *
      * @var mixed[]
      */
-    protected $insertData = [];
+    protected array $insertData = [];
 
     /**
      * @param EntityManager        $em

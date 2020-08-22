@@ -17,19 +17,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class TruncateCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected static $defaultName = 'liquetsoft:fias:truncate';
 
-    /**
-     * @var Task
-     */
-    protected $truncateTask;
+    protected Task $truncateTask;
 
-    /**
-     * @param Task $truncateTask
-     */
     public function __construct(Task $truncateTask)
     {
         $this->truncateTask = $truncateTask;
@@ -54,7 +45,7 @@ class TruncateCommand extends Command
 
         $io->note('Truncating storage for binded entities.');
 
-        $state = new ArrayState;
+        $state = new ArrayState();
         $this->truncateTask->run($state);
 
         $io->success('Storage truncated.');

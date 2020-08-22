@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator;
 
+use DateTimeInterface;
 use InvalidArgumentException;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\EntityField;
@@ -14,6 +15,7 @@ use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\Property;
 use Nette\PhpGenerator\PsrPrinter;
+use Ramsey\Uuid\UuidInterface;
 use RuntimeException;
 use SplFileInfo;
 use Throwable;
@@ -24,14 +26,8 @@ use Throwable;
  */
 class EntityGenerator
 {
-    /**
-     * @var EntityRegistry
-     */
-    protected $registry;
+    protected EntityRegistry $registry;
 
-    /**
-     * @param EntityRegistry $registry
-     */
     public function __construct(EntityRegistry $registry)
     {
         $this->registry = $registry;
@@ -89,7 +85,7 @@ class EntityGenerator
         $name = ucfirst($descriptor->getName());
         $fullPath = "{$dir->getPathname()}/{$name}.php";
 
-        $phpFile = new PhpFile;
+        $phpFile = new PhpFile();
         $phpFile->setStrictTypes();
 
         $namespace = $phpFile->addNamespace($namespace);
@@ -108,7 +104,7 @@ class EntityGenerator
             $this->decorateGetter($class->addMethod($getter), $field);
         }
 
-        file_put_contents($fullPath, (new PsrPrinter)->printFile($phpFile));
+        file_put_contents($fullPath, (new PsrPrinter())->printFile($phpFile));
     }
 
     /**
@@ -122,10 +118,10 @@ class EntityGenerator
         $namespace->addUse('Doctrine\ORM\Mapping', 'ORM');
         foreach ($descriptor->getFields() as $field) {
             if ($field->getSubType() === 'uuid') {
-                $namespace->addUse('Ramsey\Uuid\UuidInterface');
+                $namespace->addUse(UuidInterface::class);
             }
             if ($field->getSubType() === 'date') {
-                $namespace->addUse('DateTimeInterface');
+                $namespace->addUse(DateTimeInterface::class);
             }
         }
     }
@@ -176,23 +172,31 @@ class EntityGenerator
                 if ($field->isPrimary()) {
                     $column = "@ORM\Id\n{$column}";
                 }
+                $property->setType('int');
+                if ($field->isNullable()) {
+                    $property->setNullable();
+                }
                 break;
             case 'string_uuid':
                 $defaultValue = null;
-                $varType = 'UuidInterface' . ($field->isNullable() ? '|null' : '');
+                $varType = 'UuidInterface|null';
                 $column = '@ORM\Column(type="uuid"';
                 $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
                 $column .= ')';
                 if ($field->isPrimary()) {
                     $column = "@ORM\Id\n{$column}";
                 }
+                $property->setType(UuidInterface::class);
+                $property->setNullable();
                 break;
             case 'string_date':
                 $defaultValue = null;
-                $varType = 'DateTimeInterface' . ($field->isNullable() ? '|null' : '');
+                $varType = 'DateTimeInterface|null';
                 $column = '@ORM\Column(type="datetime"';
                 $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
                 $column .= ')';
+                $property->setType(DateTimeInterface::class);
+                $property->setNullable();
                 break;
             default:
                 $defaultValue = $field->isNullable() ? null : '';
@@ -204,11 +208,16 @@ class EntityGenerator
                 if ($field->isPrimary()) {
                     $column = "@ORM\Id\n{$column}";
                 }
+                $property->setType('string');
+                if ($field->isNullable()) {
+                    $property->setNullable();
+                }
                 break;
         }
 
         $property->setValue($defaultValue);
         $property->setVisibility('protected');
+        $property->setInitialized();
         if ($field->getDescription()) {
             $description = ucfirst(rtrim($field->getDescription(), " \t\n\r\0\x0B.")) . '.';
             $property->addComment("{$description}\n");
@@ -231,10 +240,10 @@ class EntityGenerator
                 $paramHint = 'int';
                 break;
             case 'string_uuid':
-                $paramHint = '\\Ramsey\\Uuid\\UuidInterface';
+                $paramHint = UuidInterface::class;
                 break;
             case 'string_date':
-                $paramHint = 'DateTimeInterface';
+                $paramHint = DateTimeInterface::class;
                 break;
             default:
                 $paramHint = 'string';
@@ -265,15 +274,19 @@ class EntityGenerator
         switch ($type) {
             case 'int':
                 $returnHint = 'int';
+                $isNullable = $field->isNullable();
                 break;
             case 'string_uuid':
-                $returnHint = '\\Ramsey\\Uuid\\UuidInterface';
+                $returnHint = UuidInterface::class;
+                $isNullable = true;
                 break;
             case 'string_date':
-                $returnHint = 'DateTimeInterface';
+                $returnHint = DateTimeInterface::class;
+                $isNullable = true;
                 break;
             default:
                 $returnHint = 'string';
+                $isNullable = $field->isNullable();
                 break;
         }
 
@@ -281,7 +294,7 @@ class EntityGenerator
 
         $method->setVisibility('public');
         $method->setReturnType($returnHint);
-        if ($field->isNullable()) {
+        if ($isNullable) {
             $method->setReturnNullable();
         }
         $method->setBody("return \$this->{$parameterName};");

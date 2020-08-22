@@ -8,7 +8,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\CurrentStatus;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
- * Тест для сущности 'Перечень статусов актуальности записи адресного элемента по классификатору КЛАДР4.0'.
+ * Тест для сущности 'Статус актуальности КЛАДР 4.0'.
  */
 class CurrentStatusTest extends EntityCase
 {
@@ -17,7 +17,7 @@ class CurrentStatusTest extends EntityCase
      */
     protected function createEntity()
     {
-        return new CurrentStatus;
+        return new CurrentStatus();
     }
 
     /**

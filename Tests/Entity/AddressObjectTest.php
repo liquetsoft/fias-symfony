@@ -10,7 +10,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Тест для сущности 'Реестр адресообразующих элементов'.
+ * Тест для сущности 'Классификатор адресообразующих элементов'.
  */
 class AddressObjectTest extends EntityCase
 {
@@ -19,7 +19,7 @@ class AddressObjectTest extends EntityCase
      */
     protected function createEntity()
     {
-        return new AddressObject;
+        return new AddressObject();
     }
 
     /**
@@ -61,10 +61,11 @@ class AddressObjectTest extends EntityCase
             'okato' => $this->createFakeData()->word,
             'oktmo' => $this->createFakeData()->word,
             'postalcode' => $this->createFakeData()->word,
-            'startdate' => new DateTime,
-            'enddate' => new DateTime,
-            'updatedate' => new DateTime,
+            'startdate' => new DateTime(),
+            'enddate' => new DateTime(),
+            'updatedate' => new DateTime(),
             'divtype' => $this->createFakeData()->numberBetween(1, 1000000),
+            'normdoc' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
         ];
     }
 }

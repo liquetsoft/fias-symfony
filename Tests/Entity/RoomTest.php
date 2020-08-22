@@ -10,7 +10,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Тест для сущности 'Сведения о помещениях (квартирах, офисах, комнатах и т.д.)'.
+ * Тест для сущности 'Классификатор помещениях'.
  */
 class RoomTest extends EntityCase
 {
@@ -19,7 +19,7 @@ class RoomTest extends EntityCase
      */
     protected function createEntity()
     {
-        return new Room;
+        return new Room();
     }
 
     /**
@@ -35,12 +35,18 @@ class RoomTest extends EntityCase
             'flatnumber' => $this->createFakeData()->word,
             'flattype' => $this->createFakeData()->numberBetween(1, 1000000),
             'postalcode' => $this->createFakeData()->word,
-            'startdate' => new DateTime,
-            'enddate' => new DateTime,
-            'updatedate' => new DateTime,
-            'operstatus' => $this->createFakeData()->word,
-            'livestatus' => $this->createFakeData()->word,
+            'startdate' => new DateTime(),
+            'enddate' => new DateTime(),
+            'updatedate' => new DateTime(),
+            'operstatus' => $this->createFakeData()->numberBetween(1, 1000000),
+            'livestatus' => $this->createFakeData()->numberBetween(1, 1000000),
             'normdoc' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
+            'roomnumber' => $this->createFakeData()->word,
+            'roomtype' => $this->createFakeData()->numberBetween(1, 1000000),
+            'previd' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
+            'nextid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
+            'cadnum' => $this->createFakeData()->word,
+            'roomcadnum' => $this->createFakeData()->word,
         ];
     }
 }

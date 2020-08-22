@@ -7,26 +7,30 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Типы нормативных документов.
+ * Тип нормативного документа.
  *
  * @ORM\MappedSuperclass
  */
 class NormativeDocumentType
 {
     /**
+     * Идентификатор записи (ключ).
+     *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
      *
      * @var int
      */
-    protected $ndtypeid = 0;
+    protected int $ndtypeid = 0;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * Наименование типа нормативного документа.
+     *
+     * @ORM\Column(type="string", length=250, nullable=false)
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     public function setNdtypeid(int $ndtypeid): self
     {

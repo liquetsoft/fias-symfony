@@ -20,19 +20,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class InstallFromFolderCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected static $defaultName = 'liquetsoft:fias:install_from_folder';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    protected Pipe $pipeline;
 
-    /**
-     * @param Pipe $pipeline
-     */
     public function __construct(Pipe $pipeline)
     {
         $this->pipeline = $pipeline;
@@ -67,7 +58,7 @@ class InstallFromFolderCommand extends Command
         $io->note("Installing full version of FIAS from '{$folder}' folder.");
         $start = microtime(true);
 
-        $state = new ArrayState;
+        $state = new ArrayState();
         $state->setAndLockParameter(Task::EXTRACT_TO_FOLDER_PARAM, new SplFileInfo($folder));
         $this->pipeline->run($state);
 

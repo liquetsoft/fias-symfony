@@ -10,7 +10,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Тест для сущности 'Элементы адреса, идентифицирующие адресуемые объекты'.
+ * Тест для сущности 'Сведения по номерам домов улиц городов и населенных пунктов'.
  */
 class HouseTest extends EntityCase
 {
@@ -19,7 +19,7 @@ class HouseTest extends EntityCase
      */
     protected function createEntity()
     {
-        return new House;
+        return new House();
     }
 
     /**
@@ -40,11 +40,18 @@ class HouseTest extends EntityCase
             'okato' => $this->createFakeData()->word,
             'oktmo' => $this->createFakeData()->word,
             'postalcode' => $this->createFakeData()->word,
-            'startdate' => new DateTime,
-            'enddate' => new DateTime,
-            'updatedate' => new DateTime,
+            'startdate' => new DateTime(),
+            'enddate' => new DateTime(),
+            'updatedate' => new DateTime(),
             'counter' => $this->createFakeData()->numberBetween(1, 1000000),
             'divtype' => $this->createFakeData()->numberBetween(1, 1000000),
+            'regioncode' => $this->createFakeData()->word,
+            'terrifnsfl' => $this->createFakeData()->word,
+            'terrifnsul' => $this->createFakeData()->word,
+            'buildnum' => $this->createFakeData()->word,
+            'strucnum' => $this->createFakeData()->word,
+            'normdoc' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
+            'cadnum' => $this->createFakeData()->word,
         ];
     }
 }

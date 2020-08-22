@@ -62,7 +62,7 @@ class DoctrineVersionManagerTest extends BaseCase
         $version = $this->createFakeData()->numberBetween(1, 1000);
         $url = $this->createFakeData()->url;
 
-        $item = new DoctrineVersionManagerMockObject;
+        $item = new DoctrineVersionManagerMockObject();
         $item->setVersion($version);
         $item->setUrl($url);
 
