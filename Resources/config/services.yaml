@@ -213,8 +213,7 @@ services:
             $tasks:
                 - '@liquetsoft_fias.task.data.truncate'
                 - '@liquetsoft_fias.task.data.select_files'
-                - '@liquetsoft_fias.task.data.insert'
-                - '@liquetsoft_fias.task.data.delete'
+                - '@liquetsoft_fias.task.symfony_process_switcher'
             $cleanupTask: null
             $logger: '@logger'
 
