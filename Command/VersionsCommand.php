@@ -45,14 +45,22 @@ class VersionsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $output->writeln('');
+
         $currentVersion = [$this->versionManager->getCurrentVersion()];
         $this->renderTable('Current version of FIAS', $currentVersion, $output);
+
+        $output->writeln('');
 
         $completeVersion = [$this->informer->getCompleteInfo()];
         $this->renderTable('Complete version of FIAS', $completeVersion, $output);
 
+        $output->writeln('');
+
         $deltaVersions = array_slice($this->informer->getDeltaList(), 0, 15);
         $this->renderTable('Delta versions of FIAS', $deltaVersions, $output);
+
+        $output->writeln('');
 
         return 0;
     }
@@ -68,6 +76,9 @@ class VersionsCommand extends Command
     {
         $rows = [];
         foreach ($versions as $version) {
+            if (!$version->hasResult()) {
+                continue;
+            }
             $rows[] = [
                 'Version' => $version->getVersion(),
                 'Url' => $version->getUrl(),
@@ -76,6 +87,7 @@ class VersionsCommand extends Command
 
         $table = new Table($output);
         $table->setHeaderTitle($header);
+        $table->setColumnWidths([10, 80]);
         $table->setHeaders(['Version', 'Url'])->setRows($rows);
         $table->render();
     }
