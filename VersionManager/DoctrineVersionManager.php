@@ -61,7 +61,7 @@ class DoctrineVersionManager implements VersionManager
     {
         $response = new InformerResponseBase();
 
-        $entity = $this->getEntityRepository()->findOneBy([], ['createdAt' => 'DESC']);
+        $entity = $this->getEntityRepository()->findOneBy([], ['created' => 'DESC']);
         if ($entity instanceof FiasVersion) {
             $response->setVersion($entity->getVersion());
             $response->setUrl($entity->getUrl());
