@@ -67,7 +67,7 @@ class DoctrineVersionManagerTest extends BaseCase
         $item->setUrl($url);
 
         $repo = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
-        $repo->method('findOneBy')->will($this->returnValue($item));
+        $repo->method('findOneBy')->with($this->equalTo([]), $this->equalTo(['created' => 'DESC']))->will($this->returnValue($item));
 
         $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $em->method('getRepository')->will($this->returnCallback(function ($class) use ($repo) {
