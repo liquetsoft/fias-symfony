@@ -137,37 +137,11 @@
 
     ```yaml
     # config/packages/doctrine.yaml
-    parameters:
-        # Adds a fallback DATABASE_URL if the env var is not set.
-        # This allows you to run cache:warmup even if your
-        # environment variables are not available yet.
-        # You should not need to change this value.
-        env(DATABASE_URL): ''
 
     doctrine:
         dbal:
-            # configure these for your database server
-            driver: 'pdo_pgsql'
-            server_version: '11'
-            charset: utf8
-            default_table_options:
-                charset: utf8
-                collate: utf8_unicode_ci
-
-            url: '%env(resolve:DATABASE_URL)%'
             logging: false # отключаем логгирование
             profiling: false # отключаем профилирование
-        orm:
-            auto_generate_proxy_classes: '%kernel.debug%'
-            naming_strategy: doctrine.orm.naming_strategy.underscore
-            auto_mapping: true
-            mappings:
-                App:
-                    is_bundle: false
-                    type: annotation
-                    dir: '%kernel.project_dir%/src/Entity'
-                    prefix: 'App\Entity'
-                    alias: App
     ```
 
 Для примера, все шаги установки проделаны в [тестовом проекте](https://github.com/liquetsoft/fias-symfony-example), который реализует простейшее REST API с использованием [API platform](https://api-platform.com/).
