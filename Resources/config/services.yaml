@@ -258,7 +258,7 @@ services:
 
     liquetsoft_fias.command.truncate:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\TruncateCommand
-        arguments:
+        arguments:``
             - '@liquetsoft_fias.task.data.truncate'
         tags:
             - { name: 'console.command' }
@@ -267,5 +267,13 @@ services:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\UpdateCommand
         arguments:
             - '@liquetsoft_fias.pipe.update'
+        tags:
+            - { name: 'console.command' }
+
+    liquetsoft_fias.command.versions:
+        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\VersionsCommand
+        arguments:
+            - '@liquetsoft_fias.informer.service'
+            - '@liquetsoft_fias.version_manager.service'
         tags:
             - { name: 'console.command' }
