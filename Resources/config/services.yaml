@@ -233,6 +233,16 @@ services:
             $cleanupTask: '@liquetsoft_fias.task.cleanup'
             $logger: '@logger'
 
+    liquetsoft_fias.pipe.update_from_folder:
+        class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
+        arguments:
+            $tasks:
+                - '@liquetsoft_fias.task.data.select_files'
+                - '@liquetsoft_fias.task.data.upsert'
+                - '@liquetsoft_fias.task.data.delete'
+            $cleanupTask: null
+            $logger: '@logger'
+
 
 
     liquetsoft_fias.command.install:
@@ -267,6 +277,13 @@ services:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\UpdateCommand
         arguments:
             - '@liquetsoft_fias.pipe.update'
+        tags:
+            - { name: 'console.command' }
+
+    liquetsoft_fias.command.update_from_folder:
+        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\UpdateFromFolderCommand
+        arguments:
+            - '@liquetsoft_fias.pipe.update_from_folder'
         tags:
             - { name: 'console.command' }
 
