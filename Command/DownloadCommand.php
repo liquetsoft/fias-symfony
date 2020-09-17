@@ -6,7 +6,6 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 
 use Liquetsoft\Fias\Component\Downloader\Downloader;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
-use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\Helper\FileSystemHelper;
 use Liquetsoft\Fias\Component\Unpacker\Unpacker;
 use RuntimeException;
@@ -54,7 +53,7 @@ class DownloadCommand extends Command
             ->setDescription('Downloads set version of FIAS.')
             ->addArgument('pathToDownload', InputArgument::REQUIRED, 'Path in local file system to download file.')
             ->addArgument('version', InputArgument::OPTIONAL, 'Version number to download. "full" is for full version.')
-            ->addOption('extract', null, InputOption::VALUE_NONE, 'Extract archive after downloading', false)
+            ->addOption('extract', null, InputOption::VALUE_NONE, 'Extract archive after downloading')
         ;
     }
 
