@@ -295,6 +295,14 @@ services:
         tags:
             - { name: 'console.command' }
 
+    liquetsoft_fias.command.version_set:
+        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\VersionSetCommand
+        arguments:
+            - '@liquetsoft_fias.informer.service'
+            - '@liquetsoft_fias.version_manager.service'
+        tags:
+            - { name: 'console.command' }
+
     liquetsoft_fias.command.download:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\DownloadCommand
         arguments:
