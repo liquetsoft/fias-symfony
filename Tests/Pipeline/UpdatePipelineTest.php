@@ -9,6 +9,7 @@ use Liquetsoft\Fias\Component\EntityDescriptor\BaseEntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\BaseEntityField;
 use Liquetsoft\Fias\Component\EntityManager\BaseEntityManager;
 use Liquetsoft\Fias\Component\EntityRegistry\ArrayEntityRegistry;
+use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
@@ -18,12 +19,15 @@ use Liquetsoft\Fias\Component\Pipeline\Task\DataUpsertTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\SelectFilesToProceedTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use Liquetsoft\Fias\Component\Pipeline\Task\UnpackTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\VersionSetTask;
 use Liquetsoft\Fias\Component\Unpacker\ZipUnpacker;
 use Liquetsoft\Fias\Component\XmlReader\BaseXmlReader;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\BulkInsertDoctrineStorage;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\DoctrineTestCase;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\PipelineTestMockEntity;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\VersionManagerTestMockEntity;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\VersionManager\DoctrineVersionManager;
 use Ramsey\Uuid\Uuid;
 use SplFileInfo;
 
@@ -51,15 +55,27 @@ class UpdatePipelineTest extends DoctrineTestCase
         $deletedEntity = new PipelineTestMockEntity();
         $deletedEntity->setTestId(444);
 
+        $version = $this->createFakeData()->numberBetween(1, 1000);
+        $versionUrl = $this->createFakeData()->url;
+        $versionInfo = $this->getMockBuilder(InformerResponse::class)->getMock();
+        $versionInfo->method('getVersion')->willReturn($version);
+        $versionInfo->method('getUrl')->willReturn($versionUrl);
+        $versionInfo->method('hasResult')->willReturn(true);
+        $versionEntity = new VersionManagerTestMockEntity();
+        $versionEntity->setVersion($version);
+        $versionEntity->setUrl($versionUrl);
+
         $state = new ArrayState();
         $state->setAndLockParameter(Task::DOWNLOAD_TO_FILE_PARAM, new SplFileInfo($testArchive));
         $state->setAndLockParameter(Task::EXTRACT_TO_FOLDER_PARAM, new SplFileInfo($testDir));
+        $state->setAndLockParameter(Task::FIAS_INFO_PARAM, $versionInfo);
 
         $pipeline = $this->createPipeLine();
         $pipeline->run($state);
 
         $this->assertFileDoesNotExist($testArchive);
         $this->assertDoctrineHasEntity($existEntity);
+        $this->assertDoctrineHasEntity($versionEntity);
         $this->assertDoctrineHasNotEntity($deletedEntity);
     }
 
@@ -123,11 +139,17 @@ class UpdatePipelineTest extends DoctrineTestCase
 
         $serializer = new FiasSerializer();
 
+        $versionManager = new DoctrineVersionManager(
+            $this->getEntityManager(),
+            VersionManagerTestMockEntity::class
+        );
+
         $tasks = [
             new UnpackTask(new ZipUnpacker()),
             new SelectFilesToProceedTask($fiasEntityManager),
             new DataUpsertTask($fiasEntityManager, $xmlReader, $storage, $serializer),
             new DataDeleteTask($fiasEntityManager, $xmlReader, $storage, $serializer),
+            new VersionSetTask($versionManager),
         ];
 
         return new ArrayPipe($tasks, new CleanupTask());
