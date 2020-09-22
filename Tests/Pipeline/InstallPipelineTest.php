@@ -24,7 +24,8 @@ use Liquetsoft\Fias\Component\XmlReader\BaseXmlReader;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\BulkInsertDoctrineStorage;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\DoctrineTestCase;
-use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\MockEntity;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\PipelineTestMockEntity;
+use Ramsey\Uuid\Uuid;
 use SplFileInfo;
 
 /**
@@ -42,12 +43,13 @@ class InstallPipelineTest extends DoctrineTestCase
 
         copy(__DIR__ . '/_fixtures/install.zip', $testArchive);
 
-        $existEntity = new MockEntity();
+        $existEntity = new PipelineTestMockEntity();
         $existEntity->setTestId(321);
         $existEntity->setTestName('to insert');
         $existEntity->setStartdate(new DateTime('2019-11-11 11:11:11'));
+        $existEntity->setUuid(Uuid::fromString('123e4567-e89b-12d3-a456-426655440001'));
 
-        $deletedEntity = new MockEntity();
+        $deletedEntity = new PipelineTestMockEntity();
         $deletedEntity->setTestId(123);
         $deletedEntity->setTestName('to remove');
         $deletedEntity->setStartdate(new DateTime('2019-10-10 10:10:10'));
@@ -98,6 +100,13 @@ class InstallPipelineTest extends DoctrineTestCase
                                     'subType' => 'date',
                                 ]
                             ),
+                            new BaseEntityField(
+                                [
+                                    'name' => 'uuid',
+                                    'type' => 'string',
+                                    'subType' => 'uuid',
+                                ]
+                            ),
                         ],
                     ]
                 ),
@@ -107,7 +116,7 @@ class InstallPipelineTest extends DoctrineTestCase
         $fiasEntityManager = new BaseEntityManager(
             $fiasEntityRegistry,
             [
-                'mock' => MockEntity::class,
+                'mock' => PipelineTestMockEntity::class,
             ]
         );
 

@@ -6,35 +6,35 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\UuidInterface;
 
 /**
- * Сущность для тестов с использованием doctrine.
+ * Сущность для тестов пайплайнов с использованием doctrine.
  *
  * @ORM\Entity
  */
-class MockEntity
+class PipelineTestMockEntity
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
-    protected $testId = 0;
+    private int $testId = 0;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
-     *
-     * @var string
      */
-    protected $testName = '';
+    private string $testName = '';
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
-     *
-     * @var DateTimeInterface
      */
-    protected $startdate;
+    private ?DateTimeInterface $startdate = null;
+
+    /**
+     * @ORM\Column(type="uuid", nullable=true)
+     */
+    private ?UuidInterface $uuid = null;
 
     public function setTestId(int $testId): self
     {
@@ -60,15 +60,27 @@ class MockEntity
         return $this->testName;
     }
 
-    public function setStartdate(DateTimeInterface $startdate): self
+    public function setStartdate(?DateTimeInterface $startdate): self
     {
         $this->startdate = $startdate;
 
         return $this;
     }
 
-    public function getStartdate(): DateTimeInterface
+    public function getStartdate(): ?DateTimeInterface
     {
         return $this->startdate;
+    }
+
+    public function setUuid(?UuidInterface $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function getUuid(): ?UuidInterface
+    {
+        return $this->uuid;
     }
 }
