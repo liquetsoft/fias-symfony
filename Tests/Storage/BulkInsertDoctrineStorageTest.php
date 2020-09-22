@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManager;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\BulkInsertDoctrineStorage;
-use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\MockEntity;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\StorageTestMockEntity;
 use RuntimeException;
 use stdClass;
 
@@ -23,12 +23,12 @@ class BulkInsertDoctrineStorageTest extends AbstractDoctrineStorageTest
      */
     public function testBulkSafelyInsert()
     {
-        $entity = new MockEntity();
+        $entity = new StorageTestMockEntity();
         $entity->setTestId(100);
         $entity->setTestName('test_1_100');
         $entity->setStartdate(new DateTime('2019-11-11 11:11:11'));
 
-        $secondEntity = new MockEntity();
+        $secondEntity = new StorageTestMockEntity();
         $secondEntity->setTestId(100);
         $secondEntity->setTestName('test_2_100');
         $secondEntity->setStartdate(new DateTime('2019-11-11 11:11:11'));

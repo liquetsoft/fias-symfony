@@ -7,11 +7,13 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests;
 use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Persistence\Mapping\MappingException;
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\Tools\ToolsException;
+use Ramsey\Uuid\Doctrine\UuidType;
 
 /**
  * Базовый класс для тестирования запросов с doctrine.
@@ -54,7 +56,7 @@ abstract class DoctrineTestCase extends BaseCase
                     foreach ($fieldNames as $fieldName) {
                         $valueBase = $meta->getFieldValue($entity, $fieldName);
                         $valueTest = $meta->getFieldValue($testedEntity, $fieldName);
-                        if ($valueBase != $valueTest) {
+                        if ($valueBase !== null && $valueBase != $valueTest) {
                             $isSame = false;
                             break;
                         }
@@ -154,6 +156,10 @@ abstract class DoctrineTestCase extends BaseCase
             'password' => getenv('DB_PASSWORD'),
             'dbname' => getenv('DB_NAME'),
         ];
+
+        if (!Type::hasType('uuid')) {
+            Type::addType('uuid', UuidType::class);
+        }
 
         $paths = [
             __DIR__ . '/MockEntities',

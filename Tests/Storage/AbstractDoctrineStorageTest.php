@@ -8,7 +8,7 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Liquetsoft\Fias\Component\Storage\Storage;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\DoctrineTestCase;
-use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\MockEntity;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\StorageTestMockEntity;
 
 /**
  * Тест для проверки записи данных в базу.
@@ -36,7 +36,7 @@ abstract class AbstractDoctrineStorageTest extends DoctrineTestCase
     public function testSupports()
     {
         $storage = $this->createStorage();
-        $entity = new MockEntity();
+        $entity = new StorageTestMockEntity();
 
         $this->assertTrue($storage->supports($entity));
         $this->assertFalse($storage->supports($this));
@@ -49,7 +49,7 @@ abstract class AbstractDoctrineStorageTest extends DoctrineTestCase
     {
         $storage = $this->createStorage();
 
-        $this->assertTrue($storage->supportsClass(MockEntity::class));
+        $this->assertTrue($storage->supportsClass(StorageTestMockEntity::class));
         $this->assertFalse($storage->supportsClass(get_class($this)));
         $this->assertFalse($storage->supportsClass('non_existed_123'));
     }
@@ -59,18 +59,18 @@ abstract class AbstractDoctrineStorageTest extends DoctrineTestCase
      */
     public function testInsert()
     {
-        $zeroEntity = new MockEntity();
+        $zeroEntity = new StorageTestMockEntity();
         $zeroEntity->setTestId(0);
         $zeroEntity->setTestName('test_0');
         $zeroEntity->setStartdate(new DateTime('2019-11-11 11:11:11'));
         $this->persistEntity($zeroEntity);
 
-        $entity = new MockEntity();
+        $entity = new StorageTestMockEntity();
         $entity->setTestId(1);
         $entity->setTestName('test_1');
         $entity->setStartdate(new DateTime('2019-11-11 11:11:11'));
 
-        $secondEntity = new MockEntity();
+        $secondEntity = new StorageTestMockEntity();
         $secondEntity->setTestId(2);
         $secondEntity->setTestName('test_2');
         $secondEntity->setStartdate(new DateTime('2019-11-11 11:11:11'));
@@ -91,13 +91,13 @@ abstract class AbstractDoctrineStorageTest extends DoctrineTestCase
      */
     public function testDelete()
     {
-        $entity = new MockEntity();
+        $entity = new StorageTestMockEntity();
         $entity->setTestId(3);
         $entity->setTestName('test_3');
         $entity->setStartdate(new DateTime('2019-11-11 11:11:11'));
         $this->persistEntity($entity);
 
-        $secondEntity = new MockEntity();
+        $secondEntity = new StorageTestMockEntity();
         $secondEntity->setTestId(4);
         $secondEntity->setTestName('test_4');
         $secondEntity->setStartdate(new DateTime('2019-11-11 11:11:11'));
@@ -117,14 +117,14 @@ abstract class AbstractDoctrineStorageTest extends DoctrineTestCase
      */
     public function testUpsert()
     {
-        $entity = new MockEntity();
+        $entity = new StorageTestMockEntity();
         $entity->setTestId(5);
         $entity->setTestName('test_5');
         $entity->setStartdate(new DateTime('2019-11-11 11:11:11'));
         $this->persistEntity($entity);
         $entity->setTestName('test_5_updated');
 
-        $secondEntity = new MockEntity();
+        $secondEntity = new StorageTestMockEntity();
         $secondEntity->setTestId(6);
         $secondEntity->setTestName('test_6');
         $secondEntity->setStartdate(new DateTime('2019-11-11 11:11:11'));
@@ -144,19 +144,19 @@ abstract class AbstractDoctrineStorageTest extends DoctrineTestCase
      */
     public function testTruncate()
     {
-        $entity = new MockEntity();
+        $entity = new StorageTestMockEntity();
         $entity->setTestId(7);
         $entity->setTestName('test_7');
         $entity->setStartdate(new DateTime('2019-11-11 11:11:11'));
         $this->persistEntity($entity);
 
-        $secondEntity = new MockEntity();
+        $secondEntity = new StorageTestMockEntity();
         $secondEntity->setTestId(8);
         $secondEntity->setTestName('test_8');
         $secondEntity->setStartdate(new DateTime('2019-11-11 11:11:11'));
         $this->persistEntity($secondEntity);
 
-        $this->createStorage()->truncate(MockEntity::class);
+        $this->createStorage()->truncate(StorageTestMockEntity::class);
 
         $this->assertDoctrineHasNotEntity($entity);
         $this->assertDoctrineHasNotEntity($secondEntity);

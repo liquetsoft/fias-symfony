@@ -82,14 +82,9 @@ class DoctrineVersionManager implements VersionManager
     private function getEntity(): FiasVersion
     {
         $className = $this->getEntityClassName();
-        $entity = new $className();
 
-        if (!($entity instanceof FiasVersion)) {
-            throw new RuntimeException(
-                "Entity class must be a child of '" . FiasVersion::class . "' class, got '{$className}'."
-                . " Please check that 'liquetsoft_fias.version_manager_entity' parameter is properly configured."
-            );
-        }
+        /** @var FiasVersion $entity */
+        $entity = new $className();
 
         return $entity;
     }
@@ -123,10 +118,13 @@ class DoctrineVersionManager implements VersionManager
         $trimmedEntityClassName = trim($this->entityClassName, " \t\n\r\0\x0B\\");
 
         if (!is_subclass_of($trimmedEntityClassName, FiasVersion::class)) {
-            throw new RuntimeException(
-                "Entity class must be a child of '" . FiasVersion::class . "' class, got '{$trimmedEntityClassName}'."
-                . " Please check that 'liquetsoft_fias.version_manager_entity' parameter is properly configured."
+            $message = sprintf(
+                "Entity class must be a child of '%s' class, got '%s'."
+                . " Please check that 'liquetsoft_fias.version_manager_entity' parameter is properly configured.",
+                FiasVersion::class,
+                $trimmedEntityClassName
             );
+            throw new RuntimeException($message);
         }
 
         return $trimmedEntityClassName;
