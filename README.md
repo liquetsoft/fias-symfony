@@ -28,7 +28,7 @@
 
     ```php
     <?php
-    //src/Entity/AddressObject.php
+    // src/Entity/AddressObject.php
 
     namespace App\Entity;
 
@@ -67,7 +67,7 @@
 
     ```php
     <?php
-    //src/Entity/FiasVersion.php
+    // src/Entity/FiasVersion.php
 
     namespace App\Entity;
 
@@ -97,6 +97,7 @@
 5. Необходимо указать бандлу какие именно сущности используются (те сущности, для которых не указан класс конвертации использоваться не будут) и в какие объекты конвертируются (важно понимать, что сущность на стороне проекта может быть любой, даже не унаследованной от одного из суперклассов, стандартный сериализатор symfony попробует преобразовать xml в указанный объект):
 
     ```yaml
+    # config/packages/liquetsoft_fias.yaml
     liquetsoft_fias:
         # сущность, которая хранит версии ФИАС
         version_manager_entity: App\Entity\FiasVersion
@@ -137,7 +138,6 @@
 
     ```yaml
     # config/packages/doctrine.yaml
-
     doctrine:
         dbal:
             logging: false # отключаем логгирование
