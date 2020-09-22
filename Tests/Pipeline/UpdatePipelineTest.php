@@ -14,10 +14,9 @@ use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataDeleteTask;
-use Liquetsoft\Fias\Component\Pipeline\Task\DataInsertTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\DataUpsertTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\SelectFilesToProceedTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\Task;
-use Liquetsoft\Fias\Component\Pipeline\Task\TruncateTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\UnpackTask;
 use Liquetsoft\Fias\Component\Unpacker\ZipUnpacker;
 use Liquetsoft\Fias\Component\XmlReader\BaseXmlReader;
@@ -29,28 +28,28 @@ use Ramsey\Uuid\Uuid;
 use SplFileInfo;
 
 /**
- * Тест для объекта папйлайна для установки базы данных.
+ * Тест для объекта папйлайна для обновления базы данных.
  */
-class InstallPipelineTest extends DoctrineTestCase
+class UpdatePipelineTest extends DoctrineTestCase
 {
     /**
-     * Тест для проверки пайплайна с установкой ФИАС с ноля.
+     * Тест для проверки пайплайна с обновлением ФИАС до новой версии.
      */
-    public function testInstall()
+    public function testUpdate()
     {
         $testDir = $this->getPathToTestDir();
-        $testArchive = "{$testDir}/install.zip";
+        $testArchive = "{$testDir}/update.zip";
 
-        copy(__DIR__ . '/_fixtures/install.zip', $testArchive);
+        copy(__DIR__ . '/_fixtures/update.zip', $testArchive);
 
         $existEntity = new PipelineTestMockEntity();
-        $existEntity->setTestId(321);
+        $existEntity->setTestId(555);
         $existEntity->setTestName('to insert');
         $existEntity->setStartdate(new DateTime('2019-11-11 11:11:11'));
-        $existEntity->setUuid(Uuid::fromString('123e4567-e89b-12d3-a456-426655440001'));
+        $existEntity->setUuid(Uuid::fromString('123e4567-e89b-12d3-a456-426655440005'));
 
         $deletedEntity = new PipelineTestMockEntity();
-        $deletedEntity->setTestId(123);
+        $deletedEntity->setTestId(444);
 
         $state = new ArrayState();
         $state->setAndLockParameter(Task::DOWNLOAD_TO_FILE_PARAM, new SplFileInfo($testArchive));
@@ -126,9 +125,8 @@ class InstallPipelineTest extends DoctrineTestCase
 
         $tasks = [
             new UnpackTask(new ZipUnpacker()),
-            new TruncateTask($fiasEntityManager, $storage),
             new SelectFilesToProceedTask($fiasEntityManager),
-            new DataInsertTask($fiasEntityManager, $xmlReader, $storage, $serializer),
+            new DataUpsertTask($fiasEntityManager, $xmlReader, $storage, $serializer),
             new DataDeleteTask($fiasEntityManager, $xmlReader, $storage, $serializer),
         ];
 
