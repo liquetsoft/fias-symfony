@@ -150,7 +150,6 @@ class InstallPipelineTest extends DoctrineTestCase
             new SelectFilesToProceedTask($fiasEntityManager),
             new DataInsertTask($fiasEntityManager, $xmlReader, $storage, $serializer),
             new DataDeleteTask($fiasEntityManager, $xmlReader, $storage, $serializer),
-            new DataDeleteTask($fiasEntityManager, $xmlReader, $storage, $serializer),
             new VersionSetTask($versionManager),
         ];
 
