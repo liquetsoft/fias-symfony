@@ -57,7 +57,7 @@ class BulkInsertDoctrineStorageTest extends AbstractDoctrineStorageTest
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function createStorage(?EntityManager $em = null, int $batch = 1): Storage
     {

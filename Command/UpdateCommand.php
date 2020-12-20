@@ -31,7 +31,7 @@ class UpdateCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure(): void
     {
@@ -39,7 +39,7 @@ class UpdateCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

@@ -39,7 +39,7 @@ class UuidNormalizer implements NormalizerInterface, DenormalizerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function supportsNormalization($data, $format = null)
     {
@@ -73,7 +73,7 @@ class UuidNormalizer implements NormalizerInterface, DenormalizerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function supportsDenormalization($data, $type, $format = null)
     {

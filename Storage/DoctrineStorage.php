@@ -32,14 +32,14 @@ class DoctrineStorage implements Storage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function start(): void
     {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function stop(): void
     {
@@ -52,7 +52,7 @@ class DoctrineStorage implements Storage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function supports(object $entity): bool
     {
@@ -60,7 +60,7 @@ class DoctrineStorage implements Storage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function supportsClass(string $class): bool
     {
@@ -79,7 +79,7 @@ class DoctrineStorage implements Storage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function insert(object $entity): void
     {
@@ -97,7 +97,7 @@ class DoctrineStorage implements Storage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function delete(object $entity): void
     {
@@ -112,7 +112,7 @@ class DoctrineStorage implements Storage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function upsert(object $entity): void
     {
@@ -126,7 +126,7 @@ class DoctrineStorage implements Storage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function truncate(string $entityClassName): void
     {
@@ -145,6 +145,8 @@ class DoctrineStorage implements Storage
      * @throws ORMException
      * @throws OptimisticLockException
      * @throws TransactionRequiredException
+     *
+     * @psalm-suppress DocblockTypeContradiction
      */
     private function mergeEntityToDoctrine(object $entity): object
     {

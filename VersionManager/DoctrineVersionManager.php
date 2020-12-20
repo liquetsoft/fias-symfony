@@ -76,8 +76,6 @@ class DoctrineVersionManager implements VersionManager
      * @return FiasVersion
      *
      * @throws RuntimeException
-     *
-     * @psalm-suppress InvalidStringClass
      */
     private function getEntity(): FiasVersion
     {
@@ -98,12 +96,7 @@ class DoctrineVersionManager implements VersionManager
     {
         $entityClassName = $this->getEntityClassName();
 
-        $repo = $this->em->getRepository($entityClassName);
-        if (!($repo instanceof EntityRepository)) {
-            throw new RuntimeException("Can't find doctrine repository for '{$entityClassName}' entity.");
-        }
-
-        return $repo;
+        return $this->em->getRepository($entityClassName);
     }
 
     /**
@@ -112,6 +105,8 @@ class DoctrineVersionManager implements VersionManager
      * @return string
      *
      * @throws RuntimeException
+     *
+     * @psalm-return class-string
      */
     private function getEntityClassName(): string
     {
