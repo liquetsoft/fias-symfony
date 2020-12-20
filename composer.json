@@ -17,9 +17,9 @@
         "symfony/phpunit-bridge": "^5.0",
         "fzaninotto/faker": "^1.7",
         "friendsofphp/php-cs-fixer": "^2.16",
-        "sebastian/phpcpd": "^5.0",
-        "vimeo/psalm": "^3.15",
-        "nette/php-generator": "^3.2"
+        "sebastian/phpcpd": "^6.0",
+        "vimeo/psalm": "^4.0",
+        "nette/php-generator": "^3.5"
     },
     "autoload": {
         "psr-4": {

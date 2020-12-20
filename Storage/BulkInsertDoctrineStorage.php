@@ -47,7 +47,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function stop(): void
     {
@@ -56,7 +56,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function insert(object $entity): void
     {

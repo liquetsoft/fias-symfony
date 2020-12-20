@@ -29,7 +29,7 @@ class InstallParallelRunningCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure(): void
     {
@@ -41,7 +41,7 @@ class InstallParallelRunningCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

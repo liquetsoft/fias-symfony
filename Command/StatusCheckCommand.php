@@ -28,7 +28,7 @@ class StatusCheckCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure(): void
     {
@@ -36,7 +36,7 @@ class StatusCheckCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

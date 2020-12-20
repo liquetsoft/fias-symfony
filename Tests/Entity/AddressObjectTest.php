@@ -15,7 +15,7 @@ use Ramsey\Uuid\UuidInterface;
 class AddressObjectTest extends EntityCase
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function createEntity()
     {
@@ -23,7 +23,7 @@ class AddressObjectTest extends EntityCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function accessorsProvider(): array
     {
