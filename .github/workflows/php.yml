@@ -1,4 +1,4 @@
-name: PHP Composer
+name: liquetsoft_fias
 
 on:
   push:
