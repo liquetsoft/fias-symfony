@@ -143,8 +143,6 @@
             profiling: false # отключаем профилирование
     ```
 
-Для примера, все шаги установки проделаны в [тестовом проекте](https://github.com/liquetsoft/fias-symfony-example), который реализует простейшее REST API с использованием [API platform](https://api-platform.com/).
-
 
 
 Использование
