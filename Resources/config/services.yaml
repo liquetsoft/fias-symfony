@@ -74,13 +74,20 @@ services:
 
 
     liquetsoft_fias.storage.service:
+        class: Liquetsoft\Fias\Component\Storage\CompositeStorage
+        arguments:
+            $internalStorages: !tagged_iterator liquetsoft_fias.storage
+
+    Liquetsoft\Fias\Component\Storage\Storage:
+        alias: liquetsoft_fias.storage.service
+
+    liquetsoft_fias.storage.doctrine_storage:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\DoctrineStorage
         arguments:
             - '@doctrine.orm.entity_manager'
             - '%liquetsoft_fias.insert_batch_count%'
-
-    Liquetsoft\Fias\Component\Storage\Storage:
-        alias: liquetsoft_fias.storage.service
+        tags:
+            - { name: 'liquetsoft_fias.storage' }
 
 
 
