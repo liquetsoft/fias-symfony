@@ -6,8 +6,10 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 
 use Liquetsoft\Fias\Component\Downloader\Downloader;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
-use Liquetsoft\Fias\Component\Helper\FileSystemHelper;
 use Liquetsoft\Fias\Component\Unpacker\Unpacker;
+use Marvin255\FileSystemHelper\FileSystemException;
+use Marvin255\FileSystemHelper\FileSystemFactory;
+use Marvin255\FileSystemHelper\FileSystemHelperInterface;
 use RuntimeException;
 use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
@@ -32,6 +34,8 @@ class DownloadCommand extends Command
 
     private FiasInformer $informer;
 
+    private FileSystemHelperInterface $fs;
+
     public function __construct(
         Downloader $downloader,
         Unpacker $unpacker,
@@ -40,6 +44,7 @@ class DownloadCommand extends Command
         $this->downloader = $downloader;
         $this->unpacker = $unpacker;
         $this->informer = $informer;
+        $this->fs = FileSystemFactory::create();
 
         parent::__construct();
     }
@@ -120,20 +125,16 @@ class DownloadCommand extends Command
      * Распаковывает загруженный архив.
      *
      * @param SplFileInfo $archive
+     *
+     * @throws FileSystemException
      */
     private function extract(SplFileInfo $archive): void
     {
         $extractTo = $archive->getPath() . DIRECTORY_SEPARATOR . $archive->getBasename('.zip');
         $extractTo = new SplFileInfo($extractTo);
 
-        if ($extractTo->isDir()) {
-            FileSystemHelper::remove($extractTo);
-        }
-
-        if (mkdir($extractTo->getPathname(), 0777, true) === false) {
-            $message = sprintf("Can't create die '%s' to extract an archive.", $extractTo->getPathname());
-            throw new RuntimeException($message);
-        }
+        $this->fs->mkdirIfNotExist($extractTo);
+        $this->fs->emptyDir($extractTo);
 
         $this->unpacker->unpack($archive, $extractTo);
 
