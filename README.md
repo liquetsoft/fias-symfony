@@ -125,12 +125,14 @@
     # config/services.yaml
     services:
         # заменяем сервис для записи на сервис, который использует bulk insert
-        liquetsoft_fias.storage.service:
+        liquetsoft_fias.storage.doctrine_storage:
             class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\BulkInsertDoctrineStorage
             arguments:
                 - '@doctrine.orm.entity_manager'
                 - '%liquetsoft_fias.insert_batch_count%'
                 - '@logger'
+            tags:
+                - { name: 'liquetsoft_fias.storage' }
     ```
 
 8. Поскольку для записи в БД используется `Doctrine`, нужно отключить логгирование запросов, иначе скрипт падает с переполнением памяти:
