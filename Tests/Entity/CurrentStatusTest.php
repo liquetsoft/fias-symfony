@@ -9,11 +9,13 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
  * Тест для сущности 'Статус актуальности КЛАДР 4.0'.
+ *
+ * @internal
  */
 class CurrentStatusTest extends EntityCase
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function createEntity()
     {
@@ -21,7 +23,7 @@ class CurrentStatusTest extends EntityCase
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function accessorsProvider(): array
     {

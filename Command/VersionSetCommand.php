@@ -73,7 +73,7 @@ class VersionSetCommand extends Command
     private function getNumber(InputInterface $input): int
     {
         $number = $input->getArgument('number');
-        $number = is_array($number) ? (int) reset($number) : (int) $number;
+        $number = \is_array($number) ? (int) reset($number) : (int) $number;
         if ($number <= 0) {
             $message = 'Version number must integer instance more than 0.';
             throw new InvalidArgumentException($message);

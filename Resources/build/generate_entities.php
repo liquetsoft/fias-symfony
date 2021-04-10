@@ -1,28 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 use Liquetsoft\Fias\Component\EntityDescriptor\BaseEntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\BaseEntityField;
 use Liquetsoft\Fias\Component\EntityRegistry\ArrayEntityRegistry;
 use Liquetsoft\Fias\Component\EntityRegistry\PhpArrayFileRegistry;
-use Liquetsoft\Fias\Component\Helper\FileSystemHelper;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator\EntityGenerator;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator\TestGenerator;
+use Marvin255\FileSystemHelper\FileSystemFactory;
 
-$root = dirname(dirname(__DIR__));
+$root = dirname(__DIR__, 2);
 
 require_once $root . '/vendor/autoload.php';
 
+$fs = FileSystemFactory::create();
+
 $dir = $root . '/Entity';
-if (is_dir($dir)) {
-    FileSystemHelper::remove(new SplFileInfo($dir));
-}
-mkdir($dir, 0777, true);
+$fs->mkdirIfNotExist($dir);
+$fs->emptyDir($dir);
 
 $testDir = $root . '/Tests/Entity';
-if (is_dir($testDir)) {
-    FileSystemHelper::remove(new SplFileInfo($testDir));
-}
-mkdir($testDir, 0777, true);
+$fs->mkdirIfNotExist($testDir);
+$fs->emptyDir($testDir);
 
 $defaultRegistry = new PhpArrayFileRegistry();
 $registry = new ArrayEntityRegistry(array_merge($defaultRegistry->getDescriptors(), [

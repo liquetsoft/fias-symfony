@@ -9,11 +9,13 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
  * Тест для сущности 'Тип комнаты'.
+ *
+ * @internal
  */
 class RoomTypeTest extends EntityCase
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function createEntity()
     {
@@ -21,7 +23,7 @@ class RoomTypeTest extends EntityCase
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function accessorsProvider(): array
     {

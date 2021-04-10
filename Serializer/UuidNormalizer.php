@@ -15,7 +15,7 @@ use Throwable;
 /**
  * Нормализатор для объектов uuid.
  */
-class UuidNormalizer implements NormalizerInterface, DenormalizerInterface
+class UuidNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     protected UuidFactory $uuidFactory;
 

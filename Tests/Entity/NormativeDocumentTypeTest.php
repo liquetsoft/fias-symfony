@@ -9,11 +9,13 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
  * Тест для сущности 'Тип нормативного документа'.
+ *
+ * @internal
  */
 class NormativeDocumentTypeTest extends EntityCase
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function createEntity()
     {
@@ -21,7 +23,7 @@ class NormativeDocumentTypeTest extends EntityCase
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function accessorsProvider(): array
     {

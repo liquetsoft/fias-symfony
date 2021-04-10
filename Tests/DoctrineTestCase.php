@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests;
 
+use DateTimeInterface;
 use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Persistence\Mapping\MappingException;
@@ -39,7 +40,7 @@ abstract class DoctrineTestCase extends BaseCase
     {
         $em = $this->getEntityManager();
 
-        $className = get_class($entity);
+        $className = \get_class($entity);
         $meta = $em->getClassMetadata($className);
         $identifiers = $meta->getIdentifierValues($entity);
         $entityFromDoctrine = $em->find($className, $identifiers);
@@ -54,9 +55,9 @@ abstract class DoctrineTestCase extends BaseCase
 
                     $fieldNames = $meta->getFieldNames();
                     foreach ($fieldNames as $fieldName) {
-                        $valueBase = $meta->getFieldValue($entity, $fieldName);
-                        $valueTest = $meta->getFieldValue($testedEntity, $fieldName);
-                        if ($valueBase !== null && $valueBase != $valueTest) {
+                        $valueBase = $this->unifyValueForCompare($meta->getFieldValue($entity, $fieldName));
+                        $valueTest = $this->unifyValueForCompare($meta->getFieldValue($testedEntity, $fieldName));
+                        if ($valueBase !== null && $valueBase !== $valueTest) {
                             $isSame = false;
                             break;
                         }
@@ -86,7 +87,7 @@ abstract class DoctrineTestCase extends BaseCase
     {
         $em = $this->getEntityManager();
 
-        $className = get_class($entity);
+        $className = \get_class($entity);
         $meta = $em->getClassMetadata($className);
         $identifiers = $meta->getIdentifierValues($entity);
         $entityFromDoctrine = $em->find($className, $identifiers);
@@ -136,6 +137,25 @@ abstract class DoctrineTestCase extends BaseCase
         $this->entityManager->clear();
 
         return $this->entityManager;
+    }
+
+    /**
+     * Приводит значения к общему типу для сравнения.
+     *
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    private function unifyValueForCompare($value)
+    {
+        $unified = $value;
+        if ($value instanceof DateTimeInterface) {
+            $unified = $value->format('Y-m-d\TH:i:s.Z');
+        } elseif (\is_object($value) && method_exists($value, '__toString')) {
+            $unified = $value->__toString();
+        }
+
+        return $unified;
     }
 
     /**

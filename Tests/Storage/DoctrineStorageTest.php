@@ -13,13 +13,15 @@ use stdClass;
 
 /**
  * Тест для проверки записи данных в базу.
+ *
+ * @internal
  */
 class DoctrineStorageTest extends AbstractDoctrineStorageTest
 {
     /**
      * Проверяет перехват исключения при завершении записи.
      */
-    public function testStopException()
+    public function testStopException(): void
     {
         $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $em->method('flush')->will($this->throwException(new RuntimeException()));
@@ -33,7 +35,7 @@ class DoctrineStorageTest extends AbstractDoctrineStorageTest
     /**
      * Проверяет перехват исключения при вставке записей в БД.
      */
-    public function testInsertException()
+    public function testInsertException(): void
     {
         $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $em->method('persist')->will($this->throwException(new RuntimeException()));
@@ -47,7 +49,7 @@ class DoctrineStorageTest extends AbstractDoctrineStorageTest
     /**
      * Проверяет перехват исключения при удалении записей в БД.
      */
-    public function testDeleteException()
+    public function testDeleteException(): void
     {
         $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $em->method('getClassMetadata')->will($this->throwException(new RuntimeException()));
@@ -61,7 +63,7 @@ class DoctrineStorageTest extends AbstractDoctrineStorageTest
     /**
      * Проверяет перехват исключения при обновлении записей в БД.
      */
-    public function testUpsertException()
+    public function testUpsertException(): void
     {
         $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $em->method('persist')->will($this->throwException(new RuntimeException()));

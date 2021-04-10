@@ -56,7 +56,7 @@ class DoctrineStorage implements Storage
      */
     public function supports(object $entity): bool
     {
-        return $this->supportsClass(get_class($entity));
+        return $this->supportsClass(\get_class($entity));
     }
 
     /**
@@ -151,7 +151,7 @@ class DoctrineStorage implements Storage
     private function mergeEntityToDoctrine(object $entity): object
     {
         $mergedEntity = null;
-        $className = get_class($entity);
+        $className = \get_class($entity);
         $identifiers = $this->getIdentifiersFromEntity($entity);
         $entityFromDoctrine = $this->em->find($className, $identifiers);
 
@@ -174,7 +174,7 @@ class DoctrineStorage implements Storage
      */
     private function getIdentifiersFromEntity(object $entity): array
     {
-        $className = get_class($entity);
+        $className = \get_class($entity);
         $meta = $this->em->getClassMetadata($className);
         $identifiers = $meta->getIdentifierValues($entity);
 
@@ -191,9 +191,9 @@ class DoctrineStorage implements Storage
      */
     private function mergeEntities(object $first, object $second): object
     {
-        $classNameFirst = get_class($first);
+        $classNameFirst = \get_class($first);
         $metaFirst = $this->em->getClassMetadata($classNameFirst);
-        $classNameSecond = get_class($second);
+        $classNameSecond = \get_class($second);
         $metaSecond = $this->em->getClassMetadata($classNameSecond);
 
         $fieldNames = $metaFirst->getFieldNames();

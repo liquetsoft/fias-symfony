@@ -61,7 +61,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     public function insert(object $entity): void
     {
         try {
-            $meta = $this->em->getClassMetadata(get_class($entity));
+            $meta = $this->em->getClassMetadata(\get_class($entity));
 
             $table = $meta->getTableName();
             $fields = $meta->getFieldNames();
@@ -94,7 +94,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     protected function checkAndFlushInsert(bool $forceInsert = false): void
     {
         foreach ($this->insertData as $tableName => $insertData) {
-            if ($forceInsert || count($insertData) >= $this->insertBatch) {
+            if ($forceInsert || \count($insertData) >= $this->insertBatch) {
                 $this->bulkInsert($tableName, $insertData);
                 unset($this->insertData[$tableName]);
             }
@@ -161,8 +161,8 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
         $dataSample = reset($data);
 
         $paramNames = implode(', ', array_keys($dataSample));
-        $paramValues = implode(', ', array_fill(0, count($dataSample), '?'));
-        $dataValues = '(' . implode('), (', array_fill(0, count($data), $paramValues)) . ')';
+        $paramValues = implode(', ', array_fill(0, \count($dataSample), '?'));
+        $dataValues = '(' . implode('), (', array_fill(0, \count($data), $paramValues)) . ')';
         $sql = "INSERT INTO {$tableName} ({$paramNames}) VALUES {$dataValues}";
 
         $stmt = $this->em->getConnection()->prepare($sql);

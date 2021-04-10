@@ -50,7 +50,7 @@ class UpdateFromFolderCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $folder = $input->getArgument('folder');
-        if (is_array($folder)) {
+        if (\is_array($folder)) {
             $folder = reset($folder);
         }
         $folder = (string) $folder;

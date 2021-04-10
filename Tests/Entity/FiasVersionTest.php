@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 
-use DateTime;
+use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FiasVersion;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
 /**
  * Тест для сущности 'Версия ФИАС'.
+ *
+ * @internal
  */
 class FiasVersionTest extends EntityCase
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function createEntity()
     {
@@ -22,14 +24,14 @@ class FiasVersionTest extends EntityCase
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function accessorsProvider(): array
     {
         return [
             'version' => $this->createFakeData()->numberBetween(1, 1000000),
             'url' => $this->createFakeData()->word,
-            'created' => new DateTime(),
+            'created' => new DateTimeImmutable(),
         ];
     }
 }

@@ -14,13 +14,15 @@ use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 
 /**
  * Тест для объекта, который сериализует/десериализует uuid.
+ *
+ * @internal
  */
 class UuidNormalizerTest extends BaseCase
 {
     /**
      * Проверяет, что объект правильно нормализуется в строку.
      */
-    public function testNormalize()
+    public function testNormalize(): void
     {
         $uuidString = $this->createFakeData()->uuid;
         $uuid = (new UuidFactory())->fromString($uuidString);
@@ -34,7 +36,7 @@ class UuidNormalizerTest extends BaseCase
      * Проверяет, что объект выбросит исключение при попытке нормализовать
      * неверный объект.
      */
-    public function testNormalizeWrongObjectException()
+    public function testNormalizeWrongObjectException(): void
     {
         $normalizer = new UuidNormalizer();
 
@@ -46,7 +48,7 @@ class UuidNormalizerTest extends BaseCase
      * Проверяет, что объект верно определяет поддерживается указанный тип
      * данных для нормализации или нет.
      */
-    public function testSupportsNormalization()
+    public function testSupportsNormalization(): void
     {
         $uuid = (new UuidFactory())->fromString($this->createFakeData()->uuid);
 
@@ -62,7 +64,7 @@ class UuidNormalizerTest extends BaseCase
     /**
      * Проверяет, что объект верно денормализует строку в объект uuid.
      */
-    public function testDenormalize()
+    public function testDenormalize(): void
     {
         $uuidString = $this->createFakeData()->uuid;
 
@@ -77,7 +79,7 @@ class UuidNormalizerTest extends BaseCase
      * Проверяет, что объект выбросит исключение при попытке денормализовать
      * пустую строку.
      */
-    public function testDenormalizeEmptyStringException()
+    public function testDenormalizeEmptyStringException(): void
     {
         $normalizer = new UuidNormalizer();
 
@@ -89,7 +91,7 @@ class UuidNormalizerTest extends BaseCase
      * Проверяет, что объект выбросит исключение при попытке денормализовать
      * строку не в формате uuid.
      */
-    public function testDenormalizeWrongStringException()
+    public function testDenormalizeWrongStringException(): void
     {
         $normalizer = new UuidNormalizer();
 
@@ -101,7 +103,7 @@ class UuidNormalizerTest extends BaseCase
      * Проверяет, что объект верно определяет поддерживается указанный тип
      * данных для денормализации или нет.
      */
-    public function testSupportsDenormalization()
+    public function testSupportsDenormalization(): void
     {
         $normalizer = new UuidNormalizer();
         $uuidString = $this->createFakeData()->uuid;

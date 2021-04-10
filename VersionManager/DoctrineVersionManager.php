@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\VersionManager;
 
-use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
@@ -39,7 +38,7 @@ class DoctrineVersionManager implements VersionManager
         $entity = $this->getEntity();
         $entity->setVersion($info->getVersion());
         $entity->setUrl($info->getUrl());
-        $entity->setCreated(new DateTime());
+        $entity->setCreated(new \DateTimeImmutable());
 
         try {
             $this->em->persist($entity);

@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 
-use DateTime;
+use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Room;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Ramsey\Uuid\UuidInterface;
 
 /**
  * Тест для сущности 'Классификатор помещениях'.
+ *
+ * @internal
  */
 class RoomTest extends EntityCase
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function createEntity()
     {
@@ -23,7 +25,7 @@ class RoomTest extends EntityCase
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function accessorsProvider(): array
     {
@@ -35,9 +37,9 @@ class RoomTest extends EntityCase
             'flatnumber' => $this->createFakeData()->word,
             'flattype' => $this->createFakeData()->numberBetween(1, 1000000),
             'postalcode' => $this->createFakeData()->word,
-            'startdate' => new DateTime(),
-            'enddate' => new DateTime(),
-            'updatedate' => new DateTime(),
+            'startdate' => new DateTimeImmutable(),
+            'enddate' => new DateTimeImmutable(),
+            'updatedate' => new DateTimeImmutable(),
             'operstatus' => $this->createFakeData()->numberBetween(1, 1000000),
             'livestatus' => $this->createFakeData()->numberBetween(1, 1000000),
             'normdoc' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
