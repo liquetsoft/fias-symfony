@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Storage;
 
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManager;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
@@ -27,12 +28,12 @@ class BulkInsertDoctrineStorageTest extends AbstractDoctrineStorageTest
         $entity = new StorageTestMockEntity();
         $entity->setTestId(100);
         $entity->setTestName('test_1_100');
-        $entity->setStartdate(new \DateTimeImmutable('2019-11-11 11:11:11'));
+        $entity->setStartdate(new DateTimeImmutable('2019-11-11 11:11:11'));
 
         $secondEntity = new StorageTestMockEntity();
         $secondEntity->setTestId(100);
         $secondEntity->setTestName('test_2_100');
-        $secondEntity->setStartdate(new \DateTimeImmutable('2019-11-11 11:11:11'));
+        $secondEntity->setStartdate(new DateTimeImmutable('2019-11-11 11:11:11'));
 
         $storage = $this->createStorage(null, 2);
         $storage->start();

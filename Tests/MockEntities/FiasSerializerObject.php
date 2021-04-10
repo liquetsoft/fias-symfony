@@ -12,11 +12,34 @@ use Ramsey\Uuid\UuidInterface;
  */
 class FiasSerializerObject
 {
-    private $ACTSTATID;
-    private $name;
+    /**
+     * @var int
+     */
+    private $ACTSTATID = 0;
+
+    /**
+     * @var string
+     */
+    private $name = '';
+
+    /**
+     * @var DateTimeInterface|null
+     */
     private $testDate;
-    private $kodtst;
+
+    /**
+     * @var string
+     */
+    private $kodtst = '';
+
+    /**
+     * @var UuidInterface|null
+     */
     private $uuid;
+
+    /**
+     * @var int
+     */
     private $emptyStringInt = 0;
 
     public function setActstatid(int $ACTSTATID): void
@@ -24,17 +47,17 @@ class FiasSerializerObject
         $this->ACTSTATID = $ACTSTATID;
     }
 
-    public function getActstatid()
+    public function getActstatid(): int
     {
         return $this->ACTSTATID;
     }
 
-    public function setName($NAME): void
+    public function setName(string $NAME): void
     {
         $this->name = $NAME;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -44,7 +67,7 @@ class FiasSerializerObject
         $this->testDate = $testDate;
     }
 
-    public function getTestDate()
+    public function getTestDate(): ?DateTimeInterface
     {
         return $this->testDate;
     }
@@ -54,7 +77,7 @@ class FiasSerializerObject
         $this->kodtst = $kodtst;
     }
 
-    public function getKodtst()
+    public function getKodtst(): string
     {
         return $this->kodtst;
     }
@@ -64,7 +87,7 @@ class FiasSerializerObject
         $this->uuid = $uuid;
     }
 
-    public function getUuid()
+    public function getUuid(): ?UuidInterface
     {
         return $this->uuid;
     }
@@ -74,7 +97,7 @@ class FiasSerializerObject
         $this->emptyStringInt = $emptyStringInt;
     }
 
-    public function getEmptyStringInt()
+    public function getEmptyStringInt(): int
     {
         return $this->emptyStringInt;
     }

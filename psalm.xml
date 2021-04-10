@@ -7,15 +7,18 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config file:///var/www/vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
-        <directory name="./" />
+        <directory name="./"/>
         <ignoreFiles>
-            <directory name="vendor" />
-            <directory name="Tests" />
-            <directory name="Docker" />
-            <directory name="Resources" />
+            <directory name="vendor"/>
+            <directory name="Docker"/>
+            <directory name="Resources"/>
         </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
     </issueHandlers>
+
+    <plugins>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+    </plugins>
 </psalm>

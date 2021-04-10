@@ -7,13 +7,14 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests;
 use DateTimeInterface;
 use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\Tools\ToolsException;
+use Doctrine\ORM\TransactionRequiredException;
 use Ramsey\Uuid\Doctrine\UuidType;
 
 /**
@@ -30,11 +31,10 @@ abstract class DoctrineTestCase extends BaseCase
      * @param string $message
      *
      * @throws AnnotationException
-     * @throws MappingException
      * @throws ORMException
      * @throws ToolsException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Doctrine\ORM\TransactionRequiredException
+     * @throws OptimisticLockException
+     * @throws TransactionRequiredException
      */
     public function assertDoctrineHasEntity(object $entity, $message = 'Failed asserting that entity can be found by Doctrine.'): void
     {
@@ -50,7 +50,7 @@ abstract class DoctrineTestCase extends BaseCase
             $this->logicalAnd(
                 $this->logicalNot($this->isNull()),
                 $this->isInstanceOf($className),
-                $this->callback(function ($testedEntity) use ($meta, $entity) {
+                $this->callback(function (object $testedEntity) use ($meta, $entity) {
                     $isSame = true;
 
                     $fieldNames = $meta->getFieldNames();
@@ -77,11 +77,10 @@ abstract class DoctrineTestCase extends BaseCase
      * @param string $message
      *
      * @throws AnnotationException
-     * @throws MappingException
      * @throws ORMException
      * @throws ToolsException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Doctrine\ORM\TransactionRequiredException
+     * @throws OptimisticLockException
+     * @throws TransactionRequiredException
      */
     public function assertDoctrineHasNotEntity(object $entity, $message = "Failed asserting that entity can't be found by Doctrine."): void
     {
@@ -105,10 +104,9 @@ abstract class DoctrineTestCase extends BaseCase
      * @param object $entity
      *
      * @throws AnnotationException
-     * @throws MappingException
      * @throws ORMException
      * @throws ToolsException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws OptimisticLockException
      */
     public function persistEntity(object $entity): void
     {
@@ -126,7 +124,6 @@ abstract class DoctrineTestCase extends BaseCase
      * @throws AnnotationException
      * @throws ORMException
      * @throws ToolsException
-     * @throws MappingException
      */
     protected function getEntityManager(): EntityManager
     {
@@ -166,6 +163,8 @@ abstract class DoctrineTestCase extends BaseCase
      * @throws AnnotationException
      * @throws ORMException
      * @throws ToolsException
+     *
+     * @psalm-suppress ArgumentTypeCoercion
      */
     private function createEntityManager(): EntityManager
     {

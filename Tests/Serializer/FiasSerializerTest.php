@@ -35,8 +35,12 @@ EOT;
         $serializer = new FiasSerializer();
 
         $object = $serializer->deserialize($data, FiasSerializerObject::class, 'xml');
+
         $date = $object->getTestDate();
         $date = $date ? $date->format('Y-m-d H:i:s') : null;
+
+        $uuid = $object->getUuid();
+        $uuid = $uuid ? $uuid->toString() : null;
 
         $this->assertInstanceOf(FiasSerializerObject::class, $object);
         $this->assertSame(2, $object->getActstatid());
@@ -44,7 +48,7 @@ EOT;
         $this->assertSame('10', $object->getKodtst());
         $this->assertSame('2019-10-10 10:10:10', $date);
         $this->assertInstanceOf(UuidInterface::class, $object->getUuid());
-        $this->assertSame($uuidString, $object->getUuid()->toString());
+        $this->assertSame($uuidString, $uuid);
         $this->assertSame(0, $object->getEmptyStringInt());
     }
 }
