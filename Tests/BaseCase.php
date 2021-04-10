@@ -72,7 +72,7 @@ abstract class BaseCase extends TestCase
                     "Can't find or write temporary folder: {$this->tempDir}"
                 );
             }
-            $this->tempDir .= DIRECTORY_SEPARATOR . 'fias_component';
+            $this->tempDir .= \DIRECTORY_SEPARATOR . 'fias_component';
             $this->fs()->mkdirIfNotExist($this->tempDir);
             $this->fs()->emptyDir($this->tempDir);
         }
@@ -96,7 +96,7 @@ abstract class BaseCase extends TestCase
             $name = $this->createFakeData()->word;
         }
 
-        $pathToFolder = $this->getTempDir() . DIRECTORY_SEPARATOR . $name;
+        $pathToFolder = $this->getTempDir() . \DIRECTORY_SEPARATOR . $name;
 
         $this->fs()->mkdir($pathToFolder);
 
@@ -117,7 +117,7 @@ abstract class BaseCase extends TestCase
             $name = $this->createFakeData()->word . '.txt';
         }
 
-        $pathToFile = $this->getTempDir() . DIRECTORY_SEPARATOR . $name;
+        $pathToFile = $this->getTempDir() . \DIRECTORY_SEPARATOR . $name;
         $content = $content === null ? $this->createFakeData()->word : $content;
         if (file_put_contents($pathToFile, $content) === false) {
             throw new RuntimeException("Can't create file {$pathToFile}");

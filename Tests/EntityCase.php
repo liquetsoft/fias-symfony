@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests;
 
-use Throwable;
-
 /**
  * Базовый класс для тестирования сущностей.
  */
@@ -26,7 +24,7 @@ abstract class EntityCase extends BaseCase
      * В качестве третьего значения можно вернуть объект с исключением, в таком случае
      * тест будет ждать исключение в сеттере.
      *
-     * @return array[]
+     * @return array
      */
     abstract protected function accessorsProvider(): array;
 
@@ -38,10 +36,10 @@ abstract class EntityCase extends BaseCase
     {
         $tests = $this->accessorsProvider();
         foreach ($tests as $testKey => $test) {
-            if (!is_array($test)) {
+            if (!\is_array($test)) {
                 $property = $testKey;
                 $input = $output = $test;
-            } elseif (count($test) === 2) {
+            } elseif (\count($test) === 2) {
                 list($property, $input) = $test;
                 $output = $input;
             } else {
@@ -65,18 +63,12 @@ abstract class EntityCase extends BaseCase
         $getter = 'get' . ucfirst($property);
         $entity = $this->createEntity();
 
-        if ($output instanceof Throwable) {
-            $this->tester->expectException(get_class($output), function () use ($entity, $setter, $input) {
-                call_user_func([$entity, $setter], $input);
-            });
-        } else {
-            call_user_func([$entity, $setter], $input);
-            $toTest = call_user_func([$entity, $getter]);
-            $this->assertSame(
-                $output,
-                $toTest,
-                "accessor pair {$setter}/{$getter} must returns expected value"
-            );
-        }
+        \call_user_func([$entity, $setter], $input);
+        $toTest = \call_user_func([$entity, $getter]);
+        $this->assertSame(
+            $output,
+            $toTest,
+            "accessor pair {$setter}/{$getter} must returns expected value"
+        );
     }
 }

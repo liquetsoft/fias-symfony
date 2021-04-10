@@ -46,13 +46,13 @@ class InstallParallelRunningCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $filesToInsert = $input->getArgument('files_to_insert');
-        if (is_array($filesToInsert)) {
+        if (\is_array($filesToInsert)) {
             $filesToInsert = reset($filesToInsert);
         }
         $filesToInsert = json_decode((string) $filesToInsert, true);
 
         $filesToDelete = $input->getArgument('files_to_delete');
-        if (is_array($filesToDelete)) {
+        if (\is_array($filesToDelete)) {
             $filesToDelete = reset($filesToDelete);
         }
         $filesToDelete = json_decode((string) $filesToDelete, true);

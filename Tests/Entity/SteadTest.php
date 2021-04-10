@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 
-use DateTime;
+use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Stead;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Ramsey\Uuid\UuidInterface;
 
 /**
  * Тест для сущности 'Классификатор земельных участков'.
+ *
+ * @internal
  */
 class SteadTest extends EntityCase
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function createEntity()
     {
@@ -23,7 +25,7 @@ class SteadTest extends EntityCase
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function accessorsProvider(): array
     {
@@ -39,9 +41,9 @@ class SteadTest extends EntityCase
             'parentguid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
             'steadid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
             'operstatus' => $this->createFakeData()->numberBetween(1, 1000000),
-            'startdate' => new DateTime(),
-            'enddate' => new DateTime(),
-            'updatedate' => new DateTime(),
+            'startdate' => new DateTimeImmutable(),
+            'enddate' => new DateTimeImmutable(),
+            'updatedate' => new DateTimeImmutable(),
             'livestatus' => $this->createFakeData()->numberBetween(1, 1000000),
             'divtype' => $this->createFakeData()->numberBetween(1, 1000000),
             'normdoc' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),

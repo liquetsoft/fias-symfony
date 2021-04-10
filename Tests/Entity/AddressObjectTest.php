@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 
-use DateTime;
+use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddressObject;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Ramsey\Uuid\UuidInterface;
 
 /**
  * Тест для сущности 'Классификатор адресообразующих элементов'.
+ *
+ * @internal
  */
 class AddressObjectTest extends EntityCase
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function createEntity()
     {
@@ -23,7 +25,7 @@ class AddressObjectTest extends EntityCase
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function accessorsProvider(): array
     {
@@ -61,9 +63,9 @@ class AddressObjectTest extends EntityCase
             'okato' => $this->createFakeData()->word,
             'oktmo' => $this->createFakeData()->word,
             'postalcode' => $this->createFakeData()->word,
-            'startdate' => new DateTime(),
-            'enddate' => new DateTime(),
-            'updatedate' => new DateTime(),
+            'startdate' => new DateTimeImmutable(),
+            'enddate' => new DateTimeImmutable(),
+            'updatedate' => new DateTimeImmutable(),
             'divtype' => $this->createFakeData()->numberBetween(1, 1000000),
             'normdoc' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
         ];

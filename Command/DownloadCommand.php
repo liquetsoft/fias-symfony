@@ -130,7 +130,7 @@ class DownloadCommand extends Command
      */
     private function extract(SplFileInfo $archive): void
     {
-        $extractTo = $archive->getPath() . DIRECTORY_SEPARATOR . $archive->getBasename('.zip');
+        $extractTo = $archive->getPath() . \DIRECTORY_SEPARATOR . $archive->getBasename('.zip');
         $extractTo = new SplFileInfo($extractTo);
 
         $this->fs->mkdirIfNotExist($extractTo);
@@ -152,7 +152,7 @@ class DownloadCommand extends Command
     {
         $version = $input->getArgument('version');
 
-        if (is_array($version)) {
+        if (\is_array($version)) {
             $version = reset($version);
         } elseif ($version === null) {
             $version = self::FULL_VERSION_NAME;
@@ -173,13 +173,13 @@ class DownloadCommand extends Command
         $version = $this->getVersionArgument($input);
 
         $pathToDownload = $input->getArgument('pathToDownload');
-        if (is_array($pathToDownload)) {
+        if (\is_array($pathToDownload)) {
             $pathToDownload = reset($pathToDownload);
         }
 
         $pathToDownload = (string) $pathToDownload;
         $pathToDownload = rtrim($pathToDownload, '/\\')
-            . DIRECTORY_SEPARATOR
+            . \DIRECTORY_SEPARATOR
             . 'fias_' . $version . '.zip';
 
         return new SplFileInfo($pathToDownload);

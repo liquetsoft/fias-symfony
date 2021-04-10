@@ -50,7 +50,7 @@ class LiquetsoftFiasExtension extends Extension
      */
     protected function loadServicesToContainer(ContainerBuilder $container): void
     {
-        $configDir = dirname(__DIR__) . '/Resources/config';
+        $configDir = \dirname(__DIR__) . '/Resources/config';
         $loader = new YamlFileLoader($container, new FileLocator($configDir));
 
         $loader->load('services.yaml');

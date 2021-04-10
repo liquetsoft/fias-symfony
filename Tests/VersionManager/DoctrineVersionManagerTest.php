@@ -12,13 +12,15 @@ use RuntimeException;
 
 /**
  * Тест для объекта, который обновляет и получает текущую версию.
+ *
+ * @internal
  */
 class DoctrineVersionManagerTest extends DoctrineTestCase
 {
     /**
      * Проверяет, что объект правильно задает текущую версию.
      */
-    public function testSetCurrentVersion()
+    public function testSetCurrentVersion(): void
     {
         $version = $this->createFakeData()->numberBetween(1, 1000);
         $url = $this->createFakeData()->url;
@@ -43,7 +45,7 @@ class DoctrineVersionManagerTest extends DoctrineTestCase
     /**
      * Проверяет, что объект выбросит исключение, если задан неверный класс сущности.
      */
-    public function testSetCurrentVersionWrongEntityException()
+    public function testSetCurrentVersionWrongEntityException(): void
     {
         $info = $this->getMockBuilder(InformerResponse::class)->getMock();
 
@@ -59,7 +61,7 @@ class DoctrineVersionManagerTest extends DoctrineTestCase
     /**
      * Проверяет, что объект правильно получает текущую версию.
      */
-    public function testGetCurrentVersion()
+    public function testGetCurrentVersion(): void
     {
         $version = $this->createFakeData()->numberBetween(1, 1000);
         $url = $this->createFakeData()->url;
@@ -82,7 +84,7 @@ class DoctrineVersionManagerTest extends DoctrineTestCase
     /**
      * Проверяет, что объект выбросит исключение, если задан неверный класс сущности.
      */
-    public function testGetCurrentVersionWrongEntityException()
+    public function testGetCurrentVersionWrongEntityException(): void
     {
         $versionManager = new DoctrineVersionManager(
             $this->getEntityManager(),

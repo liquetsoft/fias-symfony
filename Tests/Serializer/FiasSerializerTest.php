@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Serializer;
 
-use DateTime;
-use DateTimeInterface;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\BaseCase;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\FiasSerializerObject;
 use Ramsey\Uuid\UuidInterface;
 
 /**
  * Тест для объекта, который сереализует данные из ФИАС.
+ *
+ * @internal
  */
 class FiasSerializerTest extends BaseCase
 {
     /**
      * Проверяет, что объект правильно разберет данные их xml в объект.
      */
-    public function testDenormalize()
+    public function testDenormalize(): void
     {
         $uuidString = $this->createFakeData()->uuid;
         $data = <<<EOT
@@ -35,86 +36,19 @@ EOT;
 
         $object = $serializer->deserialize($data, FiasSerializerObject::class, 'xml');
 
+        $date = $object->getTestDate();
+        $date = $date ? $date->format('Y-m-d H:i:s') : null;
+
+        $uuid = $object->getUuid();
+        $uuid = $uuid ? $uuid->toString() : null;
+
         $this->assertInstanceOf(FiasSerializerObject::class, $object);
         $this->assertSame(2, $object->getActstatid());
         $this->assertSame('Не актуальный', $object->getName());
         $this->assertSame('10', $object->getKodtst());
-        $this->assertEquals(new DateTime('2019-10-10T10:10:10.02'), $object->getTestDate());
+        $this->assertSame('2019-10-10 10:10:10', $date);
         $this->assertInstanceOf(UuidInterface::class, $object->getUuid());
-        $this->assertSame($uuidString, $object->getUuid()->toString());
+        $this->assertSame($uuidString, $uuid);
         $this->assertSame(0, $object->getEmptyStringInt());
-    }
-}
-
-/**
- * Мок для проверки сериализатора.
- */
-class FiasSerializerObject
-{
-    private $ACTSTATID;
-    private $name;
-    private $testDate;
-    private $kodtst;
-    private $uuid;
-    private $emptyStringInt = 0;
-
-    public function setActstatid(int $ACTSTATID)
-    {
-        $this->ACTSTATID = $ACTSTATID;
-    }
-
-    public function getActstatid()
-    {
-        return $this->ACTSTATID;
-    }
-
-    public function setName($NAME)
-    {
-        $this->name = $NAME;
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setTestDate(DateTimeInterface $testDate)
-    {
-        $this->testDate = $testDate;
-    }
-
-    public function getTestDate()
-    {
-        return $this->testDate;
-    }
-
-    public function setKodtst(string $kodtst)
-    {
-        $this->kodtst = $kodtst;
-    }
-
-    public function getKodtst()
-    {
-        return $this->kodtst;
-    }
-
-    public function setUuid(UuidInterface $uuid)
-    {
-        $this->uuid = $uuid;
-    }
-
-    public function getUuid()
-    {
-        return $this->uuid;
-    }
-
-    public function setEmptyStringInt(int $emptyStringInt)
-    {
-        $this->emptyStringInt = $emptyStringInt;
-    }
-
-    public function getEmptyStringInt()
-    {
-        return $this->emptyStringInt;
     }
 }

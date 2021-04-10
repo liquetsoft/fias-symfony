@@ -95,7 +95,7 @@ class TestGenerator
         $this->decorateClass($class, $descriptor);
 
         $createEntityMethod = $class->addMethod('createEntity');
-        $createEntityMethod->addComment("@inheritdoc\n");
+        $createEntityMethod->addComment("{@inheritDoc}\n");
         $createEntityMethod->setVisibility('protected');
         $createEntityMethod->setBody("return new {$baseName}();");
 
@@ -109,7 +109,7 @@ class TestGenerator
             } elseif ($type === 'string_uuid') {
                 $value = '$this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock()';
             } elseif ($type === 'string_date') {
-                $value = 'new DateTime()';
+                $value = 'new DateTimeImmutable()';
             }
             $accessors .= "    '{$name}' => {$value},\n";
         }
@@ -118,7 +118,7 @@ class TestGenerator
         $accessorsProviderMethod->setVisibility('protected');
         $accessorsProviderMethod->setReturnType('array');
         $accessorsProviderMethod->setBody($accessors);
-        $accessorsProviderMethod->addComment("@inheritdoc\n");
+        $accessorsProviderMethod->addComment("{@inheritDoc}\n");
 
         file_put_contents($fullPath, (new PsrPrinter())->printFile($phpFile));
     }
@@ -140,7 +140,7 @@ class TestGenerator
                 $namespace->addUse('Ramsey\Uuid\UuidInterface');
             }
             if ($field->getSubType() === 'date') {
-                $namespace->addUse('DateTime');
+                $namespace->addUse('DateTimeImmutable');
             }
         }
     }
@@ -156,7 +156,7 @@ class TestGenerator
         $class->setExtends('Liquetsoft\\Fias\\Symfony\\LiquetsoftFiasBundle\\Tests\\EntityCase');
         $description = trim($descriptor->getDescription(), " \t\n\r\0\x0B.");
         if ($description) {
-            $class->addComment("Тест для сущности '{$description}'.\n");
+            $class->addComment("Тест для сущности '{$description}'.\n\n@internal");
         }
     }
 
