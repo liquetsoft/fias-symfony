@@ -173,7 +173,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
             }
         }
 
-        $stmt->execute();
+        $stmt->executeStatement();
     }
 
     /**
