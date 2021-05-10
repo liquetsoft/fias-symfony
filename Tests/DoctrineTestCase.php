@@ -6,7 +6,6 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests;
 
 use DateTimeInterface;
 use Doctrine\Common\Annotations\AnnotationException;
-use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
@@ -185,7 +184,7 @@ abstract class DoctrineTestCase extends BaseCase
         ];
         $isDevMode = true;
         $proxyDir = null;
-        $cache = new ArrayCache();
+        $cache = new DoctrineTestCaseArrayCache();
         $useSimpleAnnotationReader = false;
         $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
 
