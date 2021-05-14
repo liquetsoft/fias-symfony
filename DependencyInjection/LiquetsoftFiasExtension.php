@@ -23,7 +23,11 @@ class LiquetsoftFiasExtension extends Extension
     public function load(array $configs, ContainerBuilder $container): void
     {
         $this->loadConfigurationToContainer($configs, $container);
-        $this->loadServicesToContainer($container);
+
+        $this->loadServicesToContainer($container, 'services');
+        if (!empty($configs[0]['elasticsearch_enable'])) {
+            $this->loadServicesToContainer($container, 'services_elastic');
+        }
     }
 
     /**
@@ -45,14 +49,15 @@ class LiquetsoftFiasExtension extends Extension
      * Регистрирует сервисы бандла.
      *
      * @param ContainerBuilder $container
+     * @param string           $servicesBundle
      *
      * @throws Exception
      */
-    protected function loadServicesToContainer(ContainerBuilder $container): void
+    protected function loadServicesToContainer(ContainerBuilder $container, string $servicesBundle): void
     {
         $configDir = \dirname(__DIR__) . '/Resources/config';
         $loader = new YamlFileLoader($container, new FileLocator($configDir));
 
-        $loader->load('services.yaml');
+        $loader->load("{$servicesBundle}.yaml");
     }
 }

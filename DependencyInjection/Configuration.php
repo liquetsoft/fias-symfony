@@ -57,6 +57,12 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->defaultValue([])
                 ->end()
+                ->booleanNode('elasticsearch_enable')
+                    ->defaultValue(false)
+                ->end()
+                ->arrayNode('elasticsearch_hosts')
+                    ->defaultValue([])
+                ->end()
             ->end()
         ;
 
