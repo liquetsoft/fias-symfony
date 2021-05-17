@@ -171,7 +171,7 @@
 Elasticsearch
 -------------
 
-Бандл имеет поддержку Elasticsearch для хранения данных ФИАС. Для ее включения нужно:
+Бандл имеет поддержку Elasticsearch для хранения данных ФИАС.
 
 1. Установить обертку для Elasticsearch
 
@@ -196,7 +196,7 @@ Elasticsearch
     liquetsoft_fias:
         elasticsearch_enable: true
         elasticsearch_hosts:
-            - 'https//elasticsearch'
+            - 'https://elasticsearch'
         entity_bindings:
             ActualStatus: App\Entity\ActualStatus                       # для сохранения будет использована Doctrine
             AddressObject: Liquetsoft\Fias\Elastic\Entity\AddressObject # для сохранения будет использован Elasticsearch
@@ -219,3 +219,10 @@ Elasticsearch
     * `Liquetsoft\Fias\Elastic\Entity\RoomType`
     * `Liquetsoft\Fias\Elastic\Entity\Stead`
     * `Liquetsoft\Fias\Elastic\Entity\StructureStatus`
+
+4. Создать требуемые индексы:
+
+    ```bash
+    php bin/console liquetsoft:fias:create_elastic_indicies
+    ```
+5. Описания индексов можно найти в соответствующих им mapper-классах. Например, `Liquetsoft\Fias\Elastic\IndexMapper\ActualStatusIndexMapper` для `Liquetsoft\Fias\Elastic\Entity\ActualStatus`.
