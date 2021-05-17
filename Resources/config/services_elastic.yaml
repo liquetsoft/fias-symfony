@@ -14,6 +14,8 @@ services:
 
     liquetsoft_fias.elastic.index_builder:
         class: Liquetsoft\Fias\Elastic\IndexBuilder\BaseIndexBuilder
+        arguments:
+            $clientProvider: '@liquetsoft_fias.elastic.client_provider'
 
     Liquetsoft\Fias\Elastic\IndexBuilder\IndexBuilder:
         alias: liquetsoft_fias.elastic.index_builder
@@ -104,9 +106,21 @@ services:
 
 
 
+    liquetsoft_fias.elastic.repository:
+        class: Liquetsoft\Fias\Elastic\ElasticSearchRepository\BaseElasticSearchRepository
+        arguments:
+            $clientProvider: '@liquetsoft_fias.elastic.client_provider'
+            $denormalizer: '@serializer'
+
+    Liquetsoft\Fias\Elastic\ElasticSearchRepository\ElasticSearchRepository:
+        alias: liquetsoft_fias.elastic.repository
+
+
+
     liquetsoft_fias.elastic.create_indicies_command:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\CreateElasticIndiciesCommand
         arguments:
+            $entityManager: '@liquetsoft_fias.entity_manager.service'
             $registry: '@liquetsoft_fias.elastic.index_mapper_registry'
             $builder: '@liquetsoft_fias.elastic.index_builder'
         tags:

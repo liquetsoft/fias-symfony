@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 
+use Liquetsoft\Fias\Component\EntityManager\EntityManager;
 use Liquetsoft\Fias\Elastic\Exception\IndexBuilderException;
 use Liquetsoft\Fias\Elastic\IndexBuilder\IndexBuilder;
 use Liquetsoft\Fias\Elastic\IndexMapperRegistry\IndexMapperRegistry;
@@ -24,12 +25,15 @@ class CreateElasticIndiciesCommand extends Command
      */
     protected static $defaultName = 'liquetsoft:fias:create_elastic_indicies';
 
+    private EntityManager $entityManager;
+
     private IndexMapperRegistry $registry;
 
     private IndexBuilder $builder;
 
-    public function __construct(IndexMapperRegistry $registry, IndexBuilder $builder)
+    public function __construct(EntityManager $entityManager, IndexMapperRegistry $registry, IndexBuilder $builder)
     {
+        $this->entityManager = $entityManager;
         $this->registry = $registry;
         $this->builder = $builder;
 
@@ -69,8 +73,12 @@ class CreateElasticIndiciesCommand extends Command
         $shouldReplace = $input->getOption('replace');
         $shouldReplace = $shouldReplace !== false;
 
-        $mappers = $this->registry->getAllMappers();
-        foreach ($mappers as $mapper) {
+        $bindedClasses = $this->entityManager->getBindedClasses();
+        foreach ($bindedClasses as $bindedClass) {
+            if (!$this->registry->hasMapperForKey($bindedClass)) {
+                continue;
+            }
+            $mapper = $this->registry->getMapperForKey($bindedClass);
             if ($shouldReplace && $this->builder->hasIndex($mapper)) {
                 $this->builder->delete($mapper);
                 $io->note("Index '{$mapper->getName()}' already exists. Removing...");

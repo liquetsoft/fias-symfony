@@ -61,6 +61,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(false)
                 ->end()
                 ->arrayNode('elasticsearch_hosts')
+                    ->prototype('scalar')
                     ->defaultValue([])
                 ->end()
             ->end()

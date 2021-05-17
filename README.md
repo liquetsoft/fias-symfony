@@ -226,3 +226,39 @@ Elasticsearch
     php bin/console liquetsoft:fias:create_elastic_indicies
     ```
 5. Описания индексов можно найти в соответствующих им mapper-классах. Например, `Liquetsoft\Fias\Elastic\IndexMapper\ActualStatusIndexMapper` для `Liquetsoft\Fias\Elastic\Entity\ActualStatus`.
+
+6. Библиотека предоставляет так же репозиторий для доступа к данным.
+
+    ```php
+    <?php
+
+    declare(strict_types=1);
+
+    namespace App\Fias;
+
+    use Liquetsoft\Fias\Elastic\IndexMapper\ActualStatusIndexMapper;
+    use Liquetsoft\Fias\Elastic\Entity\ActualStatus;
+    use Liquetsoft\Fias\Elastic\ElasticSearchRepository\ElasticSearchRepository;
+
+    class ActualStatusService
+    {
+        private ElasticSearchRepository $repo;
+
+        private ActualStatusIndexMapper $mapper;
+
+        public function __construct(
+            ElasticSearchRepository $repo,
+            AddressObjectIndexMapper $mapper
+        ) {
+            $this->repo = $repo;
+            $this->mapper = $mapper;
+        }
+
+        public function findById(int $id): ?ActualStatus
+        {
+            $query = $this->mapper->query()->term('actstatid', $id);
+
+            return $this->repo->one($query, ActualStatus::class);
+        }
+    }
+    ```

@@ -21,7 +21,7 @@
         "vimeo/psalm": "^4.0",
         "nette/php-generator": "^3.5",
         "psalm/plugin-phpunit": "^0.15.1",
-        "liquetsoft/fias-elastic": "^4.0"
+        "liquetsoft/fias-elastic": "^4.1"
     },
     "autoload": {
         "psr-4": {
