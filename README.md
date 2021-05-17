@@ -165,3 +165,100 @@
     ```
 
 Соответственно, установка запускается только в первый раз, а обновление следует поставить в качестве задачи для `cron`.
+
+
+
+Elasticsearch
+-------------
+
+Бандл имеет поддержку Elasticsearch для хранения данных ФИАС.
+
+1. Установить обертку для Elasticsearch
+
+    ```bash
+    composer req liquetsoft/fias-elastic
+    ```
+
+2. Активировать Elasticsearch в конфигурации
+
+    ```yaml
+    # config/packages/liquetsoft_fias.yaml
+    liquetsoft_fias:
+        elasticsearch_enable: true
+        elasticsearch_hosts:
+            - 'https://elasticsearch'
+    ```
+
+3. Заменить соответствия для сущностей, которые следует сохранять в Elasticsearch:
+
+    ```yaml
+    # config/packages/liquetsoft_fias.yaml
+    liquetsoft_fias:
+        elasticsearch_enable: true
+        elasticsearch_hosts:
+            - 'https://elasticsearch'
+        entity_bindings:
+            ActualStatus: App\Entity\ActualStatus                       # для сохранения будет использована Doctrine
+            AddressObject: Liquetsoft\Fias\Elastic\Entity\AddressObject # для сохранения будет использован Elasticsearch
+    ```
+
+    Список доступных сущностей:
+
+    * `Liquetsoft\Fias\Elastic\Entity\ActualStatus`
+    * `Liquetsoft\Fias\Elastic\Entity\AddressObject`
+    * `Liquetsoft\Fias\Elastic\Entity\AddressObjectType`
+    * `Liquetsoft\Fias\Elastic\Entity\CenterStatus`
+    * `Liquetsoft\Fias\Elastic\Entity\CurrentStatus`
+    * `Liquetsoft\Fias\Elastic\Entity\EstateStatus`
+    * `Liquetsoft\Fias\Elastic\Entity\FlatType`
+    * `Liquetsoft\Fias\Elastic\Entity\House`
+    * `Liquetsoft\Fias\Elastic\Entity\NormativeDocument`
+    * `Liquetsoft\Fias\Elastic\Entity\NormativeDocumentType`
+    * `Liquetsoft\Fias\Elastic\Entity\OperationStatus`
+    * `Liquetsoft\Fias\Elastic\Entity\Room`
+    * `Liquetsoft\Fias\Elastic\Entity\RoomType`
+    * `Liquetsoft\Fias\Elastic\Entity\Stead`
+    * `Liquetsoft\Fias\Elastic\Entity\StructureStatus`
+
+4. Создать требуемые индексы:
+
+    ```bash
+    php bin/console liquetsoft:fias:create_elastic_indicies
+    ```
+5. Описания индексов можно найти в соответствующих им mapper-классах. Например, `Liquetsoft\Fias\Elastic\IndexMapper\ActualStatusIndexMapper` для `Liquetsoft\Fias\Elastic\Entity\ActualStatus`.
+
+6. Библиотека предоставляет так же репозиторий для доступа к данным.
+
+    ```php
+    <?php
+
+    declare(strict_types=1);
+
+    namespace App\Fias;
+
+    use Liquetsoft\Fias\Elastic\IndexMapper\ActualStatusIndexMapper;
+    use Liquetsoft\Fias\Elastic\Entity\ActualStatus;
+    use Liquetsoft\Fias\Elastic\ElasticSearchRepository\ElasticSearchRepository;
+
+    class ActualStatusService
+    {
+        private ElasticSearchRepository $repo;
+
+        private ActualStatusIndexMapper $mapper;
+
+        public function __construct(
+            ElasticSearchRepository $repo,
+            AddressObjectIndexMapper $mapper
+        ) {
+            $this->repo = $repo;
+            $this->mapper = $mapper;
+        }
+
+        public function findById(int $id): ?ActualStatus
+        {
+            $query = $this->mapper->query()->term('actstatid', $id);
+
+            return $this->repo->one($query, ActualStatus::class);
+        }
+    }
+    ```
