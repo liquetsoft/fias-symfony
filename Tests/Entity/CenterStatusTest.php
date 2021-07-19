@@ -29,7 +29,7 @@ class CenterStatusTest extends EntityCase
     {
         return [
             'centerstid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'name' => $this->createFakeData()->word,
+            'name' => $this->createFakeData()->word(),
         ];
     }
 }

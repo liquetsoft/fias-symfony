@@ -30,7 +30,7 @@ class FiasVersionTest extends EntityCase
     {
         return [
             'version' => $this->createFakeData()->numberBetween(1, 1000000),
-            'url' => $this->createFakeData()->word,
+            'url' => $this->createFakeData()->word(),
             'created' => new DateTimeImmutable(),
         ];
     }

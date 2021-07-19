@@ -29,7 +29,7 @@ class CurrentStatusTest extends EntityCase
     {
         return [
             'curentstid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'name' => $this->createFakeData()->word,
+            'name' => $this->createFakeData()->word(),
         ];
     }
 }

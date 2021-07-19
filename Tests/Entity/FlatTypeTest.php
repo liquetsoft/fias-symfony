@@ -29,8 +29,8 @@ class FlatTypeTest extends EntityCase
     {
         return [
             'fltypeid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'name' => $this->createFakeData()->word,
-            'shortname' => $this->createFakeData()->word,
+            'name' => $this->createFakeData()->word(),
+            'shortname' => $this->createFakeData()->word(),
         ];
     }
 }

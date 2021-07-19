@@ -28,10 +28,10 @@ class AddressObjectTypeTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'kodtst' => $this->createFakeData()->word,
+            'kodtst' => $this->createFakeData()->word(),
             'level' => $this->createFakeData()->numberBetween(1, 1000000),
-            'socrname' => $this->createFakeData()->word,
-            'scname' => $this->createFakeData()->word,
+            'socrname' => $this->createFakeData()->word(),
+            'scname' => $this->createFakeData()->word(),
         ];
     }
 }

@@ -21,7 +21,7 @@ class FiasSerializerTest extends BaseCase
      */
     public function testDenormalize(): void
     {
-        $uuidString = $this->createFakeData()->uuid;
+        $uuidString = $this->createFakeData()->uuid();
         $data = <<<EOT
 <ActualStatus
     ACTSTATID="2"

@@ -93,7 +93,7 @@ abstract class BaseCase extends TestCase
     protected function getPathToTestDir(string $name = ''): string
     {
         if ($name === '') {
-            $name = $this->createFakeData()->word;
+            $name = $this->createFakeData()->word();
         }
 
         $pathToFolder = $this->getTempDir() . \DIRECTORY_SEPARATOR . $name;
@@ -114,11 +114,11 @@ abstract class BaseCase extends TestCase
     protected function getPathToTestFile(string $name = '', ?string $content = null): string
     {
         if ($name === '') {
-            $name = $this->createFakeData()->word . '.txt';
+            $name = $this->createFakeData()->word() . '.txt';
         }
 
         $pathToFile = $this->getTempDir() . \DIRECTORY_SEPARATOR . $name;
-        $content = $content === null ? $this->createFakeData()->word : $content;
+        $content = $content === null ? $this->createFakeData()->word() : $content;
         if (file_put_contents($pathToFile, $content) === false) {
             throw new RuntimeException("Can't create file {$pathToFile}");
         }

@@ -58,7 +58,7 @@ class InstallPipelineTest extends DoctrineTestCase
         $deletedEntity->setTestId(123);
 
         $version = $this->createFakeData()->numberBetween(1, 1000);
-        $versionUrl = $this->createFakeData()->url;
+        $versionUrl = $this->createFakeData()->url();
         $versionInfo = $this->getMockBuilder(InformerResponse::class)->getMock();
         $versionInfo->method('getVersion')->willReturn($version);
         $versionInfo->method('getUrl')->willReturn($versionUrl);
