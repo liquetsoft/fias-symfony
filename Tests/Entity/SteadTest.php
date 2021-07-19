@@ -31,13 +31,13 @@ class SteadTest extends EntityCase
     {
         return [
             'steadguid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
-            'number' => $this->createFakeData()->word,
-            'regioncode' => $this->createFakeData()->word,
-            'postalcode' => $this->createFakeData()->word,
-            'ifnsfl' => $this->createFakeData()->word,
-            'ifnsul' => $this->createFakeData()->word,
-            'okato' => $this->createFakeData()->word,
-            'oktmo' => $this->createFakeData()->word,
+            'number' => $this->createFakeData()->word(),
+            'regioncode' => $this->createFakeData()->word(),
+            'postalcode' => $this->createFakeData()->word(),
+            'ifnsfl' => $this->createFakeData()->word(),
+            'ifnsul' => $this->createFakeData()->word(),
+            'okato' => $this->createFakeData()->word(),
+            'oktmo' => $this->createFakeData()->word(),
             'parentguid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
             'steadid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
             'operstatus' => $this->createFakeData()->numberBetween(1, 1000000),
@@ -47,11 +47,11 @@ class SteadTest extends EntityCase
             'livestatus' => $this->createFakeData()->numberBetween(1, 1000000),
             'divtype' => $this->createFakeData()->numberBetween(1, 1000000),
             'normdoc' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
-            'terrifnsfl' => $this->createFakeData()->word,
-            'terrifnsul' => $this->createFakeData()->word,
+            'terrifnsfl' => $this->createFakeData()->word(),
+            'terrifnsul' => $this->createFakeData()->word(),
             'previd' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
             'nextid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
-            'cadnum' => $this->createFakeData()->word,
+            'cadnum' => $this->createFakeData()->word(),
         ];
     }
 }

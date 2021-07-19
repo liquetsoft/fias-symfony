@@ -31,9 +31,9 @@ class NormativeDocumentTest extends EntityCase
     {
         return [
             'normdocid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
-            'docname' => $this->createFakeData()->word,
+            'docname' => $this->createFakeData()->word(),
             'docdate' => new DateTimeImmutable(),
-            'docnum' => $this->createFakeData()->word,
+            'docnum' => $this->createFakeData()->word(),
             'doctype' => $this->createFakeData()->numberBetween(1, 1000000),
             'docimgid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
         ];

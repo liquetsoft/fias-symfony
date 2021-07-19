@@ -24,7 +24,7 @@ class UuidNormalizerTest extends BaseCase
      */
     public function testNormalize(): void
     {
-        $uuidString = $this->createFakeData()->uuid;
+        $uuidString = $this->createFakeData()->uuid();
         $uuid = (new UuidFactory())->fromString($uuidString);
 
         $normalizer = new UuidNormalizer();
@@ -50,7 +50,7 @@ class UuidNormalizerTest extends BaseCase
      */
     public function testSupportsNormalization(): void
     {
-        $uuid = (new UuidFactory())->fromString($this->createFakeData()->uuid);
+        $uuid = (new UuidFactory())->fromString($this->createFakeData()->uuid());
 
         $normalizer = new UuidNormalizer();
 
@@ -66,7 +66,7 @@ class UuidNormalizerTest extends BaseCase
      */
     public function testDenormalize(): void
     {
-        $uuidString = $this->createFakeData()->uuid;
+        $uuidString = $this->createFakeData()->uuid();
 
         $normalizer = new UuidNormalizer();
         $uuid = $normalizer->denormalize($uuidString, 'test');
@@ -106,7 +106,7 @@ class UuidNormalizerTest extends BaseCase
     public function testSupportsDenormalization(): void
     {
         $normalizer = new UuidNormalizer();
-        $uuidString = $this->createFakeData()->uuid;
+        $uuidString = $this->createFakeData()->uuid();
 
         $this->assertTrue($normalizer->supportsDenormalization('test', Uuid::class));
         $this->assertTrue($normalizer->supportsDenormalization($uuidString, Uuid::class));

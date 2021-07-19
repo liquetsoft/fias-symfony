@@ -102,7 +102,7 @@ class TestGenerator
         $accessors = "return [\n";
         foreach ($descriptor->getFields() as $field) {
             $name = $this->unifyColumnName($field->getName());
-            $value = '$this->createFakeData()->word';
+            $value = '$this->createFakeData()->word()';
             $type = trim($field->getType() . '_' . $field->getSubType(), ' _');
             if ($type === 'int') {
                 $value = '$this->createFakeData()->numberBetween(1, 1000000)';
