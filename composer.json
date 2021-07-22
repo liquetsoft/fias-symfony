@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.4",
-        "liquetsoft/fias-component": "^9.0",
+        "liquetsoft/fias-component": "^9.1",
         "symfony/framework-bundle": "^5.0",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/orm": "^2.4",

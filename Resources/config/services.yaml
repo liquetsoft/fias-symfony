@@ -25,6 +25,9 @@ services:
 
     liquetsoft_fias.downloader.service:
         class: Liquetsoft\Fias\Component\Downloader\CurlDownloader
+        arguments:
+            - '%liquetsoft_fias.download_curl_settings%'
+            - '%liquetsoft_fias.download_retry_attempts%'
 
     Liquetsoft\Fias\Component\Downloader\Downloader:
         alias: liquetsoft_fias.downloader.service
