@@ -150,7 +150,7 @@
 Использование
 -------------
 
-Бандл определяет две значимых команды консоли:
+Бандл определяет несколько значимых команды консоли:
 
 1. Установка ФИАС с ноля
 
@@ -158,13 +158,46 @@
     bin/console liquetsoft:fias:install
     ```
 
-2. Обновление ФИАС через дельту
+2. Обновление ФИАС через дельту (установка запускается только в первый раз, а обновление следует поставить в качестве задачи для `cron`)
 
     ```bash
     bin/console liquetsoft:fias:update
+
+3. Текущий статус серверов ФИАС (сервис информирования или сервер с файлами могут быть недоступны по тем или иным причинам)
+
+    ```bash
+    bin/console liquetsoft:fias:status
     ```
 
-Соответственно, установка запускается только в первый раз, а обновление следует поставить в качестве задачи для `cron`.
+4. Список доступных для установки и обновления версий ФИАС
+
+    ```bash
+    bin/console liquetsoft:fias:versions
+    ```
+
+5. Загрузка и распаковка архива с полной версией ФИАС
+
+    ```bash
+    bin/console liquetsoft:fias:download /path/to/download full --extract
+    ```
+
+6. Установка ФИАС из указанного каталога
+
+    ```bash
+    bin/console liquetsoft:fias:install_from_folder /path/to/extracted/fias
+    ```
+
+7. Обновление ФИАС из указанного каталога
+
+    ```bash
+    bin/console liquetsoft:fias:update_from_folder /path/to/extracted/fias
+    ```
+
+8. Принудительная установка номера текущей версии ФИАС
+
+    ```bash
+    bin/console liquetsoft:fias:version_set 20160101
+    ```
 
 
 
