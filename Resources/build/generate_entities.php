@@ -6,6 +6,7 @@ use Liquetsoft\Fias\Component\EntityDescriptor\BaseEntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\BaseEntityField;
 use Liquetsoft\Fias\Component\EntityRegistry\ArrayEntityRegistry;
 use Liquetsoft\Fias\Component\EntityRegistry\PhpArrayFileRegistry;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator\DenormalizerGenerator;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator\EntityGenerator;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator\TestGenerator;
 use Marvin255\FileSystemHelper\FileSystemFactory;
@@ -23,6 +24,9 @@ $fs->emptyDir($dir);
 $testDir = $root . '/Tests/Entity';
 $fs->mkdirIfNotExist($testDir);
 $fs->emptyDir($testDir);
+
+$serializerDir = $root . '/Serializer';
+$fs->mkdirIfNotExist($serializerDir);
 
 $defaultRegistry = new PhpArrayFileRegistry();
 $registry = new ArrayEntityRegistry(array_merge($defaultRegistry->getDescriptors(), [
@@ -65,3 +69,8 @@ $namespace = 'Liquetsoft\\Fias\\Symfony\\LiquetsoftFiasBundle\\Tests\\Entity';
 $baseNamespace = 'Liquetsoft\\Fias\\Symfony\\LiquetsoftFiasBundle\\Entity';
 $testGenerator = new TestGenerator($registry);
 $testGenerator->run($testDirObject, $namespace, $baseNamespace);
+
+$serializerDirObject = new SplFileInfo($serializerDir);
+$namespace = 'Liquetsoft\\Fias\\Symfony\\LiquetsoftFiasBundle\\Serializer';
+$denormalizerGenerator = new DenormalizerGenerator($registry);
+$denormalizerGenerator->run($serializerDirObject, $namespace);
