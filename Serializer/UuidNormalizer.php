@@ -77,9 +77,6 @@ class UuidNormalizer implements DenormalizerInterface, NormalizerInterface
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        $uuidClass = trim(UuidInterface::class, '\\');
-        $dataClass = trim($type, '\\');
-
-        return $uuidClass === $dataClass || is_subclass_of($dataClass, $uuidClass);
+        return UuidInterface::class === $type || is_subclass_of($type, UuidInterface::class);
     }
 }

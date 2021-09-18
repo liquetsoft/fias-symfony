@@ -22,50 +22,71 @@ services:
 
 
 
-    Liquetsoft\Fias\Elastic\IndexMapper\ActualStatusIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\ActualStatusIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\AddrObjDivisionIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\AddrObjDivisionIndexMapper
 
-    Liquetsoft\Fias\Elastic\IndexMapper\AddressObjectIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\AddressObjectIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\AddrObjIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\AddrObjIndexMapper
 
-    Liquetsoft\Fias\Elastic\IndexMapper\AddressObjectTypeIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\AddressObjectTypeIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\AddrObjTypesIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\AddrObjTypesIndexMapper
 
-    Liquetsoft\Fias\Elastic\IndexMapper\CenterStatusIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\CenterStatusIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\AdmHierarchyIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\AdmHierarchyIndexMapper
 
-    Liquetsoft\Fias\Elastic\IndexMapper\CurrentStatusIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\CurrentStatusIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\ApartmentsIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\ApartmentsIndexMapper
 
-    Liquetsoft\Fias\Elastic\IndexMapper\EstateStatusIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\EstateStatusIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\ApartmentTypesIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\ApartmentTypesIndexMapper
 
-    Liquetsoft\Fias\Elastic\IndexMapper\FlatTypeIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\FlatTypeIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\CarplacesIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\CarplacesIndexMapper
 
-    Liquetsoft\Fias\Elastic\IndexMapper\HouseIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\HouseIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\ChangeHistoryIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\ChangeHistoryIndexMapper
 
-    Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocumentIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocumentIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\HousesIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\HousesIndexMapper
 
-    Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocumentTypeIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocumentTypeIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\HouseTypesIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\HouseTypesIndexMapper
 
-    Liquetsoft\Fias\Elastic\IndexMapper\OperationStatusIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\OperationStatusIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\MunHierarchyIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\MunHierarchyIndexMapper
 
-    Liquetsoft\Fias\Elastic\IndexMapper\RoomIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\RoomIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocsIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocsIndexMapper
 
-    Liquetsoft\Fias\Elastic\IndexMapper\RoomTypeIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\RoomTypeIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocsKindsIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocsKindsIndexMapper
 
-    Liquetsoft\Fias\Elastic\IndexMapper\SteadIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\SteadIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocsTypesIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocsTypesIndexMapper
 
-    Liquetsoft\Fias\Elastic\IndexMapper\StructureStatusIndexMapper:
-        class: Liquetsoft\Fias\Elastic\IndexMapper\StructureStatusIndexMapper
+    Liquetsoft\Fias\Elastic\IndexMapper\ObjectLevelsIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\ObjectLevelsIndexMapper
+
+    Liquetsoft\Fias\Elastic\IndexMapper\OperationTypesIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\OperationTypesIndexMapper
+
+    Liquetsoft\Fias\Elastic\IndexMapper\ParamIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\ParamIndexMapper
+
+    Liquetsoft\Fias\Elastic\IndexMapper\ParamTypesIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\ParamTypesIndexMapper
+
+    Liquetsoft\Fias\Elastic\IndexMapper\ReestrObjectsIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\ReestrObjectsIndexMapper
+
+    Liquetsoft\Fias\Elastic\IndexMapper\RoomsIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\RoomsIndexMapper
+
+    Liquetsoft\Fias\Elastic\IndexMapper\RoomTypesIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\RoomTypesIndexMapper
+
+    Liquetsoft\Fias\Elastic\IndexMapper\SteadsIndexMapper:
+        class: Liquetsoft\Fias\Elastic\IndexMapper\SteadsIndexMapper
 
 
 
@@ -73,21 +94,28 @@ services:
         class: Liquetsoft\Fias\Elastic\IndexMapperRegistry\ArrayIndexMapperRegistry
         arguments:
             $indexMappers:
-                Liquetsoft\Fias\Elastic\Entity\ActualStatus: '@Liquetsoft\Fias\Elastic\IndexMapper\ActualStatusIndexMapper'
-                Liquetsoft\Fias\Elastic\Entity\AddressObject: '@Liquetsoft\Fias\Elastic\IndexMapper\AddressObjectIndexMapper'
-                Liquetsoft\Fias\Elastic\Entity\AddressObjectType: '@Liquetsoft\Fias\Elastic\IndexMapper\AddressObjectTypeIndexMapper'
-                Liquetsoft\Fias\Elastic\Entity\CenterStatus: '@Liquetsoft\Fias\Elastic\IndexMapper\CenterStatusIndexMapper'
-                Liquetsoft\Fias\Elastic\Entity\CurrentStatus: '@Liquetsoft\Fias\Elastic\IndexMapper\CurrentStatusIndexMapper'
-                Liquetsoft\Fias\Elastic\Entity\EstateStatus: '@Liquetsoft\Fias\Elastic\IndexMapper\EstateStatusIndexMapper'
-                Liquetsoft\Fias\Elastic\Entity\FlatType: '@Liquetsoft\Fias\Elastic\IndexMapper\FlatTypeIndexMapper'
-                Liquetsoft\Fias\Elastic\Entity\House: '@Liquetsoft\Fias\Elastic\IndexMapper\HouseIndexMapper'
-                Liquetsoft\Fias\Elastic\Entity\NormativeDocument: '@Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocumentIndexMapper'
-                Liquetsoft\Fias\Elastic\Entity\NormativeDocumentType: '@Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocumentTypeIndexMapper'
-                Liquetsoft\Fias\Elastic\Entity\OperationStatus: '@Liquetsoft\Fias\Elastic\IndexMapper\OperationStatusIndexMapper'
-                Liquetsoft\Fias\Elastic\Entity\Room: '@Liquetsoft\Fias\Elastic\IndexMapper\RoomIndexMapper'
-                Liquetsoft\Fias\Elastic\Entity\RoomType: '@Liquetsoft\Fias\Elastic\IndexMapper\RoomTypeIndexMapper'
-                Liquetsoft\Fias\Elastic\Entity\Stead: '@Liquetsoft\Fias\Elastic\IndexMapper\SteadIndexMapper'
-                Liquetsoft\Fias\Elastic\Entity\StructureStatus: '@Liquetsoft\Fias\Elastic\IndexMapper\StructureStatusIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\AddrObjDivision: '@Liquetsoft\Fias\Elastic\IndexMapper\AddrObjDivisionIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\AddrObj: '@Liquetsoft\Fias\Elastic\IndexMapper\AddrObjIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\AddrObjTypes: '@Liquetsoft\Fias\Elastic\IndexMapper\AddrObjTypesIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\AdmHierarchy: '@Liquetsoft\Fias\Elastic\IndexMapper\AdmHierarchyIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\Apartments: '@Liquetsoft\Fias\Elastic\IndexMapper\ApartmentsIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\ApartmentTypes: '@Liquetsoft\Fias\Elastic\IndexMapper\ApartmentTypesIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\Carplaces: '@Liquetsoft\Fias\Elastic\IndexMapper\CarplacesIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\ChangeHistory: '@Liquetsoft\Fias\Elastic\IndexMapper\ChangeHistoryIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\Houses: '@Liquetsoft\Fias\Elastic\IndexMapper\HousesIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\HouseTypes: '@Liquetsoft\Fias\Elastic\IndexMapper\HouseTypesIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\MunHierarchy: '@Liquetsoft\Fias\Elastic\IndexMapper\MunHierarchyIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\NormativeDocs: '@Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocsIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\NormativeDocsKinds: '@Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocsKindsIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\NormativeDocsTypes: '@Liquetsoft\Fias\Elastic\IndexMapper\NormativeDocsTypesIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\ObjectLevels: '@Liquetsoft\Fias\Elastic\IndexMapper\ObjectLevelsIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\OperationTypes: '@Liquetsoft\Fias\Elastic\IndexMapper\OperationTypesIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\Param: '@Liquetsoft\Fias\Elastic\IndexMapper\ParamIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\ParamTypes: '@Liquetsoft\Fias\Elastic\IndexMapper\ParamTypesIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\ReestrObjects: '@Liquetsoft\Fias\Elastic\IndexMapper\ReestrObjectsIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\Rooms: '@Liquetsoft\Fias\Elastic\IndexMapper\RoomsIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\RoomTypes: '@Liquetsoft\Fias\Elastic\IndexMapper\RoomTypesIndexMapper'
+                Liquetsoft\Fias\Elastic\Entity\SteadsIndex: '@Liquetsoft\Fias\Elastic\IndexMapper\SteadsIndexMapper'
 
     Liquetsoft\Fias\Elastic\IndexMapperRegistry\IndexMapperRegistry:
         alias: liquetsoft_fias.elastic.index_mapper_registry
