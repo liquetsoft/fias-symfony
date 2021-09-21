@@ -12,13 +12,14 @@ use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpLiteral;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
-use Ramsey\Uuid\UuidFactory;
+use Ramsey\Uuid\Uuid;
 use SplFileInfo;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\SerializerAwareInterface;
-use Symfony\Component\Serializer\SerializerAwareTrait;
 
 /**
  * Объект, который генерирует класс денормализатора.
@@ -44,8 +45,9 @@ class DenormalizerGenerator extends AbstractGenerator
 
         $class = $namespace->addClass($name)
             ->addImplement(DenormalizerInterface::class)
-            ->addImplement(SerializerAwareInterface::class)
-            ->addTrait(SerializerAwareTrait::class)
+            ->addImplement(DenormalizerAwareInterface::class)
+            ->addImplement(ContextAwareDenormalizerInterface::class)
+            ->addTrait(DenormalizerAwareTrait::class)
         ;
         $this->decorateClass($class);
 
@@ -62,8 +64,9 @@ class DenormalizerGenerator extends AbstractGenerator
         $namespace->addUse(DenormalizerInterface::class);
         $namespace->addUse(AbstractNormalizer::class);
         $namespace->addUse(InvalidArgumentException::class);
-        $namespace->addUse(SerializerAwareInterface::class);
-        $namespace->addUse(SerializerAwareTrait::class);
+        $namespace->addUse(DenormalizerAwareInterface::class);
+        $namespace->addUse(DenormalizerAwareTrait::class);
+        $namespace->addUse(ContextAwareDenormalizerInterface::class);
 
         $descriptors = $this->getRegistry()->getDescriptors();
         foreach ($descriptors as $descriptor) {
@@ -72,7 +75,7 @@ class DenormalizerGenerator extends AbstractGenerator
                 if ($field->getSubType() === 'date') {
                     $namespace->addUse(DateTimeImmutable::class);
                 } elseif ($field->getSubType() === 'uuid') {
-                    $namespace->addUse(UuidFactory::class);
+                    $namespace->addUse(Uuid::class);
                 }
             }
         }
@@ -85,45 +88,47 @@ class DenormalizerGenerator extends AbstractGenerator
      */
     protected function decorateClass(ClassType $class): void
     {
-        $denormalizeBody = '$data = \\is_array($data) ? $data : [];' . "\n";
-        $denormalizeBody .= '$type = trim($type, " \t\n\r\0\x0B\\\\/");' . "\n\n";
-        $denormalizeBody .= "\$entity = \$context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new \$type();\n\n";
+        $class->addComment('Скомпилированный класс для денормализации сущностей ФИАС в модели.');
 
+        $compiledDataSet = 'fias_compiled_data_set';
+        $supportsBody = "return empty(\$context['{$compiledDataSet}'])\n    && (\n";
+        $denormalizeBody = '$data = \\is_array($data) ? $data : [];' . "\nunset(\$data['#']);\n";
+        $denormalizeBody .= '$type = trim($type, " \t\n\r\0\x0B/");' . "\n\n";
+        $denormalizeBody .= "\$entity = \$context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new \$type();\n\n";
         $descriptors = $this->registry->getDescriptors();
         foreach ($descriptors as $key => $descriptor) {
             $className = $this->unifyClassName($descriptor->getName());
             $denormalizeBody .= ($key > 0 ? ' else' : '') . "if (\$entity instanceof {$className}) {\n";
             $denormalizeBody .= "        \$data = \$this->setDataTo{$className}Entity(\$entity, \$data);\n";
             $denormalizeBody .= '}';
+            $supportsBody .= ($key > 0 ? '        || ' : '        ') . "is_subclass_of(\$type, {$className}::class)\n";
         }
+        $supportsBody .= "    )\n;";
         $denormalizeBody .= " else {\n";
         $denormalizeBody .= "    \$message = sprintf(\"Can't find data extractor for '%s' type.\", \$type);\n";
         $denormalizeBody .= "    throw new InvalidArgumentException(\$message);\n";
-        $denormalizeBody .= "}\n";
+        $denormalizeBody .= "}\n\n";
+        $denormalizeBody .= "if (!empty(\$data) && \$this->denormalizer) {\n";
+        $denormalizeBody .= "    \$context[AbstractNormalizer::OBJECT_TO_POPULATE] = \$entity;\n";
+        $denormalizeBody .= "    \$context['{$compiledDataSet}'] = true;\n";
+        $denormalizeBody .= "    \$entity = \$this->denormalizer->denormalize(\$data, \$type, \$format, \$context);\n";
+        $denormalizeBody .= "}\n\n";
+        $denormalizeBody .= 'return $entity;';
 
-        // $denormalizeBody .= "    default:\n";
-        // $denormalizeBody .= "        \$message = sprintf(\"Can't find data extractor for '%s' type.\", \$type);\n";
-        // $denormalizeBody .= "        throw new InvalidArgumentException(\$message);\n";
-        // $denormalizeBody .= "        break;\n";
-        // $denormalizeBody .= "}\n\n";
-        // $denormalizeBody .= "\$entity->setRawAttributes(\$extractedData);\n";
-        // $denormalizeBody .= "\n";
-        // $denormalizeBody .= 'return $entity;';
-        //
-        // $class->addComment('Скомпилированный класс для денормализации сущностей ФИАС в модели eloquent.');
-        // $class->addConstant('ALLOWED_ENTITIES', $constants)->setPrivate();
-        //
-        // $supports = $class->addMethod('supportsDenormalization')
-        //     ->addComment("{@inheritDoc}\n")
-        //     ->setVisibility('public')
-        //     ->setBody('return \\in_array(trim($type, " \t\n\r\0\x0B\\\\/"), self::ALLOWED_ENTITIES);');
-        // $supports->addParameter('data');
-        // $supports->addParameter('type')->setType('string');
-        // $supports->addParameter('format', new PhpLiteral('null'))->setType('string');
-        //
+        $supports = $class->addMethod('supportsDenormalization')
+            ->addComment("{@inheritDoc}\n")
+            ->addComment('@psalm-suppress MissingParamType')
+            ->setVisibility('public')
+            ->setBody($supportsBody);
+        $supports->addParameter('data');
+        $supports->addParameter('type')->setType('string');
+        $supports->addParameter('format', new PhpLiteral('null'))->setType('string');
+        $supports->addParameter('context', new PhpLiteral('[]'))->setType('array');
+
         $denormalize = $class->addMethod('denormalize')
             ->addComment("{@inheritDoc}\n")
-            ->addComment("@psalm-suppress InvalidStringClass\n")
+            ->addComment('@psalm-suppress InvalidStringClass')
+            ->addComment("@psalm-suppress RedundantConditionGivenDocblockType\n")
             ->setVisibility('public')
             ->setBody($denormalizeBody);
         $denormalize->addParameter('data');
@@ -161,6 +166,9 @@ class DenormalizerGenerator extends AbstractGenerator
                     break;
                 case 'string_date':
                     $varType = "new DateTimeImmutable(\$data['{$xmlAttribute}'])";
+                    break;
+                case 'string_uuid':
+                    $varType = "Uuid::fromString((string) \$data['{$xmlAttribute}'])";
                     break;
                 default:
                     $varType = "(string) \$data['{$xmlAttribute}']";

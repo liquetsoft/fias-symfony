@@ -28,25 +28,68 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\ReestrObjects;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Rooms;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\RoomTypes;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Steads;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\SerializerAwareInterface;
-use Symfony\Component\Serializer\SerializerAwareTrait;
 
-class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAwareInterface
+/**
+ * Скомпилированный класс для денормализации сущностей ФИАС в модели.
+ */
+class CompiledEntitesDenormalizer implements ContextAwareDenormalizerInterface, DenormalizerAwareInterface, DenormalizerInterface
 {
-    use SerializerAwareTrait;
+    use DenormalizerAwareTrait;
+
+    /**
+     * {@inheritDoc}
+     *
+     * @psalm-suppress MissingParamType
+     */
+    public function supportsDenormalization($data, string $type, string $format = null, array $context = [])
+    {
+        return empty($context['fias_compiled_data_set'])
+            && (
+                is_subclass_of($type, Rooms::class)
+                || is_subclass_of($type, AddrObjTypes::class)
+                || is_subclass_of($type, Param::class)
+                || is_subclass_of($type, Steads::class)
+                || is_subclass_of($type, Carplaces::class)
+                || is_subclass_of($type, MunHierarchy::class)
+                || is_subclass_of($type, NormativeDocsTypes::class)
+                || is_subclass_of($type, ApartmentTypes::class)
+                || is_subclass_of($type, OperationTypes::class)
+                || is_subclass_of($type, Houses::class)
+                || is_subclass_of($type, ChangeHistory::class)
+                || is_subclass_of($type, Apartments::class)
+                || is_subclass_of($type, HouseTypes::class)
+                || is_subclass_of($type, NormativeDocsKinds::class)
+                || is_subclass_of($type, ParamTypes::class)
+                || is_subclass_of($type, RoomTypes::class)
+                || is_subclass_of($type, NormativeDocs::class)
+                || is_subclass_of($type, ObjectLevels::class)
+                || is_subclass_of($type, AdmHierarchy::class)
+                || is_subclass_of($type, AddrObjDivision::class)
+                || is_subclass_of($type, ReestrObjects::class)
+                || is_subclass_of($type, AddrObj::class)
+                || is_subclass_of($type, FiasVersion::class)
+            )
+        ;
+    }
 
     /**
      * {@inheritDoc}
      *
      * @psalm-suppress InvalidStringClass
+     * @psalm-suppress RedundantConditionGivenDocblockType
      */
-    public function denormalize($data, string $type, string $format = null, array $context = []): void
+    public function denormalize($data, string $type, string $format = null, array $context = [])
     {
         $data = \is_array($data) ? $data : [];
-        $type = trim($type, " \t\n\r\0\x0B\\/");
+        unset($data['#']);
+        $type = trim($type, " \t\n\r\0\x0B/");
 
         $entity = $context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new $type();
 
@@ -100,6 +143,14 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             $message = sprintf("Can't find data extractor for '%s' type.", $type);
             throw new InvalidArgumentException($message);
         }
+
+        if (!empty($data) && $this->denormalizer) {
+            $context[AbstractNormalizer::OBJECT_TO_POPULATE] = $entity;
+            $context['fias_compiled_data_set'] = true;
+            $entity = $this->denormalizer->denormalize($data, $type, $format, $context);
+        }
+
+        return $entity;
     }
 
     /**
@@ -121,7 +172,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@OBJECTID']);
         }
         if (\array_key_exists('@OBJECTGUID', $data)) {
-            $entity->setObjectguid(trim((string) $data['@OBJECTGUID']));
+            $entity->setObjectguid(Uuid::fromString((string) $data['@OBJECTGUID']));
             unset($data['@OBJECTGUID']);
         }
         if (\array_key_exists('@CHANGEID', $data)) {
@@ -129,7 +180,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@CHANGEID']);
         }
         if (\array_key_exists('@NUMBER', $data)) {
-            $entity->setNumber(trim((string) $data['@NUMBER']));
+            $entity->setNumber((string) $data['@NUMBER']);
             unset($data['@NUMBER']);
         }
         if (\array_key_exists('@ROOMTYPE', $data)) {
@@ -191,15 +242,15 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@LEVEL']);
         }
         if (\array_key_exists('@SHORTNAME', $data)) {
-            $entity->setShortname(trim((string) $data['@SHORTNAME']));
+            $entity->setShortname((string) $data['@SHORTNAME']);
             unset($data['@SHORTNAME']);
         }
         if (\array_key_exists('@NAME', $data)) {
-            $entity->setName(trim((string) $data['@NAME']));
+            $entity->setName((string) $data['@NAME']);
             unset($data['@NAME']);
         }
         if (\array_key_exists('@DESC', $data)) {
-            $entity->setDesc($data['@DESC'] === null || $data['@DESC'] === '' ? null : trim((string) $data['@DESC']));
+            $entity->setDesc($data['@DESC'] === null || $data['@DESC'] === '' ? null : (string) $data['@DESC']);
             unset($data['@DESC']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
@@ -215,7 +266,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
-            $entity->setIsactive(trim((string) $data['@ISACTIVE']));
+            $entity->setIsactive((string) $data['@ISACTIVE']);
             unset($data['@ISACTIVE']);
         }
 
@@ -253,7 +304,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@TYPEID']);
         }
         if (\array_key_exists('@VALUE', $data)) {
-            $entity->setValue(trim((string) $data['@VALUE']));
+            $entity->setValue((string) $data['@VALUE']);
             unset($data['@VALUE']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
@@ -291,7 +342,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@OBJECTID']);
         }
         if (\array_key_exists('@OBJECTGUID', $data)) {
-            $entity->setObjectguid(trim((string) $data['@OBJECTGUID']));
+            $entity->setObjectguid(Uuid::fromString((string) $data['@OBJECTGUID']));
             unset($data['@OBJECTGUID']);
         }
         if (\array_key_exists('@CHANGEID', $data)) {
@@ -299,11 +350,11 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@CHANGEID']);
         }
         if (\array_key_exists('@NUMBER', $data)) {
-            $entity->setNumber(trim((string) $data['@NUMBER']));
+            $entity->setNumber((string) $data['@NUMBER']);
             unset($data['@NUMBER']);
         }
         if (\array_key_exists('@OPERTYPEID', $data)) {
-            $entity->setOpertypeid(trim((string) $data['@OPERTYPEID']));
+            $entity->setOpertypeid((string) $data['@OPERTYPEID']);
             unset($data['@OPERTYPEID']);
         }
         if (\array_key_exists('@PREVID', $data)) {
@@ -357,7 +408,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@OBJECTID']);
         }
         if (\array_key_exists('@OBJECTGUID', $data)) {
-            $entity->setObjectguid(trim((string) $data['@OBJECTGUID']));
+            $entity->setObjectguid(Uuid::fromString((string) $data['@OBJECTGUID']));
             unset($data['@OBJECTGUID']);
         }
         if (\array_key_exists('@CHANGEID', $data)) {
@@ -365,7 +416,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@CHANGEID']);
         }
         if (\array_key_exists('@NUMBER', $data)) {
-            $entity->setNumber(trim((string) $data['@NUMBER']));
+            $entity->setNumber((string) $data['@NUMBER']);
             unset($data['@NUMBER']);
         }
         if (\array_key_exists('@OPERTYPEID', $data)) {
@@ -431,7 +482,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@CHANGEID']);
         }
         if (\array_key_exists('@OKTMO', $data)) {
-            $entity->setOktmo($data['@OKTMO'] === null || $data['@OKTMO'] === '' ? null : trim((string) $data['@OKTMO']));
+            $entity->setOktmo($data['@OKTMO'] === null || $data['@OKTMO'] === '' ? null : (string) $data['@OKTMO']);
             unset($data['@OKTMO']);
         }
         if (\array_key_exists('@PREVID', $data)) {
@@ -477,7 +528,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ID']);
         }
         if (\array_key_exists('@NAME', $data)) {
-            $entity->setName(trim((string) $data['@NAME']));
+            $entity->setName((string) $data['@NAME']);
             unset($data['@NAME']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
@@ -507,15 +558,15 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ID']);
         }
         if (\array_key_exists('@NAME', $data)) {
-            $entity->setName(trim((string) $data['@NAME']));
+            $entity->setName((string) $data['@NAME']);
             unset($data['@NAME']);
         }
         if (\array_key_exists('@SHORTNAME', $data)) {
-            $entity->setShortname($data['@SHORTNAME'] === null || $data['@SHORTNAME'] === '' ? null : trim((string) $data['@SHORTNAME']));
+            $entity->setShortname($data['@SHORTNAME'] === null || $data['@SHORTNAME'] === '' ? null : (string) $data['@SHORTNAME']);
             unset($data['@SHORTNAME']);
         }
         if (\array_key_exists('@DESC', $data)) {
-            $entity->setDesc($data['@DESC'] === null || $data['@DESC'] === '' ? null : trim((string) $data['@DESC']));
+            $entity->setDesc($data['@DESC'] === null || $data['@DESC'] === '' ? null : (string) $data['@DESC']);
             unset($data['@DESC']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
@@ -531,7 +582,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
-            $entity->setIsactive(trim((string) $data['@ISACTIVE']));
+            $entity->setIsactive((string) $data['@ISACTIVE']);
             unset($data['@ISACTIVE']);
         }
 
@@ -553,15 +604,15 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ID']);
         }
         if (\array_key_exists('@NAME', $data)) {
-            $entity->setName(trim((string) $data['@NAME']));
+            $entity->setName((string) $data['@NAME']);
             unset($data['@NAME']);
         }
         if (\array_key_exists('@SHORTNAME', $data)) {
-            $entity->setShortname($data['@SHORTNAME'] === null || $data['@SHORTNAME'] === '' ? null : trim((string) $data['@SHORTNAME']));
+            $entity->setShortname($data['@SHORTNAME'] === null || $data['@SHORTNAME'] === '' ? null : (string) $data['@SHORTNAME']);
             unset($data['@SHORTNAME']);
         }
         if (\array_key_exists('@DESC', $data)) {
-            $entity->setDesc($data['@DESC'] === null || $data['@DESC'] === '' ? null : trim((string) $data['@DESC']));
+            $entity->setDesc($data['@DESC'] === null || $data['@DESC'] === '' ? null : (string) $data['@DESC']);
             unset($data['@DESC']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
@@ -577,7 +628,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
-            $entity->setIsactive(trim((string) $data['@ISACTIVE']));
+            $entity->setIsactive((string) $data['@ISACTIVE']);
             unset($data['@ISACTIVE']);
         }
 
@@ -603,7 +654,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@OBJECTID']);
         }
         if (\array_key_exists('@OBJECTGUID', $data)) {
-            $entity->setObjectguid(trim((string) $data['@OBJECTGUID']));
+            $entity->setObjectguid(Uuid::fromString((string) $data['@OBJECTGUID']));
             unset($data['@OBJECTGUID']);
         }
         if (\array_key_exists('@CHANGEID', $data)) {
@@ -611,15 +662,15 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@CHANGEID']);
         }
         if (\array_key_exists('@HOUSENUM', $data)) {
-            $entity->setHousenum($data['@HOUSENUM'] === null || $data['@HOUSENUM'] === '' ? null : trim((string) $data['@HOUSENUM']));
+            $entity->setHousenum($data['@HOUSENUM'] === null || $data['@HOUSENUM'] === '' ? null : (string) $data['@HOUSENUM']);
             unset($data['@HOUSENUM']);
         }
         if (\array_key_exists('@ADDNUM1', $data)) {
-            $entity->setAddnum1($data['@ADDNUM1'] === null || $data['@ADDNUM1'] === '' ? null : trim((string) $data['@ADDNUM1']));
+            $entity->setAddnum1($data['@ADDNUM1'] === null || $data['@ADDNUM1'] === '' ? null : (string) $data['@ADDNUM1']);
             unset($data['@ADDNUM1']);
         }
         if (\array_key_exists('@ADDNUM2', $data)) {
-            $entity->setAddnum2($data['@ADDNUM2'] === null || $data['@ADDNUM2'] === '' ? null : trim((string) $data['@ADDNUM2']));
+            $entity->setAddnum2($data['@ADDNUM2'] === null || $data['@ADDNUM2'] === '' ? null : (string) $data['@ADDNUM2']);
             unset($data['@ADDNUM2']);
         }
         if (\array_key_exists('@HOUSETYPE', $data)) {
@@ -689,7 +740,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@OBJECTID']);
         }
         if (\array_key_exists('@ADROBJECTID', $data)) {
-            $entity->setAdrobjectid(trim((string) $data['@ADROBJECTID']));
+            $entity->setAdrobjectid(Uuid::fromString((string) $data['@ADROBJECTID']));
             unset($data['@ADROBJECTID']);
         }
         if (\array_key_exists('@OPERTYPEID', $data)) {
@@ -727,7 +778,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@OBJECTID']);
         }
         if (\array_key_exists('@OBJECTGUID', $data)) {
-            $entity->setObjectguid(trim((string) $data['@OBJECTGUID']));
+            $entity->setObjectguid(Uuid::fromString((string) $data['@OBJECTGUID']));
             unset($data['@OBJECTGUID']);
         }
         if (\array_key_exists('@CHANGEID', $data)) {
@@ -735,7 +786,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@CHANGEID']);
         }
         if (\array_key_exists('@NUMBER', $data)) {
-            $entity->setNumber(trim((string) $data['@NUMBER']));
+            $entity->setNumber((string) $data['@NUMBER']);
             unset($data['@NUMBER']);
         }
         if (\array_key_exists('@APARTTYPE', $data)) {
@@ -793,15 +844,15 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ID']);
         }
         if (\array_key_exists('@NAME', $data)) {
-            $entity->setName(trim((string) $data['@NAME']));
+            $entity->setName((string) $data['@NAME']);
             unset($data['@NAME']);
         }
         if (\array_key_exists('@SHORTNAME', $data)) {
-            $entity->setShortname($data['@SHORTNAME'] === null || $data['@SHORTNAME'] === '' ? null : trim((string) $data['@SHORTNAME']));
+            $entity->setShortname($data['@SHORTNAME'] === null || $data['@SHORTNAME'] === '' ? null : (string) $data['@SHORTNAME']);
             unset($data['@SHORTNAME']);
         }
         if (\array_key_exists('@DESC', $data)) {
-            $entity->setDesc($data['@DESC'] === null || $data['@DESC'] === '' ? null : trim((string) $data['@DESC']));
+            $entity->setDesc($data['@DESC'] === null || $data['@DESC'] === '' ? null : (string) $data['@DESC']);
             unset($data['@DESC']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
@@ -817,7 +868,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
-            $entity->setIsactive(trim((string) $data['@ISACTIVE']));
+            $entity->setIsactive((string) $data['@ISACTIVE']);
             unset($data['@ISACTIVE']);
         }
 
@@ -839,7 +890,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ID']);
         }
         if (\array_key_exists('@NAME', $data)) {
-            $entity->setName(trim((string) $data['@NAME']));
+            $entity->setName((string) $data['@NAME']);
             unset($data['@NAME']);
         }
 
@@ -861,15 +912,15 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ID']);
         }
         if (\array_key_exists('@NAME', $data)) {
-            $entity->setName(trim((string) $data['@NAME']));
+            $entity->setName((string) $data['@NAME']);
             unset($data['@NAME']);
         }
         if (\array_key_exists('@CODE', $data)) {
-            $entity->setCode(trim((string) $data['@CODE']));
+            $entity->setCode((string) $data['@CODE']);
             unset($data['@CODE']);
         }
         if (\array_key_exists('@DESC', $data)) {
-            $entity->setDesc($data['@DESC'] === null || $data['@DESC'] === '' ? null : trim((string) $data['@DESC']));
+            $entity->setDesc($data['@DESC'] === null || $data['@DESC'] === '' ? null : (string) $data['@DESC']);
             unset($data['@DESC']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
@@ -885,7 +936,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
-            $entity->setIsactive(trim((string) $data['@ISACTIVE']));
+            $entity->setIsactive((string) $data['@ISACTIVE']);
             unset($data['@ISACTIVE']);
         }
 
@@ -907,15 +958,15 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ID']);
         }
         if (\array_key_exists('@NAME', $data)) {
-            $entity->setName(trim((string) $data['@NAME']));
+            $entity->setName((string) $data['@NAME']);
             unset($data['@NAME']);
         }
         if (\array_key_exists('@SHORTNAME', $data)) {
-            $entity->setShortname($data['@SHORTNAME'] === null || $data['@SHORTNAME'] === '' ? null : trim((string) $data['@SHORTNAME']));
+            $entity->setShortname($data['@SHORTNAME'] === null || $data['@SHORTNAME'] === '' ? null : (string) $data['@SHORTNAME']);
             unset($data['@SHORTNAME']);
         }
         if (\array_key_exists('@DESC', $data)) {
-            $entity->setDesc($data['@DESC'] === null || $data['@DESC'] === '' ? null : trim((string) $data['@DESC']));
+            $entity->setDesc($data['@DESC'] === null || $data['@DESC'] === '' ? null : (string) $data['@DESC']);
             unset($data['@DESC']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
@@ -931,7 +982,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
-            $entity->setIsactive(trim((string) $data['@ISACTIVE']));
+            $entity->setIsactive((string) $data['@ISACTIVE']);
             unset($data['@ISACTIVE']);
         }
 
@@ -953,7 +1004,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ID']);
         }
         if (\array_key_exists('@NAME', $data)) {
-            $entity->setName(trim((string) $data['@NAME']));
+            $entity->setName((string) $data['@NAME']);
             unset($data['@NAME']);
         }
         if (\array_key_exists('@DATE', $data)) {
@@ -961,7 +1012,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@DATE']);
         }
         if (\array_key_exists('@NUMBER', $data)) {
-            $entity->setNumber(trim((string) $data['@NUMBER']));
+            $entity->setNumber((string) $data['@NUMBER']);
             unset($data['@NUMBER']);
         }
         if (\array_key_exists('@TYPE', $data)) {
@@ -977,11 +1028,11 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@ORGNAME', $data)) {
-            $entity->setOrgname($data['@ORGNAME'] === null || $data['@ORGNAME'] === '' ? null : trim((string) $data['@ORGNAME']));
+            $entity->setOrgname($data['@ORGNAME'] === null || $data['@ORGNAME'] === '' ? null : (string) $data['@ORGNAME']);
             unset($data['@ORGNAME']);
         }
         if (\array_key_exists('@REGNUM', $data)) {
-            $entity->setRegnum($data['@REGNUM'] === null || $data['@REGNUM'] === '' ? null : trim((string) $data['@REGNUM']));
+            $entity->setRegnum($data['@REGNUM'] === null || $data['@REGNUM'] === '' ? null : (string) $data['@REGNUM']);
             unset($data['@REGNUM']);
         }
         if (\array_key_exists('@REGDATE', $data)) {
@@ -993,7 +1044,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ACCDATE']);
         }
         if (\array_key_exists('@COMMENT', $data)) {
-            $entity->setComment($data['@COMMENT'] === null || $data['@COMMENT'] === '' ? null : trim((string) $data['@COMMENT']));
+            $entity->setComment($data['@COMMENT'] === null || $data['@COMMENT'] === '' ? null : (string) $data['@COMMENT']);
             unset($data['@COMMENT']);
         }
 
@@ -1015,11 +1066,11 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@LEVEL']);
         }
         if (\array_key_exists('@NAME', $data)) {
-            $entity->setName(trim((string) $data['@NAME']));
+            $entity->setName((string) $data['@NAME']);
             unset($data['@NAME']);
         }
         if (\array_key_exists('@SHORTNAME', $data)) {
-            $entity->setShortname($data['@SHORTNAME'] === null || $data['@SHORTNAME'] === '' ? null : trim((string) $data['@SHORTNAME']));
+            $entity->setShortname($data['@SHORTNAME'] === null || $data['@SHORTNAME'] === '' ? null : (string) $data['@SHORTNAME']);
             unset($data['@SHORTNAME']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
@@ -1035,7 +1086,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
-            $entity->setIsactive(trim((string) $data['@ISACTIVE']));
+            $entity->setIsactive((string) $data['@ISACTIVE']);
             unset($data['@ISACTIVE']);
         }
 
@@ -1069,27 +1120,27 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@CHANGEID']);
         }
         if (\array_key_exists('@REGIONCODE', $data)) {
-            $entity->setRegioncode($data['@REGIONCODE'] === null || $data['@REGIONCODE'] === '' ? null : trim((string) $data['@REGIONCODE']));
+            $entity->setRegioncode($data['@REGIONCODE'] === null || $data['@REGIONCODE'] === '' ? null : (string) $data['@REGIONCODE']);
             unset($data['@REGIONCODE']);
         }
         if (\array_key_exists('@AREACODE', $data)) {
-            $entity->setAreacode($data['@AREACODE'] === null || $data['@AREACODE'] === '' ? null : trim((string) $data['@AREACODE']));
+            $entity->setAreacode($data['@AREACODE'] === null || $data['@AREACODE'] === '' ? null : (string) $data['@AREACODE']);
             unset($data['@AREACODE']);
         }
         if (\array_key_exists('@CITYCODE', $data)) {
-            $entity->setCitycode($data['@CITYCODE'] === null || $data['@CITYCODE'] === '' ? null : trim((string) $data['@CITYCODE']));
+            $entity->setCitycode($data['@CITYCODE'] === null || $data['@CITYCODE'] === '' ? null : (string) $data['@CITYCODE']);
             unset($data['@CITYCODE']);
         }
         if (\array_key_exists('@PLACECODE', $data)) {
-            $entity->setPlacecode($data['@PLACECODE'] === null || $data['@PLACECODE'] === '' ? null : trim((string) $data['@PLACECODE']));
+            $entity->setPlacecode($data['@PLACECODE'] === null || $data['@PLACECODE'] === '' ? null : (string) $data['@PLACECODE']);
             unset($data['@PLACECODE']);
         }
         if (\array_key_exists('@PLANCODE', $data)) {
-            $entity->setPlancode($data['@PLANCODE'] === null || $data['@PLANCODE'] === '' ? null : trim((string) $data['@PLANCODE']));
+            $entity->setPlancode($data['@PLANCODE'] === null || $data['@PLANCODE'] === '' ? null : (string) $data['@PLANCODE']);
             unset($data['@PLANCODE']);
         }
         if (\array_key_exists('@STREETCODE', $data)) {
-            $entity->setStreetcode($data['@STREETCODE'] === null || $data['@STREETCODE'] === '' ? null : trim((string) $data['@STREETCODE']));
+            $entity->setStreetcode($data['@STREETCODE'] === null || $data['@STREETCODE'] === '' ? null : (string) $data['@STREETCODE']);
             unset($data['@STREETCODE']);
         }
         if (\array_key_exists('@PREVID', $data)) {
@@ -1181,7 +1232,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@OBJECTGUID', $data)) {
-            $entity->setObjectguid(trim((string) $data['@OBJECTGUID']));
+            $entity->setObjectguid(Uuid::fromString((string) $data['@OBJECTGUID']));
             unset($data['@OBJECTGUID']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
@@ -1211,7 +1262,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@OBJECTID']);
         }
         if (\array_key_exists('@OBJECTGUID', $data)) {
-            $entity->setObjectguid(trim((string) $data['@OBJECTGUID']));
+            $entity->setObjectguid(Uuid::fromString((string) $data['@OBJECTGUID']));
             unset($data['@OBJECTGUID']);
         }
         if (\array_key_exists('@CHANGEID', $data)) {
@@ -1219,15 +1270,15 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@CHANGEID']);
         }
         if (\array_key_exists('@NAME', $data)) {
-            $entity->setName(trim((string) $data['@NAME']));
+            $entity->setName((string) $data['@NAME']);
             unset($data['@NAME']);
         }
         if (\array_key_exists('@TYPENAME', $data)) {
-            $entity->setTypename(trim((string) $data['@TYPENAME']));
+            $entity->setTypename((string) $data['@TYPENAME']);
             unset($data['@TYPENAME']);
         }
         if (\array_key_exists('@LEVEL', $data)) {
-            $entity->setLevel(trim((string) $data['@LEVEL']));
+            $entity->setLevel((string) $data['@LEVEL']);
             unset($data['@LEVEL']);
         }
         if (\array_key_exists('@OPERTYPEID', $data)) {
@@ -1281,7 +1332,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface, SerializerAw
             unset($data['@VERSION']);
         }
         if (\array_key_exists('@URL', $data)) {
-            $entity->setUrl(trim((string) $data['@URL']));
+            $entity->setUrl((string) $data['@URL']);
             unset($data['@URL']);
         }
         if (\array_key_exists('@CREATED', $data)) {
