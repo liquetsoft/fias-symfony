@@ -8,7 +8,6 @@ use DateTimeInterface;
 use InvalidArgumentException;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\EntityField;
-use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\PhpFile;
@@ -24,15 +23,8 @@ use Throwable;
  * Объект, который генерирует классы сущностей doctrine на основани описаний
  * сущностей ФИАС.
  */
-class EntityGenerator
+class EntityGenerator extends AbstractGenerator
 {
-    protected EntityRegistry $registry;
-
-    public function __construct(EntityRegistry $registry)
-    {
-        $this->registry = $registry;
-    }
-
     /**
      * Создает классы сущностей в указанной папке с указанным пространством имен.
      *
@@ -82,7 +74,7 @@ class EntityGenerator
      */
     protected function generateClassByDescriptor(EntityDescriptor $descriptor, SplFileInfo $dir, string $namespace): void
     {
-        $name = ucfirst($descriptor->getName());
+        $name = $this->unifyClassName($descriptor->getName());
         $fullPath = "{$dir->getPathname()}/{$name}.php";
 
         $phpFile = new PhpFile();
@@ -298,45 +290,5 @@ class EntityGenerator
             $method->setReturnNullable();
         }
         $method->setBody("return \$this->{$parameterName};");
-    }
-
-    /**
-     * Проверяет, что каталог существует и доступен на запись.
-     *
-     * @param SplFileInfo $dir
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function checkDir(SplFileInfo $dir): void
-    {
-        if (!$dir->isDir() || !$dir->isWritable()) {
-            throw new InvalidArgumentException(
-                "Destination folder '" . $dir->getPathname() . "' isn't writable or doesn't exist."
-            );
-        }
-    }
-
-    /**
-     * Приводит пространства имен к единообразному виду.
-     *
-     * @param string $namespace
-     *
-     * @return string
-     */
-    protected function unifyNamespace(string $namespace): string
-    {
-        return trim($namespace, " \t\n\r\0\x0B\\");
-    }
-
-    /**
-     * Приводит имена колонок к единообразному виду.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function unifyColumnName(string $name): string
-    {
-        return trim(strtolower(str_replace('_', '', $name)));
     }
 }

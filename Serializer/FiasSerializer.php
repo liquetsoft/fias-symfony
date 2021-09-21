@@ -18,6 +18,7 @@ class FiasSerializer extends \Liquetsoft\Fias\Component\Serializer\FiasSerialize
     {
         if ($normalizers === null) {
             $normalizers = [
+                new CompiledEntitesDenormalizer(),
                 new UuidNormalizer(),
                 new DateTimeNormalizer(),
                 new ObjectNormalizer(

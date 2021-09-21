@@ -5,82 +5,17 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities;
 
 use DateTimeInterface;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddrObj;
 use Ramsey\Uuid\UuidInterface;
 
 /**
  * Мок для проверки сериализатора.
  */
-class FiasSerializerObject
+class FiasSerializerObject extends AddrObj
 {
-    /**
-     * @var int
-     */
-    private $ACTSTATID = 0;
+    private ?UuidInterface $uuid = null;
 
-    /**
-     * @var string
-     */
-    private $name = '';
-
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $testDate;
-
-    /**
-     * @var string
-     */
-    private $kodtst = '';
-
-    /**
-     * @var UuidInterface|null
-     */
-    private $uuid;
-
-    /**
-     * @var int
-     */
-    private $emptyStringInt = 0;
-
-    public function setActstatid(int $ACTSTATID): void
-    {
-        $this->ACTSTATID = $ACTSTATID;
-    }
-
-    public function getActstatid(): int
-    {
-        return $this->ACTSTATID;
-    }
-
-    public function setName(string $NAME): void
-    {
-        $this->name = $NAME;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function setTestDate(DateTimeInterface $testDate): void
-    {
-        $this->testDate = $testDate;
-    }
-
-    public function getTestDate(): ?DateTimeInterface
-    {
-        return $this->testDate;
-    }
-
-    public function setKodtst(string $kodtst): void
-    {
-        $this->kodtst = $kodtst;
-    }
-
-    public function getKodtst(): string
-    {
-        return $this->kodtst;
-    }
+    private ?DateTimeInterface $testDate = null;
 
     public function setUuid(UuidInterface $uuid): void
     {
@@ -92,13 +27,13 @@ class FiasSerializerObject
         return $this->uuid;
     }
 
-    public function setEmptyStringInt(int $emptyStringInt): void
+    public function setTestdate(DateTimeInterface $testDate): void
     {
-        $this->emptyStringInt = $emptyStringInt;
+        $this->testDate = $testDate;
     }
 
-    public function getEmptyStringInt(): int
+    public function getTestdate(): ?DateTimeInterface
     {
-        return $this->emptyStringInt;
+        return $this->testDate;
     }
 }

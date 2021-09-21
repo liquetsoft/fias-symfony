@@ -32,35 +32,42 @@
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
-    use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddressObject as LiquetsoftAddressObject;
+    use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddrObj as LiquetsoftAddrObj;
 
     /**
      * Адреса.
      *
      * @ORM\Entity(repositoryClass="App\Repository\AddressObjectRepository")
      */
-    class AddressObject extends LiquetsoftAddressObject
+    class AddrObj extends LiquetsoftAddrObj
     {
     }
     ```
 
     Список доступных суперклассов:
 
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\ActualStatus`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddressObject`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddressObjectType`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\CenterStatus`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\CurrentStatus`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\EstateStatus`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FlatType`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\House`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\NormativeDocument`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\NormativeDocumentType`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\OperationStatus`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Room`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\RoomType`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Stead`
-    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\StructureStatus`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddrObj`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddrObjDivision`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddrObjTypes`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AdmHierarchy`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Apartments`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\ApartmentTypes`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Carplaces`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\ChangeHistory`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Houses`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\HouseTypes`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\MunHierarchy`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\NormativeDocs`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\NormativeDocsKinds`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\NormativeDocsTypes`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\ObjectLevels`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\OperationTypes`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Param`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\ParamTypes`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\ReestrObjects`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Rooms`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\RoomTypes`
+    * `Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Steads`
 
 3. Отдельно следует создать сущность для управления версиями ФИАС, установленными на проекте, которая используется для обновления:
 
@@ -102,21 +109,28 @@
         version_manager_entity: App\Entity\FiasVersion
         # массив, в котором указывается какие сущности в какой объект преобразовывать
         entity_bindings:
-            ActualStatus: App\Entity\ActualStatus
-            AddressObject: App\Entity\AddressObject
-            AddressObjectType: App\Entity\AddressObjectType
-            CenterStatus: App\Entity\CenterStatus
-            CurrentStatus: App\Entity\CurrentStatus
-            EstateStatus: App\Entity\EstateStatus
-            FlatType: App\Entity\FlatType
-            House: App\Entity\House
-            NormativeDocument: App\Entity\NormativeDocument
-            NormativeDocumentType: App\Entity\NormativeDocumentType
-            OperationStatus: App\Entity\OperationStatus
-            Room: App\Entity\Room
-            RoomType: App\Entity\RoomType
-            Stead: App\Entity\Stead
-            StructureStatus: App\Entity\StructureStatus
+            ADDR_OBJ: App\Entity\AddrObj
+            ADDR_OBJ_DIVISION: App\Entity\AddrObjDivision
+            ADDR_OBJ_TYPES: App\Entity\AddrObjTypes
+            ADM_HIERARCHY: App\Entity\AdmHierarchy
+            APARTMENTS: App\Entity\Apartments
+            APARTMENT_TYPES: App\Entity\ApartmentTypes
+            CARPLACES: App\Entity\Carplaces
+            CHANGE_HISTORY: App\Entity\ChangeHistory
+            HOUSES: App\Entity\Houses
+            HOUSE_TYPES: App\Entity\HouseTypes
+            MUN_HIERARCHY: App\Entity\MunHierarchy
+            NORMATIVE_DOCS: App\Entity\NormativeDocs
+            NORMATIVE_DOCS_KINDS: App\Entity\NormativeDocsKinds
+            NORMATIVE_DOCS_TYPES: App\Entity\NormativeDocsTypes
+            OBJECT_LEVELS: App\Entity\ObjectLevels
+            OPERATION_TYPES: App\Entity\OperationTypes
+            PARAM: App\Entity\Param
+            PARAM_TYPES: App\Entity\ParamTypes
+            REESTR_OBJECTS: App\Entity\ReestrObjects
+            ROOMS: App\Entity\Rooms
+            ROOM_TYPES: App\Entity\RoomTypes
+            STEADS: App\Entity\Steads
     ```
 
 7. По умолчанию для записи используется `Doctrine`, что может быть довольно медленно, хоть и дает возможность использовать все преимущества `Doctrine`, например, события. В качестве альтернативы предлагается использовать `bulk insert`, он значительно быстрее, но не использует события:
@@ -231,34 +245,41 @@ Elasticsearch
         elasticsearch_hosts:
             - 'https://elasticsearch'
         entity_bindings:
-            ActualStatus: App\Entity\ActualStatus                       # для сохранения будет использована Doctrine
-            AddressObject: Liquetsoft\Fias\Elastic\Entity\AddressObject # для сохранения будет использован Elasticsearch
+            ADDR_OBJ: App\Entity\AddrObj                                      # для сохранения будет использована Doctrine
+            ADDR_OBJ_DIVISION: Liquetsoft\Fias\Elastic\Entity\AddrObjDivision # для сохранения будет использован Elasticsearch
     ```
 
     Список доступных сущностей:
 
-    * `Liquetsoft\Fias\Elastic\Entity\ActualStatus`
-    * `Liquetsoft\Fias\Elastic\Entity\AddressObject`
-    * `Liquetsoft\Fias\Elastic\Entity\AddressObjectType`
-    * `Liquetsoft\Fias\Elastic\Entity\CenterStatus`
-    * `Liquetsoft\Fias\Elastic\Entity\CurrentStatus`
-    * `Liquetsoft\Fias\Elastic\Entity\EstateStatus`
-    * `Liquetsoft\Fias\Elastic\Entity\FlatType`
-    * `Liquetsoft\Fias\Elastic\Entity\House`
-    * `Liquetsoft\Fias\Elastic\Entity\NormativeDocument`
-    * `Liquetsoft\Fias\Elastic\Entity\NormativeDocumentType`
-    * `Liquetsoft\Fias\Elastic\Entity\OperationStatus`
-    * `Liquetsoft\Fias\Elastic\Entity\Room`
-    * `Liquetsoft\Fias\Elastic\Entity\RoomType`
-    * `Liquetsoft\Fias\Elastic\Entity\Stead`
-    * `Liquetsoft\Fias\Elastic\Entity\StructureStatus`
+    * `Liquetsoft\Fias\Elastic\Entity\AddrObj`
+    * `Liquetsoft\Fias\Elastic\Entity\AddrObjDivision`
+    * `Liquetsoft\Fias\Elastic\Entity\AddrObjTypes`
+    * `Liquetsoft\Fias\Elastic\Entity\AdmHierarchy`
+    * `Liquetsoft\Fias\Elastic\Entity\Apartments`
+    * `Liquetsoft\Fias\Elastic\Entity\ApartmentTypes`
+    * `Liquetsoft\Fias\Elastic\Entity\Carplaces`
+    * `Liquetsoft\Fias\Elastic\Entity\ChangeHistory`
+    * `Liquetsoft\Fias\Elastic\Entity\Houses`
+    * `Liquetsoft\Fias\Elastic\Entity\HouseTypes`
+    * `Liquetsoft\Fias\Elastic\Entity\MunHierarchy`
+    * `Liquetsoft\Fias\Elastic\Entity\NormativeDocs`
+    * `Liquetsoft\Fias\Elastic\Entity\NormativeDocsKinds`
+    * `Liquetsoft\Fias\Elastic\Entity\NormativeDocsTypes`
+    * `Liquetsoft\Fias\Elastic\Entity\ObjectLevels`
+    * `Liquetsoft\Fias\Elastic\Entity\OperationTypes`
+    * `Liquetsoft\Fias\Elastic\Entity\Param`
+    * `Liquetsoft\Fias\Elastic\Entity\ParamTypes`
+    * `Liquetsoft\Fias\Elastic\Entity\ReestrObjects`
+    * `Liquetsoft\Fias\Elastic\Entity\Rooms`
+    * `Liquetsoft\Fias\Elastic\Entity\RoomTypes`
+    * `Liquetsoft\Fias\Elastic\Entity\Steads`
 
 4. Создать требуемые индексы:
 
     ```bash
     php bin/console liquetsoft:fias:create_elastic_indicies
     ```
-5. Описания индексов можно найти в соответствующих им mapper-классах. Например, `Liquetsoft\Fias\Elastic\IndexMapper\ActualStatusIndexMapper` для `Liquetsoft\Fias\Elastic\Entity\ActualStatus`.
+5. Описания индексов можно найти в соответствующих им mapper-классах. Например, `Liquetsoft\Fias\Elastic\IndexMapper\AddrObjIndexMapper` для `Liquetsoft\Fias\Elastic\Entity\AddrObj`.
 
 6. Библиотека предоставляет так же репозиторий для доступа к данным.
 
@@ -269,29 +290,29 @@ Elasticsearch
 
     namespace App\Fias;
 
-    use Liquetsoft\Fias\Elastic\IndexMapper\ActualStatusIndexMapper;
-    use Liquetsoft\Fias\Elastic\Entity\ActualStatus;
+    use Liquetsoft\Fias\Elastic\IndexMapper\AddrObjIndexMapper;
+    use Liquetsoft\Fias\Elastic\Entity\AddrObj;
     use Liquetsoft\Fias\Elastic\ElasticSearchRepository\ElasticSearchRepository;
 
     class ActualStatusService
     {
         private ElasticSearchRepository $repo;
 
-        private ActualStatusIndexMapper $mapper;
+        private AddrObjIndexMapper $mapper;
 
         public function __construct(
             ElasticSearchRepository $repo,
-            AddressObjectIndexMapper $mapper
+            AddrObjIndexMapper $mapper
         ) {
             $this->repo = $repo;
             $this->mapper = $mapper;
         }
 
-        public function findById(int $id): ?ActualStatus
+        public function findById(int $id): ?AddrObj
         {
-            $query = $this->mapper->query()->term('actstatid', $id);
+            $query = $this->mapper->query()->term('id', $id);
 
-            return $this->repo->one($query, ActualStatus::class);
+            return $this->repo->one($query, AddrObj::class);
         }
     }
     ```

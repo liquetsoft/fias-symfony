@@ -6,7 +6,6 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator;
 
 use InvalidArgumentException;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
-use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
@@ -19,15 +18,8 @@ use Throwable;
  * Объект, который генерирует классы тестов для сущностей doctrine на основани описаний
  * сущностей ФИАС.
  */
-class TestGenerator
+class TestGenerator extends AbstractGenerator
 {
-    protected EntityRegistry $registry;
-
-    public function __construct(EntityRegistry $registry)
-    {
-        $this->registry = $registry;
-    }
-
     /**
      * Создает классы сущностей в указанной папке с указанным пространством имен.
      *
@@ -81,8 +73,8 @@ class TestGenerator
      */
     protected function generateClassByDescriptor(EntityDescriptor $descriptor, SplFileInfo $dir, string $namespace, string $baseNamespace): void
     {
-        $baseName = ucfirst($descriptor->getName());
-        $name = ucfirst($descriptor->getName()) . 'Test';
+        $baseName = $this->unifyClassName($descriptor->getName());
+        $name = $this->unifyClassName($descriptor->getName()) . 'Test';
         $fullPath = "{$dir->getPathname()}/{$name}.php";
 
         $phpFile = new PhpFile();
@@ -158,45 +150,5 @@ class TestGenerator
         if ($description) {
             $class->addComment("Тест для сущности '{$description}'.\n\n@internal");
         }
-    }
-
-    /**
-     * Проверяет, что каталог существует и доступен на запись.
-     *
-     * @param SplFileInfo $dir
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function checkDir(SplFileInfo $dir): void
-    {
-        if (!$dir->isDir() || !$dir->isWritable()) {
-            throw new InvalidArgumentException(
-                "Destination folder '" . $dir->getPathname() . "' isn't writable or doesn't exist."
-            );
-        }
-    }
-
-    /**
-     * Приводит пространсва имен к единообразному виду.
-     *
-     * @param string $namespace
-     *
-     * @return string
-     */
-    protected function unifyNamespace(string $namespace): string
-    {
-        return trim($namespace, " \t\n\r\0\x0B\\");
-    }
-
-    /**
-     * Приводит имена колонок к единообразному виду.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function unifyColumnName(string $name): string
-    {
-        return trim(strtolower(str_replace('_', '', $name)));
     }
 }

@@ -13,11 +13,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Команда для параллельных процессов, в которых идет установка ФИАС.
+ * Команда для параллельных процессов, в которых идет обновление ФИАС.
  */
-class InstallParallelRunningCommand extends Command
+class UpdateParallelRunningCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:install_parallel_running';
+    protected static $defaultName = 'liquetsoft:fias:update_parallel_running';
 
     protected Pipe $pipeline;
 
@@ -34,7 +34,7 @@ class InstallParallelRunningCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Command for running parallel installation.')
+            ->setDescription('Command for running parallel update.')
             ->addArgument('files', InputArgument::OPTIONAL, 'Json encoded list of files data.')
         ;
     }
