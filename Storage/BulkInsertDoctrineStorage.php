@@ -24,25 +24,20 @@ use Throwable;
  */
 class BulkInsertDoctrineStorage extends DoctrineStorage
 {
-    protected ?LoggerInterface $logger;
+    private ?LoggerInterface $logger;
 
     /**
      * Сохраненные в памяти данные для множественной вставки.
      *
      * Массив вида 'имя таблицы' => 'массив массивов данных для вставки'.
      *
-     * @var mixed[]
+     * @var array<string, array<mixed>>
      */
-    protected array $insertData = [];
+    private array $insertData = [];
 
-    /**
-     * @param EntityManager        $em
-     * @param int                  $insertBatch
-     * @param LoggerInterface|null $logger
-     */
-    public function __construct(EntityManager $em, int $insertBatch = 1000, ?LoggerInterface $logger = null)
+    public function __construct(EntityManager $em, int $batchCount = 1000, ?LoggerInterface $logger = null)
     {
-        parent::__construct($em, $insertBatch);
+        parent::__construct($em, $batchCount);
         $this->logger = $logger;
     }
 
@@ -61,7 +56,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     public function insert(object $entity): void
     {
         try {
-            $meta = $this->em->getClassMetadata(\get_class($entity));
+            $meta = $this->getEntityMeta($entity);
 
             $table = $meta->getTableName();
             $fields = $meta->getFieldNames();
@@ -89,12 +84,12 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      * Проверяет нужно ли отправлять запросы на множественные вставки элементов,
      * сохраненых в памяти.
      *
-     * @param bool $forceInsert
+     * @param bool $force
      */
-    protected function checkAndFlushInsert(bool $forceInsert = false): void
+    private function checkAndFlushInsert(bool $force = false): void
     {
         foreach ($this->insertData as $tableName => $insertData) {
-            if ($forceInsert || \count($insertData) >= $this->insertBatch) {
+            if ($force || \count($insertData) >= $this->batchCount) {
                 $this->bulkInsert($tableName, $insertData);
                 unset($this->insertData[$tableName]);
             }
@@ -109,7 +104,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      *
      * @throws RuntimeException
      */
-    protected function bulkInsert(string $tableName, array $data): void
+    private function bulkInsert(string $tableName, array $data): void
     {
         try {
             $this->prepareAndRunBulkInsert($tableName, $data);
@@ -128,7 +123,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      * @param string  $tableName
      * @param mixed[] $data
      */
-    protected function prepareAndRunBulkSafely(string $tableName, array $data): void
+    private function prepareAndRunBulkSafely(string $tableName, array $data): void
     {
         foreach ($data as $item) {
             try {
@@ -156,7 +151,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      * @throws RuntimeException
      * @throws DBALException
      */
-    protected function prepareAndRunBulkInsert(string $tableName, array $data): void
+    private function prepareAndRunBulkInsert(string $tableName, array $data): void
     {
         $dataSample = reset($data);
 
@@ -183,7 +178,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      * @param string $message
      * @param array  $context
      */
-    protected function log(string $errorLevel, string $message, array $context = []): void
+    private function log(string $errorLevel, string $message, array $context = []): void
     {
         if ($this->logger) {
             $this->logger->log($errorLevel, $message, $context);
