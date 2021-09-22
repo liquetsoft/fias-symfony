@@ -115,6 +115,13 @@ services:
 
 
 
+    liquetsoft_fias.filter.files_filter:
+        class: Liquetsoft\Fias\Component\Filter\RegexpFilter
+        arguments:
+            - '%liquetsoft_fias.files_filter%'
+
+
+
     liquetsoft_fias.task.cleanup:
         class: Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask
 
@@ -158,6 +165,7 @@ services:
         class: Liquetsoft\Fias\Component\Pipeline\Task\SelectFilesToProceedTask
         arguments:
             - '@liquetsoft_fias.entity_manager.service'
+            - '@liquetsoft_fias.filter.files_filter'
 
     liquetsoft_fias.task.data.insert:
         class: Liquetsoft\Fias\Component\Pipeline\Task\DataInsertTask
