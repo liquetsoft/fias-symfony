@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
+use DateTimeInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
+use Ramsey\Uuid\UuidInterface;
 use Throwable;
 
 /**
@@ -186,15 +188,47 @@ class DoctrineStorage implements Storage
         }
 
         foreach ($entities as $id => $entity) {
-            if (isset($doctrineEntitiesById[$id])) {
+            if (!isset($doctrineEntitiesById[$id])) {
+                $this->insert($entity);
+            } elseif (!$this->isEntitiesEqual($doctrineEntitiesById[$id], $entity)) {
                 $this->fillEntityFromOther($doctrineEntitiesById[$id], $entity);
                 $this->em->flush();
-                $this->em->detach($doctrineEntitiesById[$id]);
-                unset($doctrineEntitiesById[$id]);
-            } else {
-                $this->insert($entity);
             }
         }
+
+        foreach ($doctrineEntities as $doctrineEntity) {
+            $this->em->detach($doctrineEntity);
+        }
+    }
+
+    /**
+     * Возвращает правду, если сущности содержат одинаковые данные.
+     *
+     * @param object $first
+     * @param object $second
+     *
+     * @return bool
+     */
+    protected function isEntitiesEqual(object $first, object $second): bool
+    {
+        if (\get_class($first) !== \get_class($second)) {
+            return false;
+        }
+
+        $isEqual = true;
+        foreach (get_class_methods($first) as $method) {
+            if (!str_starts_with($method, 'get') && !str_starts_with($method, 'is')) {
+                continue;
+            }
+            $firstValue = $this->convertToPrimitive($first->$method());
+            $secondValue = $this->convertToPrimitive($second->$method());
+            if ($firstValue !== $secondValue) {
+                $isEqual = false;
+                break;
+            }
+        }
+
+        return $isEqual;
     }
 
     /**
@@ -271,5 +305,27 @@ class DoctrineStorage implements Storage
     protected function convertToStorageException(Throwable $e): StorageException
     {
         return new StorageException($e->getMessage(), 0, $e);
+    }
+
+    /**
+     * Пробует преобразовать указанное значение к примитиву.
+     *
+     * @param mixed $data
+     *
+     * @return mixed
+     */
+    protected function convertToPrimitive(mixed $data): mixed
+    {
+        if (is_scalar($data) || $data === null) {
+            return $data;
+        } elseif ($data instanceof DateTimeInterface) {
+            return $data->format('Y-m-d H:i:s');
+        } elseif ($data instanceof UuidInterface) {
+            return $data->toString();
+        } elseif (\is_object($data) && method_exists($data, '__toString')) {
+            return (string) $data;
+        }
+
+        throw new StorageException("Can't convert value to primitive.");
     }
 }
