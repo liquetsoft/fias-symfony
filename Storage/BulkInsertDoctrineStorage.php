@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
-use DateTimeInterface;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManager;
 use Exception;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use Ramsey\Uuid\UuidInterface;
 use RuntimeException;
 use Throwable;
 
@@ -63,12 +61,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
 
             $insertArray = [];
             foreach ($fields as $field) {
-                $value = $meta->getFieldValue($entity, $field);
-                if ($value instanceof DateTimeInterface) {
-                    $value = $value->format('Y-m-d H:i:s');
-                } elseif ($value instanceof UuidInterface) {
-                    $value = $value->toString();
-                }
+                $value = $this->convertToPrimitive($meta->getFieldValue($entity, $field));
                 $column = $meta->getColumnName($field);
                 $insertArray[$column] = $value;
             }
@@ -155,7 +148,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     {
         $dataSample = reset($data);
 
-        $paramNames = implode(', ', array_keys($dataSample));
+        $paramNames = implode(', ', array_map([$this->em->getConnection(), 'quoteIdentifier'], array_keys($dataSample)));
         $paramValues = implode(', ', array_fill(0, \count($dataSample), '?'));
         $dataValues = '(' . implode('), (', array_fill(0, \count($data), $paramValues)) . ')';
         $sql = "INSERT INTO {$tableName} ({$paramNames}) VALUES {$dataValues}";
