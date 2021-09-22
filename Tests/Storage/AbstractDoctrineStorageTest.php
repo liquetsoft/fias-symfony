@@ -74,15 +74,22 @@ abstract class AbstractDoctrineStorageTest extends DoctrineTestCase
         $secondEntity->setTestName('test_2');
         $secondEntity->setStartdate(new DateTimeImmutable('2019-11-11 11:11:11'));
 
-        $storage = $this->createStorage();
+        $thirdEntity = new StorageTestMockEntity();
+        $thirdEntity->setTestId(3);
+        $thirdEntity->setTestName('test_3');
+        $thirdEntity->setStartdate(new DateTimeImmutable('2019-11-11 11:33:33'));
+
+        $storage = $this->createStorage(null, 2);
         $storage->start();
         $storage->insert($entity);
         $storage->insert($secondEntity);
+        $storage->insert($thirdEntity);
         $storage->stop();
 
         $this->assertDoctrineHasEntity($zeroEntity);
         $this->assertDoctrineHasEntity($entity);
         $this->assertDoctrineHasEntity($secondEntity);
+        $this->assertDoctrineHasEntity($thirdEntity);
     }
 
     /**
@@ -91,14 +98,14 @@ abstract class AbstractDoctrineStorageTest extends DoctrineTestCase
     public function testDelete(): void
     {
         $entity = new StorageTestMockEntity();
-        $entity->setTestId(3);
-        $entity->setTestName('test_3');
+        $entity->setTestId(4);
+        $entity->setTestName('test_4');
         $entity->setStartdate(new DateTimeImmutable('2019-11-11 11:11:11'));
         $this->persistEntity($entity);
 
         $secondEntity = new StorageTestMockEntity();
-        $secondEntity->setTestId(4);
-        $secondEntity->setTestName('test_4');
+        $secondEntity->setTestId(5);
+        $secondEntity->setTestName('test_5');
         $secondEntity->setStartdate(new DateTimeImmutable('2019-11-11 11:11:11'));
         $this->persistEntity($secondEntity);
 
@@ -117,25 +124,41 @@ abstract class AbstractDoctrineStorageTest extends DoctrineTestCase
     public function testUpsert(): void
     {
         $entity = new StorageTestMockEntity();
-        $entity->setTestId(5);
-        $entity->setTestName('test_5');
+        $entity->setTestId(6);
+        $entity->setTestName('test_6');
         $entity->setStartdate(new DateTimeImmutable('2019-11-11 11:11:11'));
         $this->persistEntity($entity);
-        $entity->setTestName('test_5_updated');
+        $entity->setTestName('test_6_updated');
 
         $secondEntity = new StorageTestMockEntity();
-        $secondEntity->setTestId(6);
-        $secondEntity->setTestName('test_6');
+        $secondEntity->setTestId(7);
+        $secondEntity->setTestName('test_7');
         $secondEntity->setStartdate(new DateTimeImmutable('2019-11-11 11:11:11'));
 
-        $storage = $this->createStorage();
+        $thirdEntity = new StorageTestMockEntity();
+        $thirdEntity->setTestId(8);
+        $thirdEntity->setTestName('test_8');
+        $thirdEntity->setStartdate(new DateTimeImmutable('2019-11-11 11:33:33'));
+
+        $fourthEntity = new StorageTestMockEntity();
+        $fourthEntity->setTestId(9);
+        $fourthEntity->setTestName('test_9');
+        $fourthEntity->setStartdate(new DateTimeImmutable('2019-11-11 11:11:11'));
+        $this->persistEntity($fourthEntity);
+        $fourthEntity->setTestName('test_9_updated');
+
+        $storage = $this->createStorage(null, 3);
         $storage->start();
         $storage->upsert($entity);
         $storage->upsert($secondEntity);
+        $storage->upsert($thirdEntity);
+        $storage->upsert($fourthEntity);
         $storage->stop();
 
         $this->assertDoctrineHasEntity($entity);
         $this->assertDoctrineHasEntity($secondEntity);
+        $this->assertDoctrineHasEntity($thirdEntity);
+        $this->assertDoctrineHasEntity($fourthEntity);
     }
 
     /**
@@ -144,14 +167,14 @@ abstract class AbstractDoctrineStorageTest extends DoctrineTestCase
     public function testTruncate(): void
     {
         $entity = new StorageTestMockEntity();
-        $entity->setTestId(7);
-        $entity->setTestName('test_7');
+        $entity->setTestId(10);
+        $entity->setTestName('test_10');
         $entity->setStartdate(new DateTimeImmutable('2019-11-11 11:11:11'));
         $this->persistEntity($entity);
 
         $secondEntity = new StorageTestMockEntity();
-        $secondEntity->setTestId(8);
-        $secondEntity->setTestName('test_8');
+        $secondEntity->setTestId(11);
+        $secondEntity->setTestName('test_11');
         $secondEntity->setStartdate(new DateTimeImmutable('2019-11-11 11:11:11'));
         $this->persistEntity($secondEntity);
 

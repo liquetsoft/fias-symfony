@@ -5,7 +5,7 @@
     "keywords": ["php", "fias", "symfony"],
     "license": "MIT",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "liquetsoft/fias-component": "^10.0",
         "symfony/framework-bundle": "^5.0",
         "doctrine/doctrine-bundle": "^2.0",

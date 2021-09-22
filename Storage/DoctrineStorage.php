@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
-use Doctrine\ORM\TransactionRequiredException;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
 use Throwable;
@@ -19,16 +17,22 @@ class DoctrineStorage implements Storage
 {
     protected EntityManager $em;
 
-    protected int $insertBatch = 0;
+    protected int $batchCount;
 
-    protected int $insertCount = 0;
+    /**
+     * @var array<string, bool>
+     */
+    private array $supportedClasses = [];
 
-    protected array $supportedClasses = [];
+    /**
+     * @var array<string, array<int, object>>
+     */
+    private array $upsertData = [];
 
-    public function __construct(EntityManager $em, int $insertBatch = 1000)
+    public function __construct(EntityManager $em, int $batchCount = 1000)
     {
         $this->em = $em;
-        $this->insertBatch = $insertBatch;
+        $this->batchCount = $batchCount;
     }
 
     /**
@@ -43,12 +47,7 @@ class DoctrineStorage implements Storage
      */
     public function stop(): void
     {
-        try {
-            $this->em->flush();
-            $this->em->clear();
-        } catch (Throwable $e) {
-            throw new StorageException($e->getMessage(), 0, $e);
-        }
+        $this->checkAndFlushUpsert(true);
     }
 
     /**
@@ -56,7 +55,9 @@ class DoctrineStorage implements Storage
      */
     public function supports(object $entity): bool
     {
-        return $this->supportsClass(\get_class($entity));
+        return $this->supportsClass(
+            $this->getEntityName($entity)
+        );
     }
 
     /**
@@ -64,18 +65,16 @@ class DoctrineStorage implements Storage
      */
     public function supportsClass(string $class): bool
     {
-        $trimmedClass = trim($class, '\\');
-
-        if (!isset($this->supportedClasses[$trimmedClass])) {
+        if (!isset($this->supportedClasses[$class])) {
             try {
-                $this->em->getClassMetadata($trimmedClass);
-                $this->supportedClasses[$trimmedClass] = true;
+                $this->getEntityMeta($class);
+                $this->supportedClasses[$class] = true;
             } catch (Throwable $e) {
-                $this->supportedClasses[$trimmedClass] = false;
+                $this->supportedClasses[$class] = false;
             }
         }
 
-        return $this->supportedClasses[$trimmedClass];
+        return $this->supportedClasses[$class];
     }
 
     /**
@@ -85,14 +84,10 @@ class DoctrineStorage implements Storage
     {
         try {
             $this->em->persist($entity);
-            ++$this->insertCount;
-            if ($this->insertCount === $this->insertBatch) {
-                $this->insertCount = 0;
-                $this->em->flush();
-                $this->em->clear();
-            }
+            $this->em->flush();
+            $this->em->detach($entity);
         } catch (Throwable $e) {
-            throw new StorageException($e->getMessage(), 0, $e);
+            throw $this->convertToStorageException($e);
         }
     }
 
@@ -102,12 +97,17 @@ class DoctrineStorage implements Storage
     public function delete(object $entity): void
     {
         try {
-            $mergedEntity = $this->mergeEntityToDoctrine($entity);
-            $this->em->remove($mergedEntity);
-            $this->em->flush();
-            $this->em->clear();
+            $entityFromDoctrine = $this->em->find(
+                $this->getEntityName($entity),
+                $this->getIdentifiersFromEntity($entity)
+            );
+            if ($entityFromDoctrine) {
+                $this->em->remove($entityFromDoctrine);
+                $this->em->flush();
+                $this->em->detach($entityFromDoctrine);
+            }
         } catch (Throwable $e) {
-            throw new StorageException($e->getMessage(), 0, $e);
+            throw $this->convertToStorageException($e);
         }
     }
 
@@ -116,13 +116,15 @@ class DoctrineStorage implements Storage
      */
     public function upsert(object $entity): void
     {
-        try {
-            $this->mergeEntityToDoctrine($entity);
-            $this->em->flush();
-            $this->em->clear();
-        } catch (Throwable $e) {
-            throw new StorageException($e->getMessage(), 0, $e);
-        }
+        $meta = $this->getEntityMeta($entity);
+        $id = $meta->getFieldValue(
+            $entity,
+            $meta->getSingleIdentifierFieldName()
+        );
+
+        $this->upsertData[$this->getEntityName($entity)][$id] = $entity;
+
+        $this->checkAndFlushUpsert();
     }
 
     /**
@@ -130,78 +132,144 @@ class DoctrineStorage implements Storage
      */
     public function truncate(string $entityClassName): void
     {
-        $meta = $this->em->getClassMetadata($entityClassName);
-        $name = $meta->getName();
-        $this->em->createQuery("DELETE {$name} p")->execute();
+        try {
+            $name = $this->getEntityMeta($entityClassName)->getName();
+            $this->em->createQuery("DELETE {$name} p")->execute();
+        } catch (Throwable $e) {
+            throw $this->convertToStorageException($e);
+        }
     }
 
     /**
-     * Добавляет сущность инициированную в сериализаторе в контекст doctrine.
+     * Выполняет запрос на вставку/обновление накопленного кэша записей.
      *
-     * @param object $entity
-     *
-     * @return object
-     *
-     * @throws ORMException
-     * @throws OptimisticLockException
-     * @throws TransactionRequiredException
-     *
-     * @psalm-suppress DocblockTypeContradiction
+     * @param bool $force
      */
-    private function mergeEntityToDoctrine(object $entity): object
+    protected function checkAndFlushUpsert(bool $force = false): void
     {
-        $mergedEntity = null;
-        $className = \get_class($entity);
-        $identifiers = $this->getIdentifiersFromEntity($entity);
-        $entityFromDoctrine = $this->em->find($className, $identifiers);
+        foreach ($this->upsertData as $entityName => $entities) {
+            if ($force || \count($entities) >= $this->batchCount) {
+                try {
+                    $this->upsertEntities($entityName, $entities);
+                } catch (Throwable $e) {
+                    throw $this->convertToStorageException($e);
+                }
+                unset($this->upsertData[$entityName]);
+            }
+        }
+    }
 
-        if ($entityFromDoctrine) {
-            $mergedEntity = $this->mergeEntities($entityFromDoctrine, $entity);
-        } else {
-            $this->em->persist($entity);
-            $mergedEntity = $entity;
+    /**
+     * Обновляет список сущностей одного типа.
+     *
+     * @param string   $entityName
+     * @param object[] $entities
+     */
+    protected function upsertEntities(string $entityName, array $entities): void
+    {
+        $meta = $this->getEntityMeta($entityName);
+        $idName = $meta->getSingleIdentifierFieldName();
+
+        $doctrineEntities = $this->em->createQueryBuilder()
+            ->select('e')
+            ->from($entityName, 'e')
+            ->andWhere("e.{$idName} IN (:ids)")
+            ->setParameter('ids', array_keys($entities))
+            ->getQuery()
+            ->execute()
+        ;
+
+        $doctrineEntitiesById = [];
+        foreach ($doctrineEntities as $doctrineEntity) {
+            $id = $meta->getFieldValue($doctrineEntity, $idName);
+            $doctrineEntitiesById[$id] = $doctrineEntity;
         }
 
-        return $mergedEntity;
+        foreach ($entities as $id => $entity) {
+            if (isset($doctrineEntitiesById[$id])) {
+                $this->fillEntityFromOther($doctrineEntitiesById[$id], $entity);
+                $this->em->flush();
+                $this->em->detach($doctrineEntitiesById[$id]);
+                unset($doctrineEntitiesById[$id]);
+            } else {
+                $this->insert($entity);
+            }
+        }
     }
 
     /**
-     * Возвращает массив первичных ключей для сущности.
-     *
-     * @param object $entity
-     *
-     * @return array
-     */
-    private function getIdentifiersFromEntity(object $entity): array
-    {
-        $className = \get_class($entity);
-        $meta = $this->em->getClassMetadata($className);
-        $identifiers = $meta->getIdentifierValues($entity);
-
-        return $identifiers;
-    }
-
-    /**
-     * Переносит значения из второй сущности в первую.
+     * Наполняет первый объект данными, хранящимися во втором.
      *
      * @param object $first
      * @param object $second
-     *
-     * @return object
      */
-    private function mergeEntities(object $first, object $second): object
+    protected function fillEntityFromOther(object $first, object $second): void
     {
-        $classNameFirst = \get_class($first);
-        $metaFirst = $this->em->getClassMetadata($classNameFirst);
-        $classNameSecond = \get_class($second);
-        $metaSecond = $this->em->getClassMetadata($classNameSecond);
-
+        $metaFirst = $this->getEntityMeta($first);
+        $metaSecond = $this->getEntityMeta($second);
         $fieldNames = $metaFirst->getFieldNames();
         foreach ($fieldNames as $fieldName) {
             $secondValue = $metaSecond->getFieldValue($second, $fieldName);
             $metaFirst->setFieldValue($first, $fieldName, $secondValue);
         }
+    }
 
-        return $first;
+    /**
+     * Возвращает массив первичных ключей для объекта.
+     *
+     * @param object $entity
+     *
+     * @return array
+     */
+    protected function getIdentifiersFromEntity(object $entity): array
+    {
+        return $this->getEntityMeta($entity)->getIdentifierValues($entity);
+    }
+
+    /**
+     * Возвращает мета описание сущноссти из Doctrine.
+     *
+     * @param object|string $entity
+     *
+     * @return ClassMetadata
+     */
+    protected function getEntityMeta(object|string $entity): ClassMetadata
+    {
+        if (\is_object($entity)) {
+            $entity = $this->getEntityName($entity);
+        }
+
+        try {
+            $meta = $this->em->getClassMetadata($entity);
+        } catch (Throwable $e) {
+            throw $this->convertToStorageException($e);
+        }
+
+        return $meta;
+    }
+
+    /**
+     * Возвращает имя сущности для указанного объекта.
+     *
+     * @param object $entity
+     *
+     * @return string
+     * @psalm-return class-string
+     */
+    protected function getEntityName(object $entity): string
+    {
+        return \get_class($entity);
+    }
+
+    /**
+     * Преобразует указанное исключение к типу исключения хранилища.
+     *
+     * @param Throwable $e
+     *
+     * @return StorageException
+     */
+    protected function convertToStorageException(Throwable $e): StorageException
+    {
+        return new StorageException($e->getMessage(), 0, $e);
     }
 }
