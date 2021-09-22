@@ -19,20 +19,6 @@ use stdClass;
 class DoctrineStorageTest extends AbstractDoctrineStorageTest
 {
     /**
-     * Проверяет перехват исключения при завершении записи.
-     */
-    public function testStopException(): void
-    {
-        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
-        $em->method('flush')->will($this->throwException(new RuntimeException()));
-
-        $storage = $this->createStorage($em);
-
-        $this->expectException(StorageException::class);
-        $storage->stop();
-    }
-
-    /**
      * Проверяет перехват исключения при вставке записей в БД.
      */
     public function testInsertException(): void

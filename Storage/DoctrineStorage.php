@@ -48,7 +48,6 @@ class DoctrineStorage implements Storage
     public function stop(): void
     {
         $this->checkAndFlushUpsert(true);
-        $this->flushDoctrine();
     }
 
     /**
@@ -85,7 +84,8 @@ class DoctrineStorage implements Storage
     {
         try {
             $this->em->persist($entity);
-            $this->flushDoctrine();
+            $this->em->flush();
+            $this->em->detach($entity);
         } catch (Throwable $e) {
             throw $this->convertToStorageException($e);
         }
@@ -103,7 +103,8 @@ class DoctrineStorage implements Storage
             );
             if ($entityFromDoctrine) {
                 $this->em->remove($entityFromDoctrine);
-                $this->flushDoctrine();
+                $this->em->flush();
+                $this->em->detach($entityFromDoctrine);
             }
         } catch (Throwable $e) {
             throw $this->convertToStorageException($e);
@@ -116,8 +117,10 @@ class DoctrineStorage implements Storage
     public function upsert(object $entity): void
     {
         $meta = $this->getEntityMeta($entity);
-        $idName = $meta->getSingleIdentifierFieldName();
-        $id = $meta->getFieldValue($entity, $idName);
+        $id = $meta->getFieldValue(
+            $entity,
+            $meta->getSingleIdentifierFieldName()
+        );
 
         $this->upsertData[$this->getEntityName($entity)][$id] = $entity;
 
@@ -185,12 +188,13 @@ class DoctrineStorage implements Storage
         foreach ($entities as $id => $entity) {
             if (isset($doctrineEntitiesById[$id])) {
                 $this->fillEntityFromOther($doctrineEntitiesById[$id], $entity);
+                $this->em->flush();
+                $this->em->detach($doctrineEntitiesById[$id]);
+                unset($doctrineEntitiesById[$id]);
             } else {
                 $this->insert($entity);
             }
         }
-
-        $this->flushDoctrine();
     }
 
     /**
@@ -255,19 +259,6 @@ class DoctrineStorage implements Storage
     protected function getEntityName(object $entity): string
     {
         return \get_class($entity);
-    }
-
-    /**
-     * Отправляет все запросы к Doctrine и очищает список сущностей.
-     */
-    protected function flushDoctrine(): void
-    {
-        try {
-            $this->em->flush();
-            $this->em->clear();
-        } catch (Throwable $e) {
-            throw $this->convertToStorageException($e);
-        }
     }
 
     /**
