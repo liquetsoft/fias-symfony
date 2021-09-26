@@ -76,7 +76,7 @@ jobs:
         run: sudo /etc/init.d/mysql start
       - name: Install Symfony
         run: |
-          composer create-project laravel/laravel example-app
+          composer create-project symfony/website-skeleton example-app
       - name: Install FIAS
         run: |
           unzip ./Tests/Pipeline/_fixtures/install_AddressObject.zip -d ./example-app/fias-data-install
