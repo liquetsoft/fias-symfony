@@ -82,7 +82,7 @@ jobs:
           unzip ./Tests/Pipeline/_fixtures/install_AddressObject.zip -d ./example-app/fias-data-install
           unzip ./Tests/Pipeline/_fixtures/update_AddressObject.zip -d ./example-app/fias-data-update
           cd example-app
-          composer req "liquetsoft/fias-symfony:dev-${{ github.head_ref }}"
+          composer req "liquetsoft/fias-symfony:dev-${{ github.head_ref }}" -W
           cp ./../Tests/MockEntities/SymfonyTestAddrObj.php src/Entity/AddrObj.php
           cp ./../Tests/MockEntities/SymfonyTestFiasVersion.php src/Entity/FiasVersion.php
           echo "liquetsoft_fias:" > config/packages/liquetsoft_fias.yaml
