@@ -81,12 +81,15 @@ jobs:
         run: |
           unzip ./Tests/Pipeline/_fixtures/install_AddressObject.zip -d ./example-app/fias-data-install
           unzip ./Tests/Pipeline/_fixtures/update_AddressObject.zip -d ./example-app/fias-data-update
+
           cd example-app
+
           composer req ramsey/uuid-doctrine
           echo "doctrine:" >> config/packages/ramsey_uuid_doctrine.yaml
           echo "    dbal:" >> config/packages/ramsey_uuid_doctrine.yaml
           echo "        types:" >> config/packages/ramsey_uuid_doctrine.yaml
           echo "            uuid: 'Ramsey\Uuid\Doctrine\UuidType'" >> config/packages/ramsey_uuid_doctrine.yaml
+
           composer req "liquetsoft/fias-symfony:dev-${{ github.head_ref }}" -W
           cp ./../Tests/MockEntities/SymfonyTestAddrObj.php src/Entity/AddrObj.php
           cp ./../Tests/MockEntities/SymfonyTestFiasVersion.php src/Entity/FiasVersion.php
@@ -94,9 +97,11 @@ jobs:
           echo "    version_manager_entity: App\Entity\FiasVersion" >> config/packages/liquetsoft_fias.yaml
           echo "    entity_bindings:" >> config/packages/liquetsoft_fias.yaml
           echo "        ADDR_OBJ: App\Entity\AddrObj" >> config/packages/liquetsoft_fias.yaml
+
           echo "APP_ENV=dev" > .env
           echo "APP_SECRET=test" >> .env
           echo "DATABASE_URL=mysql://root:password@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/symfony?serverVersion=5.7" >> .env
+
           php bin/console cache:clear
           php bin/console doctrine:schema:create -n
       - name: Test FIAS
