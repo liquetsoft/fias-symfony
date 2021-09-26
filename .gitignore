@@ -8,5 +8,6 @@ composer.lock
 Tests/coverage
 Docker/.env
 test.php
+dev
 
 .~lock.*
