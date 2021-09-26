@@ -43,7 +43,7 @@ jobs:
       run: composer run-script linter
 
 
-  Symfony:
+  symfony:
     name: Testing installation to symfony (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
     env:
