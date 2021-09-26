@@ -77,6 +77,16 @@ jobs:
       - name: Install Symfony
         run: |
           composer create-project symfony/website-skeleton example-app
+      - name: Branch used
+        id: extract_branch
+        run: |
+          if [[ "${GITHUB_EVENT_NAME}" == "push" ]]; then
+            echo "::set-output name=branch::$(echo ${GITHUB_REF##*/})"
+          elif [[ "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then
+            echo "::set-output name=branch::$(echo $GITHUB_HEAD_REF)"
+          else
+            echo "::set-output name=branch::INVALID_EVENT_BRANCH_UNKNOWN"
+          fi
       - name: Install FIAS
         run: |
           unzip ./Tests/Pipeline/_fixtures/install_AddressObject.zip -d ./example-app/fias-data-install
@@ -90,7 +100,7 @@ jobs:
           echo "        types:" >> config/packages/ramsey_uuid_doctrine.yaml
           echo "            uuid: 'Ramsey\Uuid\Doctrine\UuidType'" >> config/packages/ramsey_uuid_doctrine.yaml
 
-          composer req "liquetsoft/fias-symfony:dev-${{ github.head_ref }}" -W
+          composer req "liquetsoft/fias-symfony:dev-${{ steps.extract_branch.outputs.branch }}" -W
           cp ./../Tests/MockEntities/SymfonyTestAddrObj.php src/Entity/AddrObj.php
           cp ./../Tests/MockEntities/SymfonyTestFiasVersion.php src/Entity/FiasVersion.php
           echo "liquetsoft_fias:" > config/packages/liquetsoft_fias.yaml
