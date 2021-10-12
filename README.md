@@ -133,23 +133,7 @@
             STEADS: App\Entity\Steads
     ```
 
-7. По умолчанию для записи используется `Doctrine`, что может быть довольно медленно, хоть и дает возможность использовать все преимущества `Doctrine`, например, события. В качестве альтернативы предлагается использовать `bulk insert`, он значительно быстрее, но не использует события:
-
-    ```yaml
-    # config/services.yaml
-    services:
-        # заменяем сервис для записи на сервис, который использует bulk insert
-        liquetsoft_fias.storage.doctrine_storage:
-            class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\BulkInsertDoctrineStorage
-            arguments:
-                - '@doctrine.orm.entity_manager'
-                - '%liquetsoft_fias.insert_batch_count%'
-                - '@logger'
-            tags:
-                - { name: 'liquetsoft_fias.storage' }
-    ```
-
-8. Поскольку для записи в БД используется `Doctrine`, нужно отключить логгирование запросов, иначе скрипт падает с переполнением памяти:
+6. Поскольку для записи в БД используется `Doctrine`, нужно отключить логгирование запросов, иначе скрипт падает с переполнением памяти:
 
     ```yaml
     # config/packages/doctrine.yaml
@@ -238,7 +222,22 @@
             - "#^.+/extracted/30/AS_.+$#" # разрешает все данные для региона
             - "#^.+/extracted/AS_.+$#"    # разрешает общие словари
             # все остальные файлы будут проигнорированы
-    ```
+
+3. добавить пакетную загрузку; по умолчанию для записи используется `Doctrine`, что может быть довольно медленно, хоть и дает возможность использовать все преимущества `Doctrine`, например, события. В качестве альтернативы предлагается использовать `bulk insert`, он значительно быстрее, но не использует события:
+
+    ```yaml
+    # config/services.yaml
+    services:
+        # заменяем сервис для записи на сервис, который использует bulk insert
+        liquetsoft_fias.storage.doctrine_storage:
+            class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\BulkInsertDoctrineStorage
+            arguments:
+                - '@doctrine.orm.entity_manager'
+                - '%liquetsoft_fias.insert_batch_count%'
+                - '@logger'
+            tags:
+                - { name: 'liquetsoft_fias.storage' }
+    ``````
 
 
 
