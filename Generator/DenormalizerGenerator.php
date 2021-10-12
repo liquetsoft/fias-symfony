@@ -43,8 +43,8 @@ class DenormalizerGenerator extends AbstractGenerator
         $namespace = $phpFile->addNamespace($namespace);
         $this->decorateNamespace($namespace);
 
-        $class = $namespace->addClass($name)
-            ->addImplement(DenormalizerInterface::class)
+        $class = $namespace->addClass($name);
+        $class->addImplement(DenormalizerInterface::class)
             ->addImplement(DenormalizerAwareInterface::class)
             ->addImplement(ContextAwareDenormalizerInterface::class)
             ->addTrait(DenormalizerAwareTrait::class)
