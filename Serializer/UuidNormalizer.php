@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer;
 
-use Ramsey\Uuid\UuidFactory;
-use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Uid\Uuid;
 use Throwable;
 
 /**
@@ -17,13 +16,6 @@ use Throwable;
  */
 class UuidNormalizer implements DenormalizerInterface, NormalizerInterface
 {
-    protected UuidFactory $uuidFactory;
-
-    public function __construct()
-    {
-        $this->uuidFactory = new UuidFactory();
-    }
-
     /**
      * {@inheritDoc}
      *
@@ -31,11 +23,11 @@ class UuidNormalizer implements DenormalizerInterface, NormalizerInterface
      */
     public function normalize($object, $format = null, array $context = [])
     {
-        if (!($object instanceof UuidInterface)) {
-            throw new InvalidArgumentException('The object must implement the "' . UuidInterface::class . '".');
+        if (!($object instanceof Uuid)) {
+            throw new InvalidArgumentException('The object must implement the "' . Uuid::class . '".');
         }
 
-        return $object->toString();
+        return (string) $object;
     }
 
     /**
@@ -43,7 +35,7 @@ class UuidNormalizer implements DenormalizerInterface, NormalizerInterface
      */
     public function supportsNormalization($data, $format = null)
     {
-        return $data instanceof UuidInterface;
+        return $data instanceof Uuid;
     }
 
     /**
@@ -60,7 +52,7 @@ class UuidNormalizer implements DenormalizerInterface, NormalizerInterface
         }
 
         try {
-            $uuid = $this->uuidFactory->fromString($data);
+            $uuid = Uuid::fromString($data);
         } catch (Throwable $e) {
             throw new NotNormalizableValueException(
                 'Error while converting string to uuid.',
@@ -77,6 +69,6 @@ class UuidNormalizer implements DenormalizerInterface, NormalizerInterface
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return UuidInterface::class === $type || is_subclass_of($type, UuidInterface::class);
+        return Uuid::class === $type || is_subclass_of($type, Uuid::class);
     }
 }

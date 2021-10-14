@@ -14,9 +14,9 @@ use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\Property;
 use Nette\PhpGenerator\PsrPrinter;
-use Ramsey\Uuid\UuidInterface;
 use RuntimeException;
 use SplFileInfo;
+use Symfony\Component\Uid\Uuid;
 use Throwable;
 
 /**
@@ -110,7 +110,7 @@ class EntityGenerator extends AbstractGenerator
         $namespace->addUse('Doctrine\ORM\Mapping', 'ORM');
         foreach ($descriptor->getFields() as $field) {
             if ($field->getSubType() === 'uuid') {
-                $namespace->addUse(UuidInterface::class);
+                $namespace->addUse(Uuid::class);
             }
             if ($field->getSubType() === 'date') {
                 $namespace->addUse(DateTimeImmutable::class);
@@ -171,14 +171,14 @@ class EntityGenerator extends AbstractGenerator
                 break;
             case 'string_uuid':
                 $defaultValue = null;
-                $varType = 'UuidInterface|null';
+                $varType = 'Uuid|null';
                 $column = '@ORM\Column(type="uuid"';
                 $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
                 $column .= ')';
                 if ($field->isPrimary()) {
                     $column = "@ORM\Id\n{$column}";
                 }
-                $property->setType(UuidInterface::class);
+                $property->setType(Uuid::class);
                 $property->setNullable();
                 break;
             case 'string_date':
@@ -232,7 +232,7 @@ class EntityGenerator extends AbstractGenerator
                 $paramHint = 'int';
                 break;
             case 'string_uuid':
-                $paramHint = UuidInterface::class;
+                $paramHint = Uuid::class;
                 break;
             case 'string_date':
                 $paramHint = DateTimeImmutable::class;
@@ -269,7 +269,7 @@ class EntityGenerator extends AbstractGenerator
                 $isNullable = $field->isNullable();
                 break;
             case 'string_uuid':
-                $returnHint = UuidInterface::class;
+                $returnHint = Uuid::class;
                 $isNullable = true;
                 break;
             case 'string_date':

@@ -6,11 +6,9 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Serializer;
 
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\UuidNormalizer;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\BaseCase;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidFactory;
-use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Тест для объекта, который сериализует/десериализует uuid.
@@ -25,7 +23,7 @@ class UuidNormalizerTest extends BaseCase
     public function testNormalize(): void
     {
         $uuidString = $this->createFakeData()->uuid();
-        $uuid = (new UuidFactory())->fromString($uuidString);
+        $uuid = Uuid::fromString($uuidString);
 
         $normalizer = new UuidNormalizer();
 
@@ -50,7 +48,7 @@ class UuidNormalizerTest extends BaseCase
      */
     public function testSupportsNormalization(): void
     {
-        $uuid = (new UuidFactory())->fromString($this->createFakeData()->uuid());
+        $uuid = Uuid::fromString($this->createFakeData()->uuid());
 
         $normalizer = new UuidNormalizer();
 
@@ -71,8 +69,8 @@ class UuidNormalizerTest extends BaseCase
         $normalizer = new UuidNormalizer();
         $uuid = $normalizer->denormalize($uuidString, 'test');
 
-        $this->assertInstanceOf(UuidInterface::class, $uuid);
-        $this->assertSame($uuidString, $uuid->toString());
+        $this->assertInstanceOf(Uuid::class, $uuid);
+        $this->assertSame($uuidString, (string) $uuid);
     }
 
     /**
@@ -84,7 +82,7 @@ class UuidNormalizerTest extends BaseCase
         $normalizer = new UuidNormalizer();
 
         $this->expectException(NotNormalizableValueException::class);
-        $uuid = $normalizer->denormalize('', 'test');
+        $normalizer->denormalize('', 'test');
     }
 
     /**
@@ -96,7 +94,7 @@ class UuidNormalizerTest extends BaseCase
         $normalizer = new UuidNormalizer();
 
         $this->expectException(NotNormalizableValueException::class);
-        $uuid = $normalizer->denormalize('test', 'test');
+        $normalizer->denormalize('test', 'test');
     }
 
     /**
@@ -110,7 +108,6 @@ class UuidNormalizerTest extends BaseCase
 
         $this->assertTrue($normalizer->supportsDenormalization('test', Uuid::class));
         $this->assertTrue($normalizer->supportsDenormalization($uuidString, Uuid::class));
-        $this->assertTrue($normalizer->supportsDenormalization($uuidString, '\\Ramsey\\Uuid\\Uuid'));
         $this->assertFalse($normalizer->supportsDenormalization($uuidString, \stdClass::class));
         $this->assertFalse($normalizer->supportsDenormalization($uuidString, 'test'));
     }

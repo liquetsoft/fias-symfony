@@ -6,23 +6,23 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities;
 
 use DateTimeInterface;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddrObj;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Мок для проверки сериализатора.
  */
 class FiasSerializerObject extends AddrObj
 {
-    private ?UuidInterface $uuid = null;
+    private ?Uuid $uuid = null;
 
     private ?DateTimeInterface $testDate = null;
 
-    public function setUuid(UuidInterface $uuid): void
+    public function setUuid(Uuid $uuid): void
     {
         $this->uuid = $uuid;
     }
 
-    public function getUuid(): ?UuidInterface
+    public function getUuid(): ?Uuid
     {
         return $this->uuid;
     }

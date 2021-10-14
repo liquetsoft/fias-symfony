@@ -7,7 +7,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Steads;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Тест для сущности 'Сведения по земельным участкам'.
@@ -32,7 +32,7 @@ class SteadsTest extends EntityCase
         return [
             'id' => $this->createFakeData()->numberBetween(1, 1000000),
             'objectid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'objectguid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
+            'objectguid' => $this->getMockBuilder(Uuid::class)->disableOriginalConstructor()->getMock(),
             'changeid' => $this->createFakeData()->numberBetween(1, 1000000),
             'number' => $this->createFakeData()->word(),
             'opertypeid' => $this->createFakeData()->word(),

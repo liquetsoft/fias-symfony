@@ -43,8 +43,7 @@ EOT;
 
         $object = $serializer->deserialize($data, FiasSerializerObject::class, 'xml');
 
-        $testObjectGUID = $object->getObjectguid();
-        $testObjectGUID = $testObjectGUID ? $testObjectGUID->toString() : null;
+        $testObjectGUID = (string) $object->getObjectguid();
 
         $testUpdateDate = $object->getUpdatedate();
         $testUpdateDate = $testUpdateDate ? $testUpdateDate->format('Y-m-d') : null;
@@ -52,8 +51,7 @@ EOT;
         $testTestDate = $object->getTestDate();
         $testTestDate = $testTestDate ? $testTestDate->format('Y-m-d') : null;
 
-        $testUuid = $object->getUuid();
-        $testUuid = $testUuid ? $testUuid->toString() : null;
+        $testUuid = (string) $object->getUuid();
 
         $this->assertInstanceOf(FiasSerializerObject::class, $object);
         $this->assertSame($id, $object->getId());

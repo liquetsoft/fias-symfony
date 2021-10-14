@@ -28,8 +28,8 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\DoctrineTestCase;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\PipelineTestMockEntity;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\VersionManagerTestMockEntity;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\VersionManager\DoctrineVersionManager;
-use Ramsey\Uuid\Uuid;
 use SplFileInfo;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Тест для объекта папйлайна для обновления базы данных.

@@ -6,7 +6,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Сведения об адресном элементе в части его идентификаторов.
@@ -66,9 +66,9 @@ class ReestrObjects
      *
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface|null
+     * @var Uuid|null
      */
-    protected ?UuidInterface $objectguid = null;
+    protected ?Uuid $objectguid = null;
 
     /**
      * Признак действующего объекта (1 - действующий, 0 - не действующий).
@@ -139,14 +139,14 @@ class ReestrObjects
         return $this->updatedate;
     }
 
-    public function setObjectguid(UuidInterface $objectguid): self
+    public function setObjectguid(Uuid $objectguid): self
     {
         $this->objectguid = $objectguid;
 
         return $this;
     }
 
-    public function getObjectguid(): ?UuidInterface
+    public function getObjectguid(): ?Uuid
     {
         return $this->objectguid;
     }

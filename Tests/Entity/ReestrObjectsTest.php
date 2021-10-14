@@ -7,7 +7,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\ReestrObjects;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Тест для сущности 'Сведения об адресном элементе в части его идентификаторов'.
@@ -35,7 +35,7 @@ class ReestrObjectsTest extends EntityCase
             'changeid' => $this->createFakeData()->numberBetween(1, 1000000),
             'levelid' => $this->createFakeData()->numberBetween(1, 1000000),
             'updatedate' => new DateTimeImmutable(),
-            'objectguid' => $this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock(),
+            'objectguid' => $this->getMockBuilder(Uuid::class)->disableOriginalConstructor()->getMock(),
             'isactive' => $this->createFakeData()->numberBetween(1, 1000000),
         ];
     }
