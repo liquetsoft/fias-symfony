@@ -11,25 +11,25 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class NormativeDocsKinds
 {
     /**
      * Идентификатор записи.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $id = 0;
 
     /**
      * Наименование.
      *
      * @ORM\Column(type="string", length=500, nullable=false)
-     *
-     * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 500)]
     protected string $name = '';
 
     public function setId(int $id): self

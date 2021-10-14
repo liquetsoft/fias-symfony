@@ -13,70 +13,65 @@ use Symfony\Component\Uid\Uuid;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class ReestrObjects
 {
     /**
      * Уникальный идентификатор объекта.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $objectid = 0;
 
     /**
      * Дата создания.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $createdate = null;
 
     /**
      * ID изменившей транзакции.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $changeid = 0;
 
     /**
      * Уровень объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $levelid = 0;
 
     /**
      * Дата обновления.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $updatedate = null;
 
     /**
      * GUID объекта.
      *
      * @ORM\Column(type="uuid", nullable=false)
-     *
-     * @var Uuid|null
      */
+    #[ORM\Column(type: 'uuid', nullable: false)]
     protected ?Uuid $objectguid = null;
 
     /**
      * Признак действующего объекта (1 - действующий, 0 - не действующий).
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $isactive = 0;
 
     public function setObjectid(int $objectid): self

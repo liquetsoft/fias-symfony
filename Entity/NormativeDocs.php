@@ -12,115 +12,105 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class NormativeDocs
 {
     /**
      * Уникальный идентификатор документа.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $id = 0;
 
     /**
      * Наименование документа.
      *
      * @ORM\Column(type="string", length=8000, nullable=false)
-     *
-     * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 8000)]
     protected string $name = '';
 
     /**
      * Дата документа.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $date = null;
 
     /**
      * Номер документа.
      *
      * @ORM\Column(type="string", length=150, nullable=false)
-     *
-     * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 150)]
     protected string $number = '';
 
     /**
      * Тип документа.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $type = 0;
 
     /**
      * Вид документа.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $kind = 0;
 
     /**
      * Дата обновления.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $updatedate = null;
 
     /**
      * Наименование органа создвшего нормативный документ.
      *
      * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @var string|null
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 255)]
     protected ?string $orgname = null;
 
     /**
      * Номер государственной регистрации.
      *
      * @ORM\Column(type="string", length=100, nullable=true)
-     *
-     * @var string|null
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 100)]
     protected ?string $regnum = null;
 
     /**
      * Дата государственной регистрации.
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected ?DateTimeImmutable $regdate = null;
 
     /**
      * Дата вступления в силу нормативного документа.
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected ?DateTimeImmutable $accdate = null;
 
     /**
      * Комментарий.
      *
      * @ORM\Column(type="string", length=8000, nullable=true)
-     *
-     * @var string|null
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 8000)]
     protected ?string $comment = null;
 
     public function setId(int $id): self

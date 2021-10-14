@@ -12,34 +12,33 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class FiasVersion
 {
     /**
      * Номер версии ФИАС.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $version = 0;
 
     /**
      * Ссылка для загрузки указанной версии ФИАС.
      *
      * @ORM\Column(type="string", nullable=false)
-     *
-     * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 255)]
     protected string $url = '';
 
     /**
      * Дата создания.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $created = null;
 
     public function setVersion(int $version): self

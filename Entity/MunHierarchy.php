@@ -12,106 +12,97 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class MunHierarchy
 {
     /**
      * Уникальный идентификатор записи. Ключевое поле.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $id = 0;
 
     /**
      * Глобальный уникальный идентификатор адресного объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $objectid = 0;
 
     /**
      * Идентификатор родительского объекта.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $parentobjid = null;
 
     /**
      * ID изменившей транзакции.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $changeid = 0;
 
     /**
      * Код ОКТМО.
      *
      * @ORM\Column(type="string", length=11, nullable=true)
-     *
-     * @var string|null
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 11)]
     protected ?string $oktmo = null;
 
     /**
      * Идентификатор записи связывания с предыдущей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $previd = null;
 
     /**
      * Идентификатор записи связывания с последующей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $nextid = null;
 
     /**
      * Дата внесения (обновления) записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $updatedate = null;
 
     /**
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $startdate = null;
 
     /**
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $enddate = null;
 
     /**
      * Признак действующего адресного объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $isactive = 0;
 
     public function setId(int $id): self

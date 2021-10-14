@@ -13,169 +13,153 @@ use Symfony\Component\Uid\Uuid;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class Houses
 {
     /**
      * Уникальный идентификатор записи. Ключевое поле.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $id = 0;
 
     /**
      * Глобальный уникальный идентификатор объекта типа INTEGER.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $objectid = 0;
 
     /**
      * Глобальный уникальный идентификатор адресного объекта типа UUID.
      *
      * @ORM\Column(type="uuid", nullable=false)
-     *
-     * @var Uuid|null
      */
+    #[ORM\Column(type: 'uuid', nullable: false)]
     protected ?Uuid $objectguid = null;
 
     /**
      * ID изменившей транзакции.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $changeid = 0;
 
     /**
      * Основной номер дома.
      *
      * @ORM\Column(type="string", length=50, nullable=true)
-     *
-     * @var string|null
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 50)]
     protected ?string $housenum = null;
 
     /**
      * Дополнительный номер дома 1.
      *
      * @ORM\Column(type="string", length=50, nullable=true)
-     *
-     * @var string|null
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 50)]
     protected ?string $addnum1 = null;
 
     /**
      * Дополнительный номер дома 1.
      *
      * @ORM\Column(type="string", length=50, nullable=true)
-     *
-     * @var string|null
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 50)]
     protected ?string $addnum2 = null;
 
     /**
      * Основной тип дома.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $housetype = null;
 
     /**
      * Дополнительный тип дома 1.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $addtype1 = null;
 
     /**
      * Дополнительный тип дома 2.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $addtype2 = null;
 
     /**
      * Статус действия над записью – причина появления записи.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $opertypeid = 0;
 
     /**
      * Идентификатор записи связывания с предыдущей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $previd = null;
 
     /**
      * Идентификатор записи связывания с последующей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $nextid = null;
 
     /**
      * Дата внесения (обновления) записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $updatedate = null;
 
     /**
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $startdate = null;
 
     /**
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $enddate = null;
 
     /**
      * Статус актуальности адресного объекта ФИАС.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $isactual = 0;
 
     /**
      * Признак действующего адресного объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $isactive = 0;
 
     public function setId(int $id): self

@@ -13,124 +13,113 @@ use Symfony\Component\Uid\Uuid;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class Carplaces
 {
     /**
      * Уникальный идентификатор записи. Ключевое поле.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $id = 0;
 
     /**
      * Глобальный уникальный идентификатор объекта типа INTEGER.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $objectid = 0;
 
     /**
      * Глобальный уникальный идентификатор адресного объекта типа UUID.
      *
      * @ORM\Column(type="uuid", nullable=false)
-     *
-     * @var Uuid|null
      */
+    #[ORM\Column(type: 'uuid', nullable: false)]
     protected ?Uuid $objectguid = null;
 
     /**
      * ID изменившей транзакции.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $changeid = 0;
 
     /**
      * Номер машиноместа.
      *
      * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 50)]
     protected string $number = '';
 
     /**
      * Статус действия над записью – причина появления записи.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $opertypeid = 0;
 
     /**
      * Идентификатор записи связывания с предыдущей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $previd = null;
 
     /**
      * Идентификатор записи связывания с последующей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $nextid = null;
 
     /**
      * Дата внесения (обновления) записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $updatedate = null;
 
     /**
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $startdate = null;
 
     /**
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $enddate = null;
 
     /**
      * Статус актуальности адресного объекта ФИАС.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $isactual = 0;
 
     /**
      * Признак действующего адресного объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $isactive = 0;
 
     public function setId(int $id): self

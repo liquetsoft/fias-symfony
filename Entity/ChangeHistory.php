@@ -13,61 +13,57 @@ use Symfony\Component\Uid\Uuid;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class ChangeHistory
 {
     /**
      * ID изменившей транзакции.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $changeid = 0;
 
     /**
      * Уникальный ID объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $objectid = 0;
 
     /**
      * Уникальный ID изменившей транзакции (GUID).
      *
      * @ORM\Column(type="uuid", nullable=false)
-     *
-     * @var Uuid|null
      */
+    #[ORM\Column(type: 'uuid', nullable: false)]
     protected ?Uuid $adrobjectid = null;
 
     /**
      * Тип операции.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $opertypeid = 0;
 
     /**
      * ID документа.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $ndocid = null;
 
     /**
      * Дата изменения.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $changedate = null;
 
     public function setChangeid(int $changeid): self

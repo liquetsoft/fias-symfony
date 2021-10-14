@@ -12,88 +12,81 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class AddrObjTypes
 {
     /**
      * Идентификатор записи.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $id = 0;
 
     /**
      * Уровень адресного объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $level = 0;
 
     /**
      * Краткое наименование типа объекта.
      *
      * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 50)]
     protected string $shortname = '';
 
     /**
      * Полное наименование типа объекта.
      *
      * @ORM\Column(type="string", length=250, nullable=false)
-     *
-     * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 250)]
     protected string $name = '';
 
     /**
      * Описание.
      *
      * @ORM\Column(type="string", length=250, nullable=true)
-     *
-     * @var string|null
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 250)]
     protected ?string $desc = null;
 
     /**
      * Дата внесения (обновления) записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $updatedate = null;
 
     /**
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $startdate = null;
 
     /**
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $enddate = null;
 
     /**
      * Статус активности.
      *
      * @ORM\Column(type="string", nullable=false)
-     *
-     * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 255)]
     protected string $isactive = '';
 
     public function setId(int $id): self
