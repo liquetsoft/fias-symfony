@@ -6,7 +6,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Сведения по истории изменений.
@@ -39,9 +39,9 @@ class ChangeHistory
      *
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface|null
+     * @var Uuid|null
      */
-    protected ?UuidInterface $adrobjectid = null;
+    protected ?Uuid $adrobjectid = null;
 
     /**
      * Тип операции.
@@ -94,14 +94,14 @@ class ChangeHistory
         return $this->objectid;
     }
 
-    public function setAdrobjectid(UuidInterface $adrobjectid): self
+    public function setAdrobjectid(Uuid $adrobjectid): self
     {
         $this->adrobjectid = $adrobjectid;
 
         return $this;
     }
 
-    public function getAdrobjectid(): ?UuidInterface
+    public function getAdrobjectid(): ?Uuid
     {
         return $this->adrobjectid;
     }

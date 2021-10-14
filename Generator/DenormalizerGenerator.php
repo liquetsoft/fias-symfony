@@ -12,7 +12,6 @@ use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpLiteral;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
-use Ramsey\Uuid\Uuid;
 use SplFileInfo;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -20,6 +19,7 @@ use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Объект, который генерирует класс денормализатора.

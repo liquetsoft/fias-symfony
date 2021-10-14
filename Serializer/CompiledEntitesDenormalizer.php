@@ -28,13 +28,13 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\ReestrObjects;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Rooms;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\RoomTypes;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Steads;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Скомпилированный класс для денормализации сущностей ФИАС в модели.

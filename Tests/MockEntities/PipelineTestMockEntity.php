@@ -6,7 +6,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Сущность для тестов пайплайнов с использованием doctrine.
@@ -34,7 +34,7 @@ class PipelineTestMockEntity
     /**
      * @ORM\Column(type="uuid", nullable=true)
      */
-    private ?UuidInterface $uuid = null;
+    private ?Uuid $uuid = null;
 
     public function setTestId(int $testId): self
     {
@@ -72,14 +72,14 @@ class PipelineTestMockEntity
         return $this->startdate;
     }
 
-    public function setUuid(?UuidInterface $uuid): self
+    public function setUuid(?Uuid $uuid): self
     {
         $this->uuid = $uuid;
 
         return $this;
     }
 
-    public function getUuid(): ?UuidInterface
+    public function getUuid(): ?Uuid
     {
         return $this->uuid;
     }

@@ -6,7 +6,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Сведения классификатора адресообразующих элементов.
@@ -39,9 +39,9 @@ class AddrObj
      *
      * @ORM\Column(type="uuid", nullable=false)
      *
-     * @var UuidInterface|null
+     * @var Uuid|null
      */
-    protected ?UuidInterface $objectguid = null;
+    protected ?Uuid $objectguid = null;
 
     /**
      * ID изменившей транзакции.
@@ -175,14 +175,14 @@ class AddrObj
         return $this->objectid;
     }
 
-    public function setObjectguid(UuidInterface $objectguid): self
+    public function setObjectguid(Uuid $objectguid): self
     {
         $this->objectguid = $objectguid;
 
         return $this;
     }
 
-    public function getObjectguid(): ?UuidInterface
+    public function getObjectguid(): ?Uuid
     {
         return $this->objectguid;
     }

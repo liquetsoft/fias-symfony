@@ -94,12 +94,6 @@ jobs:
 
           cd example-app
 
-          composer req ramsey/uuid-doctrine
-          echo "doctrine:" >> config/packages/ramsey_uuid_doctrine.yaml
-          echo "    dbal:" >> config/packages/ramsey_uuid_doctrine.yaml
-          echo "        types:" >> config/packages/ramsey_uuid_doctrine.yaml
-          echo "            uuid: 'Ramsey\Uuid\Doctrine\UuidType'" >> config/packages/ramsey_uuid_doctrine.yaml
-
           composer req "liquetsoft/fias-symfony:dev-${{ steps.extract_branch.outputs.branch }}" -W
           cp ./../Tests/MockEntities/SymfonyTestAddrObj.php src/Entity/AddrObj.php
           cp ./../Tests/MockEntities/SymfonyTestFiasVersion.php src/Entity/FiasVersion.php

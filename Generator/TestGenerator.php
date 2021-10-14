@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator;
 
+use DateTimeImmutable;
 use InvalidArgumentException;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
 use RuntimeException;
 use SplFileInfo;
+use Symfony\Component\Uid\Uuid;
 use Throwable;
 
 /**
@@ -99,7 +102,7 @@ class TestGenerator extends AbstractGenerator
             if ($type === 'int') {
                 $value = '$this->createFakeData()->numberBetween(1, 1000000)';
             } elseif ($type === 'string_uuid') {
-                $value = '$this->getMockBuilder(UuidInterface::class)->disableOriginalConstructor()->getMock()';
+                $value = '$this->getMockBuilder(Uuid::class)->disableOriginalConstructor()->getMock()';
             } elseif ($type === 'string_date') {
                 $value = 'new DateTimeImmutable()';
             }
@@ -125,14 +128,14 @@ class TestGenerator extends AbstractGenerator
      */
     protected function decorateNamespace(PhpNamespace $namespace, EntityDescriptor $descriptor, string $baseNamespace, string $baseName): void
     {
-        $namespace->addUse('Liquetsoft\\Fias\\Symfony\\LiquetsoftFiasBundle\\Tests\\EntityCase');
+        $namespace->addUse(EntityCase::class);
         $namespace->addUse($baseNamespace . '\\' . $baseName);
         foreach ($descriptor->getFields() as $field) {
             if ($field->getSubType() === 'uuid') {
-                $namespace->addUse('Ramsey\Uuid\UuidInterface');
+                $namespace->addUse(Uuid::class);
             }
             if ($field->getSubType() === 'date') {
-                $namespace->addUse('DateTimeImmutable');
+                $namespace->addUse(DateTimeImmutable::class);
             }
         }
     }
@@ -145,7 +148,7 @@ class TestGenerator extends AbstractGenerator
      */
     protected function decorateClass(ClassType $class, EntityDescriptor $descriptor): void
     {
-        $class->setExtends('Liquetsoft\\Fias\\Symfony\\LiquetsoftFiasBundle\\Tests\\EntityCase');
+        $class->setExtends(EntityCase::class);
         $description = trim($descriptor->getDescription(), " \t\n\r\0\x0B.");
         if ($description) {
             $class->addComment("Тест для сущности '{$description}'.\n\n@internal");

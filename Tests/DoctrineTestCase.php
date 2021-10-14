@@ -14,7 +14,7 @@ use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\Tools\ToolsException;
 use Doctrine\ORM\TransactionRequiredException;
-use Ramsey\Uuid\Doctrine\UuidType;
+use Symfony\Bridge\Doctrine\Types\UuidType;
 
 /**
  * Базовый класс для тестирования запросов с doctrine.
