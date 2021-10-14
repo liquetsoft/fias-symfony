@@ -12,14 +12,17 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class AdmHierarchy
 {
     /**
      * Уникальный идентификатор записи. Ключевое поле.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $id = 0;
 
     /**
@@ -27,6 +30,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $objectid = 0;
 
     /**
@@ -34,6 +38,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $parentobjid = null;
 
     /**
@@ -41,6 +46,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $changeid = 0;
 
     /**
@@ -48,6 +54,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="string", length=4, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 4)]
     protected ?string $regioncode = null;
 
     /**
@@ -55,6 +62,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="string", length=4, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 4)]
     protected ?string $areacode = null;
 
     /**
@@ -62,6 +70,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="string", length=4, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 4)]
     protected ?string $citycode = null;
 
     /**
@@ -69,6 +78,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="string", length=4, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 4)]
     protected ?string $placecode = null;
 
     /**
@@ -76,6 +86,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="string", length=4, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 4)]
     protected ?string $plancode = null;
 
     /**
@@ -83,6 +94,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="string", length=4, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 4)]
     protected ?string $streetcode = null;
 
     /**
@@ -90,6 +102,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $previd = null;
 
     /**
@@ -97,6 +110,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $nextid = null;
 
     /**
@@ -104,6 +118,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $updatedate = null;
 
     /**
@@ -111,6 +126,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $startdate = null;
 
     /**
@@ -118,6 +134,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $enddate = null;
 
     /**
@@ -125,6 +142,7 @@ class AdmHierarchy
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $isactive = 0;
 
     public function setId(int $id): self

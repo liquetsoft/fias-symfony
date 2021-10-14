@@ -13,14 +13,17 @@ use Symfony\Component\Uid\Uuid;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class ChangeHistory
 {
     /**
      * ID изменившей транзакции.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $changeid = 0;
 
     /**
@@ -28,6 +31,7 @@ class ChangeHistory
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $objectid = 0;
 
     /**
@@ -35,6 +39,7 @@ class ChangeHistory
      *
      * @ORM\Column(type="uuid", nullable=false)
      */
+    #[ORM\Column(type: 'uuid', nullable: false)]
     protected ?Uuid $adrobjectid = null;
 
     /**
@@ -42,6 +47,7 @@ class ChangeHistory
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $opertypeid = 0;
 
     /**
@@ -49,6 +55,7 @@ class ChangeHistory
      *
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $ndocid = null;
 
     /**
@@ -56,6 +63,7 @@ class ChangeHistory
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $changedate = null;
 
     public function setChangeid(int $changeid): self

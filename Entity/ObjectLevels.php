@@ -12,14 +12,17 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class ObjectLevels
 {
     /**
      * Уникальный идентификатор записи. Ключевое поле. Номер уровня объекта.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $level = 0;
 
     /**
@@ -27,6 +30,7 @@ class ObjectLevels
      *
      * @ORM\Column(type="string", length=250, nullable=false)
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 250)]
     protected string $name = '';
 
     /**
@@ -34,6 +38,7 @@ class ObjectLevels
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 50)]
     protected ?string $shortname = null;
 
     /**
@@ -41,6 +46,7 @@ class ObjectLevels
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $updatedate = null;
 
     /**
@@ -48,6 +54,7 @@ class ObjectLevels
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $startdate = null;
 
     /**
@@ -55,6 +62,7 @@ class ObjectLevels
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $enddate = null;
 
     /**
@@ -62,6 +70,7 @@ class ObjectLevels
      *
      * @ORM\Column(type="string", nullable=false)
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 255)]
     protected string $isactive = '';
 
     public function setLevel(int $level): self

@@ -12,14 +12,17 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class Param
 {
     /**
      * Идентификатор записи.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $id = 0;
 
     /**
@@ -27,6 +30,7 @@ class Param
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $objectid = 0;
 
     /**
@@ -34,6 +38,7 @@ class Param
      *
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $changeid = null;
 
     /**
@@ -41,6 +46,7 @@ class Param
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $changeidend = 0;
 
     /**
@@ -48,6 +54,7 @@ class Param
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $typeid = 0;
 
     /**
@@ -55,6 +62,7 @@ class Param
      *
      * @ORM\Column(type="string", length=8000, nullable=false)
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 8000)]
     protected string $value = '';
 
     /**
@@ -62,6 +70,7 @@ class Param
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $updatedate = null;
 
     /**
@@ -69,6 +78,7 @@ class Param
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $startdate = null;
 
     /**
@@ -76,6 +86,7 @@ class Param
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $enddate = null;
 
     public function setId(int $id): self

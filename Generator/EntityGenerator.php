@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator;
 
 use DateTimeImmutable;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Index;
+use Doctrine\ORM\Mapping\MappedSuperclass;
 use InvalidArgumentException;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\EntityField;
@@ -132,6 +136,7 @@ class EntityGenerator extends AbstractGenerator
         }
 
         $class->addComment("@ORM\MappedSuperclass\n");
+        $class->addAttribute(MappedSuperclass::class);
 
         $indexes = [];
         $indexPrefix = $this->unifyColumnName($descriptor->getName());
@@ -139,6 +144,13 @@ class EntityGenerator extends AbstractGenerator
             if ($field->isIndex()) {
                 $column = $this->unifyColumnName($field->getName());
                 $indexes[] = "@ORM\Index(name=\"{$indexPrefix}_{$column}_idx\", columns={\"{$column}\"})";
+                $class->addAttribute(
+                    Index::class,
+                    [
+                        'name' => "{$indexPrefix}_{$column}_idx",
+                        'columns' => [$column],
+                    ]
+                );
             }
         }
         if ($indexes) {
@@ -155,13 +167,26 @@ class EntityGenerator extends AbstractGenerator
      */
     protected function decorateProperty(Property $property, EntityField $field): void
     {
+        if ($field->getDescription()) {
+            $description = ucfirst(rtrim($field->getDescription(), " \t\n\r\0\x0B.")) . '.';
+            $property->addComment("{$description}\n");
+        }
+
         $type = trim($field->getType() . '_' . $field->getSubType(), ' _');
         switch ($type) {
             case 'int':
                 $defaultValue = $field->isNullable() ? null : 0;
-                $column = '@ORM\Column(type="integer"' . ($field->isNullable() ? ', nullable=true' : ', nullable=false') . ')';
+                $property->addComment('@ORM\Column(type="integer"' . ($field->isNullable() ? ', nullable=true' : ', nullable=false') . ')');
+                $property->addAttribute(
+                    Column::class,
+                    [
+                        'type' => 'integer',
+                        'nullable' => $field->isNullable(),
+                    ]
+                );
                 if ($field->isPrimary()) {
-                    $column = "@ORM\Id\n{$column}";
+                    $property->addComment('@ORM\Id');
+                    $property->addAttribute(Id::class);
                 }
                 $property->setType('int');
                 if ($field->isNullable()) {
@@ -170,20 +195,31 @@ class EntityGenerator extends AbstractGenerator
                 break;
             case 'string_uuid':
                 $defaultValue = null;
-                $column = '@ORM\Column(type="uuid"';
-                $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
-                $column .= ')';
+                $property->addComment('@ORM\Column(type="uuid"' . ($field->isNullable() ? ', nullable=true' : ', nullable=false') . ')');
+                $property->addAttribute(
+                    Column::class,
+                    [
+                        'type' => 'uuid',
+                        'nullable' => $field->isNullable(),
+                    ]
+                );
                 if ($field->isPrimary()) {
-                    $column = "@ORM\Id\n{$column}";
+                    $property->addComment('@ORM\Id');
+                    $property->addAttribute(Id::class);
                 }
                 $property->setType(Uuid::class);
                 $property->setNullable();
                 break;
             case 'string_date':
                 $defaultValue = null;
-                $column = '@ORM\Column(type="datetime_immutable"';
-                $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
-                $column .= ')';
+                $property->addComment('@ORM\Column(type="datetime_immutable"' . ($field->isNullable() ? ', nullable=true' : ', nullable=false') . ')');
+                $property->addAttribute(
+                    Column::class,
+                    [
+                        'type' => 'datetime_immutable',
+                        'nullable' => $field->isNullable(),
+                    ]
+                );
                 $property->setType(DateTimeImmutable::class);
                 $property->setNullable();
                 break;
@@ -193,8 +229,18 @@ class EntityGenerator extends AbstractGenerator
                 $column .= $field->getLength() ? ", length={$field->getLength()}" : '';
                 $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
                 $column .= ')';
+                $property->addComment($column);
+                $property->addAttribute(
+                    Column::class,
+                    [
+                        'type' => 'string',
+                        'nullable' => $field->isNullable(),
+                        'length' => $field->getLength() ?: 255,
+                    ]
+                );
                 if ($field->isPrimary()) {
-                    $column = "@ORM\Id\n{$column}";
+                    $property->addComment('@ORM\Id');
+                    $property->addAttribute(Id::class);
                 }
                 $property->setType('string');
                 if ($field->isNullable()) {
@@ -206,11 +252,6 @@ class EntityGenerator extends AbstractGenerator
         $property->setValue($defaultValue);
         $property->setVisibility('protected');
         $property->setInitialized();
-        if ($field->getDescription()) {
-            $description = ucfirst(rtrim($field->getDescription(), " \t\n\r\0\x0B.")) . '.';
-            $property->addComment("{$description}\n");
-        }
-        $property->addComment("{$column}\n");
     }
 
     /**

@@ -12,14 +12,17 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class NormativeDocs
 {
     /**
      * Уникальный идентификатор документа.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $id = 0;
 
     /**
@@ -27,6 +30,7 @@ class NormativeDocs
      *
      * @ORM\Column(type="string", length=8000, nullable=false)
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 8000)]
     protected string $name = '';
 
     /**
@@ -34,6 +38,7 @@ class NormativeDocs
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $date = null;
 
     /**
@@ -41,6 +46,7 @@ class NormativeDocs
      *
      * @ORM\Column(type="string", length=150, nullable=false)
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 150)]
     protected string $number = '';
 
     /**
@@ -48,6 +54,7 @@ class NormativeDocs
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $type = 0;
 
     /**
@@ -55,6 +62,7 @@ class NormativeDocs
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $kind = 0;
 
     /**
@@ -62,6 +70,7 @@ class NormativeDocs
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $updatedate = null;
 
     /**
@@ -69,6 +78,7 @@ class NormativeDocs
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 255)]
     protected ?string $orgname = null;
 
     /**
@@ -76,6 +86,7 @@ class NormativeDocs
      *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 100)]
     protected ?string $regnum = null;
 
     /**
@@ -83,6 +94,7 @@ class NormativeDocs
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected ?DateTimeImmutable $regdate = null;
 
     /**
@@ -90,6 +102,7 @@ class NormativeDocs
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected ?DateTimeImmutable $accdate = null;
 
     /**
@@ -97,6 +110,7 @@ class NormativeDocs
      *
      * @ORM\Column(type="string", length=8000, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 8000)]
     protected ?string $comment = null;
 
     public function setId(int $id): self

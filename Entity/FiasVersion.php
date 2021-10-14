@@ -12,14 +12,17 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class FiasVersion
 {
     /**
      * Номер версии ФИАС.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $version = 0;
 
     /**
@@ -27,6 +30,7 @@ class FiasVersion
      *
      * @ORM\Column(type="string", nullable=false)
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 255)]
     protected string $url = '';
 
     /**
@@ -34,6 +38,7 @@ class FiasVersion
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $created = null;
 
     public function setVersion(int $version): self

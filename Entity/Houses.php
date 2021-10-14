@@ -13,14 +13,17 @@ use Symfony\Component\Uid\Uuid;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class Houses
 {
     /**
      * Уникальный идентификатор записи. Ключевое поле.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $id = 0;
 
     /**
@@ -28,6 +31,7 @@ class Houses
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $objectid = 0;
 
     /**
@@ -35,6 +39,7 @@ class Houses
      *
      * @ORM\Column(type="uuid", nullable=false)
      */
+    #[ORM\Column(type: 'uuid', nullable: false)]
     protected ?Uuid $objectguid = null;
 
     /**
@@ -42,6 +47,7 @@ class Houses
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $changeid = 0;
 
     /**
@@ -49,6 +55,7 @@ class Houses
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 50)]
     protected ?string $housenum = null;
 
     /**
@@ -56,6 +63,7 @@ class Houses
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 50)]
     protected ?string $addnum1 = null;
 
     /**
@@ -63,6 +71,7 @@ class Houses
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 50)]
     protected ?string $addnum2 = null;
 
     /**
@@ -70,6 +79,7 @@ class Houses
      *
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $housetype = null;
 
     /**
@@ -77,6 +87,7 @@ class Houses
      *
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $addtype1 = null;
 
     /**
@@ -84,6 +95,7 @@ class Houses
      *
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $addtype2 = null;
 
     /**
@@ -91,6 +103,7 @@ class Houses
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $opertypeid = 0;
 
     /**
@@ -98,6 +111,7 @@ class Houses
      *
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $previd = null;
 
     /**
@@ -105,6 +119,7 @@ class Houses
      *
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $nextid = null;
 
     /**
@@ -112,6 +127,7 @@ class Houses
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $updatedate = null;
 
     /**
@@ -119,6 +135,7 @@ class Houses
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $startdate = null;
 
     /**
@@ -126,6 +143,7 @@ class Houses
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $enddate = null;
 
     /**
@@ -133,6 +151,7 @@ class Houses
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $isactual = 0;
 
     /**
@@ -140,6 +159,7 @@ class Houses
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $isactive = 0;
 
     public function setId(int $id): self

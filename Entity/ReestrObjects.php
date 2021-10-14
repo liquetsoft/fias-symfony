@@ -13,14 +13,17 @@ use Symfony\Component\Uid\Uuid;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class ReestrObjects
 {
     /**
      * Уникальный идентификатор объекта.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $objectid = 0;
 
     /**
@@ -28,6 +31,7 @@ class ReestrObjects
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $createdate = null;
 
     /**
@@ -35,6 +39,7 @@ class ReestrObjects
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $changeid = 0;
 
     /**
@@ -42,6 +47,7 @@ class ReestrObjects
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $levelid = 0;
 
     /**
@@ -49,6 +55,7 @@ class ReestrObjects
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $updatedate = null;
 
     /**
@@ -56,6 +63,7 @@ class ReestrObjects
      *
      * @ORM\Column(type="uuid", nullable=false)
      */
+    #[ORM\Column(type: 'uuid', nullable: false)]
     protected ?Uuid $objectguid = null;
 
     /**
@@ -63,6 +71,7 @@ class ReestrObjects
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $isactive = 0;
 
     public function setObjectid(int $objectid): self

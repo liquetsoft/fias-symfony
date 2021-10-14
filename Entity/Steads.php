@@ -13,14 +13,17 @@ use Symfony\Component\Uid\Uuid;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class Steads
 {
     /**
      * Уникальный идентификатор записи. Ключевое поле.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $id = 0;
 
     /**
@@ -28,6 +31,7 @@ class Steads
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $objectid = 0;
 
     /**
@@ -35,6 +39,7 @@ class Steads
      *
      * @ORM\Column(type="uuid", nullable=false)
      */
+    #[ORM\Column(type: 'uuid', nullable: false)]
     protected ?Uuid $objectguid = null;
 
     /**
@@ -42,6 +47,7 @@ class Steads
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $changeid = 0;
 
     /**
@@ -49,6 +55,7 @@ class Steads
      *
      * @ORM\Column(type="string", length=250, nullable=false)
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 250)]
     protected string $number = '';
 
     /**
@@ -56,6 +63,7 @@ class Steads
      *
      * @ORM\Column(type="string", length=2, nullable=false)
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 2)]
     protected string $opertypeid = '';
 
     /**
@@ -63,6 +71,7 @@ class Steads
      *
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $previd = null;
 
     /**
@@ -70,6 +79,7 @@ class Steads
      *
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $nextid = null;
 
     /**
@@ -77,6 +87,7 @@ class Steads
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $updatedate = null;
 
     /**
@@ -84,6 +95,7 @@ class Steads
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $startdate = null;
 
     /**
@@ -91,6 +103,7 @@ class Steads
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $enddate = null;
 
     /**
@@ -98,6 +111,7 @@ class Steads
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $isactual = 0;
 
     /**
@@ -105,6 +119,7 @@ class Steads
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $isactive = 0;
 
     public function setId(int $id): self

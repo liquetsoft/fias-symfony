@@ -12,14 +12,17 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class HouseTypes
 {
     /**
      * Идентификатор.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $id = 0;
 
     /**
@@ -27,6 +30,7 @@ class HouseTypes
      *
      * @ORM\Column(type="string", length=50, nullable=false)
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 50)]
     protected string $name = '';
 
     /**
@@ -34,6 +38,7 @@ class HouseTypes
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 50)]
     protected ?string $shortname = null;
 
     /**
@@ -41,6 +46,7 @@ class HouseTypes
      *
      * @ORM\Column(type="string", length=250, nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true, length: 250)]
     protected ?string $desc = null;
 
     /**
@@ -48,6 +54,7 @@ class HouseTypes
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $updatedate = null;
 
     /**
@@ -55,6 +62,7 @@ class HouseTypes
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $startdate = null;
 
     /**
@@ -62,6 +70,7 @@ class HouseTypes
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $enddate = null;
 
     /**
@@ -69,6 +78,7 @@ class HouseTypes
      *
      * @ORM\Column(type="string", nullable=false)
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 255)]
     protected string $isactive = '';
 
     public function setId(int $id): self

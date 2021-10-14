@@ -12,14 +12,17 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class NormativeDocsTypes
 {
     /**
      * Идентификатор записи.
      *
-     * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Id
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     protected int $id = 0;
 
     /**
@@ -27,6 +30,7 @@ class NormativeDocsTypes
      *
      * @ORM\Column(type="string", length=500, nullable=false)
      */
+    #[ORM\Column(type: 'string', nullable: false, length: 500)]
     protected string $name = '';
 
     /**
@@ -34,6 +38,7 @@ class NormativeDocsTypes
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $startdate = null;
 
     /**
@@ -41,6 +46,7 @@ class NormativeDocsTypes
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
     protected ?DateTimeImmutable $enddate = null;
 
     public function setId(int $id): self
