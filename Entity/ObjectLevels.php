@@ -6,6 +6,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 /**
  * Сведения по уровням адресных объектов.
@@ -116,8 +117,12 @@ class ObjectLevels
         return $this;
     }
 
-    public function getUpdatedate(): ?DateTimeImmutable
+    public function getUpdatedate(): DateTimeImmutable
     {
+        if ($this->updatedate === null) {
+            throw new InvalidArgumentException("Parameter 'updatedate' isn't set.");
+        }
+
         return $this->updatedate;
     }
 
@@ -128,8 +133,12 @@ class ObjectLevels
         return $this;
     }
 
-    public function getStartdate(): ?DateTimeImmutable
+    public function getStartdate(): DateTimeImmutable
     {
+        if ($this->startdate === null) {
+            throw new InvalidArgumentException("Parameter 'startdate' isn't set.");
+        }
+
         return $this->startdate;
     }
 
@@ -140,8 +149,12 @@ class ObjectLevels
         return $this;
     }
 
-    public function getEnddate(): ?DateTimeImmutable
+    public function getEnddate(): DateTimeImmutable
     {
+        if ($this->enddate === null) {
+            throw new InvalidArgumentException("Parameter 'enddate' isn't set.");
+        }
+
         return $this->enddate;
     }
 

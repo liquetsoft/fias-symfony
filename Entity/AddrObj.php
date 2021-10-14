@@ -6,6 +6,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -169,8 +170,12 @@ class AddrObj
         return $this;
     }
 
-    public function getObjectguid(): ?Uuid
+    public function getObjectguid(): Uuid
     {
+        if ($this->objectguid === null) {
+            throw new InvalidArgumentException("Parameter 'objectguid' isn't set.");
+        }
+
         return $this->objectguid;
     }
 
@@ -265,8 +270,12 @@ class AddrObj
         return $this;
     }
 
-    public function getUpdatedate(): ?DateTimeImmutable
+    public function getUpdatedate(): DateTimeImmutable
     {
+        if ($this->updatedate === null) {
+            throw new InvalidArgumentException("Parameter 'updatedate' isn't set.");
+        }
+
         return $this->updatedate;
     }
 
@@ -277,8 +286,12 @@ class AddrObj
         return $this;
     }
 
-    public function getStartdate(): ?DateTimeImmutable
+    public function getStartdate(): DateTimeImmutable
     {
+        if ($this->startdate === null) {
+            throw new InvalidArgumentException("Parameter 'startdate' isn't set.");
+        }
+
         return $this->startdate;
     }
 
@@ -289,8 +302,12 @@ class AddrObj
         return $this;
     }
 
-    public function getEnddate(): ?DateTimeImmutable
+    public function getEnddate(): DateTimeImmutable
     {
+        if ($this->enddate === null) {
+            throw new InvalidArgumentException("Parameter 'enddate' isn't set.");
+        }
+
         return $this->enddate;
     }
 
