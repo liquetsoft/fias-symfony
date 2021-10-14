@@ -19,8 +19,6 @@ class AdmHierarchy
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $id = 0;
 
@@ -28,8 +26,6 @@ class AdmHierarchy
      * Глобальный уникальный идентификатор объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $objectid = 0;
 
@@ -37,8 +33,6 @@ class AdmHierarchy
      * Идентификатор родительского объекта.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $parentobjid = null;
 
@@ -46,8 +40,6 @@ class AdmHierarchy
      * ID изменившей транзакции.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $changeid = 0;
 
@@ -55,8 +47,6 @@ class AdmHierarchy
      * Код региона.
      *
      * @ORM\Column(type="string", length=4, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $regioncode = null;
 
@@ -64,8 +54,6 @@ class AdmHierarchy
      * Код района.
      *
      * @ORM\Column(type="string", length=4, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $areacode = null;
 
@@ -73,8 +61,6 @@ class AdmHierarchy
      * Код города.
      *
      * @ORM\Column(type="string", length=4, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $citycode = null;
 
@@ -82,8 +68,6 @@ class AdmHierarchy
      * Код населенного пункта.
      *
      * @ORM\Column(type="string", length=4, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $placecode = null;
 
@@ -91,8 +75,6 @@ class AdmHierarchy
      * Код ЭПС.
      *
      * @ORM\Column(type="string", length=4, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $plancode = null;
 
@@ -100,8 +82,6 @@ class AdmHierarchy
      * Код улицы.
      *
      * @ORM\Column(type="string", length=4, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $streetcode = null;
 
@@ -109,8 +89,6 @@ class AdmHierarchy
      * Идентификатор записи связывания с предыдущей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $previd = null;
 
@@ -118,8 +96,6 @@ class AdmHierarchy
      * Идентификатор записи связывания с последующей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $nextid = null;
 
@@ -127,8 +103,6 @@ class AdmHierarchy
      * Дата внесения (обновления) записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $updatedate = null;
 
@@ -136,8 +110,6 @@ class AdmHierarchy
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $startdate = null;
 
@@ -145,8 +117,6 @@ class AdmHierarchy
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $enddate = null;
 
@@ -154,8 +124,6 @@ class AdmHierarchy
      * Признак действующего адресного объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $isactive = 0;
 

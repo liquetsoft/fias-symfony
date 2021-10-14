@@ -19,8 +19,6 @@ class AddrObjTypes
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $id = 0;
 
@@ -28,8 +26,6 @@ class AddrObjTypes
      * Уровень адресного объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $level = 0;
 
@@ -37,8 +33,6 @@ class AddrObjTypes
      * Краткое наименование типа объекта.
      *
      * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @var string
      */
     protected string $shortname = '';
 
@@ -46,8 +40,6 @@ class AddrObjTypes
      * Полное наименование типа объекта.
      *
      * @ORM\Column(type="string", length=250, nullable=false)
-     *
-     * @var string
      */
     protected string $name = '';
 
@@ -55,8 +47,6 @@ class AddrObjTypes
      * Описание.
      *
      * @ORM\Column(type="string", length=250, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $desc = null;
 
@@ -64,8 +54,6 @@ class AddrObjTypes
      * Дата внесения (обновления) записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $updatedate = null;
 
@@ -73,8 +61,6 @@ class AddrObjTypes
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $startdate = null;
 
@@ -82,8 +68,6 @@ class AddrObjTypes
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $enddate = null;
 
@@ -91,8 +75,6 @@ class AddrObjTypes
      * Статус активности.
      *
      * @ORM\Column(type="string", nullable=false)
-     *
-     * @var string
      */
     protected string $isactive = '';
 

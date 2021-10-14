@@ -20,8 +20,6 @@ class Houses
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $id = 0;
 
@@ -29,8 +27,6 @@ class Houses
      * Глобальный уникальный идентификатор объекта типа INTEGER.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $objectid = 0;
 
@@ -38,8 +34,6 @@ class Houses
      * Глобальный уникальный идентификатор адресного объекта типа UUID.
      *
      * @ORM\Column(type="uuid", nullable=false)
-     *
-     * @var Uuid|null
      */
     protected ?Uuid $objectguid = null;
 
@@ -47,8 +41,6 @@ class Houses
      * ID изменившей транзакции.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $changeid = 0;
 
@@ -56,8 +48,6 @@ class Houses
      * Основной номер дома.
      *
      * @ORM\Column(type="string", length=50, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $housenum = null;
 
@@ -65,8 +55,6 @@ class Houses
      * Дополнительный номер дома 1.
      *
      * @ORM\Column(type="string", length=50, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $addnum1 = null;
 
@@ -74,8 +62,6 @@ class Houses
      * Дополнительный номер дома 1.
      *
      * @ORM\Column(type="string", length=50, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $addnum2 = null;
 
@@ -83,8 +69,6 @@ class Houses
      * Основной тип дома.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $housetype = null;
 
@@ -92,8 +76,6 @@ class Houses
      * Дополнительный тип дома 1.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $addtype1 = null;
 
@@ -101,8 +83,6 @@ class Houses
      * Дополнительный тип дома 2.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $addtype2 = null;
 
@@ -110,8 +90,6 @@ class Houses
      * Статус действия над записью – причина появления записи.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $opertypeid = 0;
 
@@ -119,8 +97,6 @@ class Houses
      * Идентификатор записи связывания с предыдущей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $previd = null;
 
@@ -128,8 +104,6 @@ class Houses
      * Идентификатор записи связывания с последующей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $nextid = null;
 
@@ -137,8 +111,6 @@ class Houses
      * Дата внесения (обновления) записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $updatedate = null;
 
@@ -146,8 +118,6 @@ class Houses
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $startdate = null;
 
@@ -155,8 +125,6 @@ class Houses
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $enddate = null;
 
@@ -164,8 +132,6 @@ class Houses
      * Статус актуальности адресного объекта ФИАС.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $isactual = 0;
 
@@ -173,8 +139,6 @@ class Houses
      * Признак действующего адресного объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $isactive = 0;
 

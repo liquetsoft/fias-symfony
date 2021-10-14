@@ -19,8 +19,6 @@ class HouseTypes
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $id = 0;
 
@@ -28,8 +26,6 @@ class HouseTypes
      * Наименование.
      *
      * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @var string
      */
     protected string $name = '';
 
@@ -37,8 +33,6 @@ class HouseTypes
      * Краткое наименование.
      *
      * @ORM\Column(type="string", length=50, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $shortname = null;
 
@@ -46,8 +40,6 @@ class HouseTypes
      * Описание.
      *
      * @ORM\Column(type="string", length=250, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $desc = null;
 
@@ -55,8 +47,6 @@ class HouseTypes
      * Дата внесения (обновления) записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $updatedate = null;
 
@@ -64,8 +54,6 @@ class HouseTypes
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $startdate = null;
 
@@ -73,8 +61,6 @@ class HouseTypes
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $enddate = null;
 
@@ -82,8 +68,6 @@ class HouseTypes
      * Статус активности.
      *
      * @ORM\Column(type="string", nullable=false)
-     *
-     * @var string
      */
     protected string $isactive = '';
 

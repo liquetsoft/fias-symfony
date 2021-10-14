@@ -18,8 +18,6 @@ class AddrObjDivision
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $id = 0;
 
@@ -27,8 +25,6 @@ class AddrObjDivision
      * Родительский ID.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $parentid = 0;
 
@@ -36,8 +32,6 @@ class AddrObjDivision
      * Дочерний ID.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $childid = 0;
 
@@ -45,8 +39,6 @@ class AddrObjDivision
      * ID изменившей транзакции.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $changeid = 0;
 

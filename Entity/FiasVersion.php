@@ -19,8 +19,6 @@ class FiasVersion
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $version = 0;
 
@@ -28,8 +26,6 @@ class FiasVersion
      * Ссылка для загрузки указанной версии ФИАС.
      *
      * @ORM\Column(type="string", nullable=false)
-     *
-     * @var string
      */
     protected string $url = '';
 
@@ -37,8 +33,6 @@ class FiasVersion
      * Дата создания.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $created = null;
 

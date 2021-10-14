@@ -19,8 +19,6 @@ class MunHierarchy
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $id = 0;
 
@@ -28,8 +26,6 @@ class MunHierarchy
      * Глобальный уникальный идентификатор адресного объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $objectid = 0;
 
@@ -37,8 +33,6 @@ class MunHierarchy
      * Идентификатор родительского объекта.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $parentobjid = null;
 
@@ -46,8 +40,6 @@ class MunHierarchy
      * ID изменившей транзакции.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $changeid = 0;
 
@@ -55,8 +47,6 @@ class MunHierarchy
      * Код ОКТМО.
      *
      * @ORM\Column(type="string", length=11, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $oktmo = null;
 
@@ -64,8 +54,6 @@ class MunHierarchy
      * Идентификатор записи связывания с предыдущей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $previd = null;
 
@@ -73,8 +61,6 @@ class MunHierarchy
      * Идентификатор записи связывания с последующей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $nextid = null;
 
@@ -82,8 +68,6 @@ class MunHierarchy
      * Дата внесения (обновления) записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $updatedate = null;
 
@@ -91,8 +75,6 @@ class MunHierarchy
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $startdate = null;
 
@@ -100,8 +82,6 @@ class MunHierarchy
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $enddate = null;
 
@@ -109,8 +89,6 @@ class MunHierarchy
      * Признак действующего адресного объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $isactive = 0;
 

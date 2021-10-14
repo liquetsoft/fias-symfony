@@ -20,8 +20,6 @@ class Rooms
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $id = 0;
 
@@ -29,8 +27,6 @@ class Rooms
      * Глобальный уникальный идентификатор объекта типа INTEGER.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $objectid = 0;
 
@@ -38,8 +34,6 @@ class Rooms
      * Глобальный уникальный идентификатор адресного объекта типа UUID.
      *
      * @ORM\Column(type="uuid", nullable=false)
-     *
-     * @var Uuid|null
      */
     protected ?Uuid $objectguid = null;
 
@@ -47,8 +41,6 @@ class Rooms
      * ID изменившей транзакции.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $changeid = 0;
 
@@ -56,8 +48,6 @@ class Rooms
      * Номер комнаты или офиса.
      *
      * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @var string
      */
     protected string $number = '';
 
@@ -65,8 +55,6 @@ class Rooms
      * Тип комнаты или офиса.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $roomtype = 0;
 
@@ -74,8 +62,6 @@ class Rooms
      * Статус действия над записью – причина появления записи.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $opertypeid = 0;
 
@@ -83,8 +69,6 @@ class Rooms
      * Идентификатор записи связывания с предыдущей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $previd = null;
 
@@ -92,8 +76,6 @@ class Rooms
      * Идентификатор записи связывания с последующей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $nextid = null;
 
@@ -101,8 +83,6 @@ class Rooms
      * Дата внесения (обновления) записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $updatedate = null;
 
@@ -110,8 +90,6 @@ class Rooms
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $startdate = null;
 
@@ -119,8 +97,6 @@ class Rooms
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $enddate = null;
 
@@ -128,8 +104,6 @@ class Rooms
      * Статус актуальности адресного объекта ФИАС.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $isactual = 0;
 
@@ -137,8 +111,6 @@ class Rooms
      * Признак действующего адресного объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $isactive = 0;
 

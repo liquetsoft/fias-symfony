@@ -20,8 +20,6 @@ class ChangeHistory
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $changeid = 0;
 
@@ -29,8 +27,6 @@ class ChangeHistory
      * Уникальный ID объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $objectid = 0;
 
@@ -38,8 +34,6 @@ class ChangeHistory
      * Уникальный ID изменившей транзакции (GUID).
      *
      * @ORM\Column(type="uuid", nullable=false)
-     *
-     * @var Uuid|null
      */
     protected ?Uuid $adrobjectid = null;
 
@@ -47,8 +41,6 @@ class ChangeHistory
      * Тип операции.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $opertypeid = 0;
 
@@ -56,8 +48,6 @@ class ChangeHistory
      * ID документа.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $ndocid = null;
 
@@ -65,8 +55,6 @@ class ChangeHistory
      * Дата изменения.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $changedate = null;
 

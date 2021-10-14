@@ -19,8 +19,6 @@ class NormativeDocs
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $id = 0;
 
@@ -28,8 +26,6 @@ class NormativeDocs
      * Наименование документа.
      *
      * @ORM\Column(type="string", length=8000, nullable=false)
-     *
-     * @var string
      */
     protected string $name = '';
 
@@ -37,8 +33,6 @@ class NormativeDocs
      * Дата документа.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $date = null;
 
@@ -46,8 +40,6 @@ class NormativeDocs
      * Номер документа.
      *
      * @ORM\Column(type="string", length=150, nullable=false)
-     *
-     * @var string
      */
     protected string $number = '';
 
@@ -55,8 +47,6 @@ class NormativeDocs
      * Тип документа.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $type = 0;
 
@@ -64,8 +54,6 @@ class NormativeDocs
      * Вид документа.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $kind = 0;
 
@@ -73,8 +61,6 @@ class NormativeDocs
      * Дата обновления.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $updatedate = null;
 
@@ -82,8 +68,6 @@ class NormativeDocs
      * Наименование органа создвшего нормативный документ.
      *
      * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $orgname = null;
 
@@ -91,8 +75,6 @@ class NormativeDocs
      * Номер государственной регистрации.
      *
      * @ORM\Column(type="string", length=100, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $regnum = null;
 
@@ -100,8 +82,6 @@ class NormativeDocs
      * Дата государственной регистрации.
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $regdate = null;
 
@@ -109,8 +89,6 @@ class NormativeDocs
      * Дата вступления в силу нормативного документа.
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $accdate = null;
 
@@ -118,8 +96,6 @@ class NormativeDocs
      * Комментарий.
      *
      * @ORM\Column(type="string", length=8000, nullable=true)
-     *
-     * @var string|null
      */
     protected ?string $comment = null;
 

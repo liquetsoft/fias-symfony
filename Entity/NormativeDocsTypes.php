@@ -19,8 +19,6 @@ class NormativeDocsTypes
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $id = 0;
 
@@ -28,8 +26,6 @@ class NormativeDocsTypes
      * Наименование.
      *
      * @ORM\Column(type="string", length=500, nullable=false)
-     *
-     * @var string
      */
     protected string $name = '';
 
@@ -37,8 +33,6 @@ class NormativeDocsTypes
      * Дата начала действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $startdate = null;
 
@@ -46,8 +40,6 @@ class NormativeDocsTypes
      * Дата окончания действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $enddate = null;
 

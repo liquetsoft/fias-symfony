@@ -18,8 +18,6 @@ class NormativeDocsKinds
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $id = 0;
 
@@ -27,8 +25,6 @@ class NormativeDocsKinds
      * Наименование.
      *
      * @ORM\Column(type="string", length=500, nullable=false)
-     *
-     * @var string
      */
     protected string $name = '';
 

@@ -20,8 +20,6 @@ class ReestrObjects
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $objectid = 0;
 
@@ -29,8 +27,6 @@ class ReestrObjects
      * Дата создания.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $createdate = null;
 
@@ -38,8 +34,6 @@ class ReestrObjects
      * ID изменившей транзакции.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $changeid = 0;
 
@@ -47,8 +41,6 @@ class ReestrObjects
      * Уровень объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $levelid = 0;
 
@@ -56,8 +48,6 @@ class ReestrObjects
      * Дата обновления.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $updatedate = null;
 
@@ -65,8 +55,6 @@ class ReestrObjects
      * GUID объекта.
      *
      * @ORM\Column(type="uuid", nullable=false)
-     *
-     * @var Uuid|null
      */
     protected ?Uuid $objectguid = null;
 
@@ -74,8 +62,6 @@ class ReestrObjects
      * Признак действующего объекта (1 - действующий, 0 - не действующий).
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $isactive = 0;
 

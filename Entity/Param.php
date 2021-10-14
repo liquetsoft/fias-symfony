@@ -19,8 +19,6 @@ class Param
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $id = 0;
 
@@ -28,8 +26,6 @@ class Param
      * Глобальный уникальный идентификатор адресного объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $objectid = 0;
 
@@ -37,8 +33,6 @@ class Param
      * ID изменившей транзакции.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $changeid = null;
 
@@ -46,8 +40,6 @@ class Param
      * ID завершившей транзакции.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $changeidend = 0;
 
@@ -55,8 +47,6 @@ class Param
      * Тип параметра.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $typeid = 0;
 
@@ -64,8 +54,6 @@ class Param
      * Значение параметра.
      *
      * @ORM\Column(type="string", length=8000, nullable=false)
-     *
-     * @var string
      */
     protected string $value = '';
 
@@ -73,8 +61,6 @@ class Param
      * Дата внесения (обновления) записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $updatedate = null;
 
@@ -82,8 +68,6 @@ class Param
      * Дата начала действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $startdate = null;
 
@@ -91,8 +75,6 @@ class Param
      * Дата окончания действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $enddate = null;
 

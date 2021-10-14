@@ -20,8 +20,6 @@ class AddrObj
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $id = 0;
 
@@ -29,8 +27,6 @@ class AddrObj
      * Глобальный уникальный идентификатор адресного объекта типа INTEGER.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $objectid = 0;
 
@@ -38,8 +34,6 @@ class AddrObj
      * Глобальный уникальный идентификатор адресного объекта типа UUID.
      *
      * @ORM\Column(type="uuid", nullable=false)
-     *
-     * @var Uuid|null
      */
     protected ?Uuid $objectguid = null;
 
@@ -47,8 +41,6 @@ class AddrObj
      * ID изменившей транзакции.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $changeid = 0;
 
@@ -56,8 +48,6 @@ class AddrObj
      * Наименование.
      *
      * @ORM\Column(type="string", length=250, nullable=false)
-     *
-     * @var string
      */
     protected string $name = '';
 
@@ -65,8 +55,6 @@ class AddrObj
      * Краткое наименование типа объекта.
      *
      * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @var string
      */
     protected string $typename = '';
 
@@ -74,8 +62,6 @@ class AddrObj
      * Уровень адресного объекта.
      *
      * @ORM\Column(type="string", length=10, nullable=false)
-     *
-     * @var string
      */
     protected string $level = '';
 
@@ -83,8 +69,6 @@ class AddrObj
      * Статус действия над записью – причина появления записи.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $opertypeid = 0;
 
@@ -92,8 +76,6 @@ class AddrObj
      * Идентификатор записи связывания с предыдущей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $previd = null;
 
@@ -101,8 +83,6 @@ class AddrObj
      * Идентификатор записи связывания с последующей исторической записью.
      *
      * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
      */
     protected ?int $nextid = null;
 
@@ -110,8 +90,6 @@ class AddrObj
      * Дата внесения (обновления) записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $updatedate = null;
 
@@ -119,8 +97,6 @@ class AddrObj
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $startdate = null;
 
@@ -128,8 +104,6 @@ class AddrObj
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
-     *
-     * @var DateTimeImmutable|null
      */
     protected ?DateTimeImmutable $enddate = null;
 
@@ -137,8 +111,6 @@ class AddrObj
      * Статус актуальности адресного объекта ФИАС.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $isactual = 0;
 
@@ -146,8 +118,6 @@ class AddrObj
      * Признак действующего адресного объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
-     *
-     * @var int
      */
     protected int $isactive = 0;
 

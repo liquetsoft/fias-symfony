@@ -159,7 +159,6 @@ class EntityGenerator extends AbstractGenerator
         switch ($type) {
             case 'int':
                 $defaultValue = $field->isNullable() ? null : 0;
-                $varType = 'int' . ($field->isNullable() ? '|null' : '');
                 $column = '@ORM\Column(type="integer"' . ($field->isNullable() ? ', nullable=true' : ', nullable=false') . ')';
                 if ($field->isPrimary()) {
                     $column = "@ORM\Id\n{$column}";
@@ -171,7 +170,6 @@ class EntityGenerator extends AbstractGenerator
                 break;
             case 'string_uuid':
                 $defaultValue = null;
-                $varType = 'Uuid|null';
                 $column = '@ORM\Column(type="uuid"';
                 $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
                 $column .= ')';
@@ -183,7 +181,6 @@ class EntityGenerator extends AbstractGenerator
                 break;
             case 'string_date':
                 $defaultValue = null;
-                $varType = 'DateTimeImmutable|null';
                 $column = '@ORM\Column(type="datetime_immutable"';
                 $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
                 $column .= ')';
@@ -192,7 +189,6 @@ class EntityGenerator extends AbstractGenerator
                 break;
             default:
                 $defaultValue = $field->isNullable() ? null : '';
-                $varType = 'string' . ($field->isNullable() ? '|null' : '');
                 $column = '@ORM\Column(type="string"';
                 $column .= $field->getLength() ? ", length={$field->getLength()}" : '';
                 $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
@@ -215,7 +211,6 @@ class EntityGenerator extends AbstractGenerator
             $property->addComment("{$description}\n");
         }
         $property->addComment("{$column}\n");
-        $property->addComment("@var {$varType}");
     }
 
     /**
