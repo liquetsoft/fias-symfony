@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,18 +38,18 @@ class NormativeDocsTypes
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable|null
      */
-    protected ?DateTimeInterface $startdate = null;
+    protected ?DateTimeImmutable $startdate = null;
 
     /**
      * Дата окончания действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable|null
      */
-    protected ?DateTimeInterface $enddate = null;
+    protected ?DateTimeImmutable $enddate = null;
 
     public function setId(int $id): self
     {
@@ -75,26 +75,26 @@ class NormativeDocsTypes
         return $this->name;
     }
 
-    public function setStartdate(DateTimeInterface $startdate): self
+    public function setStartdate(DateTimeImmutable $startdate): self
     {
         $this->startdate = $startdate;
 
         return $this;
     }
 
-    public function getStartdate(): ?DateTimeInterface
+    public function getStartdate(): ?DateTimeImmutable
     {
         return $this->startdate;
     }
 
-    public function setEnddate(DateTimeInterface $enddate): self
+    public function setEnddate(DateTimeImmutable $enddate): self
     {
         $this->enddate = $enddate;
 
         return $this;
     }
 
-    public function getEnddate(): ?DateTimeInterface
+    public function getEnddate(): ?DateTimeImmutable
     {
         return $this->enddate;
     }

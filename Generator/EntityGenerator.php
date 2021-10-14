@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 use InvalidArgumentException;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\EntityField;
@@ -113,7 +113,7 @@ class EntityGenerator extends AbstractGenerator
                 $namespace->addUse(UuidInterface::class);
             }
             if ($field->getSubType() === 'date') {
-                $namespace->addUse(DateTimeInterface::class);
+                $namespace->addUse(DateTimeImmutable::class);
             }
         }
     }
@@ -183,11 +183,11 @@ class EntityGenerator extends AbstractGenerator
                 break;
             case 'string_date':
                 $defaultValue = null;
-                $varType = 'DateTimeInterface|null';
+                $varType = 'DateTimeImmutable|null';
                 $column = '@ORM\Column(type="datetime_immutable"';
                 $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
                 $column .= ')';
-                $property->setType(DateTimeInterface::class);
+                $property->setType(DateTimeImmutable::class);
                 $property->setNullable();
                 break;
             default:
@@ -235,7 +235,7 @@ class EntityGenerator extends AbstractGenerator
                 $paramHint = UuidInterface::class;
                 break;
             case 'string_date':
-                $paramHint = DateTimeInterface::class;
+                $paramHint = DateTimeImmutable::class;
                 break;
             default:
                 $paramHint = 'string';
@@ -273,7 +273,7 @@ class EntityGenerator extends AbstractGenerator
                 $isNullable = true;
                 break;
             case 'string_date':
-                $returnHint = DateTimeInterface::class;
+                $returnHint = DateTimeImmutable::class;
                 $isNullable = true;
                 break;
             default:

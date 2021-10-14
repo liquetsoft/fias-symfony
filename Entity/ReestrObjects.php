@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
@@ -30,9 +30,9 @@ class ReestrObjects
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable|null
      */
-    protected ?DateTimeInterface $createdate = null;
+    protected ?DateTimeImmutable $createdate = null;
 
     /**
      * ID изменившей транзакции.
@@ -57,9 +57,9 @@ class ReestrObjects
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable|null
      */
-    protected ?DateTimeInterface $updatedate = null;
+    protected ?DateTimeImmutable $updatedate = null;
 
     /**
      * GUID объекта.
@@ -91,14 +91,14 @@ class ReestrObjects
         return $this->objectid;
     }
 
-    public function setCreatedate(DateTimeInterface $createdate): self
+    public function setCreatedate(DateTimeImmutable $createdate): self
     {
         $this->createdate = $createdate;
 
         return $this;
     }
 
-    public function getCreatedate(): ?DateTimeInterface
+    public function getCreatedate(): ?DateTimeImmutable
     {
         return $this->createdate;
     }
@@ -127,14 +127,14 @@ class ReestrObjects
         return $this->levelid;
     }
 
-    public function setUpdatedate(DateTimeInterface $updatedate): self
+    public function setUpdatedate(DateTimeImmutable $updatedate): self
     {
         $this->updatedate = $updatedate;
 
         return $this;
     }
 
-    public function getUpdatedate(): ?DateTimeInterface
+    public function getUpdatedate(): ?DateTimeImmutable
     {
         return $this->updatedate;
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,9 +38,9 @@ class NormativeDocs
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable|null
      */
-    protected ?DateTimeInterface $date = null;
+    protected ?DateTimeImmutable $date = null;
 
     /**
      * Номер документа.
@@ -74,9 +74,9 @@ class NormativeDocs
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable|null
      */
-    protected ?DateTimeInterface $updatedate = null;
+    protected ?DateTimeImmutable $updatedate = null;
 
     /**
      * Наименование органа создвшего нормативный документ.
@@ -101,18 +101,18 @@ class NormativeDocs
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable|null
      */
-    protected ?DateTimeInterface $regdate = null;
+    protected ?DateTimeImmutable $regdate = null;
 
     /**
      * Дата вступления в силу нормативного документа.
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable|null
      */
-    protected ?DateTimeInterface $accdate = null;
+    protected ?DateTimeImmutable $accdate = null;
 
     /**
      * Комментарий.
@@ -147,14 +147,14 @@ class NormativeDocs
         return $this->name;
     }
 
-    public function setDate(DateTimeInterface $date): self
+    public function setDate(DateTimeImmutable $date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getDate(): ?DateTimeInterface
+    public function getDate(): ?DateTimeImmutable
     {
         return $this->date;
     }
@@ -195,14 +195,14 @@ class NormativeDocs
         return $this->kind;
     }
 
-    public function setUpdatedate(DateTimeInterface $updatedate): self
+    public function setUpdatedate(DateTimeImmutable $updatedate): self
     {
         $this->updatedate = $updatedate;
 
         return $this;
     }
 
-    public function getUpdatedate(): ?DateTimeInterface
+    public function getUpdatedate(): ?DateTimeImmutable
     {
         return $this->updatedate;
     }
@@ -231,26 +231,26 @@ class NormativeDocs
         return $this->regnum;
     }
 
-    public function setRegdate(?DateTimeInterface $regdate): self
+    public function setRegdate(?DateTimeImmutable $regdate): self
     {
         $this->regdate = $regdate;
 
         return $this;
     }
 
-    public function getRegdate(): ?DateTimeInterface
+    public function getRegdate(): ?DateTimeImmutable
     {
         return $this->regdate;
     }
 
-    public function setAccdate(?DateTimeInterface $accdate): self
+    public function setAccdate(?DateTimeImmutable $accdate): self
     {
         $this->accdate = $accdate;
 
         return $this;
     }
 
-    public function getAccdate(): ?DateTimeInterface
+    public function getAccdate(): ?DateTimeImmutable
     {
         return $this->accdate;
     }

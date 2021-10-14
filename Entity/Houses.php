@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
@@ -138,27 +138,27 @@ class Houses
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable|null
      */
-    protected ?DateTimeInterface $updatedate = null;
+    protected ?DateTimeImmutable $updatedate = null;
 
     /**
      * Начало действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable|null
      */
-    protected ?DateTimeInterface $startdate = null;
+    protected ?DateTimeImmutable $startdate = null;
 
     /**
      * Окончание действия записи.
      *
      * @ORM\Column(type="datetime_immutable", nullable=false)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable|null
      */
-    protected ?DateTimeInterface $enddate = null;
+    protected ?DateTimeImmutable $enddate = null;
 
     /**
      * Статус актуальности адресного объекта ФИАС.
@@ -334,38 +334,38 @@ class Houses
         return $this->nextid;
     }
 
-    public function setUpdatedate(DateTimeInterface $updatedate): self
+    public function setUpdatedate(DateTimeImmutable $updatedate): self
     {
         $this->updatedate = $updatedate;
 
         return $this;
     }
 
-    public function getUpdatedate(): ?DateTimeInterface
+    public function getUpdatedate(): ?DateTimeImmutable
     {
         return $this->updatedate;
     }
 
-    public function setStartdate(DateTimeInterface $startdate): self
+    public function setStartdate(DateTimeImmutable $startdate): self
     {
         $this->startdate = $startdate;
 
         return $this;
     }
 
-    public function getStartdate(): ?DateTimeInterface
+    public function getStartdate(): ?DateTimeImmutable
     {
         return $this->startdate;
     }
 
-    public function setEnddate(DateTimeInterface $enddate): self
+    public function setEnddate(DateTimeImmutable $enddate): self
     {
         $this->enddate = $enddate;
 
         return $this;
     }
 
-    public function getEnddate(): ?DateTimeInterface
+    public function getEnddate(): ?DateTimeImmutable
     {
         return $this->enddate;
     }
