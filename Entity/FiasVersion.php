@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,11 +36,11 @@ class FiasVersion
     /**
      * Дата создания.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable|null
      */
-    protected ?DateTimeInterface $created = null;
+    protected ?DateTimeImmutable $created = null;
 
     public function setVersion(int $version): self
     {
@@ -66,14 +66,14 @@ class FiasVersion
         return $this->url;
     }
 
-    public function setCreated(DateTimeInterface $created): self
+    public function setCreated(DateTimeImmutable $created): self
     {
         $this->created = $created;
 
         return $this;
     }
 
-    public function getCreated(): ?DateTimeInterface
+    public function getCreated(): ?DateTimeImmutable
     {
         return $this->created;
     }

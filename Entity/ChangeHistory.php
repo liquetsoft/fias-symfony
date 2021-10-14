@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
@@ -64,11 +64,11 @@ class ChangeHistory
     /**
      * Дата изменения.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable|null
      */
-    protected ?DateTimeInterface $changedate = null;
+    protected ?DateTimeImmutable $changedate = null;
 
     public function setChangeid(int $changeid): self
     {
@@ -130,14 +130,14 @@ class ChangeHistory
         return $this->ndocid;
     }
 
-    public function setChangedate(DateTimeInterface $changedate): self
+    public function setChangedate(DateTimeImmutable $changedate): self
     {
         $this->changedate = $changedate;
 
         return $this;
     }
 
-    public function getChangedate(): ?DateTimeInterface
+    public function getChangedate(): ?DateTimeImmutable
     {
         return $this->changedate;
     }
