@@ -36,7 +36,7 @@ class NormativeDocs
     /**
      * Дата документа.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */
@@ -72,7 +72,7 @@ class NormativeDocs
     /**
      * Дата обновления.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */
@@ -99,7 +99,7 @@ class NormativeDocs
     /**
      * Дата государственной регистрации.
      *
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      *
      * @var DateTimeInterface|null
      */
@@ -108,7 +108,7 @@ class NormativeDocs
     /**
      * Дата вступления в силу нормативного документа.
      *
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      *
      * @var DateTimeInterface|null
      */

@@ -126,7 +126,7 @@ class AdmHierarchy
     /**
      * Дата внесения (обновления) записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */
@@ -135,7 +135,7 @@ class AdmHierarchy
     /**
      * Начало действия записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */
@@ -144,7 +144,7 @@ class AdmHierarchy
     /**
      * Окончание действия записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */

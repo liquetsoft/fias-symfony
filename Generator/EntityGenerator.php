@@ -184,7 +184,7 @@ class EntityGenerator extends AbstractGenerator
             case 'string_date':
                 $defaultValue = null;
                 $varType = 'DateTimeInterface|null';
-                $column = '@ORM\Column(type="datetime"';
+                $column = '@ORM\Column(type="datetime_immutable"';
                 $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
                 $column .= ')';
                 $property->setType(DateTimeInterface::class);

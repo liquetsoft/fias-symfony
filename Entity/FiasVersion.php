@@ -36,7 +36,7 @@ class FiasVersion
     /**
      * Дата создания.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */

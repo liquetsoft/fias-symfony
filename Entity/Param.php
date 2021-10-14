@@ -72,7 +72,7 @@ class Param
     /**
      * Дата внесения (обновления) записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */
@@ -81,7 +81,7 @@ class Param
     /**
      * Дата начала действия записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */
@@ -90,7 +90,7 @@ class Param
     /**
      * Дата окончания действия записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */

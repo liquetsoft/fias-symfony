@@ -81,7 +81,7 @@ class MunHierarchy
     /**
      * Дата внесения (обновления) записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */
@@ -90,7 +90,7 @@ class MunHierarchy
     /**
      * Начало действия записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */
@@ -99,7 +99,7 @@ class MunHierarchy
     /**
      * Окончание действия записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */

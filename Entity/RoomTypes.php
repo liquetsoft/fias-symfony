@@ -54,7 +54,7 @@ class RoomTypes
     /**
      * Дата внесения (обновления) записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */
@@ -63,7 +63,7 @@ class RoomTypes
     /**
      * Начало действия записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */
@@ -72,7 +72,7 @@ class RoomTypes
     /**
      * Окончание действия записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */

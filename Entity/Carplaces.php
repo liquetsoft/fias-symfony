@@ -91,7 +91,7 @@ class Carplaces
     /**
      * Дата внесения (обновления) записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */
@@ -100,7 +100,7 @@ class Carplaces
     /**
      * Начало действия записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */
@@ -109,7 +109,7 @@ class Carplaces
     /**
      * Окончание действия записи.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */

@@ -28,7 +28,7 @@ class ReestrObjects
     /**
      * Дата создания.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */
@@ -55,7 +55,7 @@ class ReestrObjects
     /**
      * Дата обновления.
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=false)
      *
      * @var DateTimeInterface|null
      */
