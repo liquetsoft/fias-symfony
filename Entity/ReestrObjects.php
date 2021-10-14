@@ -6,6 +6,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -93,8 +94,12 @@ class ReestrObjects
         return $this;
     }
 
-    public function getCreatedate(): ?DateTimeImmutable
+    public function getCreatedate(): DateTimeImmutable
     {
+        if ($this->createdate === null) {
+            throw new InvalidArgumentException("Parameter 'createdate' isn't set.");
+        }
+
         return $this->createdate;
     }
 
@@ -129,8 +134,12 @@ class ReestrObjects
         return $this;
     }
 
-    public function getUpdatedate(): ?DateTimeImmutable
+    public function getUpdatedate(): DateTimeImmutable
     {
+        if ($this->updatedate === null) {
+            throw new InvalidArgumentException("Parameter 'updatedate' isn't set.");
+        }
+
         return $this->updatedate;
     }
 
@@ -141,8 +150,12 @@ class ReestrObjects
         return $this;
     }
 
-    public function getObjectguid(): ?Uuid
+    public function getObjectguid(): Uuid
     {
+        if ($this->objectguid === null) {
+            throw new InvalidArgumentException("Parameter 'objectguid' isn't set.");
+        }
+
         return $this->objectguid;
     }
 

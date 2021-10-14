@@ -112,6 +112,8 @@ class EntityGenerator extends AbstractGenerator
     protected function decorateNamespace(PhpNamespace $namespace, EntityDescriptor $descriptor): void
     {
         $namespace->addUse('Doctrine\ORM\Mapping', 'ORM');
+        $namespace->addUse(InvalidArgumentException::class);
+
         foreach ($descriptor->getFields() as $field) {
             if ($field->getSubType() === 'uuid') {
                 $namespace->addUse(Uuid::class);
@@ -299,32 +301,33 @@ class EntityGenerator extends AbstractGenerator
     protected function decorateGetter(Method $method, EntityField $field): void
     {
         $type = trim($field->getType() . '_' . $field->getSubType(), ' _');
-        switch ($type) {
-            case 'int':
-                $returnHint = 'int';
-                $isNullable = $field->isNullable();
-                break;
-            case 'string_uuid':
-                $returnHint = Uuid::class;
-                $isNullable = true;
-                break;
-            case 'string_date':
-                $returnHint = DateTimeImmutable::class;
-                $isNullable = true;
-                break;
-            default:
-                $returnHint = 'string';
-                $isNullable = $field->isNullable();
-                break;
-        }
-
         $parameterName = $this->unifyColumnName($field->getName());
 
         $method->setVisibility('public');
-        $method->setReturnType($returnHint);
-        if ($isNullable) {
-            $method->setReturnNullable();
+
+        switch ($type) {
+            case 'int':
+                $method->setReturnType('int');
+                break;
+            case 'string_uuid':
+                $method->setReturnType(Uuid::class);
+                break;
+            case 'string_date':
+                $method->setReturnType(DateTimeImmutable::class);
+                break;
+            default:
+                $method->setReturnType('string');
+                break;
         }
-        $method->setBody("return \$this->{$parameterName};");
+
+        if ($field->isNullable()) {
+            $method->setReturnNullable();
+        } elseif (!$field->isNullable() && ($type === 'string_uuid' || $type === 'string_date')) {
+            $method->addBody("if (\$this->{$parameterName} === null) {");
+            $method->addBody("    throw new InvalidArgumentException(\"Parameter '{$parameterName}' isn't set.\");");
+            $method->addBody("}\n");
+        }
+
+        $method->addBody("return \$this->{$parameterName};");
     }
 }

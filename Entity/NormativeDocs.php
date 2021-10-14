@@ -6,6 +6,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 /**
  * Сведения о нормативном документе, являющемся основанием присвоения адресному элементу наименования.
@@ -144,8 +145,12 @@ class NormativeDocs
         return $this;
     }
 
-    public function getDate(): ?DateTimeImmutable
+    public function getDate(): DateTimeImmutable
     {
+        if ($this->date === null) {
+            throw new InvalidArgumentException("Parameter 'date' isn't set.");
+        }
+
         return $this->date;
     }
 
@@ -192,8 +197,12 @@ class NormativeDocs
         return $this;
     }
 
-    public function getUpdatedate(): ?DateTimeImmutable
+    public function getUpdatedate(): DateTimeImmutable
     {
+        if ($this->updatedate === null) {
+            throw new InvalidArgumentException("Parameter 'updatedate' isn't set.");
+        }
+
         return $this->updatedate;
     }
 
