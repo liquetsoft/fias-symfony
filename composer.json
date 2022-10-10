@@ -1,5 +1,5 @@
 {
-    "name": "liquetsoft/fias-symfony",
+    "name": "brilliant-almazov/fias-symfony",
     "type": "symfony-bundle",
     "description": "Symfony bundle for FIAS database importer.",
     "keywords": ["php", "fias", "symfony"],
