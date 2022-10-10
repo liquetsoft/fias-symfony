@@ -7,7 +7,7 @@
     "require": {
         "php": ">=8.0",
 
-        "liquetsoft/fias-component": "^10.0",
+        "brilliant-almazov/fias-component": "^10.0",
         "symfony/framework-bundle": "6.1.*",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/orm": "^2.6",
