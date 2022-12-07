@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests;
 
-use DateTimeInterface;
 use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Tools\SchemaTool;
-use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\Tools\ToolsException;
 use Doctrine\ORM\TransactionRequiredException;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -145,7 +144,7 @@ abstract class DoctrineTestCase extends BaseCase
     private function unifyValueForCompare($value)
     {
         $unified = $value;
-        if ($value instanceof DateTimeInterface) {
+        if ($value instanceof \DateTimeInterface) {
             $unified = $value->format('Y-m-d\TH:i:s.Z');
         } elseif (\is_object($value) && method_exists($value, '__toString')) {
             $unified = $value->__toString();
@@ -184,9 +183,7 @@ abstract class DoctrineTestCase extends BaseCase
         ];
         $isDevMode = true;
         $proxyDir = null;
-        $cache = new DoctrineTestCaseArrayCache();
-        $useSimpleAnnotationReader = false;
-        $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
+        $config = ORMSetup::createAnnotationMetadataConfiguration($paths, $isDevMode, $proxyDir);
 
         $em = EntityManager::create($connection, $config);
 

@@ -70,8 +70,7 @@ class CreateElasticIndiciesCommand extends Command
 
         $io->note('Creating indices in elasticsearch...');
 
-        $shouldReplace = $input->getOption('replace');
-        $shouldReplace = $shouldReplace !== false;
+        $shouldReplace = $input->getOption('replace') !== false;
 
         $bindedClasses = $this->entityManager->getBindedClasses();
         foreach ($bindedClasses as $bindedClass) {

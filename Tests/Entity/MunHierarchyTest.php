@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 
-use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\MunHierarchy;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
@@ -36,9 +35,9 @@ class MunHierarchyTest extends EntityCase
             'oktmo' => $this->createFakeData()->word(),
             'previd' => $this->createFakeData()->numberBetween(1, 1000000),
             'nextid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'updatedate' => new DateTimeImmutable(),
-            'startdate' => new DateTimeImmutable(),
-            'enddate' => new DateTimeImmutable(),
+            'updatedate' => new \DateTimeImmutable(),
+            'startdate' => new \DateTimeImmutable(),
+            'enddate' => new \DateTimeImmutable(),
             'isactive' => $this->createFakeData()->numberBetween(1, 1000000),
         ];
     }

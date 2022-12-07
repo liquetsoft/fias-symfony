@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 
-use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\ReestrObjects;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Symfony\Component\Uid\Uuid;
@@ -31,10 +30,10 @@ class ReestrObjectsTest extends EntityCase
     {
         return [
             'objectid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'createdate' => new DateTimeImmutable(),
+            'createdate' => new \DateTimeImmutable(),
             'changeid' => $this->createFakeData()->numberBetween(1, 1000000),
             'levelid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'updatedate' => new DateTimeImmutable(),
+            'updatedate' => new \DateTimeImmutable(),
             'objectguid' => $this->getMockBuilder(Uuid::class)->disableOriginalConstructor()->getMock(),
             'isactive' => $this->createFakeData()->numberBetween(1, 1000000),
         ];

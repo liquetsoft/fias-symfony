@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\DependencyInjection;
 
-use Exception;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -18,7 +17,7 @@ class LiquetsoftFiasExtension extends Extension
     /**
      * {@inheritDoc}
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -35,6 +34,8 @@ class LiquetsoftFiasExtension extends Extension
      *
      * @param array            $configs
      * @param ContainerBuilder $container
+     *
+     * @psalm-suppress MixedArgument
      */
     protected function loadConfigurationToContainer(array $configs, ContainerBuilder $container): void
     {
@@ -51,7 +52,7 @@ class LiquetsoftFiasExtension extends Extension
      * @param ContainerBuilder $container
      * @param string           $servicesBundle
      *
-     * @throws Exception
+     * @throws \Exception
      */
     protected function loadServicesToContainer(ContainerBuilder $container, string $servicesBundle): void
     {

@@ -45,8 +45,7 @@ EOT;
 
         $testObjectGUID = (string) $object->getObjectguid();
 
-        $testUpdateDate = $object->getUpdatedate();
-        $testUpdateDate = $testUpdateDate ? $testUpdateDate->format('Y-m-d') : null;
+        $testUpdateDate = $object->getUpdatedate()->format('Y-m-d');
 
         $testTestDate = $object->getTestDate();
         $testTestDate = $testTestDate ? $testTestDate->format('Y-m-d') : null;

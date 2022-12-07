@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": ">=8.0",
-        "liquetsoft/fias-component": "^10.0",
+        "liquetsoft/fias-component": "^12.0",
         "symfony/framework-bundle": "^5.2",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/orm": "^2.6",
@@ -21,7 +21,7 @@
         "vimeo/psalm": "^4.0",
         "nette/php-generator": "^3.5",
         "psalm/plugin-phpunit": "^0.15.1",
-        "liquetsoft/fias-elastic": "^5.0"
+        "liquetsoft/fias-elastic": "^6.0"
     },
     "autoload": {
         "psr-4": {

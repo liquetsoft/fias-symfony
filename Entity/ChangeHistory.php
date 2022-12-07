@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use InvalidArgumentException;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -65,7 +63,7 @@ class ChangeHistory
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
-    protected ?DateTimeImmutable $changedate = null;
+    protected ?\DateTimeImmutable $changedate = null;
 
     public function setChangeid(int $changeid): self
     {
@@ -101,7 +99,7 @@ class ChangeHistory
     public function getAdrobjectid(): Uuid
     {
         if ($this->adrobjectid === null) {
-            throw new InvalidArgumentException("Parameter 'adrobjectid' isn't set.");
+            throw new \InvalidArgumentException("Parameter 'adrobjectid' isn't set.");
         }
 
         return $this->adrobjectid;
@@ -131,17 +129,17 @@ class ChangeHistory
         return $this->ndocid;
     }
 
-    public function setChangedate(DateTimeImmutable $changedate): self
+    public function setChangedate(\DateTimeImmutable $changedate): self
     {
         $this->changedate = $changedate;
 
         return $this;
     }
 
-    public function getChangedate(): DateTimeImmutable
+    public function getChangedate(): \DateTimeImmutable
     {
         if ($this->changedate === null) {
-            throw new InvalidArgumentException("Parameter 'changedate' isn't set.");
+            throw new \InvalidArgumentException("Parameter 'changedate' isn't set.");
         }
 
         return $this->changedate;

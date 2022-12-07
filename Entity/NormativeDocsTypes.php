@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use InvalidArgumentException;
 
 /**
  * Сведения по типам нормативных документов.
@@ -40,7 +38,7 @@ class NormativeDocsTypes
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
-    protected ?DateTimeImmutable $startdate = null;
+    protected ?\DateTimeImmutable $startdate = null;
 
     /**
      * Дата окончания действия записи.
@@ -48,7 +46,7 @@ class NormativeDocsTypes
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
-    protected ?DateTimeImmutable $enddate = null;
+    protected ?\DateTimeImmutable $enddate = null;
 
     public function setId(int $id): self
     {
@@ -74,33 +72,33 @@ class NormativeDocsTypes
         return $this->name;
     }
 
-    public function setStartdate(DateTimeImmutable $startdate): self
+    public function setStartdate(\DateTimeImmutable $startdate): self
     {
         $this->startdate = $startdate;
 
         return $this;
     }
 
-    public function getStartdate(): DateTimeImmutable
+    public function getStartdate(): \DateTimeImmutable
     {
         if ($this->startdate === null) {
-            throw new InvalidArgumentException("Parameter 'startdate' isn't set.");
+            throw new \InvalidArgumentException("Parameter 'startdate' isn't set.");
         }
 
         return $this->startdate;
     }
 
-    public function setEnddate(DateTimeImmutable $enddate): self
+    public function setEnddate(\DateTimeImmutable $enddate): self
     {
         $this->enddate = $enddate;
 
         return $this;
     }
 
-    public function getEnddate(): DateTimeImmutable
+    public function getEnddate(): \DateTimeImmutable
     {
         if ($this->enddate === null) {
-            throw new InvalidArgumentException("Parameter 'enddate' isn't set.");
+            throw new \InvalidArgumentException("Parameter 'enddate' isn't set.");
         }
 
         return $this->enddate;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities;
 
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,7 +27,7 @@ class StorageTestMockEntity
     /**
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private ?DateTimeInterface $startdate = null;
+    private ?\DateTimeInterface $startdate = null;
 
     public function setTestId(int $testId): self
     {
@@ -54,14 +53,14 @@ class StorageTestMockEntity
         return $this->testName;
     }
 
-    public function setStartdate(?DateTimeInterface $startdate): self
+    public function setStartdate(?\DateTimeInterface $startdate): self
     {
         $this->startdate = $startdate;
 
         return $this;
     }
 
-    public function getStartdate(): ?DateTimeInterface
+    public function getStartdate(): ?\DateTimeInterface
     {
         return $this->startdate;
     }

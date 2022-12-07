@@ -19,12 +19,7 @@ abstract class EntityCase extends BaseCase
     /**
      * Возвращает массив с проверочными значениями для геттеров и сеттеров.
      *
-     * В массиве должны быть три элемента: имя свойства, которое будет проверяться,
-     * входящее значение для сеттера и то значение, которое мы получим из геттера.
-     * В качестве третьего значения можно вернуть объект с исключением, в таком случае
-     * тест будет ждать исключение в сеттере.
-     *
-     * @return array
+     * @return array<string, mixed>
      */
     abstract protected function accessorsProvider(): array;
 
@@ -34,18 +29,8 @@ abstract class EntityCase extends BaseCase
      */
     public function testAccessors(): void
     {
-        $tests = $this->accessorsProvider();
-        foreach ($tests as $testKey => $test) {
-            if (!\is_array($test)) {
-                $property = $testKey;
-                $input = $output = $test;
-            } elseif (\count($test) === 2) {
-                list($property, $input) = $test;
-                $output = $input;
-            } else {
-                list($property, $input, $output) = $test;
-            }
-            $this->assertAccessorsCase($property, $input, $output);
+        foreach ($this->accessorsProvider() as $testKey => $test) {
+            $this->assertAccessorsCase($testKey, $test, $test);
         }
     }
 

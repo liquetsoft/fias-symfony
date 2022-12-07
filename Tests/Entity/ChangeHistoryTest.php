@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 
-use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\ChangeHistory;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Symfony\Component\Uid\Uuid;
@@ -35,7 +34,7 @@ class ChangeHistoryTest extends EntityCase
             'adrobjectid' => $this->getMockBuilder(Uuid::class)->disableOriginalConstructor()->getMock(),
             'opertypeid' => $this->createFakeData()->numberBetween(1, 1000000),
             'ndocid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'changedate' => new DateTimeImmutable(),
+            'changedate' => new \DateTimeImmutable(),
         ];
     }
 }

@@ -6,7 +6,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
-use Liquetsoft\Fias\Component\Pipeline\Task\Task;
+use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -57,7 +57,7 @@ class UpdateParallelRunningCommand extends Command
         }
 
         $state = new ArrayState();
-        $state->setAndLockParameter(Task::FILES_TO_PROCEED, $files);
+        $state->setAndLockParameter(StateParameter::FILES_TO_PROCEED, $files);
         $this->pipeline->run($state);
 
         return 0;

@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
-use DateTimeInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
 use Ramsey\Uuid\UuidInterface;
-use Throwable;
 
 /**
  * Объект, который сохраняет данные ФИАС с помощью Doctrine.
@@ -27,7 +25,7 @@ class DoctrineStorage implements Storage
     private array $supportedClasses = [];
 
     /**
-     * @var array<string, array<int, object>>
+     * @var array<string, array<string, object>>
      */
     private array $upsertData = [];
 
@@ -71,7 +69,7 @@ class DoctrineStorage implements Storage
             try {
                 $this->getEntityMeta($class);
                 $this->supportedClasses[$class] = true;
-            } catch (Throwable $e) {
+            } catch (\Throwable $e) {
                 $this->supportedClasses[$class] = false;
             }
         }
@@ -88,7 +86,7 @@ class DoctrineStorage implements Storage
             $this->em->persist($entity);
             $this->em->flush();
             $this->em->detach($entity);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             throw $this->convertToStorageException($e);
         }
     }
@@ -108,7 +106,7 @@ class DoctrineStorage implements Storage
                 $this->em->flush();
                 $this->em->detach($entityFromDoctrine);
             }
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             throw $this->convertToStorageException($e);
         }
     }
@@ -119,7 +117,7 @@ class DoctrineStorage implements Storage
     public function upsert(object $entity): void
     {
         $meta = $this->getEntityMeta($entity);
-        $id = $meta->getFieldValue(
+        $id = (string) $meta->getFieldValue(
             $entity,
             $meta->getSingleIdentifierFieldName()
         );
@@ -137,7 +135,7 @@ class DoctrineStorage implements Storage
         try {
             $name = $this->getEntityMeta($entityClassName)->getName();
             $this->em->createQuery("DELETE {$name} p")->execute();
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             throw $this->convertToStorageException($e);
         }
     }
@@ -153,7 +151,7 @@ class DoctrineStorage implements Storage
             if ($force || \count($entities) >= $this->batchCount) {
                 try {
                     $this->upsertEntities($entityName, $entities);
-                } catch (Throwable $e) {
+                } catch (\Throwable $e) {
                     throw $this->convertToStorageException($e);
                 }
                 unset($this->upsertData[$entityName]);
@@ -164,14 +162,15 @@ class DoctrineStorage implements Storage
     /**
      * Обновляет список сущностей одного типа.
      *
-     * @param string   $entityName
-     * @param object[] $entities
+     * @param string                $entityName
+     * @param array<string, object> $entities
      */
     protected function upsertEntities(string $entityName, array $entities): void
     {
         $meta = $this->getEntityMeta($entityName);
         $idName = $meta->getSingleIdentifierFieldName();
 
+        /** @var object[] */
         $doctrineEntities = $this->em->createQueryBuilder()
             ->select('e')
             ->from($entityName, 'e')
@@ -183,7 +182,7 @@ class DoctrineStorage implements Storage
 
         $doctrineEntitiesById = [];
         foreach ($doctrineEntities as $doctrineEntity) {
-            $id = $meta->getFieldValue($doctrineEntity, $idName);
+            $id = (string) $meta->getFieldValue($doctrineEntity, $idName);
             $doctrineEntitiesById[$id] = $doctrineEntity;
         }
 
@@ -208,6 +207,8 @@ class DoctrineStorage implements Storage
      * @param object $second
      *
      * @return bool
+     *
+     * @psalm-suppress MixedMethodCall
      */
     protected function isEntitiesEqual(object $first, object $second): bool
     {
@@ -275,7 +276,7 @@ class DoctrineStorage implements Storage
 
         try {
             $meta = $this->em->getClassMetadata($entity);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             throw $this->convertToStorageException($e);
         }
 
@@ -288,6 +289,7 @@ class DoctrineStorage implements Storage
      * @param object $entity
      *
      * @return string
+     *
      * @psalm-return class-string
      */
     protected function getEntityName(object $entity): string
@@ -298,11 +300,11 @@ class DoctrineStorage implements Storage
     /**
      * Преобразует указанное исключение к типу исключения хранилища.
      *
-     * @param Throwable $e
+     * @param \Throwable $e
      *
      * @return StorageException
      */
-    protected function convertToStorageException(Throwable $e): StorageException
+    protected function convertToStorageException(\Throwable $e): StorageException
     {
         return new StorageException($e->getMessage(), 0, $e);
     }
@@ -316,9 +318,9 @@ class DoctrineStorage implements Storage
      */
     protected function convertToPrimitive(mixed $data): mixed
     {
-        if (is_scalar($data) || $data === null) {
+        if (\is_scalar($data) || $data === null) {
             return $data;
-        } elseif ($data instanceof DateTimeInterface) {
+        } elseif ($data instanceof \DateTimeInterface) {
             return $data->format('Y-m-d H:i:s');
         } elseif ($data instanceof UuidInterface) {
             return $data->toString();

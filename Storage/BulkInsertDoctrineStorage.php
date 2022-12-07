@@ -6,12 +6,9 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\ORM\EntityManager;
-use Exception;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use RuntimeException;
-use Throwable;
 
 /**
  * Объект, который сохраняет данные ФИАС с помощью Doctrine.
@@ -29,7 +26,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      *
      * Массив вида 'имя таблицы' => 'массив массивов данных для вставки'.
      *
-     * @var array<string, array<mixed>>
+     * @var array<string, array<int, array<string, mixed>>>
      */
     private array $insertData = [];
 
@@ -68,7 +65,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
 
             $this->insertData[$table][] = $insertArray;
             $this->checkAndFlushInsert(false);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             throw new StorageException($e->getMessage(), 0, $e);
         }
     }
@@ -92,10 +89,10 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     /**
      * Отправляет запрос на массовую вставку данных в таблицу.
      *
-     * @param string  $tableName
-     * @param mixed[] $data
+     * @param string                           $tableName
+     * @param array<int, array<string, mixed>> $data
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     private function bulkInsert(string $tableName, array $data): void
     {
@@ -113,15 +110,15 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      * Только для некоторых случаев:
      *    - повторяющийся первичный ключ
      *
-     * @param string  $tableName
-     * @param mixed[] $data
+     * @param string                           $tableName
+     * @param array<int, array<string, mixed>> $data
      */
     private function prepareAndRunBulkSafely(string $tableName, array $data): void
     {
         foreach ($data as $item) {
             try {
                 $this->prepareAndRunBulkInsert($tableName, [$item]);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->log(
                     LogLevel::ERROR,
                     "Error while inserting item to '{$tableName}' table. Item wasn't proceed.",
@@ -138,30 +135,32 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     /**
      * Непосредственное создание и запуск запроса на исполнение.
      *
-     * @param string  $tableName
-     * @param mixed[] $data
+     * @param string                           $tableName
+     * @param array<int, array<string, mixed>> $data
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      * @throws DBALException
      */
     private function prepareAndRunBulkInsert(string $tableName, array $data): void
     {
         $dataSample = reset($data);
 
-        $paramNames = implode(', ', array_map([$this->em->getConnection(), 'quoteIdentifier'], array_keys($dataSample)));
-        $paramValues = implode(', ', array_fill(0, \count($dataSample), '?'));
-        $dataValues = '(' . implode('), (', array_fill(0, \count($data), $paramValues)) . ')';
-        $sql = "INSERT INTO {$tableName} ({$paramNames}) VALUES {$dataValues}";
+        if (!empty($dataSample)) {
+            $paramNames = implode(', ', array_map([$this->em->getConnection(), 'quoteIdentifier'], array_keys($dataSample)));
+            $paramValues = implode(', ', array_fill(0, \count($dataSample), '?'));
+            $dataValues = '(' . implode('), (', array_fill(0, \count($data), $paramValues)) . ')';
+            $sql = "INSERT INTO {$tableName} ({$paramNames}) VALUES {$dataValues}";
 
-        $stmt = $this->em->getConnection()->prepare($sql);
-        $count = 0;
-        foreach ($data as $item) {
-            foreach ($item as $value) {
-                $stmt->bindValue(++$count, $value);
+            $stmt = $this->em->getConnection()->prepare($sql);
+            $count = 0;
+            foreach ($data as $item) {
+                foreach ($item as $value) {
+                    $stmt->bindValue(++$count, $value);
+                }
             }
-        }
 
-        $stmt->executeStatement();
+            $stmt->executeStatement();
+        }
     }
 
     /**
