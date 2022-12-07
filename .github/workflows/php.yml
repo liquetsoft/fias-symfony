@@ -84,7 +84,7 @@ jobs:
       - name: Install Symfony app
         if: steps.symfony-app-cache.outputs.cache-hit != 'true'
         run: |
-          composer config --no-interaction "allow-plugins.symfony/flex" true
+          composer config --no-interaction allow-plugins.symfony/flex true
           composer create-project symfony/skeleton:"${{ matrix.symfony-versions }}.*" symfony_app_tmp
           cd symfony_app_tmp
           composer require webapp
@@ -119,6 +119,7 @@ jobs:
           echo "APP_ENV=dev" > .env
           echo "APP_SECRET=test" >> .env
           echo "DATABASE_URL=mysql://root:password@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/symfony?serverVersion=5.7" >> .env
+          echo "MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0" >> $SYMFONY_FOLDER/.env
 
           php bin/console cache:clear
           php bin/console doctrine:schema:create -n
