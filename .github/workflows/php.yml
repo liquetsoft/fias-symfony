@@ -44,7 +44,7 @@ jobs:
 
 
   symfony:
-    name: Testing installation to symfony (PHP ${{ matrix.php-versions }}, Symfony ${{ matrix.symfony-versions }})
+    name: Testing Symfony installation (PHP ${{ matrix.php-versions }}, Symfony ${{ matrix.symfony-versions }})
     runs-on: ubuntu-latest
     env:
       DB_DATABASE: symfony
