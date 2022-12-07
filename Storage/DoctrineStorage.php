@@ -170,6 +170,7 @@ class DoctrineStorage implements Storage
         $meta = $this->getEntityMeta($entityName);
         $idName = $meta->getSingleIdentifierFieldName();
 
+        /** @var object[] */
         $doctrineEntities = $this->em->createQueryBuilder()
             ->select('e')
             ->from($entityName, 'e')
