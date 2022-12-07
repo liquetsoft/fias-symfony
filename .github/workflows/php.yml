@@ -44,7 +44,7 @@ jobs:
 
 
   symfony:
-    name: Testing installation to symfony (PHP ${{ matrix.php-versions }}, Symfony ${{ symfony.php-versions }})
+    name: Testing installation to symfony (PHP ${{ matrix.php-versions }}, Symfony ${{ matrix.symfony-versions }})
     runs-on: ubuntu-latest
     env:
       DB_DATABASE: symfony
@@ -75,10 +75,22 @@ jobs:
           extensions: mbstring, dom, fileinfo, mysql, curl
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
-      - name: Install Symfony
+      - name: Cache Symfony app
+        id: symfony-app-cache
+        uses: actions/cache@v2
+        with:
+          path: symfony_app_tmp
+          key: ${{ runner.os }}-symfony-${{ matrix.symfony-versions }}-${{ matrix.php-versions }}
+      - name: Install Symfony app
+        if: steps.symfony-app-cache.outputs.cache-hit != 'true'
         run: |
           composer config --no-interaction "allow-plugins.symfony/flex" true
-          composer create-project symfony/skeleton:"${{ matrix.symfony-versions }}.*" example-app
+          composer create-project symfony/skeleton:"${{ matrix.symfony-versions }}.*" symfony_app_tmp
+          cd symfony_app_tmp
+          composer require webapp
+      - name: Prepare fresh Symfony app
+        run: |
+          cp -r symfony_app_tmp example_app
       - name: Branch used
         id: extract_branch
         run: |
@@ -91,10 +103,10 @@ jobs:
           fi
       - name: Install FIAS
         run: |
-          unzip ./Tests/Pipeline/_fixtures/install_AddressObject.zip -d ./example-app/fias-data-install
-          unzip ./Tests/Pipeline/_fixtures/update_AddressObject.zip -d ./example-app/fias-data-update
+          unzip ./Tests/Pipeline/_fixtures/install_AddressObject.zip -d ./example_app/fias-data-install
+          unzip ./Tests/Pipeline/_fixtures/update_AddressObject.zip -d ./example_app/fias-data-update
 
-          cd example-app
+          cd example_app
 
           composer req "liquetsoft/fias-symfony:dev-${{ steps.extract_branch.outputs.branch }}" -W
           cp ./../Tests/MockEntities/SymfonyTestAddrObj.php src/Entity/AddrObj.php
@@ -112,7 +124,7 @@ jobs:
           php bin/console doctrine:schema:create -n
       - name: Test FIAS
         run: |
-          cd example-app
+          cd example_app
           php bin/console liquetsoft:fias:truncate
           php bin/console liquetsoft:fias:install_from_folder ./fias-data-install
           php bin/console liquetsoft:fias:update_from_folder ./fias-data-update
