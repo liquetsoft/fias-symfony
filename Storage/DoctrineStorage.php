@@ -25,7 +25,7 @@ class DoctrineStorage implements Storage
     private array $supportedClasses = [];
 
     /**
-     * @var array<string, array<int, object>>
+     * @var array<string, array<string, object>>
      */
     private array $upsertData = [];
 
@@ -117,7 +117,7 @@ class DoctrineStorage implements Storage
     public function upsert(object $entity): void
     {
         $meta = $this->getEntityMeta($entity);
-        $id = $meta->getFieldValue(
+        $id = (string) $meta->getFieldValue(
             $entity,
             $meta->getSingleIdentifierFieldName()
         );
@@ -162,8 +162,8 @@ class DoctrineStorage implements Storage
     /**
      * Обновляет список сущностей одного типа.
      *
-     * @param string   $entityName
-     * @param object[] $entities
+     * @param string                $entityName
+     * @param array<string, object> $entities
      */
     protected function upsertEntities(string $entityName, array $entities): void
     {
@@ -182,7 +182,7 @@ class DoctrineStorage implements Storage
 
         $doctrineEntitiesById = [];
         foreach ($doctrineEntities as $doctrineEntity) {
-            $id = $meta->getFieldValue($doctrineEntity, $idName);
+            $id = (string) $meta->getFieldValue($doctrineEntity, $idName);
             $doctrineEntitiesById[$id] = $doctrineEntity;
         }
 
@@ -207,6 +207,8 @@ class DoctrineStorage implements Storage
      * @param object $second
      *
      * @return bool
+     *
+     * @psalm-suppress MixedMethodCall
      */
     protected function isEntitiesEqual(object $first, object $second): bool
     {

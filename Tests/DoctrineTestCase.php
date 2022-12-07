@@ -183,8 +183,7 @@ abstract class DoctrineTestCase extends BaseCase
         ];
         $isDevMode = true;
         $proxyDir = null;
-        $useSimpleAnnotationReader = false;
-        $config = ORMSetup::createAnnotationMetadataConfiguration($paths, $isDevMode, $proxyDir, null, $useSimpleAnnotationReader);
+        $config = ORMSetup::createAnnotationMetadataConfiguration($paths, $isDevMode, $proxyDir);
 
         $em = EntityManager::create($connection, $config);
 

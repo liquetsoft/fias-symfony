@@ -80,10 +80,12 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
     /**
      * {@inheritDoc}
      *
+     * @return mixed
+     *
      * @psalm-suppress InvalidStringClass
      * @psalm-suppress RedundantConditionGivenDocblockType
      */
-    public function denormalize($data, string $type, string $format = null, array $context = [])
+    public function denormalize(mixed $data, string $type, string $format = null, array $context = [])
     {
         $data = \is_array($data) ? $data : [];
         unset($data['#']);

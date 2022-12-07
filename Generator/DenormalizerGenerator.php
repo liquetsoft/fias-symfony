@@ -122,12 +122,13 @@ class DenormalizerGenerator extends AbstractGenerator
         $supports->addParameter('context', new PhpLiteral('[]'))->setType('array');
 
         $denormalize = $class->addMethod('denormalize')
-            ->addComment("{@inheritDoc}\n")
+            ->addComment('{@inheritDoc}')
+            ->addComment('@return mixed')
             ->addComment('@psalm-suppress InvalidStringClass')
-            ->addComment("@psalm-suppress RedundantConditionGivenDocblockType\n")
+            ->addComment('@psalm-suppress RedundantConditionGivenDocblockType')
             ->setVisibility('public')
             ->setBody($denormalizeBody);
-        $denormalize->addParameter('data');
+        $denormalize->addParameter('data')->setType('mixed');
         $denormalize->addParameter('type')->setType('string');
         $denormalize->addParameter('format', new PhpLiteral('null'))->setType('string');
         $denormalize->addParameter('context', new PhpLiteral('[]'))->setType('array');

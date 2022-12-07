@@ -73,6 +73,8 @@ class DoctrineVersionManager implements VersionManager
      * @return FiasVersion
      *
      * @throws \RuntimeException
+     *
+     * @psalm-suppress MixedMethodCall
      */
     private function getEntity(): FiasVersion
     {
