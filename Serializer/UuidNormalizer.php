@@ -51,7 +51,7 @@ class UuidNormalizer implements DenormalizerInterface, NormalizerInterface
         }
 
         try {
-            $uuid = Uuid::fromString($data);
+            $uuid = Uuid::fromString((string) $data);
         } catch (\Throwable $e) {
             throw new NotNormalizableValueException(
                 'Error while converting string to uuid.',

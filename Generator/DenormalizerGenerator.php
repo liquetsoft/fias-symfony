@@ -161,7 +161,7 @@ class DenormalizerGenerator extends AbstractGenerator
                     $varType = "(int) \$data['{$xmlAttribute}']";
                     break;
                 case 'string_date':
-                    $varType = "new DateTimeImmutable(\$data['{$xmlAttribute}'])";
+                    $varType = "new DateTimeImmutable((string) \$data['{$xmlAttribute}'])";
                     break;
                 case 'string_uuid':
                     $varType = "Uuid::fromString((string) \$data['{$xmlAttribute}'])";

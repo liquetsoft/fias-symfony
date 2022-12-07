@@ -6,7 +6,6 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Класс с описанием настроек бандла.
@@ -19,6 +18,7 @@ class Configuration implements ConfigurationInterface
      * {@inheritdoc}
      *
      * @psalm-suppress UndefinedMethod
+     * @psalm-suppress MixedMethodCall
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
@@ -93,8 +93,6 @@ class Configuration implements ConfigurationInterface
      */
     private function getPathToRootDir()
     {
-        return version_compare(Kernel::VERSION, '5.0.0', '<')
-            ? '%kernel.root_dir%/..'
-            : '%kernel.project_dir%';
+        return '%kernel.project_dir%';
     }
 }

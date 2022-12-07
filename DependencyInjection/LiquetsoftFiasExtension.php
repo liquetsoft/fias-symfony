@@ -34,6 +34,8 @@ class LiquetsoftFiasExtension extends Extension
      *
      * @param array            $configs
      * @param ContainerBuilder $container
+     *
+     * @psalm-suppress MixedArgument
      */
     protected function loadConfigurationToContainer(array $configs, ContainerBuilder $container): void
     {

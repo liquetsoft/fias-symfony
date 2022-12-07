@@ -9,8 +9,8 @@ use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Tools\SchemaTool;
-use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\Tools\ToolsException;
 use Doctrine\ORM\TransactionRequiredException;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -183,9 +183,8 @@ abstract class DoctrineTestCase extends BaseCase
         ];
         $isDevMode = true;
         $proxyDir = null;
-        $cache = new DoctrineTestCaseArrayCache();
         $useSimpleAnnotationReader = false;
-        $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
+        $config = ORMSetup::createAnnotationMetadataConfiguration($paths, $isDevMode, $proxyDir, null, $useSimpleAnnotationReader);
 
         $em = EntityManager::create($connection, $config);
 

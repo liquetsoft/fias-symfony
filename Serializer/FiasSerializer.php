@@ -6,7 +6,9 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer;
 
 use Liquetsoft\Fias\Component\Serializer\FiasNameConverter;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 /**
@@ -14,6 +16,10 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
  */
 class FiasSerializer extends \Liquetsoft\Fias\Component\Serializer\FiasSerializer
 {
+    /**
+     * @param NormalizerInterface[]|null $normalizers
+     * @param EncoderInterface[]|null    $encoders
+     */
     public function __construct(?array $normalizers = null, ?array $encoders = null)
     {
         if ($normalizers === null) {

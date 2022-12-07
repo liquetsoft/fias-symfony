@@ -198,15 +198,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@NEXTID']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTUAL', $data)) {
@@ -252,15 +252,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@DESC']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
@@ -306,15 +306,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@VALUE']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
 
@@ -364,15 +364,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@NEXTID']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTUAL', $data)) {
@@ -430,15 +430,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@NEXTID']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTUAL', $data)) {
@@ -492,15 +492,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@NEXTID']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
@@ -530,11 +530,11 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@NAME']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
 
@@ -568,15 +568,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@DESC']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
@@ -614,15 +614,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@DESC']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
@@ -696,15 +696,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@NEXTID']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTUAL', $data)) {
@@ -750,7 +750,7 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@NDOCID']);
         }
         if (\array_key_exists('@CHANGEDATE', $data)) {
-            $entity->setChangedate(new \DateTimeImmutable($data['@CHANGEDATE']));
+            $entity->setChangedate(new \DateTimeImmutable((string) $data['@CHANGEDATE']));
             unset($data['@CHANGEDATE']);
         }
 
@@ -804,15 +804,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@NEXTID']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTUAL', $data)) {
@@ -854,15 +854,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@DESC']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
@@ -922,15 +922,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@DESC']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
@@ -968,15 +968,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@DESC']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
@@ -1006,7 +1006,7 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@NAME']);
         }
         if (\array_key_exists('@DATE', $data)) {
-            $entity->setDate(new \DateTimeImmutable($data['@DATE']));
+            $entity->setDate(new \DateTimeImmutable((string) $data['@DATE']));
             unset($data['@DATE']);
         }
         if (\array_key_exists('@NUMBER', $data)) {
@@ -1022,7 +1022,7 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@KIND']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@ORGNAME', $data)) {
@@ -1034,11 +1034,11 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@REGNUM']);
         }
         if (\array_key_exists('@REGDATE', $data)) {
-            $entity->setRegdate($data['@REGDATE'] === null || $data['@REGDATE'] === '' ? null : new \DateTimeImmutable($data['@REGDATE']));
+            $entity->setRegdate($data['@REGDATE'] === null || $data['@REGDATE'] === '' ? null : new \DateTimeImmutable((string) $data['@REGDATE']));
             unset($data['@REGDATE']);
         }
         if (\array_key_exists('@ACCDATE', $data)) {
-            $entity->setAccdate($data['@ACCDATE'] === null || $data['@ACCDATE'] === '' ? null : new \DateTimeImmutable($data['@ACCDATE']));
+            $entity->setAccdate($data['@ACCDATE'] === null || $data['@ACCDATE'] === '' ? null : new \DateTimeImmutable((string) $data['@ACCDATE']));
             unset($data['@ACCDATE']);
         }
         if (\array_key_exists('@COMMENT', $data)) {
@@ -1072,15 +1072,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@SHORTNAME']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
@@ -1150,15 +1150,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@NEXTID']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTIVE', $data)) {
@@ -1214,7 +1214,7 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@OBJECTID']);
         }
         if (\array_key_exists('@CREATEDATE', $data)) {
-            $entity->setCreatedate(new \DateTimeImmutable($data['@CREATEDATE']));
+            $entity->setCreatedate(new \DateTimeImmutable((string) $data['@CREATEDATE']));
             unset($data['@CREATEDATE']);
         }
         if (\array_key_exists('@CHANGEID', $data)) {
@@ -1226,7 +1226,7 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@LEVELID']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@OBJECTGUID', $data)) {
@@ -1292,15 +1292,15 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@NEXTID']);
         }
         if (\array_key_exists('@UPDATEDATE', $data)) {
-            $entity->setUpdatedate(new \DateTimeImmutable($data['@UPDATEDATE']));
+            $entity->setUpdatedate(new \DateTimeImmutable((string) $data['@UPDATEDATE']));
             unset($data['@UPDATEDATE']);
         }
         if (\array_key_exists('@STARTDATE', $data)) {
-            $entity->setStartdate(new \DateTimeImmutable($data['@STARTDATE']));
+            $entity->setStartdate(new \DateTimeImmutable((string) $data['@STARTDATE']));
             unset($data['@STARTDATE']);
         }
         if (\array_key_exists('@ENDDATE', $data)) {
-            $entity->setEnddate(new \DateTimeImmutable($data['@ENDDATE']));
+            $entity->setEnddate(new \DateTimeImmutable((string) $data['@ENDDATE']));
             unset($data['@ENDDATE']);
         }
         if (\array_key_exists('@ISACTUAL', $data)) {
@@ -1334,7 +1334,7 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
             unset($data['@URL']);
         }
         if (\array_key_exists('@CREATED', $data)) {
-            $entity->setCreated(new \DateTimeImmutable($data['@CREATED']));
+            $entity->setCreated(new \DateTimeImmutable((string) $data['@CREATED']));
             unset($data['@CREATED']);
         }
 
