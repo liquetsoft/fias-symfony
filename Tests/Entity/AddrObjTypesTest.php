@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 
-use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddrObjTypes;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
@@ -34,9 +33,9 @@ class AddrObjTypesTest extends EntityCase
             'shortname' => $this->createFakeData()->word(),
             'name' => $this->createFakeData()->word(),
             'desc' => $this->createFakeData()->word(),
-            'updatedate' => new DateTimeImmutable(),
-            'startdate' => new DateTimeImmutable(),
-            'enddate' => new DateTimeImmutable(),
+            'updatedate' => new \DateTimeImmutable(),
+            'startdate' => new \DateTimeImmutable(),
+            'enddate' => new \DateTimeImmutable(),
             'isactive' => $this->createFakeData()->word(),
         ];
     }

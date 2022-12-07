@@ -10,8 +10,6 @@ use Liquetsoft\Fias\Component\Unpacker\Unpacker;
 use Marvin255\FileSystemHelper\FileSystemException;
 use Marvin255\FileSystemHelper\FileSystemFactory;
 use Marvin255\FileSystemHelper\FileSystemHelperInterface;
-use RuntimeException;
-use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -115,7 +113,7 @@ class DownloadCommand extends Command
 
         if (empty($url)) {
             $message = sprintf("Can't find url for '%s' version.", $version);
-            throw new RuntimeException($message);
+            throw new \RuntimeException($message);
         }
 
         return $url;
@@ -124,14 +122,14 @@ class DownloadCommand extends Command
     /**
      * Распаковывает загруженный архив.
      *
-     * @param SplFileInfo $archive
+     * @param \SplFileInfo $archive
      *
      * @throws FileSystemException
      */
-    private function extract(SplFileInfo $archive): void
+    private function extract(\SplFileInfo $archive): void
     {
         $extractTo = $archive->getPath() . \DIRECTORY_SEPARATOR . $archive->getBasename('.zip');
-        $extractTo = new SplFileInfo($extractTo);
+        $extractTo = new \SplFileInfo($extractTo);
 
         $this->fs->mkdirIfNotExist($extractTo);
         $this->fs->emptyDir($extractTo);
@@ -166,9 +164,9 @@ class DownloadCommand extends Command
      *
      * @param InputInterface $input
      *
-     * @return SplFileInfo
+     * @return \SplFileInfo
      */
-    private function getPathArgument(InputInterface $input): SplFileInfo
+    private function getPathArgument(InputInterface $input): \SplFileInfo
     {
         $version = $this->getVersionArgument($input);
 
@@ -182,7 +180,7 @@ class DownloadCommand extends Command
             . \DIRECTORY_SEPARATOR
             . 'fias_' . $version . '.zip';
 
-        return new SplFileInfo($pathToDownload);
+        return new \SplFileInfo($pathToDownload);
     }
 
     /**

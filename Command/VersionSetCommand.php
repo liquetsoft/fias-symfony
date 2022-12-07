@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 
-use InvalidArgumentException;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\VersionManager\VersionManager;
@@ -76,7 +75,7 @@ class VersionSetCommand extends Command
         $number = \is_array($number) ? (int) reset($number) : (int) $number;
         if ($number <= 0) {
             $message = 'Version number must integer instance more than 0.';
-            throw new InvalidArgumentException($message);
+            throw new \InvalidArgumentException($message);
         }
 
         return $number;
@@ -101,7 +100,7 @@ class VersionSetCommand extends Command
 
         if ($version === null) {
             $message = sprintf("Can't find '%s' version in list of deltas.", $number);
-            throw new InvalidArgumentException($message);
+            throw new \InvalidArgumentException($message);
         }
 
         return $version;

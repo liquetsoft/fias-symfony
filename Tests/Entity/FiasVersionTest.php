@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 
-use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FiasVersion;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
@@ -31,7 +30,7 @@ class FiasVersionTest extends EntityCase
         return [
             'version' => $this->createFakeData()->numberBetween(1, 1000000),
             'url' => $this->createFakeData()->word(),
-            'created' => new DateTimeImmutable(),
+            'created' => new \DateTimeImmutable(),
         ];
     }
 }

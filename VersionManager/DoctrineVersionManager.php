@@ -10,8 +10,6 @@ use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\FiasInformer\InformerResponseBase;
 use Liquetsoft\Fias\Component\VersionManager\VersionManager;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FiasVersion;
-use RuntimeException;
-use Throwable;
 
 /**
  * Объект, который сохраняет текущую версию ФИАС с помощью doctrine.
@@ -31,7 +29,7 @@ class DoctrineVersionManager implements VersionManager
     /**
      * {@inheritDoc}
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public function setCurrentVersion(InformerResponse $info): VersionManager
     {
@@ -44,8 +42,8 @@ class DoctrineVersionManager implements VersionManager
             $this->em->persist($entity);
             $this->em->flush();
             $this->em->clear();
-        } catch (Throwable $e) {
-            throw new RuntimeException("Can't set new version of FIAS: {$e->getMessage()}", 0, $e);
+        } catch (\Throwable $e) {
+            throw new \RuntimeException("Can't set new version of FIAS: {$e->getMessage()}", 0, $e);
         }
 
         return $this;
@@ -54,7 +52,7 @@ class DoctrineVersionManager implements VersionManager
     /**
      * {@inheritdoc}
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public function getCurrentVersion(): InformerResponse
     {
@@ -74,7 +72,7 @@ class DoctrineVersionManager implements VersionManager
      *
      * @return FiasVersion
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     private function getEntity(): FiasVersion
     {
@@ -103,7 +101,7 @@ class DoctrineVersionManager implements VersionManager
      *
      * @return string
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      *
      * @psalm-return class-string
      */
@@ -118,7 +116,7 @@ class DoctrineVersionManager implements VersionManager
                 FiasVersion::class,
                 $trimmedEntityClassName
             );
-            throw new RuntimeException($message);
+            throw new \RuntimeException($message);
         }
 
         return $trimmedEntityClassName;

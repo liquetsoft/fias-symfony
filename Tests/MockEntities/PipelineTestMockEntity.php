@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities;
 
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
@@ -29,7 +28,7 @@ class PipelineTestMockEntity
     /**
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private ?DateTimeInterface $startdate = null;
+    private ?\DateTimeInterface $startdate = null;
 
     /**
      * @ORM\Column(type="uuid", nullable=true)
@@ -60,14 +59,14 @@ class PipelineTestMockEntity
         return $this->testName;
     }
 
-    public function setStartdate(?DateTimeInterface $startdate): self
+    public function setStartdate(?\DateTimeInterface $startdate): self
     {
         $this->startdate = $startdate;
 
         return $this;
     }
 
-    public function getStartdate(): ?DateTimeInterface
+    public function getStartdate(): ?\DateTimeInterface
     {
         return $this->startdate;
     }

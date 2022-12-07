@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator;
 
-use DateTimeImmutable;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Method;
@@ -12,10 +11,8 @@ use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpLiteral;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
-use SplFileInfo;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -29,10 +26,10 @@ class DenormalizerGenerator extends AbstractGenerator
     /**
      * Создает объект денормализатора для базовых сущностей.
      *
-     * @param SplFileInfo $dir
-     * @param string      $namespace
+     * @param \SplFileInfo $dir
+     * @param string       $namespace
      */
-    public function run(SplFileInfo $dir, string $namespace): void
+    public function run(\SplFileInfo $dir, string $namespace): void
     {
         $name = 'CompiledEntitesDenormalizer';
         $fullPath = "{$dir->getPathname()}/{$name}.php";
@@ -46,7 +43,6 @@ class DenormalizerGenerator extends AbstractGenerator
         $class = $namespace->addClass($name);
         $class->addImplement(DenormalizerInterface::class)
             ->addImplement(DenormalizerAwareInterface::class)
-            ->addImplement(ContextAwareDenormalizerInterface::class)
             ->addTrait(DenormalizerAwareTrait::class)
         ;
         $this->decorateClass($class);
@@ -66,14 +62,13 @@ class DenormalizerGenerator extends AbstractGenerator
         $namespace->addUse(InvalidArgumentException::class);
         $namespace->addUse(DenormalizerAwareInterface::class);
         $namespace->addUse(DenormalizerAwareTrait::class);
-        $namespace->addUse(ContextAwareDenormalizerInterface::class);
 
         $descriptors = $this->getRegistry()->getDescriptors();
         foreach ($descriptors as $descriptor) {
             $namespace->addUse($this->createModelClass($descriptor));
             foreach ($descriptor->getFields() as $field) {
                 if ($field->getSubType() === 'date') {
-                    $namespace->addUse(DateTimeImmutable::class);
+                    $namespace->addUse(\DateTimeImmutable::class);
                 } elseif ($field->getSubType() === 'uuid') {
                     $namespace->addUse(Uuid::class);
                 }
@@ -116,6 +111,7 @@ class DenormalizerGenerator extends AbstractGenerator
         $denormalizeBody .= 'return $entity;';
 
         $supports = $class->addMethod('supportsDenormalization')
+            ->setReturnType('bool')
             ->addComment("{@inheritDoc}\n")
             ->addComment('@psalm-suppress MissingParamType')
             ->setVisibility('public')

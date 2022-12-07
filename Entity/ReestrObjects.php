@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use InvalidArgumentException;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -33,7 +31,7 @@ class ReestrObjects
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
-    protected ?DateTimeImmutable $createdate = null;
+    protected ?\DateTimeImmutable $createdate = null;
 
     /**
      * ID изменившей транзакции.
@@ -57,7 +55,7 @@ class ReestrObjects
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
-    protected ?DateTimeImmutable $updatedate = null;
+    protected ?\DateTimeImmutable $updatedate = null;
 
     /**
      * GUID объекта.
@@ -87,17 +85,17 @@ class ReestrObjects
         return $this->objectid;
     }
 
-    public function setCreatedate(DateTimeImmutable $createdate): self
+    public function setCreatedate(\DateTimeImmutable $createdate): self
     {
         $this->createdate = $createdate;
 
         return $this;
     }
 
-    public function getCreatedate(): DateTimeImmutable
+    public function getCreatedate(): \DateTimeImmutable
     {
         if ($this->createdate === null) {
-            throw new InvalidArgumentException("Parameter 'createdate' isn't set.");
+            throw new \InvalidArgumentException("Parameter 'createdate' isn't set.");
         }
 
         return $this->createdate;
@@ -127,17 +125,17 @@ class ReestrObjects
         return $this->levelid;
     }
 
-    public function setUpdatedate(DateTimeImmutable $updatedate): self
+    public function setUpdatedate(\DateTimeImmutable $updatedate): self
     {
         $this->updatedate = $updatedate;
 
         return $this;
     }
 
-    public function getUpdatedate(): DateTimeImmutable
+    public function getUpdatedate(): \DateTimeImmutable
     {
         if ($this->updatedate === null) {
-            throw new InvalidArgumentException("Parameter 'updatedate' isn't set.");
+            throw new \InvalidArgumentException("Parameter 'updatedate' isn't set.");
         }
 
         return $this->updatedate;
@@ -153,7 +151,7 @@ class ReestrObjects
     public function getObjectguid(): Uuid
     {
         if ($this->objectguid === null) {
-            throw new InvalidArgumentException("Parameter 'objectguid' isn't set.");
+            throw new \InvalidArgumentException("Parameter 'objectguid' isn't set.");
         }
 
         return $this->objectguid;

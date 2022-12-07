@@ -6,8 +6,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
-use Liquetsoft\Fias\Component\Pipeline\Task\Task;
-use SplFileInfo;
+use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -58,7 +57,7 @@ class UpdateFromFolderCommand extends Command
         $io->note("Updating version of FIAS from '{$folder}' folder.");
 
         $state = new ArrayState();
-        $state->setAndLockParameter(Task::EXTRACT_TO_FOLDER_PARAM, new SplFileInfo($folder));
+        $state->setAndLockParameter(StateParameter::EXTRACT_TO_FOLDER, new \SplFileInfo($folder));
         $this->pipeline->run($state);
 
         $io->success("FIAS updated from '{$folder}' folder.");

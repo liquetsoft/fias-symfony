@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator;
 
-use InvalidArgumentException;
 use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
-use SplFileInfo;
 
 /**
  * Абстрактный генератор.
@@ -33,14 +31,14 @@ abstract class AbstractGenerator
     /**
      * Проверяет, что каталог существует и доступен на запись.
      *
-     * @param SplFileInfo $dir
+     * @param \SplFileInfo $dir
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
-    protected function checkDir(SplFileInfo $dir): void
+    protected function checkDir(\SplFileInfo $dir): void
     {
         if (!$dir->isDir() || !$dir->isWritable()) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 "Destination folder '" . $dir->getPathname() . "' isn't writable or doesn't exist."
             );
         }

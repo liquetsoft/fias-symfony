@@ -63,7 +63,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.0']
+        php-versions: ['8.0', '8.1']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -114,5 +114,3 @@ jobs:
           php bin/console liquetsoft:fias:truncate
           php bin/console liquetsoft:fias:install_from_folder ./fias-data-install
           php bin/console liquetsoft:fias:update_from_folder ./fias-data-update
-          php bin/console liquetsoft:fias:status
-          php bin/console liquetsoft:fias:versions

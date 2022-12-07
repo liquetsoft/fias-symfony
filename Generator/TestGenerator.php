@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator;
 
-use DateTimeImmutable;
-use InvalidArgumentException;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
-use RuntimeException;
-use SplFileInfo;
 use Symfony\Component\Uid\Uuid;
-use Throwable;
 
 /**
  * Объект, который генерирует классы тестов для сущностей doctrine на основани описаний
@@ -26,14 +21,14 @@ class TestGenerator extends AbstractGenerator
     /**
      * Создает классы сущностей в указанной папке с указанным пространством имен.
      *
-     * @param SplFileInfo $dir
-     * @param string      $namespace
-     * @param string      $baseNamespace
+     * @param \SplFileInfo $dir
+     * @param string       $namespace
+     * @param string       $baseNamespace
      *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
-    public function run(SplFileInfo $dir, string $namespace = '', string $baseNamespace = ''): void
+    public function run(\SplFileInfo $dir, string $namespace = '', string $baseNamespace = ''): void
     {
         $this->checkDir($dir);
         $unifiedNamespace = $this->unifyNamespace($namespace);
@@ -41,22 +36,22 @@ class TestGenerator extends AbstractGenerator
 
         try {
             $this->generate($dir, $unifiedNamespace, $unifiedBaseNamespace);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             $message = 'Error while class generation.';
-            throw new RuntimeException($message, 0, $e);
+            throw new \RuntimeException($message, 0, $e);
         }
     }
 
     /**
      * Процесс генерации классов.
      *
-     * @param SplFileInfo $dir
-     * @param string      $namespace
-     * @param string      $baseNamespace
+     * @param \SplFileInfo $dir
+     * @param string       $namespace
+     * @param string       $baseNamespace
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
-    protected function generate(SplFileInfo $dir, string $namespace, string $baseNamespace): void
+    protected function generate(\SplFileInfo $dir, string $namespace, string $baseNamespace): void
     {
         $descriptors = $this->registry->getDescriptors();
         foreach ($descriptors as $descriptor) {
@@ -68,13 +63,13 @@ class TestGenerator extends AbstractGenerator
      * Создает php класс для указанного дескриптора.
      *
      * @param EntityDescriptor $descriptor
-     * @param SplFileInfo      $dir
+     * @param \SplFileInfo     $dir
      * @param string           $namespace
      * @param string           $baseNamespace
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
-    protected function generateClassByDescriptor(EntityDescriptor $descriptor, SplFileInfo $dir, string $namespace, string $baseNamespace): void
+    protected function generateClassByDescriptor(EntityDescriptor $descriptor, \SplFileInfo $dir, string $namespace, string $baseNamespace): void
     {
         $baseName = $this->unifyClassName($descriptor->getName());
         $name = $this->unifyClassName($descriptor->getName()) . 'Test';
@@ -135,7 +130,7 @@ class TestGenerator extends AbstractGenerator
                 $namespace->addUse(Uuid::class);
             }
             if ($field->getSubType() === 'date') {
-                $namespace->addUse(DateTimeImmutable::class);
+                $namespace->addUse(\DateTimeImmutable::class);
             }
         }
     }

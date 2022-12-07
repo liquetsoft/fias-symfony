@@ -7,8 +7,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
-use Liquetsoft\Fias\Component\Pipeline\Task\Task;
-use RuntimeException;
+use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -52,10 +51,10 @@ class UpdateCommand extends Command
             $state = new ArrayState();
             $this->pipeline->run($state);
 
-            $info = $state->getParameter(Task::FIAS_INFO_PARAM);
+            $info = $state->getParameter(StateParameter::FIAS_INFO);
             if (!($info instanceof InformerResponse)) {
-                throw new RuntimeException(
-                    "There is no '" . Task::FIAS_INFO_PARAM . "' parameter in state."
+                throw new \RuntimeException(
+                    "There is no '" . StateParameter::FIAS_INFO . "' parameter in state."
                 );
             }
 

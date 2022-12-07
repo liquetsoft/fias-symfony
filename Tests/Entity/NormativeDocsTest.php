@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 
-use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\NormativeDocs;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
@@ -31,15 +30,15 @@ class NormativeDocsTest extends EntityCase
         return [
             'id' => $this->createFakeData()->numberBetween(1, 1000000),
             'name' => $this->createFakeData()->word(),
-            'date' => new DateTimeImmutable(),
+            'date' => new \DateTimeImmutable(),
             'number' => $this->createFakeData()->word(),
             'type' => $this->createFakeData()->numberBetween(1, 1000000),
             'kind' => $this->createFakeData()->numberBetween(1, 1000000),
-            'updatedate' => new DateTimeImmutable(),
+            'updatedate' => new \DateTimeImmutable(),
             'orgname' => $this->createFakeData()->word(),
             'regnum' => $this->createFakeData()->word(),
-            'regdate' => new DateTimeImmutable(),
-            'accdate' => new DateTimeImmutable(),
+            'regdate' => new \DateTimeImmutable(),
+            'accdate' => new \DateTimeImmutable(),
             'comment' => $this->createFakeData()->word(),
         ];
     }

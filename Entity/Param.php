@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use InvalidArgumentException;
 
 /**
  * Сведения о классификаторе параметров адресообразующих элементов и объектов недвижимости.
@@ -72,7 +70,7 @@ class Param
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
-    protected ?DateTimeImmutable $updatedate = null;
+    protected ?\DateTimeImmutable $updatedate = null;
 
     /**
      * Дата начала действия записи.
@@ -80,7 +78,7 @@ class Param
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
-    protected ?DateTimeImmutable $startdate = null;
+    protected ?\DateTimeImmutable $startdate = null;
 
     /**
      * Дата окончания действия записи.
@@ -88,7 +86,7 @@ class Param
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
-    protected ?DateTimeImmutable $enddate = null;
+    protected ?\DateTimeImmutable $enddate = null;
 
     public function setId(int $id): self
     {
@@ -162,49 +160,49 @@ class Param
         return $this->value;
     }
 
-    public function setUpdatedate(DateTimeImmutable $updatedate): self
+    public function setUpdatedate(\DateTimeImmutable $updatedate): self
     {
         $this->updatedate = $updatedate;
 
         return $this;
     }
 
-    public function getUpdatedate(): DateTimeImmutable
+    public function getUpdatedate(): \DateTimeImmutable
     {
         if ($this->updatedate === null) {
-            throw new InvalidArgumentException("Parameter 'updatedate' isn't set.");
+            throw new \InvalidArgumentException("Parameter 'updatedate' isn't set.");
         }
 
         return $this->updatedate;
     }
 
-    public function setStartdate(DateTimeImmutable $startdate): self
+    public function setStartdate(\DateTimeImmutable $startdate): self
     {
         $this->startdate = $startdate;
 
         return $this;
     }
 
-    public function getStartdate(): DateTimeImmutable
+    public function getStartdate(): \DateTimeImmutable
     {
         if ($this->startdate === null) {
-            throw new InvalidArgumentException("Parameter 'startdate' isn't set.");
+            throw new \InvalidArgumentException("Parameter 'startdate' isn't set.");
         }
 
         return $this->startdate;
     }
 
-    public function setEnddate(DateTimeImmutable $enddate): self
+    public function setEnddate(\DateTimeImmutable $enddate): self
     {
         $this->enddate = $enddate;
 
         return $this;
     }
 
-    public function getEnddate(): DateTimeImmutable
+    public function getEnddate(): \DateTimeImmutable
     {
         if ($this->enddate === null) {
-            throw new InvalidArgumentException("Parameter 'enddate' isn't set.");
+            throw new \InvalidArgumentException("Parameter 'enddate' isn't set.");
         }
 
         return $this->enddate;

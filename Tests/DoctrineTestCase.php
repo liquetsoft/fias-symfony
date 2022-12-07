@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests;
 
-use DateTimeInterface;
 use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
@@ -145,7 +144,7 @@ abstract class DoctrineTestCase extends BaseCase
     private function unifyValueForCompare($value)
     {
         $unified = $value;
-        if ($value instanceof DateTimeInterface) {
+        if ($value instanceof \DateTimeInterface) {
             $unified = $value->format('Y-m-d\TH:i:s.Z');
         } elseif (\is_object($value) && method_exists($value, '__toString')) {
             $unified = $value->__toString();

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 
-use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\RoomTypes;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
@@ -33,9 +32,9 @@ class RoomTypesTest extends EntityCase
             'name' => $this->createFakeData()->word(),
             'shortname' => $this->createFakeData()->word(),
             'desc' => $this->createFakeData()->word(),
-            'updatedate' => new DateTimeImmutable(),
-            'startdate' => new DateTimeImmutable(),
-            'enddate' => new DateTimeImmutable(),
+            'updatedate' => new \DateTimeImmutable(),
+            'startdate' => new \DateTimeImmutable(),
+            'enddate' => new \DateTimeImmutable(),
             'isactive' => $this->createFakeData()->word(),
         ];
     }

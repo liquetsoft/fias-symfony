@@ -8,8 +8,6 @@ use Doctrine\ORM\EntityManager;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\DoctrineStorage;
-use RuntimeException;
-use stdClass;
 
 /**
  * Тест для проверки записи данных в базу.
@@ -24,12 +22,12 @@ class DoctrineStorageTest extends AbstractDoctrineStorageTest
     public function testInsertException(): void
     {
         $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
-        $em->method('persist')->will($this->throwException(new RuntimeException()));
+        $em->method('persist')->will($this->throwException(new \RuntimeException()));
 
         $storage = $this->createStorage($em);
 
         $this->expectException(StorageException::class);
-        $storage->insert(new stdClass());
+        $storage->insert(new \stdClass());
     }
 
     /**
@@ -38,12 +36,12 @@ class DoctrineStorageTest extends AbstractDoctrineStorageTest
     public function testDeleteException(): void
     {
         $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
-        $em->method('getClassMetadata')->will($this->throwException(new RuntimeException()));
+        $em->method('getClassMetadata')->will($this->throwException(new \RuntimeException()));
 
         $storage = $this->createStorage($em);
 
         $this->expectException(StorageException::class);
-        $storage->delete(new stdClass());
+        $storage->delete(new \stdClass());
     }
 
     /**
@@ -52,13 +50,13 @@ class DoctrineStorageTest extends AbstractDoctrineStorageTest
     public function testUpsertException(): void
     {
         $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
-        $em->method('persist')->will($this->throwException(new RuntimeException()));
-        $em->method('getClassMetadata')->will($this->throwException(new RuntimeException()));
+        $em->method('persist')->will($this->throwException(new \RuntimeException()));
+        $em->method('getClassMetadata')->will($this->throwException(new \RuntimeException()));
 
         $storage = $this->createStorage($em);
 
         $this->expectException(StorageException::class);
-        $storage->upsert(new stdClass());
+        $storage->upsert(new \stdClass());
     }
 
     /**

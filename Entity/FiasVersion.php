@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use InvalidArgumentException;
 
 /**
  * Версия ФИАС.
@@ -40,7 +38,7 @@ class FiasVersion
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
-    protected ?DateTimeImmutable $created = null;
+    protected ?\DateTimeImmutable $created = null;
 
     public function setVersion(int $version): self
     {
@@ -66,17 +64,17 @@ class FiasVersion
         return $this->url;
     }
 
-    public function setCreated(DateTimeImmutable $created): self
+    public function setCreated(\DateTimeImmutable $created): self
     {
         $this->created = $created;
 
         return $this;
     }
 
-    public function getCreated(): DateTimeImmutable
+    public function getCreated(): \DateTimeImmutable
     {
         if ($this->created === null) {
-            throw new InvalidArgumentException("Parameter 'created' isn't set.");
+            throw new \InvalidArgumentException("Parameter 'created' isn't set.");
         }
 
         return $this->created;

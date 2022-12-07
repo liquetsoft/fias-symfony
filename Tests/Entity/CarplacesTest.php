@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 
-use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\Carplaces;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 use Symfony\Component\Uid\Uuid;
@@ -38,9 +37,9 @@ class CarplacesTest extends EntityCase
             'opertypeid' => $this->createFakeData()->numberBetween(1, 1000000),
             'previd' => $this->createFakeData()->numberBetween(1, 1000000),
             'nextid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'updatedate' => new DateTimeImmutable(),
-            'startdate' => new DateTimeImmutable(),
-            'enddate' => new DateTimeImmutable(),
+            'updatedate' => new \DateTimeImmutable(),
+            'startdate' => new \DateTimeImmutable(),
+            'enddate' => new \DateTimeImmutable(),
             'isactual' => $this->createFakeData()->numberBetween(1, 1000000),
             'isactive' => $this->createFakeData()->numberBetween(1, 1000000),
         ];

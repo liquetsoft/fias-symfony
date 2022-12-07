@@ -8,7 +8,6 @@ use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\DoctrineTestCase;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\VersionManagerTestMockEntity;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\VersionManager\DoctrineVersionManager;
-use RuntimeException;
 
 /**
  * Тест для объекта, который обновляет и получает текущую версию.
@@ -54,7 +53,7 @@ class DoctrineVersionManagerTest extends DoctrineTestCase
             'test'
         );
 
-        $this->expectException(RuntimeException::class);
+        $this->expectException(\RuntimeException::class);
         $versionManager->setCurrentVersion($info);
     }
 
@@ -91,7 +90,7 @@ class DoctrineVersionManagerTest extends DoctrineTestCase
             'test'
         );
 
-        $this->expectException(RuntimeException::class);
+        $this->expectException(\RuntimeException::class);
         $versionResponse = $versionManager->getCurrentVersion();
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Entity;
 
-use DateTimeImmutable;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\ObjectLevels;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
 
@@ -32,9 +31,9 @@ class ObjectLevelsTest extends EntityCase
             'level' => $this->createFakeData()->numberBetween(1, 1000000),
             'name' => $this->createFakeData()->word(),
             'shortname' => $this->createFakeData()->word(),
-            'updatedate' => new DateTimeImmutable(),
-            'startdate' => new DateTimeImmutable(),
-            'enddate' => new DateTimeImmutable(),
+            'updatedate' => new \DateTimeImmutable(),
+            'startdate' => new \DateTimeImmutable(),
+            'enddate' => new \DateTimeImmutable(),
             'isactive' => $this->createFakeData()->word(),
         ];
     }

@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\MappedSuperclass;
-use InvalidArgumentException;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\EntityField;
 use Nette\PhpGenerator\ClassType;
@@ -18,10 +16,7 @@ use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\Property;
 use Nette\PhpGenerator\PsrPrinter;
-use RuntimeException;
-use SplFileInfo;
 use Symfony\Component\Uid\Uuid;
-use Throwable;
 
 /**
  * Объект, который генерирует классы сущностей doctrine на основани описаний
@@ -32,34 +27,34 @@ class EntityGenerator extends AbstractGenerator
     /**
      * Создает классы сущностей в указанной папке с указанным пространством имен.
      *
-     * @param SplFileInfo $dir
-     * @param string      $namespace
+     * @param \SplFileInfo $dir
+     * @param string       $namespace
      *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
-    public function run(SplFileInfo $dir, string $namespace = ''): void
+    public function run(\SplFileInfo $dir, string $namespace = ''): void
     {
         $this->checkDir($dir);
         $unifiedNamespace = $this->unifyNamespace($namespace);
 
         try {
             $this->generate($dir, $unifiedNamespace);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             $message = 'Error while class generation.';
-            throw new RuntimeException($message, 0, $e);
+            throw new \RuntimeException($message, 0, $e);
         }
     }
 
     /**
      * Процесс генерации классов.
      *
-     * @param SplFileInfo $dir
-     * @param string      $namespace
+     * @param \SplFileInfo $dir
+     * @param string       $namespace
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
-    protected function generate(SplFileInfo $dir, string $namespace): void
+    protected function generate(\SplFileInfo $dir, string $namespace): void
     {
         $descriptors = $this->registry->getDescriptors();
         foreach ($descriptors as $descriptor) {
@@ -71,12 +66,12 @@ class EntityGenerator extends AbstractGenerator
      * Создает php класс для указанного дескриптора.
      *
      * @param EntityDescriptor $descriptor
-     * @param SplFileInfo      $dir
+     * @param \SplFileInfo     $dir
      * @param string           $namespace
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
-    protected function generateClassByDescriptor(EntityDescriptor $descriptor, SplFileInfo $dir, string $namespace): void
+    protected function generateClassByDescriptor(EntityDescriptor $descriptor, \SplFileInfo $dir, string $namespace): void
     {
         $name = $this->unifyClassName($descriptor->getName());
         $fullPath = "{$dir->getPathname()}/{$name}.php";
@@ -112,14 +107,14 @@ class EntityGenerator extends AbstractGenerator
     protected function decorateNamespace(PhpNamespace $namespace, EntityDescriptor $descriptor): void
     {
         $namespace->addUse('Doctrine\ORM\Mapping', 'ORM');
-        $namespace->addUse(InvalidArgumentException::class);
+        $namespace->addUse(\InvalidArgumentException::class);
 
         foreach ($descriptor->getFields() as $field) {
             if ($field->getSubType() === 'uuid') {
                 $namespace->addUse(Uuid::class);
             }
             if ($field->getSubType() === 'date') {
-                $namespace->addUse(DateTimeImmutable::class);
+                $namespace->addUse(\DateTimeImmutable::class);
             }
         }
     }
@@ -222,7 +217,7 @@ class EntityGenerator extends AbstractGenerator
                         'nullable' => $field->isNullable(),
                     ]
                 );
-                $property->setType(DateTimeImmutable::class);
+                $property->setType(\DateTimeImmutable::class);
                 $property->setNullable();
                 break;
             default:
@@ -273,7 +268,7 @@ class EntityGenerator extends AbstractGenerator
                 $paramHint = Uuid::class;
                 break;
             case 'string_date':
-                $paramHint = DateTimeImmutable::class;
+                $paramHint = \DateTimeImmutable::class;
                 break;
             default:
                 $paramHint = 'string';
@@ -313,7 +308,7 @@ class EntityGenerator extends AbstractGenerator
                 $method->setReturnType(Uuid::class);
                 break;
             case 'string_date':
-                $method->setReturnType(DateTimeImmutable::class);
+                $method->setReturnType(\DateTimeImmutable::class);
                 break;
             default:
                 $method->setReturnType('string');

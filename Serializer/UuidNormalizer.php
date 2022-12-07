@@ -9,7 +9,6 @@ use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Uid\Uuid;
-use Throwable;
 
 /**
  * Нормализатор для объектов uuid.
@@ -53,7 +52,7 @@ class UuidNormalizer implements DenormalizerInterface, NormalizerInterface
 
         try {
             $uuid = Uuid::fromString($data);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             throw new NotNormalizableValueException(
                 'Error while converting string to uuid.',
                 0,

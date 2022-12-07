@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use InvalidArgumentException;
 
 /**
  * Сведения о нормативном документе, являющемся основанием присвоения адресному элементу наименования.
@@ -40,7 +38,7 @@ class NormativeDocs
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
-    protected ?DateTimeImmutable $date = null;
+    protected ?\DateTimeImmutable $date = null;
 
     /**
      * Номер документа.
@@ -72,7 +70,7 @@ class NormativeDocs
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
     #[ORM\Column(type: 'datetime_immutable', nullable: false)]
-    protected ?DateTimeImmutable $updatedate = null;
+    protected ?\DateTimeImmutable $updatedate = null;
 
     /**
      * Наименование органа создвшего нормативный документ.
@@ -96,7 +94,7 @@ class NormativeDocs
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    protected ?DateTimeImmutable $regdate = null;
+    protected ?\DateTimeImmutable $regdate = null;
 
     /**
      * Дата вступления в силу нормативного документа.
@@ -104,7 +102,7 @@ class NormativeDocs
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    protected ?DateTimeImmutable $accdate = null;
+    protected ?\DateTimeImmutable $accdate = null;
 
     /**
      * Комментарий.
@@ -138,17 +136,17 @@ class NormativeDocs
         return $this->name;
     }
 
-    public function setDate(DateTimeImmutable $date): self
+    public function setDate(\DateTimeImmutable $date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getDate(): DateTimeImmutable
+    public function getDate(): \DateTimeImmutable
     {
         if ($this->date === null) {
-            throw new InvalidArgumentException("Parameter 'date' isn't set.");
+            throw new \InvalidArgumentException("Parameter 'date' isn't set.");
         }
 
         return $this->date;
@@ -190,17 +188,17 @@ class NormativeDocs
         return $this->kind;
     }
 
-    public function setUpdatedate(DateTimeImmutable $updatedate): self
+    public function setUpdatedate(\DateTimeImmutable $updatedate): self
     {
         $this->updatedate = $updatedate;
 
         return $this;
     }
 
-    public function getUpdatedate(): DateTimeImmutable
+    public function getUpdatedate(): \DateTimeImmutable
     {
         if ($this->updatedate === null) {
-            throw new InvalidArgumentException("Parameter 'updatedate' isn't set.");
+            throw new \InvalidArgumentException("Parameter 'updatedate' isn't set.");
         }
 
         return $this->updatedate;
@@ -230,26 +228,26 @@ class NormativeDocs
         return $this->regnum;
     }
 
-    public function setRegdate(?DateTimeImmutable $regdate): self
+    public function setRegdate(?\DateTimeImmutable $regdate): self
     {
         $this->regdate = $regdate;
 
         return $this;
     }
 
-    public function getRegdate(): ?DateTimeImmutable
+    public function getRegdate(): ?\DateTimeImmutable
     {
         return $this->regdate;
     }
 
-    public function setAccdate(?DateTimeImmutable $accdate): self
+    public function setAccdate(?\DateTimeImmutable $accdate): self
     {
         $this->accdate = $accdate;
 
         return $this;
     }
 
-    public function getAccdate(): ?DateTimeImmutable
+    public function getAccdate(): ?\DateTimeImmutable
     {
         return $this->accdate;
     }

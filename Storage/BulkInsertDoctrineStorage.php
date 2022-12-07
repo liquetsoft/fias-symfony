@@ -6,12 +6,9 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\ORM\EntityManager;
-use Exception;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use RuntimeException;
-use Throwable;
 
 /**
  * Объект, который сохраняет данные ФИАС с помощью Doctrine.
@@ -68,7 +65,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
 
             $this->insertData[$table][] = $insertArray;
             $this->checkAndFlushInsert(false);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             throw new StorageException($e->getMessage(), 0, $e);
         }
     }
@@ -95,7 +92,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      * @param string  $tableName
      * @param mixed[] $data
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     private function bulkInsert(string $tableName, array $data): void
     {
@@ -121,7 +118,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
         foreach ($data as $item) {
             try {
                 $this->prepareAndRunBulkInsert($tableName, [$item]);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->log(
                     LogLevel::ERROR,
                     "Error while inserting item to '{$tableName}' table. Item wasn't proceed.",
@@ -141,7 +138,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      * @param string  $tableName
      * @param mixed[] $data
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      * @throws DBALException
      */
     private function prepareAndRunBulkInsert(string $tableName, array $data): void
