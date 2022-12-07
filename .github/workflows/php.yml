@@ -10,7 +10,7 @@ jobs:
 
 
   build:
-    name: Liquetsoft FIAS (PHP ${{ matrix.php-versions }})
+    name: Linting and testing (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
