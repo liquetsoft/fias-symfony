@@ -77,7 +77,7 @@ jobs:
         run: sudo /etc/init.d/mysql start
       - name: Install Symfony
         run: |
-          composer config --no-interaction allow-plugins.symfony/flex true
+          composer config --no-interaction "allow-plugins.symfony/flex" true
           composer create-project symfony/skeleton:"${{ matrix.symfony-versions }}.*" example-app
       - name: Branch used
         id: extract_branch
