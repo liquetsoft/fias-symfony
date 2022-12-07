@@ -13,6 +13,8 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 /**
  * Преднастроенный объект сериализатора для ФИАС.
+ *
+ * @psalm-suppress DeprecatedInterface
  */
 class FiasSerializer extends \Liquetsoft\Fias\Component\Serializer\FiasSerializer
 {
