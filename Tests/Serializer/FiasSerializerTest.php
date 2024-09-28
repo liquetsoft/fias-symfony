@@ -13,20 +13,20 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\FiasSerializ
  *
  * @internal
  */
-class FiasSerializerTest extends BaseCase
+final class FiasSerializerTest extends BaseCase
 {
     /**
      * Проверяет, что объект правильно разберет данные их xml в объект.
      */
     public function testDenormalize(): void
     {
-        $id = $this->createFakeData()->numberBetween(100000, 900000);
-        $objectGUID = $this->createFakeData()->uuid();
-        $name = $this->createFakeData()->text();
-        $updateDate = $this->createFakeData()->dateTime()->format('Y-m-d');
-        $testDate = $this->createFakeData()->dateTime()->format('Y-m-d');
-        $operTypeId = $this->createFakeData()->numberBetween(1, 100);
-        $uuidString = $this->createFakeData()->uuid();
+        $id = 123321;
+        $objectGUID = 'f81d4fae-7dec-11d0-a765-00a0c91e6bf6';
+        $name = 'test name';
+        $updateDate = '2024-10-10';
+        $testDate = '2024-11-11';
+        $operTypeId = 321;
+        $uuidString = 'f81d4fae-qqqq-11d0-a765-00a0c91e6bf6';
         $data = <<<EOT
 <OBJECT
     ID="{$id}"
@@ -39,17 +39,14 @@ class FiasSerializerTest extends BaseCase
     testDate="{$testDate}"
 />
 EOT;
+
         $serializer = new FiasSerializer();
 
         $object = $serializer->deserialize($data, FiasSerializerObject::class, 'xml');
-
         $testObjectGUID = (string) $object->getObjectguid();
-
         $testUpdateDate = $object->getUpdatedate()->format('Y-m-d');
-
         $testTestDate = $object->getTestDate();
         $testTestDate = $testTestDate ? $testTestDate->format('Y-m-d') : null;
-
         $testUuid = (string) $object->getUuid();
 
         $this->assertInstanceOf(FiasSerializerObject::class, $object);
