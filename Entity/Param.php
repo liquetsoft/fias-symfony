@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Сведения о классификаторе параметров адресообразующих элементов и объектов недвижимости.
  *
+ * @psalm-consistent-constructor
+ *
  * @ORM\MappedSuperclass
  */
 #[ORM\MappedSuperclass]

@@ -10,6 +10,8 @@ use Symfony\Component\Uid\Uuid;
 /**
  * Сведения по истории изменений.
  *
+ * @psalm-consistent-constructor
+ *
  * @ORM\MappedSuperclass
  */
 #[ORM\MappedSuperclass]

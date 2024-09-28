@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" bootstrap="vendor/autoload.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" bootstrap="vendor/autoload.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" cacheDirectory=".phpunit.cache">
+  <testsuites>
+    <testsuite name="LiquetsoftFiasBundle tests suit">
+      <directory>./Tests</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+    <env name="DB_DRIVER" value="pdo_sqlite"/>
+    <env name="DB_PATH" value=":memory:"/>
+    <env name="DB_USER" value=""/>
+    <env name="DB_PASSWORD" value=""/>
+    <env name="DB_NAME" value=""/>
+  </php>
+  <source>
     <include>
       <directory>.</directory>
     </include>
@@ -12,21 +25,5 @@
       <directory>./Tests</directory>
       <directory>./vendor</directory>
     </exclude>
-  </coverage>
-  <testsuites>
-    <testsuite name="LiquetsoftFiasBundle tests suit">
-      <directory>./Tests</directory>
-    </testsuite>
-  </testsuites>
-  <listeners>
-    <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
-  </listeners>
-  <php>
-    <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
-    <env name="DB_DRIVER" value="pdo_sqlite"/>
-    <env name="DB_PATH" value=":memory:"/>
-    <env name="DB_USER" value=""/>
-    <env name="DB_PASSWORD" value=""/>
-    <env name="DB_NAME" value=""/>
-  </php>
+  </source>
 </phpunit>

@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Сведения о нормативном документе, являющемся основанием присвоения адресному элементу наименования.
  *
+ * @psalm-consistent-constructor
+ *
  * @ORM\MappedSuperclass
  */
 #[ORM\MappedSuperclass]

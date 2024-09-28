@@ -10,6 +10,8 @@ use Symfony\Component\Uid\Uuid;
 /**
  * Сведения по земельным участкам.
  *
+ * @psalm-consistent-constructor
+ *
  * @ORM\MappedSuperclass
  */
 #[ORM\MappedSuperclass]

@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Сведения по статусу действия.
  *
+ * @psalm-consistent-constructor
+ *
  * @ORM\MappedSuperclass
  */
 #[ORM\MappedSuperclass]

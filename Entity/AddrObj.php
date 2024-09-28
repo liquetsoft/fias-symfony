@@ -10,6 +10,8 @@ use Symfony\Component\Uid\Uuid;
 /**
  * Сведения классификатора адресообразующих элементов.
  *
+ * @psalm-consistent-constructor
+ *
  * @ORM\MappedSuperclass
  */
 #[ORM\MappedSuperclass]

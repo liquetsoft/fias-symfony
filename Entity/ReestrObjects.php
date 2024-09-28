@@ -10,6 +10,8 @@ use Symfony\Component\Uid\Uuid;
 /**
  * Сведения об адресном элементе в части его идентификаторов.
  *
+ * @psalm-consistent-constructor
+ *
  * @ORM\MappedSuperclass
  */
 #[ORM\MappedSuperclass]

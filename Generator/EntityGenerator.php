@@ -116,6 +116,7 @@ class EntityGenerator extends AbstractGenerator
             $class->addComment("{$description}.\n");
         }
 
+        $class->addComment('@psalm-consistent-constructor');
         $class->addComment("@ORM\MappedSuperclass\n");
         $class->addAttribute(MappedSuperclass::class);
 
