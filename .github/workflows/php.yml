@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php-versions: ['8.0', '8.1']
+        php-versions: ['8.2', '8.3']
     steps:
     - uses: actions/checkout@v2
     - name: Install PHP
@@ -63,8 +63,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.0', '8.1']
-        symfony-versions: ['5.2', '5.3', '5.4']
+        php-versions: ['8.2', '8.3']
+        symfony-versions: ['5.4', '6.4', '7.1']
     steps:
       - name: Checkout
         uses: actions/checkout@v2

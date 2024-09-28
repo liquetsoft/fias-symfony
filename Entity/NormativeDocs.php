@@ -18,6 +18,7 @@ class NormativeDocs
      * Уникальный идентификатор документа.
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @ORM\Id
      */
     #[ORM\Column(type: 'integer', nullable: false)]

@@ -68,9 +68,7 @@ class VersionsCommand extends Command
     /**
      * Отображает список версий в виде таблицы.
      *
-     * @param string             $header
      * @param InformerResponse[] $versions
-     * @param OutputInterface    $output
      */
     private function renderTable(string $header, array $versions, OutputInterface $output): void
     {

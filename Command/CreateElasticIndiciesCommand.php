@@ -57,11 +57,6 @@ class CreateElasticIndiciesCommand extends Command
     /**
      * Запускает команду на исполнение.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     *
      * @throws IndexBuilderException
      */
     protected function execute(InputInterface $input, OutputInterface $output): int

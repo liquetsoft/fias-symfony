@@ -22,7 +22,7 @@ class UuidNormalizer implements DenormalizerInterface, NormalizerInterface
      *
      * @throws InvalidArgumentException
      */
-    public function normalize(mixed $object, string $format = null, array $context = [])
+    public function normalize(mixed $object, ?string $format = null, array $context = [])
     {
         if (!($object instanceof Uuid)) {
             throw new InvalidArgumentException('The object must implement the "' . Uuid::class . '".');

@@ -18,6 +18,7 @@ class OperationTypes
      * Идентификатор статуса (ключ).
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @ORM\Id
      */
     #[ORM\Column(type: 'integer', nullable: false)]

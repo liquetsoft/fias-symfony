@@ -25,7 +25,6 @@ abstract class DoctrineTestCase extends BaseCase
     /**
      * Проверяет, что сущность существует в базе данных.
      *
-     * @param object $entity
      * @param string $message
      *
      * @throws AnnotationException
@@ -71,7 +70,6 @@ abstract class DoctrineTestCase extends BaseCase
     /**
      * Проверяет, что сущность не существует в базе данных.
      *
-     * @param object $entity
      * @param string $message
      *
      * @throws AnnotationException
@@ -99,8 +97,6 @@ abstract class DoctrineTestCase extends BaseCase
     /**
      * Записывает новую сузность в базу данных.
      *
-     * @param object $entity
-     *
      * @throws AnnotationException
      * @throws ORMException
      * @throws ToolsException
@@ -116,8 +112,6 @@ abstract class DoctrineTestCase extends BaseCase
 
     /**
      * Возвразает объект EntityManager для тестов.
-     *
-     * @return EntityManager
      *
      * @throws AnnotationException
      * @throws ORMException
@@ -136,10 +130,6 @@ abstract class DoctrineTestCase extends BaseCase
 
     /**
      * Приводит значения к общему типу для сравнения.
-     *
-     * @param mixed $value
-     *
-     * @return mixed
      */
     private function unifyValueForCompare($value)
     {
@@ -155,8 +145,6 @@ abstract class DoctrineTestCase extends BaseCase
 
     /**
      * Создает EntityManager для тестов.
-     *
-     * @return EntityManager
      *
      * @throws AnnotationException
      * @throws ORMException

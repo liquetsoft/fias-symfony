@@ -16,6 +16,7 @@ class PipelineTestMockEntity
 {
     /**
      * @ORM\Id
+     *
      * @ORM\Column(type="integer", nullable=false)
      */
     private int $testId = 0;

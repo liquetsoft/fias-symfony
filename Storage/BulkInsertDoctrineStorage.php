@@ -73,8 +73,6 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     /**
      * Проверяет нужно ли отправлять запросы на множественные вставки элементов,
      * сохраненых в памяти.
-     *
-     * @param bool $force
      */
     private function checkAndFlushInsert(bool $force = false): void
     {
@@ -89,7 +87,6 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     /**
      * Отправляет запрос на массовую вставку данных в таблицу.
      *
-     * @param string                           $tableName
      * @param array<int, array<string, mixed>> $data
      *
      * @throws \RuntimeException
@@ -110,7 +107,6 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      * Только для некоторых случаев:
      *    - повторяющийся первичный ключ
      *
-     * @param string                           $tableName
      * @param array<int, array<string, mixed>> $data
      */
     private function prepareAndRunBulkSafely(string $tableName, array $data): void
@@ -135,7 +131,6 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     /**
      * Непосредственное создание и запуск запроса на исполнение.
      *
-     * @param string                           $tableName
      * @param array<int, array<string, mixed>> $data
      *
      * @throws \RuntimeException
@@ -165,10 +160,6 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
 
     /**
      * Запись сообщения в лог.
-     *
-     * @param string $errorLevel
-     * @param string $message
-     * @param array  $context
      */
     private function log(string $errorLevel, string $message, array $context = []): void
     {

@@ -11,8 +11,6 @@ abstract class EntityCase extends BaseCase
 {
     /**
      * Возвращает инициированую сущность для тестирования.
-     *
-     * @return mixed
      */
     abstract protected function createEntity();
 
@@ -36,11 +34,6 @@ abstract class EntityCase extends BaseCase
 
     /**
      * Проводит тест аццессоров по указанным параметрам в массиве.
-     *
-     * @param string $property
-     * @param mixed  $input
-     * @param mixed  $output
-     * @param array  $testCase
      */
     protected function assertAccessorsCase(string $property, $input, $output): void
     {

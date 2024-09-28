@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 /**
  * Класс расширения для предоставления бандлом сервисов.
  */
-class LiquetsoftFiasExtension extends Extension
+final class LiquetsoftFiasExtension extends Extension
 {
     /**
      * {@inheritDoc}
@@ -32,12 +32,9 @@ class LiquetsoftFiasExtension extends Extension
     /**
      * Регистрирует параметры конфигов бандла.
      *
-     * @param array            $configs
-     * @param ContainerBuilder $container
-     *
      * @psalm-suppress MixedArgument
      */
-    protected function loadConfigurationToContainer(array $configs, ContainerBuilder $container): void
+    private function loadConfigurationToContainer(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -49,12 +46,9 @@ class LiquetsoftFiasExtension extends Extension
     /**
      * Регистрирует сервисы бандла.
      *
-     * @param ContainerBuilder $container
-     * @param string           $servicesBundle
-     *
      * @throws \Exception
      */
-    protected function loadServicesToContainer(ContainerBuilder $container, string $servicesBundle): void
+    private function loadServicesToContainer(ContainerBuilder $container, string $servicesBundle): void
     {
         $configDir = \dirname(__DIR__) . '/Resources/config';
         $loader = new YamlFileLoader($container, new FileLocator($configDir));

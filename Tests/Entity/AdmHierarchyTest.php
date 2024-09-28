@@ -44,6 +44,7 @@ class AdmHierarchyTest extends EntityCase
             'startdate' => new \DateTimeImmutable(),
             'enddate' => new \DateTimeImmutable(),
             'isactive' => $this->createFakeData()->numberBetween(1, 1000000),
+            'path' => $this->createFakeData()->word(),
         ];
     }
 }

@@ -18,6 +18,7 @@ class ParamTypes
      * Идентификатор типа параметра (ключ).
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @ORM\Id
      */
     #[ORM\Column(type: 'integer', nullable: false)]

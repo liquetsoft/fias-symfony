@@ -25,9 +25,6 @@ class DenormalizerGenerator extends AbstractGenerator
 {
     /**
      * Создает объект денормализатора для базовых сущностей.
-     *
-     * @param \SplFileInfo $dir
-     * @param string       $namespace
      */
     public function run(\SplFileInfo $dir, string $namespace): void
     {
@@ -52,8 +49,6 @@ class DenormalizerGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые импорты в пространство имен.
-     *
-     * @param PhpNamespace $namespace
      */
     protected function decorateNamespace(PhpNamespace $namespace): void
     {
@@ -78,8 +73,6 @@ class DenormalizerGenerator extends AbstractGenerator
 
     /**
      * Добавляет в класс все необходимые методы и константы.
-     *
-     * @param ClassType $class
      */
     protected function decorateClass(ClassType $class): void
     {
@@ -142,9 +135,6 @@ class DenormalizerGenerator extends AbstractGenerator
 
     /**
      * Создает метод для денормализации одной конкретной модели.
-     *
-     * @param Method           $method
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateEntityDataSetter(Method $method, EntityDescriptor $descriptor): void
     {
@@ -195,10 +185,6 @@ class DenormalizerGenerator extends AbstractGenerator
 
     /**
      * Создает имя класса для модели дескриптора.
-     *
-     * @param EntityDescriptor $descriptor
-     *
-     * @return string
      */
     protected function createModelClass(EntityDescriptor $descriptor): string
     {

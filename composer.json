@@ -5,23 +5,20 @@
     "keywords": ["php", "fias", "symfony"],
     "license": "MIT",
     "require": {
-        "php": ">=8.0",
-        "liquetsoft/fias-component": "^12.0",
-        "symfony/framework-bundle": "^5.2",
-        "doctrine/doctrine-bundle": "^2.0",
-        "doctrine/orm": "^2.6",
-        "symfony/uid": "^5.2"
+        "php": ">=8.2",
+        "liquetsoft/fias-component": "^13.0",
+        "symfony/framework-bundle": "^5.0|^6.0|^7.0",
+        "doctrine/doctrine-bundle": "^2.0|^3.0",
+        "doctrine/orm": "^2.6|^3.0",
+        "symfony/uid": "^5.0|^6.0|^7.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.0",
-        "symfony/phpunit-bridge": "^5.0",
+        "phpunit/phpunit": "^10.0",
+        "symfony/phpunit-bridge": "^5.0|^6.0|^7.0",
         "fakerphp/faker": "^1.7",
         "friendsofphp/php-cs-fixer": "^3.0",
-        "sebastian/phpcpd": "^6.0",
-        "vimeo/psalm": "^4.0",
-        "nette/php-generator": "^3.5",
-        "psalm/plugin-phpunit": "^0.15.1",
-        "liquetsoft/fias-elastic": "^6.0"
+        "vimeo/psalm": "^5.0",
+        "nette/php-generator": "^3.5"
     },
     "autoload": {
         "psr-4": {
@@ -37,15 +34,11 @@
         "fixer": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --allow-risky=yes",
         "linter": [
             "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --stop-on-violation --allow-risky=yes",
-            "vendor/bin/phpcpd ./ --exclude vendor --exclude Tests --exclude Entity --exclude Serializer/CompiledEntitesDenormalizer.php",
             "vendor/bin/psalm --show-info=true"
         ],
         "entities": [
             "php -f Resources/build/generate_entities.php",
             "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes -q"
         ]
-    },
-    "suggest": {
-        "liquetsoft/fias-elastic": "Allows elasticsearch storage for FIAS"
     }
 }

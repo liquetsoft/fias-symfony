@@ -18,6 +18,7 @@ class MunHierarchy
      * Уникальный идентификатор записи. Ключевое поле.
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @ORM\Id
      */
     #[ORM\Column(type: 'integer', nullable: false)]
@@ -103,6 +104,14 @@ class MunHierarchy
      */
     #[ORM\Column(type: 'integer', nullable: false)]
     protected int $isactive = 0;
+
+    /**
+     * Материализованный путь к объекту (полная иерархия).
+     *
+     * @ORM\Column(type="string", nullable=false)
+     */
+    #[ORM\Column(type: 'string', nullable: false, length: 255)]
+    protected string $path = '';
 
     public function setId(int $id): self
     {
@@ -246,5 +255,17 @@ class MunHierarchy
     public function getIsactive(): int
     {
         return $this->isactive;
+    }
+
+    public function setPath(string $path): self
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    public function getPath(): string
+    {
+        return $this->path;
     }
 }

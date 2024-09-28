@@ -19,6 +19,7 @@ class ChangeHistory
      * ID изменившей транзакции.
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @ORM\Id
      */
     #[ORM\Column(type: 'integer', nullable: false)]

@@ -64,10 +64,6 @@ class VersionSetCommand extends Command
 
     /**
      * Получает номер версии из параметров запуска команды.
-     *
-     * @param InputInterface $input
-     *
-     * @return int
      */
     private function getNumber(InputInterface $input): int
     {
@@ -83,8 +79,6 @@ class VersionSetCommand extends Command
 
     /**
      * Ищет указанную версию в списке на обновление и возвращает найденную.
-     *
-     * @return InformerResponse
      */
     private function getVersion(int $number): InformerResponse
     {
@@ -99,7 +93,7 @@ class VersionSetCommand extends Command
         }
 
         if ($version === null) {
-            $message = sprintf("Can't find '%s' version in list of deltas.", $number);
+            $message = \sprintf("Can't find '%s' version in list of deltas.", $number);
             throw new \InvalidArgumentException($message);
         }
 

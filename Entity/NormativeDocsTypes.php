@@ -18,6 +18,7 @@ class NormativeDocsTypes
      * Идентификатор записи.
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @ORM\Id
      */
     #[ORM\Column(type: 'integer', nullable: false)]

@@ -142,8 +142,6 @@ class DoctrineStorage implements Storage
 
     /**
      * Выполняет запрос на вставку/обновление накопленного кэша записей.
-     *
-     * @param bool $force
      */
     protected function checkAndFlushUpsert(bool $force = false): void
     {
@@ -162,7 +160,6 @@ class DoctrineStorage implements Storage
     /**
      * Обновляет список сущностей одного типа.
      *
-     * @param string                $entityName
      * @param array<string, object> $entities
      */
     protected function upsertEntities(string $entityName, array $entities): void
@@ -203,11 +200,6 @@ class DoctrineStorage implements Storage
     /**
      * Возвращает правду, если сущности содержат одинаковые данные.
      *
-     * @param object $first
-     * @param object $second
-     *
-     * @return bool
-     *
      * @psalm-suppress MixedMethodCall
      */
     protected function isEntitiesEqual(object $first, object $second): bool
@@ -234,9 +226,6 @@ class DoctrineStorage implements Storage
 
     /**
      * Наполняет первый объект данными, хранящимися во втором.
-     *
-     * @param object $first
-     * @param object $second
      */
     protected function fillEntityFromOther(object $first, object $second): void
     {
@@ -251,10 +240,6 @@ class DoctrineStorage implements Storage
 
     /**
      * Возвращает массив первичных ключей для объекта.
-     *
-     * @param object $entity
-     *
-     * @return array
      */
     protected function getIdentifiersFromEntity(object $entity): array
     {
@@ -263,10 +248,6 @@ class DoctrineStorage implements Storage
 
     /**
      * Возвращает мета описание сущноссти из Doctrine.
-     *
-     * @param object|string $entity
-     *
-     * @return ClassMetadata
      */
     protected function getEntityMeta(object|string $entity): ClassMetadata
     {
@@ -286,10 +267,6 @@ class DoctrineStorage implements Storage
     /**
      * Возвращает имя сущности для указанного объекта.
      *
-     * @param object $entity
-     *
-     * @return string
-     *
      * @psalm-return class-string
      */
     protected function getEntityName(object $entity): string
@@ -299,10 +276,6 @@ class DoctrineStorage implements Storage
 
     /**
      * Преобразует указанное исключение к типу исключения хранилища.
-     *
-     * @param \Throwable $e
-     *
-     * @return StorageException
      */
     protected function convertToStorageException(\Throwable $e): StorageException
     {
@@ -311,10 +284,6 @@ class DoctrineStorage implements Storage
 
     /**
      * Пробует преобразовать указанное значение к примитиву.
-     *
-     * @param mixed $data
-     *
-     * @return mixed
      */
     protected function convertToPrimitive(mixed $data): mixed
     {

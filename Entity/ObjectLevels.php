@@ -18,6 +18,7 @@ class ObjectLevels
      * Уникальный идентификатор записи. Ключевое поле. Номер уровня объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @ORM\Id
      */
     #[ORM\Column(type: 'integer', nullable: false)]

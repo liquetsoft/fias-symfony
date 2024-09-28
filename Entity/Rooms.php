@@ -19,6 +19,7 @@ class Rooms
      * Уникальный идентификатор записи. Ключевое поле.
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @ORM\Id
      */
     #[ORM\Column(type: 'integer', nullable: false)]

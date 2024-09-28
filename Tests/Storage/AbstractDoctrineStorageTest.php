@@ -17,11 +17,6 @@ abstract class AbstractDoctrineStorageTest extends DoctrineTestCase
     /**
      * Создает объект хранилища.
      *
-     * @param EntityManager|null $em
-     * @param int                $batch
-     *
-     * @return Storage
-     *
      * @throws \Doctrine\Common\Annotations\AnnotationException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\Tools\ToolsException

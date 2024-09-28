@@ -19,6 +19,7 @@ class ReestrObjects
      * Уникальный идентификатор объекта.
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @ORM\Id
      */
     #[ORM\Column(type: 'integer', nullable: false)]

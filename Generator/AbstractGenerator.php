@@ -20,8 +20,6 @@ abstract class AbstractGenerator
 
     /**
      * Возвращает список всех сущностей ФИАС.
-     *
-     * @return EntityRegistry
      */
     public function getRegistry(): EntityRegistry
     {
@@ -30,8 +28,6 @@ abstract class AbstractGenerator
 
     /**
      * Проверяет, что каталог существует и доступен на запись.
-     *
-     * @param \SplFileInfo $dir
      *
      * @throws \InvalidArgumentException
      */
@@ -46,10 +42,6 @@ abstract class AbstractGenerator
 
     /**
      * Приводит имена классов к единообразному виду.
-     *
-     * @param string $namespace
-     *
-     * @return string
      */
     protected function unifyClassName(string $name): string
     {
@@ -69,10 +61,6 @@ abstract class AbstractGenerator
 
     /**
      * Приводит пространсва имен к единообразному виду.
-     *
-     * @param string $namespace
-     *
-     * @return string
      */
     protected function unifyNamespace(string $namespace): string
     {
@@ -81,10 +69,6 @@ abstract class AbstractGenerator
 
     /**
      * Приводит имена колонок к единообразному виду.
-     *
-     * @param string $name
-     *
-     * @return string
      */
     protected function unifyColumnName(string $name): string
     {

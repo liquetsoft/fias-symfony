@@ -18,6 +18,7 @@ class HouseTypes
      * Идентификатор.
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @ORM\Id
      */
     #[ORM\Column(type: 'integer', nullable: false)]

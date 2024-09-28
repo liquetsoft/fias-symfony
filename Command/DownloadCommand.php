@@ -37,7 +37,7 @@ class DownloadCommand extends Command
     public function __construct(
         Downloader $downloader,
         Unpacker $unpacker,
-        FiasInformer $informer
+        FiasInformer $informer,
     ) {
         $this->downloader = $downloader;
         $this->unpacker = $unpacker;
@@ -89,10 +89,6 @@ class DownloadCommand extends Command
 
     /**
      * Получает url для указанной версии.
-     *
-     * @param string $version
-     *
-     * @return string
      */
     private function findUrlForVersion(string $version): string
     {
@@ -112,7 +108,7 @@ class DownloadCommand extends Command
         }
 
         if (empty($url)) {
-            $message = sprintf("Can't find url for '%s' version.", $version);
+            $message = \sprintf("Can't find url for '%s' version.", $version);
             throw new \RuntimeException($message);
         }
 
@@ -121,8 +117,6 @@ class DownloadCommand extends Command
 
     /**
      * Распаковывает загруженный архив.
-     *
-     * @param \SplFileInfo $archive
      *
      * @throws FileSystemException
      */
@@ -141,10 +135,6 @@ class DownloadCommand extends Command
 
     /**
      * Получает значение аргумента с номером версии.
-     *
-     * @param InputInterface $input
-     *
-     * @return string
      */
     private function getVersionArgument(InputInterface $input): string
     {
@@ -161,10 +151,6 @@ class DownloadCommand extends Command
 
     /**
      * Получает значение аргумента с путем, по которому нужно сохранить файл.
-     *
-     * @param InputInterface $input
-     *
-     * @return \SplFileInfo
      */
     private function getPathArgument(InputInterface $input): \SplFileInfo
     {
@@ -185,10 +171,6 @@ class DownloadCommand extends Command
 
     /**
      * Получает значение флага нужно ли распаковывать архив после загрузки.
-     *
-     * @param InputInterface $input
-     *
-     * @return bool
      */
     private function getExtractionOption(InputInterface $input): bool
     {
