@@ -81,9 +81,8 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
      * {@inheritDoc}
      *
      * @psalm-suppress InvalidStringClass
-     * @psalm-suppress RedundantConditionGivenDocblockType
      */
-    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = [])
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
         $data = \is_array($data) ? $data : [];
         unset($data['#']);
@@ -138,17 +137,50 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
         } elseif ($entity instanceof FiasVersion) {
             $data = $this->setDataToFiasVersionEntity($entity, $data);
         } else {
-            $message = \sprintf("Can't find data extractor for '%s' type.", $type);
-            throw new InvalidArgumentException($message);
+            throw new InvalidArgumentException("Can't find data extractor for '{$type}' type");
         }
 
-        if (!empty($data) && $this->denormalizer) {
+        if (!empty($data)) {
             $context[AbstractNormalizer::OBJECT_TO_POPULATE] = $entity;
             $context['fias_compiled_data_set'] = true;
             $entity = $this->denormalizer->denormalize($data, $type, $format, $context);
         }
 
         return $entity;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return array<string, bool|null>
+     */
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            Apartments::class => true,
+            AddrObjDivision::class => true,
+            NormativeDocsTypes::class => true,
+            RoomTypes::class => true,
+            ObjectLevels::class => true,
+            NormativeDocsKinds::class => true,
+            Rooms::class => true,
+            ApartmentTypes::class => true,
+            AddrObjTypes::class => true,
+            Steads::class => true,
+            NormativeDocs::class => true,
+            OperationTypes::class => true,
+            Houses::class => true,
+            AdmHierarchy::class => true,
+            Carplaces::class => true,
+            ChangeHistory::class => true,
+            AddrObj::class => true,
+            ParamTypes::class => true,
+            Param::class => true,
+            ReestrObjects::class => true,
+            HouseTypes::class => true,
+            MunHierarchy::class => true,
+            FiasVersion::class => true,
+        ];
     }
 
     /**

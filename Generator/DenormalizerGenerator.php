@@ -80,6 +80,7 @@ class DenormalizerGenerator extends AbstractGenerator
 
         $compiledDataSet = 'fias_compiled_data_set';
         $supportsBody = "return empty(\$context['{$compiledDataSet}'])\n    && (\n";
+        $getSupportedTypesBody = '';
         $denormalizeBody = '$data = \\is_array($data) ? $data : [];' . "\nunset(\$data['#']);\n";
         $denormalizeBody .= '$type = trim($type, " \t\n\r\0\x0B/");' . "\n\n";
         $denormalizeBody .= "\$entity = \$context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new \$type();\n\n";
@@ -87,16 +88,16 @@ class DenormalizerGenerator extends AbstractGenerator
         foreach ($descriptors as $key => $descriptor) {
             $className = $this->unifyClassName($descriptor->getName());
             $denormalizeBody .= ($key > 0 ? ' else' : '') . "if (\$entity instanceof {$className}) {\n";
-            $denormalizeBody .= "        \$data = \$this->setDataTo{$className}Entity(\$entity, \$data);\n";
+            $denormalizeBody .= "    \$data = \$this->setDataTo{$className}Entity(\$entity, \$data);\n";
             $denormalizeBody .= '}';
             $supportsBody .= ($key > 0 ? '        || ' : '        ') . "is_subclass_of(\$type, {$className}::class)\n";
+            $getSupportedTypesBody .= "    {$className}::class => true,\n";
         }
         $supportsBody .= "    )\n;";
         $denormalizeBody .= " else {\n";
-        $denormalizeBody .= "    \$message = sprintf(\"Can't find data extractor for '%s' type.\", \$type);\n";
-        $denormalizeBody .= "    throw new InvalidArgumentException(\$message);\n";
+        $denormalizeBody .= "    throw new InvalidArgumentException(\"Can't find data extractor for '{\$type}' type\");\n";
         $denormalizeBody .= "}\n\n";
-        $denormalizeBody .= "if (!empty(\$data) && \$this->denormalizer) {\n";
+        $denormalizeBody .= "if (!empty(\$data)) {\n";
         $denormalizeBody .= "    \$context[AbstractNormalizer::OBJECT_TO_POPULATE] = \$entity;\n";
         $denormalizeBody .= "    \$context['{$compiledDataSet}'] = true;\n";
         $denormalizeBody .= "    \$entity = \$this->denormalizer->denormalize(\$data, \$type, \$format, \$context);\n";
@@ -116,15 +117,22 @@ class DenormalizerGenerator extends AbstractGenerator
 
         $denormalize = $class->addMethod('denormalize')
             ->addComment('{@inheritDoc}')
-            ->addComment('@return mixed')
             ->addComment('@psalm-suppress InvalidStringClass')
-            ->addComment('@psalm-suppress RedundantConditionGivenDocblockType')
+            ->setReturnType('mixed')
             ->setVisibility('public')
             ->setBody($denormalizeBody);
         $denormalize->addParameter('data')->setType('mixed');
         $denormalize->addParameter('type')->setType('string');
         $denormalize->addParameter('format', new PhpLiteral('null'))->setType('string');
         $denormalize->addParameter('context', new PhpLiteral('[]'))->setType('array');
+
+        $getSupportedTypes = $class->addMethod('getSupportedTypes')
+            ->addComment('{@inheritDoc}')
+            ->addComment('@return array<string, bool|null>')
+            ->setReturnType('array')
+            ->setVisibility('public')
+            ->setBody("return [\n{$getSupportedTypesBody}];");
+        $getSupportedTypes->addParameter('format')->setType('string')->setNullable(true);
 
         foreach ($descriptors as $descriptor) {
             $className = $this->unifyClassName($descriptor->getName());
@@ -173,9 +181,6 @@ class DenormalizerGenerator extends AbstractGenerator
         $body .= "\nreturn \$data;";
 
         $method->addComment("Наполняет сущность '{$className}' данными и возвращает те, которые не были использованы.\n");
-        $method->addComment("@param {$className} \$entity\n");
-        $method->addComment("@param array \$data\n");
-        $method->addComment("@return array\n");
         $method->addParameter('entity')->setType($fqcn);
         $method->addParameter('data')->setType('array');
         $method->setVisibility('private');
