@@ -73,13 +73,6 @@ final class Configuration implements ConfigurationInterface
                     ->prototype('scalar')->end()
                     ->defaultValue([])
                 ->end()
-                ->booleanNode('elasticsearch_enable')
-                    ->defaultValue(false)
-                ->end()
-                ->arrayNode('elasticsearch_hosts')
-                    ->prototype('scalar')->end()
-                    ->defaultValue([])
-                ->end()
             ->end()
         ;
 

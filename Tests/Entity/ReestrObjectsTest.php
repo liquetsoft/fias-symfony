@@ -18,7 +18,7 @@ class ReestrObjectsTest extends EntityCase
     /**
      * {@inheritDoc}
      */
-    protected function createEntity()
+    protected function createEntity(): object
     {
         return new ReestrObjects();
     }
@@ -29,13 +29,13 @@ class ReestrObjectsTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'objectid' => $this->createFakeData()->numberBetween(1, 1000000),
+            'objectid' => 123321,
             'createdate' => new \DateTimeImmutable(),
-            'changeid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'levelid' => $this->createFakeData()->numberBetween(1, 1000000),
+            'changeid' => 123321,
+            'levelid' => 123321,
             'updatedate' => new \DateTimeImmutable(),
-            'objectguid' => $this->getMockBuilder(Uuid::class)->disableOriginalConstructor()->getMock(),
-            'isactive' => $this->createFakeData()->numberBetween(1, 1000000),
+            'objectguid' => $this->mock(Uuid::class),
+            'isactive' => 123321,
         ];
     }
 }

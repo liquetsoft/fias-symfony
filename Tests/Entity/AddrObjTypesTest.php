@@ -17,7 +17,7 @@ class AddrObjTypesTest extends EntityCase
     /**
      * {@inheritDoc}
      */
-    protected function createEntity()
+    protected function createEntity(): object
     {
         return new AddrObjTypes();
     }
@@ -28,15 +28,15 @@ class AddrObjTypesTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'id' => $this->createFakeData()->numberBetween(1, 1000000),
-            'level' => $this->createFakeData()->numberBetween(1, 1000000),
-            'shortname' => $this->createFakeData()->word(),
-            'name' => $this->createFakeData()->word(),
-            'desc' => $this->createFakeData()->word(),
+            'id' => 123321,
+            'level' => 123321,
+            'shortname' => 'test string',
+            'name' => 'test string',
+            'desc' => 'test string',
             'updatedate' => new \DateTimeImmutable(),
             'startdate' => new \DateTimeImmutable(),
             'enddate' => new \DateTimeImmutable(),
-            'isactive' => $this->createFakeData()->word(),
+            'isactive' => 'test string',
         ];
     }
 }

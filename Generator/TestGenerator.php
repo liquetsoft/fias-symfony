@@ -75,16 +75,17 @@ class TestGenerator extends AbstractGenerator
         $createEntityMethod->addComment("{@inheritDoc}\n");
         $createEntityMethod->setVisibility('protected');
         $createEntityMethod->setBody("return new {$baseName}();");
+        $createEntityMethod->setReturnType('object');
 
         $accessors = "return [\n";
         foreach ($descriptor->getFields() as $field) {
             $name = $this->unifyColumnName($field->getName());
-            $value = '$this->createFakeData()->word()';
+            $value = '"test string"';
             $type = trim($field->getType() . '_' . $field->getSubType(), ' _');
             if ($type === 'int') {
-                $value = '$this->createFakeData()->numberBetween(1, 1000000)';
+                $value = '123321';
             } elseif ($type === 'string_uuid') {
-                $value = '$this->getMockBuilder(Uuid::class)->disableOriginalConstructor()->getMock()';
+                $value = '$this->mock(Uuid::class)';
             } elseif ($type === 'string_date') {
                 $value = 'new DateTimeImmutable()';
             }

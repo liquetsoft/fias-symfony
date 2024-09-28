@@ -18,7 +18,7 @@ class AddrObjTest extends EntityCase
     /**
      * {@inheritDoc}
      */
-    protected function createEntity()
+    protected function createEntity(): object
     {
         return new AddrObj();
     }
@@ -29,21 +29,21 @@ class AddrObjTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'id' => $this->createFakeData()->numberBetween(1, 1000000),
-            'objectid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'objectguid' => $this->getMockBuilder(Uuid::class)->disableOriginalConstructor()->getMock(),
-            'changeid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'name' => $this->createFakeData()->word(),
-            'typename' => $this->createFakeData()->word(),
-            'level' => $this->createFakeData()->word(),
-            'opertypeid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'previd' => $this->createFakeData()->numberBetween(1, 1000000),
-            'nextid' => $this->createFakeData()->numberBetween(1, 1000000),
+            'id' => 123321,
+            'objectid' => 123321,
+            'objectguid' => $this->mock(Uuid::class),
+            'changeid' => 123321,
+            'name' => 'test string',
+            'typename' => 'test string',
+            'level' => 'test string',
+            'opertypeid' => 123321,
+            'previd' => 123321,
+            'nextid' => 123321,
             'updatedate' => new \DateTimeImmutable(),
             'startdate' => new \DateTimeImmutable(),
             'enddate' => new \DateTimeImmutable(),
-            'isactual' => $this->createFakeData()->numberBetween(1, 1000000),
-            'isactive' => $this->createFakeData()->numberBetween(1, 1000000),
+            'isactual' => 123321,
+            'isactive' => 123321,
         ];
     }
 }

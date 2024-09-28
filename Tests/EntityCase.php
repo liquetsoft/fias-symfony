@@ -12,7 +12,7 @@ abstract class EntityCase extends BaseCase
     /**
      * Возвращает инициированую сущность для тестирования.
      */
-    abstract protected function createEntity();
+    abstract protected function createEntity(): object;
 
     /**
      * Возвращает массив с проверочными значениями для геттеров и сеттеров.
@@ -35,7 +35,7 @@ abstract class EntityCase extends BaseCase
     /**
      * Проводит тест аццессоров по указанным параметрам в массиве.
      */
-    protected function assertAccessorsCase(string $property, $input, $output): void
+    protected function assertAccessorsCase(string $property, mixed $input, mixed $output): void
     {
         $setter = 'set' . ucfirst($property);
         $getter = 'get' . ucfirst($property);

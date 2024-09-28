@@ -24,9 +24,6 @@ final class LiquetsoftFiasExtension extends Extension
         $this->loadConfigurationToContainer($configs, $container);
 
         $this->loadServicesToContainer($container, 'services');
-        if (!empty($configs[0]['elasticsearch_enable'])) {
-            $this->loadServicesToContainer($container, 'services_elastic');
-        }
     }
 
     /**

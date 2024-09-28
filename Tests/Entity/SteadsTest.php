@@ -18,7 +18,7 @@ class SteadsTest extends EntityCase
     /**
      * {@inheritDoc}
      */
-    protected function createEntity()
+    protected function createEntity(): object
     {
         return new Steads();
     }
@@ -29,19 +29,19 @@ class SteadsTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'id' => $this->createFakeData()->numberBetween(1, 1000000),
-            'objectid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'objectguid' => $this->getMockBuilder(Uuid::class)->disableOriginalConstructor()->getMock(),
-            'changeid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'number' => $this->createFakeData()->word(),
-            'opertypeid' => $this->createFakeData()->word(),
-            'previd' => $this->createFakeData()->numberBetween(1, 1000000),
-            'nextid' => $this->createFakeData()->numberBetween(1, 1000000),
+            'id' => 123321,
+            'objectid' => 123321,
+            'objectguid' => $this->mock(Uuid::class),
+            'changeid' => 123321,
+            'number' => 'test string',
+            'opertypeid' => 'test string',
+            'previd' => 123321,
+            'nextid' => 123321,
             'updatedate' => new \DateTimeImmutable(),
             'startdate' => new \DateTimeImmutable(),
             'enddate' => new \DateTimeImmutable(),
-            'isactual' => $this->createFakeData()->numberBetween(1, 1000000),
-            'isactive' => $this->createFakeData()->numberBetween(1, 1000000),
+            'isactual' => 123321,
+            'isactive' => 123321,
         ];
     }
 }

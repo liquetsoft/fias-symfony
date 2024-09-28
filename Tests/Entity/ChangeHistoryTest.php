@@ -18,7 +18,7 @@ class ChangeHistoryTest extends EntityCase
     /**
      * {@inheritDoc}
      */
-    protected function createEntity()
+    protected function createEntity(): object
     {
         return new ChangeHistory();
     }
@@ -29,11 +29,11 @@ class ChangeHistoryTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'changeid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'objectid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'adrobjectid' => $this->getMockBuilder(Uuid::class)->disableOriginalConstructor()->getMock(),
-            'opertypeid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'ndocid' => $this->createFakeData()->numberBetween(1, 1000000),
+            'changeid' => 123321,
+            'objectid' => 123321,
+            'adrobjectid' => $this->mock(Uuid::class),
+            'opertypeid' => 123321,
+            'ndocid' => 123321,
             'changedate' => new \DateTimeImmutable(),
         ];
     }
