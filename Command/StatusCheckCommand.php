@@ -14,16 +14,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Консольная команда, которая отображает текущий статус всех сервисов ФИАС.
  */
-class StatusCheckCommand extends Command
+final class StatusCheckCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:status';
+    protected static string $defaultName = 'liquetsoft:fias:status';
 
-    private FiasStatusChecker $checker;
-
-    public function __construct(FiasStatusChecker $checker)
+    public function __construct(private readonly FiasStatusChecker $checker)
     {
-        $this->checker = $checker;
-
         parent::__construct();
     }
 

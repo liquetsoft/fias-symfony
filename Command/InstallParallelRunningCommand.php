@@ -15,16 +15,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Команда для параллельных процессов, в которых идет установка ФИАС.
  */
-class InstallParallelRunningCommand extends Command
+final class InstallParallelRunningCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:install_parallel_running';
+    protected static string $defaultName = 'liquetsoft:fias:install_parallel_running';
 
-    protected Pipe $pipeline;
-
-    public function __construct(Pipe $pipeline)
+    public function __construct(private readonly Pipe $pipeline)
     {
-        $this->pipeline = $pipeline;
-
         parent::__construct();
     }
 

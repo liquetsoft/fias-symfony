@@ -15,16 +15,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Команда для параллельных процессов, в которых идет обновление ФИАС.
  */
-class UpdateParallelRunningCommand extends Command
+final class UpdateParallelRunningCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:update_parallel_running';
+    protected static string $defaultName = 'liquetsoft:fias:update_parallel_running';
 
-    protected Pipe $pipeline;
-
-    public function __construct(Pipe $pipeline)
+    public function __construct(private readonly Pipe $pipeline)
     {
-        $this->pipeline = $pipeline;
-
         parent::__construct();
     }
 

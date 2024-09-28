@@ -16,19 +16,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Консольная команда, которая принудительно задает номер текущей версии ФИАС.
  */
-class VersionSetCommand extends Command
+final class VersionSetCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:version_set';
+    protected static string $defaultName = 'liquetsoft:fias:version_set';
 
-    private FiasInformer $informer;
-
-    private VersionManager $versionManager;
-
-    public function __construct(FiasInformer $informer, VersionManager $versionManager)
-    {
-        $this->informer = $informer;
-        $this->versionManager = $versionManager;
-
+    public function __construct(
+        private readonly FiasInformer $informer,
+        private readonly VersionManager $versionManager,
+    ) {
         parent::__construct();
     }
 

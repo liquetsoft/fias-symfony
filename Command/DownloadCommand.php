@@ -20,28 +20,19 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Консольная команда, которая загружает указанную версию ФИАС в указанную папку.
  */
-class DownloadCommand extends Command
+final class DownloadCommand extends Command
 {
     private const FULL_VERSION_NAME = 'full';
 
-    protected static $defaultName = 'liquetsoft:fias:download';
-
-    private Downloader $downloader;
-
-    private Unpacker $unpacker;
-
-    private FiasInformer $informer;
+    protected static string $defaultName = 'liquetsoft:fias:download';
 
     private FileSystemHelperInterface $fs;
 
     public function __construct(
-        Downloader $downloader,
-        Unpacker $unpacker,
-        FiasInformer $informer,
+        private readonly Downloader $downloader,
+        private readonly Unpacker $unpacker,
+        private readonly FiasInformer $informer,
     ) {
-        $this->downloader = $downloader;
-        $this->unpacker = $unpacker;
-        $this->informer = $informer;
         $this->fs = FileSystemFactory::create();
 
         parent::__construct();

@@ -16,16 +16,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Команда, которая обновляет ФИАС с текущей версии до самой свежей.
  */
-class UpdateCommand extends Command
+final class UpdateCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:update';
+    protected static string $defaultName = 'liquetsoft:fias:update';
 
-    protected Pipe $pipeline;
-
-    public function __construct(Pipe $pipeline)
+    public function __construct(private readonly Pipe $pipeline)
     {
-        $this->pipeline = $pipeline;
-
         parent::__construct();
     }
 

@@ -14,16 +14,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Команда, которая запускает полную установку ФИАС в параллельных процессах.
  */
-class InstallParallelCommand extends Command
+final class InstallParallelCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:install';
+    protected static string $defaultName = 'liquetsoft:fias:install';
 
-    protected Pipe $pipeline;
-
-    public function __construct(Pipe $pipeline)
+    public function __construct(private readonly Pipe $pipeline)
     {
-        $this->pipeline = $pipeline;
-
         parent::__construct();
     }
 

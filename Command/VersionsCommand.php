@@ -16,19 +16,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Консольная команда, которая отображает текущую версию, полную версию
  * и список версий на обновление.
  */
-class VersionsCommand extends Command
+final class VersionsCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:versions';
+    protected static string $defaultName = 'liquetsoft:fias:versions';
 
-    private FiasInformer $informer;
-
-    private VersionManager $versionManager;
-
-    public function __construct(FiasInformer $informer, VersionManager $versionManager)
-    {
-        $this->informer = $informer;
-        $this->versionManager = $versionManager;
-
+    public function __construct(
+        private readonly FiasInformer $informer,
+        private readonly VersionManager $versionManager,
+    ) {
         parent::__construct();
     }
 

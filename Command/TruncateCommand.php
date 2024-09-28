@@ -15,16 +15,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * Команда, которая очищает хранилища для всех сущностей проекта, привязанных
  * к сущностям ФИАС.
  */
-class TruncateCommand extends Command
+final class TruncateCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:truncate';
+    protected static string $defaultName = 'liquetsoft:fias:truncate';
 
-    protected Task $truncateTask;
-
-    public function __construct(Task $truncateTask)
+    public function __construct(private readonly Task $truncateTask)
     {
-        $this->truncateTask = $truncateTask;
-
         parent::__construct();
     }
 

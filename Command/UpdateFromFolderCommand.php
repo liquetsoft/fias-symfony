@@ -17,16 +17,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * Команда, которая запускает обновление ФИАС из xml файлов,
  * сохраненных на локальном диске.
  */
-class UpdateFromFolderCommand extends Command
+final class UpdateFromFolderCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:update_from_folder';
+    protected static string $defaultName = 'liquetsoft:fias:update_from_folder';
 
-    protected Pipe $pipeline;
-
-    public function __construct(Pipe $pipeline)
+    public function __construct(private readonly Pipe $pipeline)
     {
-        $this->pipeline = $pipeline;
-
         parent::__construct();
     }
 

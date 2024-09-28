@@ -17,16 +17,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * Команда, которая запускает полную установку ФИАС из xml файлов,
  * сохраненных на локальном диске.
  */
-class InstallFromFolderCommand extends Command
+final class InstallFromFolderCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:install_from_folder';
+    protected static string $defaultName = 'liquetsoft:fias:install_from_folder';
 
-    protected Pipe $pipeline;
-
-    public function __construct(Pipe $pipeline)
+    public function __construct(private readonly Pipe $pipeline)
     {
-        $this->pipeline = $pipeline;
-
         parent::__construct();
     }
 
