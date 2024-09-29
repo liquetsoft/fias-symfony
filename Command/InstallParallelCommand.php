@@ -30,7 +30,7 @@ final class InstallParallelCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Installs full version of FIAS from scratch in parallel processes.');
+        $this->setDescription('Installs full version of FIAS from scratch in parallel processes');
     }
 
     /**
@@ -40,7 +40,7 @@ final class InstallParallelCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->note('Installing full version of FIAS in parallel processes.');
+        $io->note('Installing full version of FIAS in parallel processes');
         $start = microtime(true);
 
         $state = new ArrayState();

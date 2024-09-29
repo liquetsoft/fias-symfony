@@ -32,8 +32,8 @@ final class InstallParallelRunningCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Command for running parallel installation.')
-            ->addArgument('files', InputArgument::OPTIONAL, 'Json encoded list of files data.')
+            ->setDescription('Command for running one single thread of installation process')
+            ->addArgument('files', InputArgument::OPTIONAL, 'Json encoded list of files to process')
         ;
     }
 
@@ -47,11 +47,11 @@ final class InstallParallelRunningCommand extends Command
             $files = reset($files);
         }
 
-        if (!empty($files)) {
+        if ($files !== null && $files !== '') {
             $files = json_decode((string) $files, true);
         } else {
             $stdIn = file_get_contents('php://stdin');
-            $files = !empty($stdIn) ? json_decode($stdIn, true) : [];
+            $files = $stdIn !== false ? json_decode($stdIn, true) : [];
         }
 
         $state = new ArrayState();
