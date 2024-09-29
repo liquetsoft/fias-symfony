@@ -113,14 +113,97 @@ final class HttpTransportSymfonyTest extends BaseCase
      */
     public function testGetException(): void
     {
-        $url = 'https://test.test/url';
-
         $mockResponse = new MockResponse(info: ['error' => 'host unreachable']);
-        $httpClient = new MockHttpClient($mockResponse, $url);
+        $httpClient = new MockHttpClient($mockResponse, self::REQUEST_URL);
 
         $client = new HttpTransportSymfony($httpClient);
 
         $this->expectException(HttpTransportException::class);
-        $client->get($url);
+        $client->get(self::REQUEST_URL);
+    }
+
+    /**
+     * Проверяет, что объект правильно загрузит файл.
+     */
+    public function testDownload(): void
+    {
+        $body = 'test body';
+        $destination = $this->getPathToTestFile('testDownload', 'qwe');
+        $destinationResource = fopen($destination, 'wb');
+
+        $mockResponse = new MockResponse(
+            $body,
+            [
+                'http_code' => self::RESPONSE_STATUS_CODE,
+                'response_headers' => self::RESPONSE_SYMFONY_HEADERS,
+            ]
+        );
+        $httpClient = new MockHttpClient($mockResponse, self::REQUEST_URL);
+
+        $client = new HttpTransportSymfony($httpClient);
+        $res = $client->download(self::REQUEST_URL, $destinationResource);
+        fclose($destinationResource);
+
+        $this->assertSame('GET', $mockResponse->getRequestMethod());
+        $this->assertSame(self::REQUEST_URL, $mockResponse->getRequestUrl());
+
+        $this->assertSame(self::RESPONSE_STATUS_CODE, $res->getStatusCode());
+        $this->assertSame(self::RESPONSE_LOCAL_HEADERS, $res->getHeaders());
+        $this->assertSame($body, file_get_contents($destination));
+    }
+
+    /**
+     * Проверяет, что объект правильно загрузит файл с указанной точки.
+     */
+    public function testDownloadBytes(): void
+    {
+        $body = 'test body';
+        $destination = $this->getPathToTestFile('testDownload', 'qwe');
+        $destinationResource = fopen($destination, 'wb');
+        $bytesFrom = 100;
+        $bytesTo = 200;
+
+        $mockResponse = new MockResponse(
+            $body,
+            [
+                'http_code' => self::RESPONSE_STATUS_CODE,
+                'response_headers' => self::RESPONSE_SYMFONY_HEADERS,
+            ]
+        );
+        $httpClient = new MockHttpClient($mockResponse, self::REQUEST_URL);
+
+        $client = new HttpTransportSymfony($httpClient);
+        $res = $client->download(self::REQUEST_URL, $destinationResource, $bytesFrom, $bytesTo);
+
+        $this->assertSame('GET', $mockResponse->getRequestMethod());
+        $this->assertSame(self::REQUEST_URL, $mockResponse->getRequestUrl());
+        $this->assertSame(
+            [
+                'Range: bytes=' . $bytesFrom . '-' . ($bytesTo - 1),
+                'Accept: */*',
+            ],
+            $mockResponse->getRequestOptions()['headers']
+        );
+
+        $this->assertSame(self::RESPONSE_STATUS_CODE, $res->getStatusCode());
+        $this->assertSame(self::RESPONSE_LOCAL_HEADERS, $res->getHeaders());
+        $this->assertSame($body, file_get_contents($destination));
+    }
+
+    /**
+     * Проверяет, что объект правильно перехватит исключение при загрузке файла.
+     */
+    public function testDownloadException(): void
+    {
+        $destination = $this->getPathToTestFile('testDownload', 'qwe');
+        $destinationResource = fopen($destination, 'wb');
+
+        $mockResponse = new MockResponse(info: ['error' => 'host unreachable']);
+        $httpClient = new MockHttpClient($mockResponse, self::REQUEST_URL);
+
+        $client = new HttpTransportSymfony($httpClient);
+
+        $this->expectException(HttpTransportException::class);
+        $client->download(self::REQUEST_URL, $destinationResource);
     }
 }

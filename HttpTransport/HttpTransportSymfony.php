@@ -75,7 +75,7 @@ final class HttpTransportSymfony implements HttpTransport
         try {
             $response = $this->symfonyHttpClient->request('GET', $url, $params);
             $statusCode = $response->getStatusCode();
-            if (200 !== $statusCode) {
+            if ($statusCode <= 200 || $statusCode >= 300) {
                 return HttpTransportResponseFactory::create($statusCode);
             }
             foreach ($this->symfonyHttpClient->stream($response) as $chunk) {
