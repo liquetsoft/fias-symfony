@@ -32,7 +32,7 @@ services:
 
 
     liquetsoft_fias.downloader.service:
-        class: Liquetsoft\Fias\Component\Downloader\CurlDownloader
+        class: Liquetsoft\Fias\Component\Downloader\DownloaderImpl
         arguments:
             - '@liquetsoft_fias.http_transport.service'
             - '%liquetsoft_fias.download_retry_attempts%'
