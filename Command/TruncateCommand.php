@@ -31,7 +31,7 @@ final class TruncateCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Truncates storage for binded entities.');
+        $this->setDescription('Truncates storage for bound entities');
     }
 
     /**
@@ -41,12 +41,12 @@ final class TruncateCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->note('Truncating storage for binded entities.');
+        $io->note('Truncating storage for bound entities');
 
         $state = new ArrayState();
         $this->truncateTask->run($state);
 
-        $io->success('Storage truncated.');
+        $io->success('Storage truncated');
 
         return 0;
     }
