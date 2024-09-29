@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 
-use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
@@ -32,7 +31,7 @@ final class UpdateCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Updates FIAS to latest version.');
+        $this->setDescription('Updates FIAS to the latest version');
     }
 
     /**
@@ -42,27 +41,27 @@ final class UpdateCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->note('Updating FIAS.');
+        $io->note('Updating FIAS');
         $start = microtime(true);
 
         do {
             $state = new ArrayState();
-            $this->pipeline->run($state);
-
-            $info = $state->getParameter(StateParameter::FIAS_INFO);
-            if (!($info instanceof InformerResponse)) {
+            try {
+                $this->pipeline->run($state);
+            } catch (\Throwable $e) {
                 throw new \RuntimeException(
-                    "There is no '" . StateParameter::FIAS_INFO . "' parameter in state."
+                    message: "Something went wrong during the updating. Please check the Laravel's log to get more information",
+                    previous: $e
                 );
             }
-
-            if ($info->hasResult()) {
-                $io->note("Updated to version '{$info->getVersion()}'.");
+            $newVersion = $state->getParameterString(StateParameter::FIAS_NEXT_VERSION_NUMBER);
+            if ($newVersion !== '') {
+                $io->note("Updated to version '{$newVersion}'");
             }
-        } while ($info->hasResult());
+        } while ($newVersion !== '');
 
         $total = round(microtime(true) - $start, 4);
-        $io->success("FIAS updated after {$total} s.");
+        $io->note("FIAS updated after {$total} s.");
 
         return 0;
     }
