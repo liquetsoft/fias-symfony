@@ -21,9 +21,9 @@ services:
 
 
     liquetsoft_fias.status_checker.service:
-        class: Liquetsoft\Fias\Component\FiasStatusChecker\CurlStatusChecker
+        class: Liquetsoft\Fias\Component\FiasStatusChecker\FiasStatusCheckerImpl
         arguments:
-            - '%liquetsoft_fias.informer_wsdl%'
+            - '@liquetsoft_fias.http_transport.service'
             - '@liquetsoft_fias.informer.service'
 
     Liquetsoft\Fias\Component\FiasStatusChecker\FiasStatusChecker:
