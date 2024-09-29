@@ -26,8 +26,6 @@ final class DownloadCommand extends Command
 {
     private const LATEST_VERSION_NAME = 'latest';
 
-    protected static string $defaultName = 'liquetsoft:fias:download';
-
     private readonly FileSystemHelperInterface $fs;
 
     public function __construct(
@@ -46,6 +44,7 @@ final class DownloadCommand extends Command
     protected function configure(): void
     {
         $this
+            ->setName('liquetsoft:fias:download')
             ->setDescription('Downloads provided version of FIAS')
             ->addArgument('pathToDownload', InputArgument::REQUIRED, 'Path in local file system to download file')
             ->addArgument('version', InputArgument::OPTIONAL, 'Version number to download. "' . self::LATEST_VERSION_NAME . '" is for the latest version')

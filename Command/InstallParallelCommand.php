@@ -18,8 +18,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 final class InstallParallelCommand extends Command
 {
-    protected static string $defaultName = 'liquetsoft:fias:install';
-
     public function __construct(private readonly Pipe $pipeline)
     {
         parent::__construct();
@@ -30,7 +28,10 @@ final class InstallParallelCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Installs full version of FIAS from scratch in parallel processes');
+        $this
+            ->setName('liquetsoft:fias:install')
+            ->setDescription('Installs full version of FIAS from scratch in parallel processes')
+        ;
     }
 
     /**

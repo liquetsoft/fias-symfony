@@ -19,8 +19,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class InstallParallelRunningCommand extends Command
 {
-    protected static string $defaultName = 'liquetsoft:fias:install_parallel_running';
-
     public function __construct(private readonly Pipe $pipeline)
     {
         parent::__construct();
@@ -32,6 +30,7 @@ final class InstallParallelRunningCommand extends Command
     protected function configure(): void
     {
         $this
+            ->setName('liquetsoft:fias:install_parallel_running')
             ->setDescription('Command for running one single thread of installation process')
             ->addArgument('files', InputArgument::OPTIONAL, 'Json encoded list of files to process')
         ;

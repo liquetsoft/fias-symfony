@@ -19,8 +19,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 final class UpdateCommand extends Command
 {
-    protected static string $defaultName = 'liquetsoft:fias:update';
-
     public function __construct(private readonly Pipe $pipeline)
     {
         parent::__construct();
@@ -31,7 +29,10 @@ final class UpdateCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Updates FIAS to the latest version');
+        $this
+            ->setName('liquetsoft:fias:update')
+            ->setDescription('Updates FIAS to the latest version')
+        ;
     }
 
     /**

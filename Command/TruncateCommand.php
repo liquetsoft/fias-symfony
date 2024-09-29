@@ -19,8 +19,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 final class TruncateCommand extends Command
 {
-    protected static string $defaultName = 'liquetsoft:fias:truncate';
-
     public function __construct(private readonly Task $truncateTask)
     {
         parent::__construct();
@@ -31,7 +29,10 @@ final class TruncateCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Truncates storage for bound entities');
+        $this
+            ->setName('liquetsoft:fias:truncate')
+            ->setDescription('Truncates storage for bound entities')
+        ;
     }
 
     /**

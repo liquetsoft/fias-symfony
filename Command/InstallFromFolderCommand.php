@@ -21,8 +21,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 final class InstallFromFolderCommand extends Command
 {
-    protected static string $defaultName = 'liquetsoft:fias:install_from_folder';
-
     public function __construct(private readonly Pipe $pipeline)
     {
         parent::__construct();
@@ -34,6 +32,7 @@ final class InstallFromFolderCommand extends Command
     protected function configure(): void
     {
         $this
+            ->setName('liquetsoft:fias:install_from_folder')
             ->setDescription('Installs full version of FIAS from folder')
             ->addArgument('folder', InputArgument::REQUIRED, 'Path to folder on local system with FIAS xmls')
         ;

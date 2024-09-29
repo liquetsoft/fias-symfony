@@ -20,8 +20,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class VersionsCommand extends Command
 {
-    protected static string $defaultName = 'liquetsoft:fias:versions';
-
     public function __construct(
         private readonly FiasInformer $informer,
         private readonly VersionManager $versionManager,
@@ -34,7 +32,10 @@ final class VersionsCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Shows information about current version, delta versions and full version');
+        $this
+            ->setName('liquetsoft:fias:versions')
+            ->setDescription('Shows information about current version, delta versions and full version')
+        ;
     }
 
     /**

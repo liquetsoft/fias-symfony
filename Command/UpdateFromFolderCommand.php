@@ -21,8 +21,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 final class UpdateFromFolderCommand extends Command
 {
-    protected static string $defaultName = 'liquetsoft:fias:update_from_folder';
-
     public function __construct(private readonly Pipe $pipeline)
     {
         parent::__construct();
@@ -34,6 +32,7 @@ final class UpdateFromFolderCommand extends Command
     protected function configure(): void
     {
         $this
+            ->setName('liquetsoft:fias:update_from_folder')
             ->setDescription('Updates version of FIAS from the provided folder.')
             ->addArgument('folder', InputArgument::REQUIRED, 'Path to the folder on local file system with FIAS xmls')
         ;

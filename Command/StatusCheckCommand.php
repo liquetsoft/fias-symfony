@@ -20,8 +20,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 final class StatusCheckCommand extends Command
 {
-    protected static string $defaultName = 'liquetsoft:fias:status';
-
     public function __construct(private readonly FiasStatusChecker $checker)
     {
         parent::__construct();
@@ -32,7 +30,10 @@ final class StatusCheckCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Shows information about current status of FIAS services');
+        $this
+            ->setName('liquetsoft:fias:status')
+            ->setDescription('Shows information about current status of FIAS services')
+        ;
     }
 
     /**

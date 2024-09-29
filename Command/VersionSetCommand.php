@@ -20,8 +20,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 final class VersionSetCommand extends Command
 {
-    protected static string $defaultName = 'liquetsoft:fias:version_set';
-
     public function __construct(
         private readonly FiasInformer $informer,
         private readonly VersionManager $versionManager,
@@ -35,6 +33,7 @@ final class VersionSetCommand extends Command
     protected function configure(): void
     {
         $this
+            ->setName('liquetsoft:fias:version_set')
             ->setDescription('Force current version of FIAS with provided version')
             ->addArgument('number', InputArgument::REQUIRED, 'New version')
         ;
