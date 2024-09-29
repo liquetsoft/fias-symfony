@@ -3,7 +3,9 @@ services:
 
 
     liquetsoft_fias.http_transport.service:
-        class: Liquetsoft\Fias\Component\HttpTransport\HttpTransportCurl
+        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\HttpTransport\HttpTransportSymfony
+        arguments:
+            - '@http_client'
 
     Liquetsoft\Fias\Component\HttpTransport\HttpTransport:
         alias: liquetsoft_fias.http_transport.service

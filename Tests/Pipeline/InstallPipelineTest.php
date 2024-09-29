@@ -34,7 +34,7 @@ use Symfony\Component\Uid\Uuid;
  *
  * @internal
  */
-class InstallPipelineTest extends DoctrineTestCase
+final class InstallPipelineTest extends DoctrineTestCase
 {
     /**
      * Тест для проверки пайплайна с установкой ФИАС с ноля.
