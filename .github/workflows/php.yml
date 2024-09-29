@@ -119,7 +119,9 @@ jobs:
           php bin/console cache:clear
           php bin/console doctrine:schema:create -n
       - name: Lint container
-        run: php bin/console lint:container
+        run: |
+          cd example_app
+          php bin/console lint:container
       - name: Test FIAS
         run: |
           cd example_app
