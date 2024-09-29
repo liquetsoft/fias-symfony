@@ -27,9 +27,6 @@ class EntityGenerator extends AbstractGenerator
     /**
      * Создает классы сущностей в указанной папке с указанным пространством имен.
      *
-     * @param \SplFileInfo $dir
-     * @param string       $namespace
-     *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
@@ -49,9 +46,6 @@ class EntityGenerator extends AbstractGenerator
     /**
      * Процесс генерации классов.
      *
-     * @param \SplFileInfo $dir
-     * @param string       $namespace
-     *
      * @throws \Throwable
      */
     protected function generate(\SplFileInfo $dir, string $namespace): void
@@ -64,10 +58,6 @@ class EntityGenerator extends AbstractGenerator
 
     /**
      * Создает php класс для указанного дескриптора.
-     *
-     * @param EntityDescriptor $descriptor
-     * @param \SplFileInfo     $dir
-     * @param string           $namespace
      *
      * @throws \Throwable
      */
@@ -100,9 +90,6 @@ class EntityGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые импорты в пространство имен.
-     *
-     * @param PhpNamespace     $namespace
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateNamespace(PhpNamespace $namespace, EntityDescriptor $descriptor): void
     {
@@ -121,9 +108,6 @@ class EntityGenerator extends AbstractGenerator
 
     /**
      * Добавляет всен необходимые для класса комментарии.
-     *
-     * @param ClassType        $class
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateClass(ClassType $class, EntityDescriptor $descriptor): void
     {
@@ -132,6 +116,7 @@ class EntityGenerator extends AbstractGenerator
             $class->addComment("{$description}.\n");
         }
 
+        $class->addComment('@psalm-consistent-constructor');
         $class->addComment("@ORM\MappedSuperclass\n");
         $class->addAttribute(MappedSuperclass::class);
 
@@ -158,9 +143,6 @@ class EntityGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые для свойства комментарии.
-     *
-     * @param Property    $property
-     * @param EntityField $field
      */
     protected function decorateProperty(Property $property, EntityField $field): void
     {
@@ -223,7 +205,7 @@ class EntityGenerator extends AbstractGenerator
             default:
                 $defaultValue = $field->isNullable() ? null : '';
                 $column = '@ORM\Column(type="string"';
-                $column .= $field->getLength() ? ", length={$field->getLength()}" : '';
+                $column .= $field->getLength() !== null ? ", length={$field->getLength()}" : '';
                 $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
                 $column .= ')';
                 $property->addComment($column);
@@ -232,7 +214,7 @@ class EntityGenerator extends AbstractGenerator
                     [
                         'type' => 'string',
                         'nullable' => $field->isNullable(),
-                        'length' => $field->getLength() ?: 255,
+                        'length' => $field->getLength() ?? 255,
                     ]
                 );
                 if ($field->isPrimary()) {
@@ -253,9 +235,6 @@ class EntityGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые для сеттера комментарии.
-     *
-     * @param Method      $method
-     * @param EntityField $field
      */
     protected function decorateSetter(Method $method, EntityField $field): void
     {
@@ -289,9 +268,6 @@ class EntityGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые для геттера комментарии.
-     *
-     * @param Method      $method
-     * @param EntityField $field
      */
     protected function decorateGetter(Method $method, EntityField $field): void
     {

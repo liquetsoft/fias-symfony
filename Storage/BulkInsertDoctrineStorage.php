@@ -17,10 +17,8 @@ use Psr\Log\LogLevel;
  * Следует понимать, что события и другие фичи Doctrine, связанные с сущностями
  * при такой вставке не работают. Кроме того, данная реализация подходит не для всех СУБД.
  */
-class BulkInsertDoctrineStorage extends DoctrineStorage
+final class BulkInsertDoctrineStorage extends DoctrineStorage
 {
-    private ?LoggerInterface $logger;
-
     /**
      * Сохраненные в памяти данные для множественной вставки.
      *
@@ -30,10 +28,12 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      */
     private array $insertData = [];
 
-    public function __construct(EntityManager $em, int $batchCount = 1000, ?LoggerInterface $logger = null)
-    {
+    public function __construct(
+        EntityManager $em,
+        int $batchCount = 1000,
+        private readonly ?LoggerInterface $logger = null,
+    ) {
         parent::__construct($em, $batchCount);
-        $this->logger = $logger;
     }
 
     /**
@@ -73,8 +73,6 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     /**
      * Проверяет нужно ли отправлять запросы на множественные вставки элементов,
      * сохраненых в памяти.
-     *
-     * @param bool $force
      */
     private function checkAndFlushInsert(bool $force = false): void
     {
@@ -89,10 +87,7 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     /**
      * Отправляет запрос на массовую вставку данных в таблицу.
      *
-     * @param string                           $tableName
      * @param array<int, array<string, mixed>> $data
-     *
-     * @throws \RuntimeException
      */
     private function bulkInsert(string $tableName, array $data): void
     {
@@ -110,7 +105,6 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
      * Только для некоторых случаев:
      *    - повторяющийся первичный ключ
      *
-     * @param string                           $tableName
      * @param array<int, array<string, mixed>> $data
      */
     private function prepareAndRunBulkSafely(string $tableName, array $data): void
@@ -135,17 +129,13 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
     /**
      * Непосредственное создание и запуск запроса на исполнение.
      *
-     * @param string                           $tableName
      * @param array<int, array<string, mixed>> $data
-     *
-     * @throws \RuntimeException
-     * @throws DBALException
      */
     private function prepareAndRunBulkInsert(string $tableName, array $data): void
     {
         $dataSample = reset($data);
 
-        if (!empty($dataSample)) {
+        if ($dataSample !== false) {
             $paramNames = implode(', ', array_map([$this->em->getConnection(), 'quoteIdentifier'], array_keys($dataSample)));
             $paramValues = implode(', ', array_fill(0, \count($dataSample), '?'));
             $dataValues = '(' . implode('), (', array_fill(0, \count($data), $paramValues)) . ')';
@@ -165,10 +155,6 @@ class BulkInsertDoctrineStorage extends DoctrineStorage
 
     /**
      * Запись сообщения в лог.
-     *
-     * @param string $errorLevel
-     * @param string $message
-     * @param array  $context
      */
     private function log(string $errorLevel, string $message, array $context = []): void
     {

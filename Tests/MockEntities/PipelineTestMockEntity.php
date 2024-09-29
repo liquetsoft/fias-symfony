@@ -9,30 +9,21 @@ use Symfony\Component\Uid\Uuid;
 
 /**
  * Сущность для тестов пайплайнов с использованием doctrine.
- *
- * @ORM\Entity
  */
+#[ORM\Entity]
 class PipelineTestMockEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     private int $testId = 0;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
     private string $testName = '';
 
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     */
+    #[ORM\Column(type: 'datetime', nullable: false)]
     private ?\DateTimeInterface $startdate = null;
 
-    /**
-     * @ORM\Column(type="uuid", nullable=true)
-     */
+    #[ORM\Column(type: 'uuid', nullable: true)]
     private ?Uuid $uuid = null;
 
     public function setTestId(int $testId): self

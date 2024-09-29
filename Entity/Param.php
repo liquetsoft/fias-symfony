@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Сведения о классификаторе параметров адресообразующих элементов и объектов недвижимости.
  *
+ * @psalm-consistent-constructor
+ *
  * @ORM\MappedSuperclass
  */
 #[ORM\MappedSuperclass]
@@ -18,6 +20,7 @@ class Param
      * Идентификатор записи.
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @ORM\Id
      */
     #[ORM\Column(type: 'integer', nullable: false)]

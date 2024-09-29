@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Версия ФИАС.
  *
+ * @psalm-consistent-constructor
+ *
  * @ORM\MappedSuperclass
  */
 #[ORM\MappedSuperclass]
@@ -18,6 +20,7 @@ class FiasVersion
      * Номер версии ФИАС.
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @ORM\Id
      */
     #[ORM\Column(type: 'integer', nullable: false)]
@@ -30,7 +33,15 @@ class FiasVersion
      * @ORM\Column(type="string", nullable=false)
      */
     #[ORM\Column(type: 'string', nullable: false, length: 255)]
-    protected string $url = '';
+    protected string $fullurl = '';
+
+    /**
+     * Ссылка для загрузки изменений для указанной версии ФИАС.
+     *
+     * @ORM\Column(type="string", nullable=false)
+     */
+    #[ORM\Column(type: 'string', nullable: false, length: 255)]
+    protected string $deltaurl = '';
 
     /**
      * Дата создания.
@@ -52,16 +63,28 @@ class FiasVersion
         return $this->version;
     }
 
-    public function setUrl(string $url): self
+    public function setFullurl(string $fullurl): self
     {
-        $this->url = $url;
+        $this->fullurl = $fullurl;
 
         return $this;
     }
 
-    public function getUrl(): string
+    public function getFullurl(): string
     {
-        return $this->url;
+        return $this->fullurl;
+    }
+
+    public function setDeltaurl(string $deltaurl): self
+    {
+        $this->deltaurl = $deltaurl;
+
+        return $this;
+    }
+
+    public function getDeltaurl(): string
+    {
+        return $this->deltaurl;
     }
 
     public function setCreated(\DateTimeImmutable $created): self

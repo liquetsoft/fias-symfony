@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Serializer;
 
-use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
+use Liquetsoft\Fias\Component\FiasInformer\FiasInformerResponse;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\DoctrineTestCase;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\VersionManagerTestMockEntity;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\VersionManager\DoctrineVersionManager;
@@ -14,19 +14,21 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\VersionManager\DoctrineVersionM
  *
  * @internal
  */
-class DoctrineVersionManagerTest extends DoctrineTestCase
+final class DoctrineVersionManagerTest extends DoctrineTestCase
 {
     /**
      * Проверяет, что объект правильно задает текущую версию.
      */
     public function testSetCurrentVersion(): void
     {
-        $version = $this->createFakeData()->numberBetween(1, 1000);
-        $url = $this->createFakeData()->url();
+        $version = 123;
+        $fullUrl = 'https://test.ru/full';
+        $deltaUrl = 'https://test.ru/delta';
 
-        $info = $this->getMockBuilder(InformerResponse::class)->getMock();
+        $info = $this->mock(FiasInformerResponse::class);
         $info->method('getVersion')->willReturn($version);
-        $info->method('getUrl')->willReturn($url);
+        $info->method('getFullUrl')->willReturn($fullUrl);
+        $info->method('getDeltaUrl')->willReturn($deltaUrl);
 
         $versionManager = new DoctrineVersionManager(
             $this->getEntityManager(),
@@ -36,7 +38,8 @@ class DoctrineVersionManagerTest extends DoctrineTestCase
 
         $versionEntity = new VersionManagerTestMockEntity();
         $versionEntity->setVersion($version);
-        $versionEntity->setUrl($url);
+        $versionEntity->setFullurl($fullUrl);
+        $versionEntity->setDeltaurl($deltaUrl);
 
         $this->assertDoctrineHasEntity($versionEntity);
     }
@@ -46,7 +49,7 @@ class DoctrineVersionManagerTest extends DoctrineTestCase
      */
     public function testSetCurrentVersionWrongEntityException(): void
     {
-        $info = $this->getMockBuilder(InformerResponse::class)->getMock();
+        $info = $this->mock(FiasInformerResponse::class);
 
         $versionManager = new DoctrineVersionManager(
             $this->getEntityManager(),
@@ -62,12 +65,14 @@ class DoctrineVersionManagerTest extends DoctrineTestCase
      */
     public function testGetCurrentVersion(): void
     {
-        $version = $this->createFakeData()->numberBetween(1, 1000);
-        $url = $this->createFakeData()->url();
+        $version = 123;
+        $fullUrl = 'https://test.ru/full';
+        $deltaUrl = 'https://test.ru/delta';
 
-        $info = $this->getMockBuilder(InformerResponse::class)->getMock();
+        $info = $this->mock(FiasInformerResponse::class);
         $info->method('getVersion')->willReturn($version);
-        $info->method('getUrl')->willReturn($url);
+        $info->method('getFullUrl')->willReturn($fullUrl);
+        $info->method('getDeltaUrl')->willReturn($deltaUrl);
 
         $versionManager = new DoctrineVersionManager(
             $this->getEntityManager(),
@@ -76,8 +81,10 @@ class DoctrineVersionManagerTest extends DoctrineTestCase
         $versionManager->setCurrentVersion($info);
         $versionResponse = $versionManager->getCurrentVersion();
 
+        $this->assertNotNull($versionResponse);
         $this->assertSame($version, $versionResponse->getVersion());
-        $this->assertSame($url, $versionResponse->getUrl());
+        $this->assertSame($fullUrl, $versionResponse->getFullUrl());
+        $this->assertSame($deltaUrl, $versionResponse->getDeltaUrl());
     }
 
     /**
@@ -91,6 +98,6 @@ class DoctrineVersionManagerTest extends DoctrineTestCase
         );
 
         $this->expectException(\RuntimeException::class);
-        $versionResponse = $versionManager->getCurrentVersion();
+        $versionManager->getCurrentVersion();
     }
 }

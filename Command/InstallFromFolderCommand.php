@@ -16,17 +16,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Команда, которая запускает полную установку ФИАС из xml файлов,
  * сохраненных на локальном диске.
+ *
+ * @internal
  */
-class InstallFromFolderCommand extends Command
+final class InstallFromFolderCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:install_from_folder';
-
-    protected Pipe $pipeline;
-
-    public function __construct(Pipe $pipeline)
+    public function __construct(private readonly Pipe $pipeline)
     {
-        $this->pipeline = $pipeline;
-
         parent::__construct();
     }
 
@@ -36,8 +32,9 @@ class InstallFromFolderCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Installs full version of FIAS from folder.')
-            ->addArgument('folder', InputArgument::REQUIRED, 'Path to folder on local system with FIAS xmls.')
+            ->setName('liquetsoft:fias:install_from_folder')
+            ->setDescription('Installs full version of FIAS from folder')
+            ->addArgument('folder', InputArgument::REQUIRED, 'Path to folder on local system with FIAS xmls')
         ;
     }
 
@@ -54,11 +51,11 @@ class InstallFromFolderCommand extends Command
         }
         $folder = (string) $folder;
 
-        $io->note("Installing full version of FIAS from '{$folder}' folder.");
+        $io->note("Installing full version of FIAS from '{$folder}' folder");
         $start = microtime(true);
 
         $state = new ArrayState();
-        $state->setAndLockParameter(StateParameter::EXTRACT_TO_FOLDER, new \SplFileInfo($folder));
+        $state = $state->setAndLockParameter(StateParameter::PATH_TO_EXTRACT_FOLDER, $folder);
         $this->pipeline->run($state);
 
         $total = round(microtime(true) - $start, 4);

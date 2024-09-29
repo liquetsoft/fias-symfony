@@ -15,7 +15,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\StorageTestM
  *
  * @internal
  */
-class BulkInsertDoctrineStorageTest extends AbstractDoctrineStorageTest
+final class BulkInsertDoctrineStorageTest extends AbstractDoctrineStorageCase
 {
     /**
      * Проверяет, что хранилище попробует отправить записи по одной, если произошла ошибка в бандле.
@@ -46,8 +46,10 @@ class BulkInsertDoctrineStorageTest extends AbstractDoctrineStorageTest
      */
     public function testInsertException(): void
     {
-        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
-        $em->method('getClassMetadata')->will($this->throwException(new \RuntimeException()));
+        $em = $this->mock(EntityManager::class);
+        $em->expects($this->once())
+            ->method('getClassMetadata')
+            ->willThrowException(new \RuntimeException());
 
         $storage = $this->createStorage($em);
 

@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Сведения по типу параметра.
  *
+ * @psalm-consistent-constructor
+ *
  * @ORM\MappedSuperclass
  */
 #[ORM\MappedSuperclass]
@@ -18,6 +20,7 @@ class ParamTypes
      * Идентификатор типа параметра (ключ).
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @ORM\Id
      */
     #[ORM\Column(type: 'integer', nullable: false)]

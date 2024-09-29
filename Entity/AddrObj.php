@@ -10,6 +10,8 @@ use Symfony\Component\Uid\Uuid;
 /**
  * Сведения классификатора адресообразующих элементов.
  *
+ * @psalm-consistent-constructor
+ *
  * @ORM\MappedSuperclass
  */
 #[ORM\MappedSuperclass]
@@ -19,6 +21,7 @@ class AddrObj
      * Уникальный идентификатор записи. Ключевое поле.
      *
      * @ORM\Column(type="integer", nullable=false)
+     *
      * @ORM\Id
      */
     #[ORM\Column(type: 'integer', nullable: false)]

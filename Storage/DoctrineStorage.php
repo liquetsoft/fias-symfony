@@ -15,10 +15,6 @@ use Ramsey\Uuid\UuidInterface;
  */
 class DoctrineStorage implements Storage
 {
-    protected EntityManager $em;
-
-    protected int $batchCount;
-
     /**
      * @var array<string, bool>
      */
@@ -26,13 +22,15 @@ class DoctrineStorage implements Storage
 
     /**
      * @var array<string, array<string, object>>
+     *
+     * @psalm-var array<class-string, array<string, object>>
      */
     private array $upsertData = [];
 
-    public function __construct(EntityManager $em, int $batchCount = 1000)
-    {
-        $this->em = $em;
-        $this->batchCount = $batchCount;
+    public function __construct(
+        protected readonly EntityManager $em,
+        protected readonly int $batchCount = 1000,
+    ) {
     }
 
     /**
@@ -142,8 +140,6 @@ class DoctrineStorage implements Storage
 
     /**
      * Выполняет запрос на вставку/обновление накопленного кэша записей.
-     *
-     * @param bool $force
      */
     protected function checkAndFlushUpsert(bool $force = false): void
     {
@@ -160,12 +156,49 @@ class DoctrineStorage implements Storage
     }
 
     /**
+     * Возвращает мета описание сущноссти из Doctrine.
+     */
+    protected function getEntityMeta(object|string $entity): ClassMetadata
+    {
+        if (\is_object($entity)) {
+            $entity = $this->getEntityName($entity);
+        }
+
+        try {
+            $meta = $this->em->getClassMetadata($entity);
+        } catch (\Throwable $e) {
+            throw $this->convertToStorageException($e);
+        }
+
+        return $meta;
+    }
+
+    /**
+     * Пробует преобразовать указанное значение к примитиву.
+     */
+    protected function convertToPrimitive(mixed $data): mixed
+    {
+        if (\is_scalar($data) || $data === null) {
+            return $data;
+        } elseif ($data instanceof \DateTimeInterface) {
+            return $data->format('Y-m-d H:i:s');
+        } elseif ($data instanceof UuidInterface) {
+            return $data->toString();
+        } elseif (\is_object($data) && method_exists($data, '__toString')) {
+            return (string) $data;
+        }
+
+        throw new StorageException("Can't convert value to primitive");
+    }
+
+    /**
      * Обновляет список сущностей одного типа.
      *
-     * @param string                $entityName
+     * @psalm-param class-string $entityName
+     *
      * @param array<string, object> $entities
      */
-    protected function upsertEntities(string $entityName, array $entities): void
+    private function upsertEntities(string $entityName, array $entities): void
     {
         $meta = $this->getEntityMeta($entityName);
         $idName = $meta->getSingleIdentifierFieldName();
@@ -203,14 +236,9 @@ class DoctrineStorage implements Storage
     /**
      * Возвращает правду, если сущности содержат одинаковые данные.
      *
-     * @param object $first
-     * @param object $second
-     *
-     * @return bool
-     *
      * @psalm-suppress MixedMethodCall
      */
-    protected function isEntitiesEqual(object $first, object $second): bool
+    private function isEntitiesEqual(object $first, object $second): bool
     {
         if (\get_class($first) !== \get_class($second)) {
             return false;
@@ -234,11 +262,8 @@ class DoctrineStorage implements Storage
 
     /**
      * Наполняет первый объект данными, хранящимися во втором.
-     *
-     * @param object $first
-     * @param object $second
      */
-    protected function fillEntityFromOther(object $first, object $second): void
+    private function fillEntityFromOther(object $first, object $second): void
     {
         $metaFirst = $this->getEntityMeta($first);
         $metaSecond = $this->getEntityMeta($second);
@@ -251,83 +276,27 @@ class DoctrineStorage implements Storage
 
     /**
      * Возвращает массив первичных ключей для объекта.
-     *
-     * @param object $entity
-     *
-     * @return array
      */
-    protected function getIdentifiersFromEntity(object $entity): array
+    private function getIdentifiersFromEntity(object $entity): array
     {
         return $this->getEntityMeta($entity)->getIdentifierValues($entity);
     }
 
     /**
-     * Возвращает мета описание сущноссти из Doctrine.
-     *
-     * @param object|string $entity
-     *
-     * @return ClassMetadata
-     */
-    protected function getEntityMeta(object|string $entity): ClassMetadata
-    {
-        if (\is_object($entity)) {
-            $entity = $this->getEntityName($entity);
-        }
-
-        try {
-            $meta = $this->em->getClassMetadata($entity);
-        } catch (\Throwable $e) {
-            throw $this->convertToStorageException($e);
-        }
-
-        return $meta;
-    }
-
-    /**
-     * Возвращает имя сущности для указанного объекта.
-     *
-     * @param object $entity
-     *
-     * @return string
-     *
-     * @psalm-return class-string
-     */
-    protected function getEntityName(object $entity): string
-    {
-        return \get_class($entity);
-    }
-
-    /**
      * Преобразует указанное исключение к типу исключения хранилища.
-     *
-     * @param \Throwable $e
-     *
-     * @return StorageException
      */
-    protected function convertToStorageException(\Throwable $e): StorageException
+    private function convertToStorageException(\Throwable $e): StorageException
     {
         return new StorageException($e->getMessage(), 0, $e);
     }
 
     /**
-     * Пробует преобразовать указанное значение к примитиву.
+     * Возвращает имя сущности для указанного объекта.
      *
-     * @param mixed $data
-     *
-     * @return mixed
+     * @psalm-return class-string
      */
-    protected function convertToPrimitive(mixed $data): mixed
+    private function getEntityName(object $entity): string
     {
-        if (\is_scalar($data) || $data === null) {
-            return $data;
-        } elseif ($data instanceof \DateTimeInterface) {
-            return $data->format('Y-m-d H:i:s');
-        } elseif ($data instanceof UuidInterface) {
-            return $data->toString();
-        } elseif (\is_object($data) && method_exists($data, '__toString')) {
-            return (string) $data;
-        }
-
-        throw new StorageException("Can't convert value to primitive.");
+        return \get_class($entity);
     }
 }

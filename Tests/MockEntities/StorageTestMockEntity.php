@@ -8,25 +8,18 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Сущность для тестов хранилища с использованием doctrine.
- *
- * @ORM\Entity
  */
+#[ORM\Entity]
 class StorageTestMockEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     */
+    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Id]
     private int $testId = 0;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
     private string $testName = '';
 
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     */
+    #[ORM\Column(type: 'datetime', nullable: false)]
     private ?\DateTimeInterface $startdate = null;
 
     public function setTestId(int $testId): self

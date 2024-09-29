@@ -21,10 +21,6 @@ class TestGenerator extends AbstractGenerator
     /**
      * Создает классы сущностей в указанной папке с указанным пространством имен.
      *
-     * @param \SplFileInfo $dir
-     * @param string       $namespace
-     * @param string       $baseNamespace
-     *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
@@ -45,10 +41,6 @@ class TestGenerator extends AbstractGenerator
     /**
      * Процесс генерации классов.
      *
-     * @param \SplFileInfo $dir
-     * @param string       $namespace
-     * @param string       $baseNamespace
-     *
      * @throws \Throwable
      */
     protected function generate(\SplFileInfo $dir, string $namespace, string $baseNamespace): void
@@ -61,11 +53,6 @@ class TestGenerator extends AbstractGenerator
 
     /**
      * Создает php класс для указанного дескриптора.
-     *
-     * @param EntityDescriptor $descriptor
-     * @param \SplFileInfo     $dir
-     * @param string           $namespace
-     * @param string           $baseNamespace
      *
      * @throws \Throwable
      */
@@ -88,16 +75,17 @@ class TestGenerator extends AbstractGenerator
         $createEntityMethod->addComment("{@inheritDoc}\n");
         $createEntityMethod->setVisibility('protected');
         $createEntityMethod->setBody("return new {$baseName}();");
+        $createEntityMethod->setReturnType('object');
 
         $accessors = "return [\n";
         foreach ($descriptor->getFields() as $field) {
             $name = $this->unifyColumnName($field->getName());
-            $value = '$this->createFakeData()->word()';
+            $value = '"test string"';
             $type = trim($field->getType() . '_' . $field->getSubType(), ' _');
             if ($type === 'int') {
-                $value = '$this->createFakeData()->numberBetween(1, 1000000)';
+                $value = '123321';
             } elseif ($type === 'string_uuid') {
-                $value = '$this->getMockBuilder(Uuid::class)->disableOriginalConstructor()->getMock()';
+                $value = '$this->mock(Uuid::class)';
             } elseif ($type === 'string_date') {
                 $value = 'new DateTimeImmutable()';
             }
@@ -115,11 +103,6 @@ class TestGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые импорты в пространство имен.
-     *
-     * @param PhpNamespace     $namespace
-     * @param EntityDescriptor $descriptor
-     * @param string           $baseNamespace
-     * @param string           $baseName
      */
     protected function decorateNamespace(PhpNamespace $namespace, EntityDescriptor $descriptor, string $baseNamespace, string $baseName): void
     {
@@ -137,9 +120,6 @@ class TestGenerator extends AbstractGenerator
 
     /**
      * Добавляет всен необходимые для класса комментарии.
-     *
-     * @param ClassType        $class
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateClass(ClassType $class, EntityDescriptor $descriptor): void
     {

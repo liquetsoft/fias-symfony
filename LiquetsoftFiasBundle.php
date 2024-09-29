@@ -9,6 +9,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * Класс бандла symfony.
  */
-class LiquetsoftFiasBundle extends Bundle
+final class LiquetsoftFiasBundle extends Bundle
 {
 }

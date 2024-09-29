@@ -6,8 +6,8 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 
 use Liquetsoft\Fias\Component\Downloader\Downloader;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
+use Liquetsoft\Fias\Component\FiasInformer\FiasInformerResponse;
 use Liquetsoft\Fias\Component\Unpacker\Unpacker;
-use Marvin255\FileSystemHelper\FileSystemException;
 use Marvin255\FileSystemHelper\FileSystemFactory;
 use Marvin255\FileSystemHelper\FileSystemHelperInterface;
 use Symfony\Component\Console\Command\Command;
@@ -19,29 +19,20 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Консольная команда, которая загружает указанную версию ФИАС в указанную папку.
+ *
+ * @internal
  */
-class DownloadCommand extends Command
+final class DownloadCommand extends Command
 {
-    private const FULL_VERSION_NAME = 'full';
+    private const LATEST_VERSION_NAME = 'latest';
 
-    protected static $defaultName = 'liquetsoft:fias:download';
-
-    private Downloader $downloader;
-
-    private Unpacker $unpacker;
-
-    private FiasInformer $informer;
-
-    private FileSystemHelperInterface $fs;
+    private readonly FileSystemHelperInterface $fs;
 
     public function __construct(
-        Downloader $downloader,
-        Unpacker $unpacker,
-        FiasInformer $informer
+        private readonly Downloader $downloader,
+        private readonly Unpacker $unpacker,
+        private readonly FiasInformer $informer,
     ) {
-        $this->downloader = $downloader;
-        $this->unpacker = $unpacker;
-        $this->informer = $informer;
         $this->fs = FileSystemFactory::create();
 
         parent::__construct();
@@ -53,10 +44,12 @@ class DownloadCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Downloads set version of FIAS.')
-            ->addArgument('pathToDownload', InputArgument::REQUIRED, 'Path in local file system to download file.')
-            ->addArgument('version', InputArgument::OPTIONAL, 'Version number to download. "full" is for full version.')
-            ->addOption('extract', null, InputOption::VALUE_NONE, 'Extract archive after downloading')
+            ->setName('liquetsoft:fias:download')
+            ->setDescription('Downloads provided version of FIAS')
+            ->addArgument('pathToDownload', InputArgument::REQUIRED, 'Path in local file system to download file')
+            ->addArgument('version', InputArgument::OPTIONAL, 'Version number to download. "' . self::LATEST_VERSION_NAME . '" is for the latest version')
+            ->addOption('extract', null, InputOption::VALUE_NONE, 'Extract data from the archive after downloading')
+            ->addOption('delta', null, InputOption::VALUE_NONE, 'Download archive for delta between the provided version and the previous one')
         ;
     }
 
@@ -69,62 +62,47 @@ class DownloadCommand extends Command
 
         $version = $this->getVersionArgument($input);
         $pathToDownload = $this->getPathArgument($input);
-        $needExtraction = $this->getExtractionOption($input);
+        $needExtraction = $this->getBooleanOptionValue($input, 'extract');
+        $needDelta = $this->getBooleanOptionValue($input, 'delta');
 
-        $url = $this->findUrlForVersion($version);
+        $version = $this->findVersion($version);
+        $url = $needDelta ? $version->getDeltaUrl() : $version->getFullUrl();
 
-        $io->note("Downloading '{$url}' to '{$pathToDownload->getPathname()}'.");
+        $io->note("Downloading '{$url}' to '{$pathToDownload->getPathname()}'");
 
         $this->downloader->download($url, $pathToDownload);
 
         if ($needExtraction) {
-            $io->note("Extracting '{$pathToDownload->getPathname()}' to folder.");
+            $io->note("Extracting '{$pathToDownload->getPathname()}' to folder");
             $this->extract($pathToDownload);
         }
 
-        $io->success('Downloading complete.');
+        $io->success('Downloading complete');
 
         return 0;
     }
 
     /**
-     * Получает url для указанной версии.
-     *
-     * @param string $version
-     *
-     * @return string
+     * Получает описание указанной версии ФИАС.
      */
-    private function findUrlForVersion(string $version): string
+    private function findVersion(string $version): FiasInformerResponse
     {
-        $url = '';
-
-        if ($version === self::FULL_VERSION_NAME) {
-            $url = $this->informer->getCompleteInfo()->getUrl();
+        if ($version === self::LATEST_VERSION_NAME) {
+            return $this->informer->getLatestVersion();
         } else {
-            $allVersions = $this->informer->getDeltaList();
             $version = (int) $version;
-            foreach ($allVersions as $deltaVervion) {
-                if ($deltaVervion->getVersion() === $version) {
-                    $url = $deltaVervion->getUrl();
-                    break;
+            foreach ($this->informer->getAllVersions() as $allVersionsItem) {
+                if ($allVersionsItem->getVersion() === $version) {
+                    return $allVersionsItem;
                 }
             }
         }
 
-        if (empty($url)) {
-            $message = sprintf("Can't find url for '%s' version.", $version);
-            throw new \RuntimeException($message);
-        }
-
-        return $url;
+        throw new \RuntimeException("Can't find url for '{$version}' version");
     }
 
     /**
      * Распаковывает загруженный архив.
-     *
-     * @param \SplFileInfo $archive
-     *
-     * @throws FileSystemException
      */
     private function extract(\SplFileInfo $archive): void
     {
@@ -141,10 +119,6 @@ class DownloadCommand extends Command
 
     /**
      * Получает значение аргумента с номером версии.
-     *
-     * @param InputInterface $input
-     *
-     * @return string
      */
     private function getVersionArgument(InputInterface $input): string
     {
@@ -152,8 +126,10 @@ class DownloadCommand extends Command
 
         if (\is_array($version)) {
             $version = reset($version);
-        } elseif ($version === null) {
-            $version = self::FULL_VERSION_NAME;
+        }
+
+        if ($version === null) {
+            return self::LATEST_VERSION_NAME;
         }
 
         return (string) $version;
@@ -161,10 +137,6 @@ class DownloadCommand extends Command
 
     /**
      * Получает значение аргумента с путем, по которому нужно сохранить файл.
-     *
-     * @param InputInterface $input
-     *
-     * @return \SplFileInfo
      */
     private function getPathArgument(InputInterface $input): \SplFileInfo
     {
@@ -184,20 +156,10 @@ class DownloadCommand extends Command
     }
 
     /**
-     * Получает значение флага нужно ли распаковывать архив после загрузки.
-     *
-     * @param InputInterface $input
-     *
-     * @return bool
+     * Получает значение флага по имени.
      */
-    private function getExtractionOption(InputInterface $input): bool
+    private function getBooleanOptionValue(InputInterface $input, string $name): bool
     {
-        $needExtraction = $input->getOption('extract');
-
-        if ($needExtraction === null) {
-            $needExtraction = false;
-        }
-
-        return (bool) $needExtraction;
+        return (bool) $input->getOption($name);
     }
 }

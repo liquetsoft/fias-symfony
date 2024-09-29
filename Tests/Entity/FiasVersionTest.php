@@ -17,7 +17,7 @@ class FiasVersionTest extends EntityCase
     /**
      * {@inheritDoc}
      */
-    protected function createEntity()
+    protected function createEntity(): object
     {
         return new FiasVersion();
     }
@@ -28,8 +28,9 @@ class FiasVersionTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'version' => $this->createFakeData()->numberBetween(1, 1000000),
-            'url' => $this->createFakeData()->word(),
+            'version' => 123321,
+            'fullurl' => 'test string',
+            'deltaurl' => 'test string',
             'created' => new \DateTimeImmutable(),
         ];
     }

@@ -13,17 +13,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Команда, которая запускает полную установку ФИАС в параллельных процессах.
+ *
+ * @internal
  */
-class InstallParallelCommand extends Command
+final class InstallParallelCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:install';
-
-    protected Pipe $pipeline;
-
-    public function __construct(Pipe $pipeline)
+    public function __construct(private readonly Pipe $pipeline)
     {
-        $this->pipeline = $pipeline;
-
         parent::__construct();
     }
 
@@ -32,7 +28,10 @@ class InstallParallelCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Installs full version of FIAS from scratch in parallel processes.');
+        $this
+            ->setName('liquetsoft:fias:install')
+            ->setDescription('Installs full version of FIAS from scratch in parallel processes')
+        ;
     }
 
     /**
@@ -42,7 +41,7 @@ class InstallParallelCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->note('Installing full version of FIAS in parallel processes.');
+        $io->note('Installing full version of FIAS in parallel processes');
         $start = microtime(true);
 
         $state = new ArrayState();

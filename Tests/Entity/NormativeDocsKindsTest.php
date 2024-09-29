@@ -17,7 +17,7 @@ class NormativeDocsKindsTest extends EntityCase
     /**
      * {@inheritDoc}
      */
-    protected function createEntity()
+    protected function createEntity(): object
     {
         return new NormativeDocsKinds();
     }
@@ -28,8 +28,8 @@ class NormativeDocsKindsTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'id' => $this->createFakeData()->numberBetween(1, 1000000),
-            'name' => $this->createFakeData()->word(),
+            'id' => 123321,
+            'name' => 'test string',
         ];
     }
 }

@@ -8,7 +8,6 @@ use Liquetsoft\Fias\Component\EntityDescriptor\BaseEntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\BaseEntityField;
 use Liquetsoft\Fias\Component\EntityManager\BaseEntityManager;
 use Liquetsoft\Fias\Component\EntityRegistry\ArrayEntityRegistry;
-use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
@@ -55,20 +54,21 @@ class UpdatePipelineTest extends DoctrineTestCase
         $deletedEntity = new PipelineTestMockEntity();
         $deletedEntity->setTestId(444);
 
-        $version = $this->createFakeData()->numberBetween(1, 1000);
-        $versionUrl = $this->createFakeData()->url();
-        $versionInfo = $this->getMockBuilder(InformerResponse::class)->getMock();
-        $versionInfo->method('getVersion')->willReturn($version);
-        $versionInfo->method('getUrl')->willReturn($versionUrl);
-        $versionInfo->method('hasResult')->willReturn(true);
+        $version = 321;
+        $versionFullUrl = 'https://test.test/full';
+        $versionDeltaUrl = 'https://test.test/delta';
+
         $versionEntity = new VersionManagerTestMockEntity();
         $versionEntity->setVersion($version);
-        $versionEntity->setUrl($versionUrl);
+        $versionEntity->setFullurl($versionFullUrl);
+        $versionEntity->setDeltaurl($versionDeltaUrl);
 
         $state = new ArrayState();
-        $state->setAndLockParameter(StateParameter::DOWNLOAD_TO_FILE, new \SplFileInfo($testArchive));
-        $state->setAndLockParameter(StateParameter::EXTRACT_TO_FOLDER, new \SplFileInfo($testDir));
-        $state->setAndLockParameter(StateParameter::FIAS_INFO, $versionInfo);
+        $state->setAndLockParameter(StateParameter::PATH_TO_DOWNLOAD_FILE, $testArchive);
+        $state->setAndLockParameter(StateParameter::PATH_TO_EXTRACT_FOLDER, $testDir);
+        $state->setAndLockParameter(StateParameter::FIAS_NEXT_VERSION_NUMBER, $version);
+        $state->setAndLockParameter(StateParameter::FIAS_NEXT_VERSION_FULL_URL, $versionFullUrl);
+        $state->setAndLockParameter(StateParameter::FIAS_NEXT_VERSION_DELTA_URL, $versionDeltaUrl);
 
         $pipeline = $this->createPipeLine();
         $pipeline->run($state);

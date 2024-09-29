@@ -17,7 +17,7 @@ class AdmHierarchyTest extends EntityCase
     /**
      * {@inheritDoc}
      */
-    protected function createEntity()
+    protected function createEntity(): object
     {
         return new AdmHierarchy();
     }
@@ -28,22 +28,23 @@ class AdmHierarchyTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'id' => $this->createFakeData()->numberBetween(1, 1000000),
-            'objectid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'parentobjid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'changeid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'regioncode' => $this->createFakeData()->word(),
-            'areacode' => $this->createFakeData()->word(),
-            'citycode' => $this->createFakeData()->word(),
-            'placecode' => $this->createFakeData()->word(),
-            'plancode' => $this->createFakeData()->word(),
-            'streetcode' => $this->createFakeData()->word(),
-            'previd' => $this->createFakeData()->numberBetween(1, 1000000),
-            'nextid' => $this->createFakeData()->numberBetween(1, 1000000),
+            'id' => 123321,
+            'objectid' => 123321,
+            'parentobjid' => 123321,
+            'changeid' => 123321,
+            'regioncode' => 'test string',
+            'areacode' => 'test string',
+            'citycode' => 'test string',
+            'placecode' => 'test string',
+            'plancode' => 'test string',
+            'streetcode' => 'test string',
+            'previd' => 123321,
+            'nextid' => 123321,
             'updatedate' => new \DateTimeImmutable(),
             'startdate' => new \DateTimeImmutable(),
             'enddate' => new \DateTimeImmutable(),
-            'isactive' => $this->createFakeData()->numberBetween(1, 1000000),
+            'isactive' => 123321,
+            'path' => 'test string',
         ];
     }
 }

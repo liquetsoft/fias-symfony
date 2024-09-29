@@ -9,8 +9,10 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * Класс с описанием настроек бандла.
+ *
+ * @internal
  */
-class Configuration implements ConfigurationInterface
+final class Configuration implements ConfigurationInterface
 {
     public const CONFIG_NAME = 'liquetsoft_fias';
 
@@ -27,9 +29,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder(self::CONFIG_NAME);
         $treeBuilder->getRootNode()
             ->children()
-                ->scalarNode('informer_wsdl')
-                    ->defaultValue('http://fias.nalog.ru/WebServices/Public/DownloadService.asmx?WSDL')
-                ->end()
                 ->scalarNode('registry_path')
                     ->defaultValue(null)
                 ->end()
@@ -60,23 +59,10 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->defaultValue([])
                 ->end()
-                ->arrayNode('download_curl_settings')
-                    ->useAttributeAsKey('name')
-                        ->prototype('scalar')
-                    ->end()
-                    ->defaultValue([])
-                ->end()
                 ->scalarNode('download_retry_attempts')
                     ->defaultValue(10)
                 ->end()
                 ->arrayNode('files_filter')
-                    ->prototype('scalar')->end()
-                    ->defaultValue([])
-                ->end()
-                ->booleanNode('elasticsearch_enable')
-                    ->defaultValue(false)
-                ->end()
-                ->arrayNode('elasticsearch_hosts')
                     ->prototype('scalar')->end()
                     ->defaultValue([])
                 ->end()

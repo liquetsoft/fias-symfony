@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 
 use Liquetsoft\Fias\Component\FiasStatusChecker\FiasStatusChecker;
+use Liquetsoft\Fias\Component\FiasStatusChecker\FiasStatusCheckerResult;
+use Liquetsoft\Fias\Component\FiasStatusChecker\FiasStatusCheckerStatus;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,17 +15,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Консольная команда, которая отображает текущий статус всех сервисов ФИАС.
+ *
+ * @internal
  */
-class StatusCheckCommand extends Command
+final class StatusCheckCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:status';
-
-    private FiasStatusChecker $checker;
-
-    public function __construct(FiasStatusChecker $checker)
+    public function __construct(private readonly FiasStatusChecker $checker)
     {
-        $this->checker = $checker;
-
         parent::__construct();
     }
 
@@ -32,7 +30,10 @@ class StatusCheckCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Shows information about current status of FIAS services.');
+        $this
+            ->setName('liquetsoft:fias:status')
+            ->setDescription('Shows information about current status of FIAS services')
+        ;
     }
 
     /**
@@ -43,16 +44,36 @@ class StatusCheckCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $status = $this->checker->check();
-        if ($status->getResultStatus() === FiasStatusChecker::STATUS_AVAILABLE) {
-            $io->success('FIAS is OK and available.');
+        if ($status->getResultStatus() === FiasStatusCheckerStatus::AVAILABLE) {
+            $io->success('FIAS is OK and available');
         } else {
-            $io->error('FIAS is not available.');
+            $io->error('FIAS is not available');
             $table = new Table($output);
             $table->setColumnWidths([15, 15, 60]);
-            $table->setHeaders(['Service', 'Status', 'Reason'])->setRows($status->getPerServiceStatuses());
+            $table->setHeaders(['Service', 'Status', 'Reason'])->setRows($this->convertStatusToTableBody($status));
             $table->render();
         }
 
         return 0;
+    }
+
+    /**
+     * Конвертирует массив статусов в массив строк для таблицы.
+     *
+     * @return array<int, array<int, string>>
+     */
+    private function convertStatusToTableBody(FiasStatusCheckerResult $status): array
+    {
+        $tableBody = [];
+
+        foreach ($status->getPerServiceStatuses() as $serviceStatus) {
+            $tableBody[] = [
+                $serviceStatus->getService()->value,
+                $serviceStatus->getStatus()->value,
+                $serviceStatus->getReason(),
+            ];
+        }
+
+        return $tableBody;
     }
 }

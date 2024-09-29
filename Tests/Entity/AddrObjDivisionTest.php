@@ -17,7 +17,7 @@ class AddrObjDivisionTest extends EntityCase
     /**
      * {@inheritDoc}
      */
-    protected function createEntity()
+    protected function createEntity(): object
     {
         return new AddrObjDivision();
     }
@@ -28,10 +28,10 @@ class AddrObjDivisionTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'id' => $this->createFakeData()->numberBetween(1, 1000000),
-            'parentid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'childid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'changeid' => $this->createFakeData()->numberBetween(1, 1000000),
+            'id' => 123321,
+            'parentid' => 123321,
+            'childid' => 123321,
+            'changeid' => 123321,
         ];
     }
 }

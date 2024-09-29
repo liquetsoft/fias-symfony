@@ -14,17 +14,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Команда, которая очищает хранилища для всех сущностей проекта, привязанных
  * к сущностям ФИАС.
+ *
+ * @internal
  */
-class TruncateCommand extends Command
+final class TruncateCommand extends Command
 {
-    protected static $defaultName = 'liquetsoft:fias:truncate';
-
-    protected Task $truncateTask;
-
-    public function __construct(Task $truncateTask)
+    public function __construct(private readonly Task $truncateTask)
     {
-        $this->truncateTask = $truncateTask;
-
         parent::__construct();
     }
 
@@ -33,7 +29,10 @@ class TruncateCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Truncates storage for binded entities.');
+        $this
+            ->setName('liquetsoft:fias:truncate')
+            ->setDescription('Truncates storage for bound entities')
+        ;
     }
 
     /**
@@ -43,12 +42,12 @@ class TruncateCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->note('Truncating storage for binded entities.');
+        $io->note('Truncating storage for bound entities');
 
         $state = new ArrayState();
         $this->truncateTask->run($state);
 
-        $io->success('Storage truncated.');
+        $io->success('Storage truncated');
 
         return 0;
     }

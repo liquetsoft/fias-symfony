@@ -17,7 +17,7 @@ class ApartmentTypesTest extends EntityCase
     /**
      * {@inheritDoc}
      */
-    protected function createEntity()
+    protected function createEntity(): object
     {
         return new ApartmentTypes();
     }
@@ -28,14 +28,14 @@ class ApartmentTypesTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'id' => $this->createFakeData()->numberBetween(1, 1000000),
-            'name' => $this->createFakeData()->word(),
-            'shortname' => $this->createFakeData()->word(),
-            'desc' => $this->createFakeData()->word(),
+            'id' => 123321,
+            'name' => 'test string',
+            'shortname' => 'test string',
+            'desc' => 'test string',
             'updatedate' => new \DateTimeImmutable(),
             'startdate' => new \DateTimeImmutable(),
             'enddate' => new \DateTimeImmutable(),
-            'isactive' => $this->createFakeData()->word(),
+            'isactive' => 'test string',
         ];
     }
 }

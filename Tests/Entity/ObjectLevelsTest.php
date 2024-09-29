@@ -17,7 +17,7 @@ class ObjectLevelsTest extends EntityCase
     /**
      * {@inheritDoc}
      */
-    protected function createEntity()
+    protected function createEntity(): object
     {
         return new ObjectLevels();
     }
@@ -28,13 +28,13 @@ class ObjectLevelsTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'level' => $this->createFakeData()->numberBetween(1, 1000000),
-            'name' => $this->createFakeData()->word(),
-            'shortname' => $this->createFakeData()->word(),
+            'level' => 123321,
+            'name' => 'test string',
+            'shortname' => 'test string',
             'updatedate' => new \DateTimeImmutable(),
             'startdate' => new \DateTimeImmutable(),
             'enddate' => new \DateTimeImmutable(),
-            'isactive' => $this->createFakeData()->word(),
+            'isactive' => 'test string',
         ];
     }
 }

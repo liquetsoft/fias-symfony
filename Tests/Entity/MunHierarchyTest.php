@@ -17,7 +17,7 @@ class MunHierarchyTest extends EntityCase
     /**
      * {@inheritDoc}
      */
-    protected function createEntity()
+    protected function createEntity(): object
     {
         return new MunHierarchy();
     }
@@ -28,17 +28,18 @@ class MunHierarchyTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'id' => $this->createFakeData()->numberBetween(1, 1000000),
-            'objectid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'parentobjid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'changeid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'oktmo' => $this->createFakeData()->word(),
-            'previd' => $this->createFakeData()->numberBetween(1, 1000000),
-            'nextid' => $this->createFakeData()->numberBetween(1, 1000000),
+            'id' => 123321,
+            'objectid' => 123321,
+            'parentobjid' => 123321,
+            'changeid' => 123321,
+            'oktmo' => 'test string',
+            'previd' => 123321,
+            'nextid' => 123321,
             'updatedate' => new \DateTimeImmutable(),
             'startdate' => new \DateTimeImmutable(),
             'enddate' => new \DateTimeImmutable(),
-            'isactive' => $this->createFakeData()->numberBetween(1, 1000000),
+            'isactive' => 123321,
+            'path' => 'test string',
         ];
     }
 }

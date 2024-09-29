@@ -17,7 +17,7 @@ class NormativeDocsTest extends EntityCase
     /**
      * {@inheritDoc}
      */
-    protected function createEntity()
+    protected function createEntity(): object
     {
         return new NormativeDocs();
     }
@@ -28,18 +28,18 @@ class NormativeDocsTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'id' => $this->createFakeData()->numberBetween(1, 1000000),
-            'name' => $this->createFakeData()->word(),
+            'id' => 123321,
+            'name' => 'test string',
             'date' => new \DateTimeImmutable(),
-            'number' => $this->createFakeData()->word(),
-            'type' => $this->createFakeData()->numberBetween(1, 1000000),
-            'kind' => $this->createFakeData()->numberBetween(1, 1000000),
+            'number' => 'test string',
+            'type' => 123321,
+            'kind' => 123321,
             'updatedate' => new \DateTimeImmutable(),
-            'orgname' => $this->createFakeData()->word(),
-            'regnum' => $this->createFakeData()->word(),
+            'orgname' => 'test string',
+            'regnum' => 'test string',
             'regdate' => new \DateTimeImmutable(),
             'accdate' => new \DateTimeImmutable(),
-            'comment' => $this->createFakeData()->word(),
+            'comment' => 'test string',
         ];
     }
 }

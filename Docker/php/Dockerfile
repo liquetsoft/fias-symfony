@@ -1,4 +1,4 @@
-FROM php:8.1-cli-alpine
+FROM php:8.2-cli-alpine
 
 
 RUN set -xe && apk update && apk add --no-cache \
@@ -12,10 +12,11 @@ RUN set -xe && apk update && apk add --no-cache \
     git \
     autoconf \
     g++ \
+    linux-headers \
     make
 
 
-RUN docker-php-ext-install zip soap \
+RUN docker-php-ext-install zip opcache \
     && docker-php-source extract \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
@@ -24,7 +25,7 @@ RUN docker-php-ext-install zip soap \
     && echo 'xdebug.mode=coverage' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer  --version=2.4.4 \
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer  --version=2.7.6 \
     && mkdir -p /.composer && chmod -Rf 777 /.composer
 
 

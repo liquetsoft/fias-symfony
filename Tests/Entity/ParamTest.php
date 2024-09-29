@@ -17,7 +17,7 @@ class ParamTest extends EntityCase
     /**
      * {@inheritDoc}
      */
-    protected function createEntity()
+    protected function createEntity(): object
     {
         return new Param();
     }
@@ -28,12 +28,12 @@ class ParamTest extends EntityCase
     protected function accessorsProvider(): array
     {
         return [
-            'id' => $this->createFakeData()->numberBetween(1, 1000000),
-            'objectid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'changeid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'changeidend' => $this->createFakeData()->numberBetween(1, 1000000),
-            'typeid' => $this->createFakeData()->numberBetween(1, 1000000),
-            'value' => $this->createFakeData()->word(),
+            'id' => 123321,
+            'objectid' => 123321,
+            'changeid' => 123321,
+            'changeidend' => 123321,
+            'typeid' => 123321,
+            'value' => 'test string',
             'updatedate' => new \DateTimeImmutable(),
             'startdate' => new \DateTimeImmutable(),
             'enddate' => new \DateTimeImmutable(),
