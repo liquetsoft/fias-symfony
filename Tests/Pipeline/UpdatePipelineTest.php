@@ -33,7 +33,7 @@ use Symfony\Component\Uid\Uuid;
  *
  * @internal
  */
-class UpdatePipelineTest extends DoctrineTestCase
+final class UpdatePipelineTest extends DoctrineTestCase
 {
     /**
      * Тест для проверки пайплайна с обновлением ФИАС до новой версии.
