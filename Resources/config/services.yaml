@@ -2,10 +2,18 @@ services:
 
 
 
+    liquetsoft_fias.http_transport.service:
+        class: Liquetsoft\Fias\Component\HttpTransport\HttpTransportCurl
+
+    Liquetsoft\Fias\Component\HttpTransport\HttpTransport:
+        alias: liquetsoft_fias.http_transport.service
+
+
+
     liquetsoft_fias.informer.service:
-        class: Liquetsoft\Fias\Component\FiasInformer\SoapFiasInformer
+        class: Liquetsoft\Fias\Component\FiasInformer\FiasInformerImpl
         arguments:
-            - '%liquetsoft_fias.informer_wsdl%'
+            - '@liquetsoft_fias.http_transport.service'
 
     Liquetsoft\Fias\Component\FiasInformer\FiasInformer:
         alias: liquetsoft_fias.informer.service
@@ -26,7 +34,7 @@ services:
     liquetsoft_fias.downloader.service:
         class: Liquetsoft\Fias\Component\Downloader\CurlDownloader
         arguments:
-            - '%liquetsoft_fias.download_curl_settings%'
+            - '@liquetsoft_fias.http_transport.service'
             - '%liquetsoft_fias.download_retry_attempts%'
 
     Liquetsoft\Fias\Component\Downloader\Downloader:
