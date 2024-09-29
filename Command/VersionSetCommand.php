@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
-use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
+use Liquetsoft\Fias\Component\FiasInformer\FiasInformerResponse;
 use Liquetsoft\Fias\Component\VersionManager\VersionManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -35,8 +35,8 @@ final class VersionSetCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Sets number of current version of FIAS.')
-            ->addArgument('number', InputArgument::REQUIRED, 'Number of new version.')
+            ->setDescription('Force current version of FIAS with provided version')
+            ->addArgument('number', InputArgument::REQUIRED, 'New version')
         ;
     }
 
@@ -49,12 +49,12 @@ final class VersionSetCommand extends Command
 
         $number = $this->getNumber($input);
 
-        $io->note("Setting '{$number}' FIAS version number.");
+        $io->note("Setting '{$number}' FIAS version");
 
         $version = $this->getVersion($number);
         $this->versionManager->setCurrentVersion($version);
 
-        $io->success("'{$number}' FIAS version number set.");
+        $io->success("'{$number}' FIAS version set");
 
         return 0;
     }
@@ -66,9 +66,9 @@ final class VersionSetCommand extends Command
     {
         $number = $input->getArgument('number');
         $number = \is_array($number) ? (int) reset($number) : (int) $number;
+
         if ($number <= 0) {
-            $message = 'Version number must integer instance more than 0.';
-            throw new \InvalidArgumentException($message);
+            throw new \InvalidArgumentException('Version number must integer instance more than 0');
         }
 
         return $number;
@@ -77,23 +77,14 @@ final class VersionSetCommand extends Command
     /**
      * Ищет указанную версию в списке на обновление и возвращает найденную.
      */
-    private function getVersion(int $number): InformerResponse
+    private function getVersion(int $number): FiasInformerResponse
     {
-        $version = null;
-
-        $deltaVersions = $this->informer->getDeltaList();
-        foreach ($deltaVersions as $deltaVersion) {
-            if ($deltaVersion->getVersion() === $number) {
-                $version = $deltaVersion;
-                break;
+        foreach ($this->informer->getAllVersions() as $allVersionsItem) {
+            if ($allVersionsItem->getVersion() === $number) {
+                return $allVersionsItem;
             }
         }
 
-        if ($version === null) {
-            $message = \sprintf("Can't find '%s' version in list of deltas.", $number);
-            throw new \InvalidArgumentException($message);
-        }
-
-        return $version;
+        throw new \InvalidArgumentException("Can't find '{$number}' version");
     }
 }

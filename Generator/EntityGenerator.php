@@ -205,7 +205,7 @@ class EntityGenerator extends AbstractGenerator
             default:
                 $defaultValue = $field->isNullable() ? null : '';
                 $column = '@ORM\Column(type="string"';
-                $column .= $field->getLength() ? ", length={$field->getLength()}" : '';
+                $column .= $field->getLength() !== null ? ", length={$field->getLength()}" : '';
                 $column .= $field->isNullable() ? ', nullable=true' : ', nullable=false';
                 $column .= ')';
                 $property->addComment($column);
@@ -214,7 +214,7 @@ class EntityGenerator extends AbstractGenerator
                     [
                         'type' => 'string',
                         'nullable' => $field->isNullable(),
-                        'length' => $field->getLength() ?: 255,
+                        'length' => $field->getLength() ?? 255,
                     ]
                 );
                 if ($field->isPrimary()) {

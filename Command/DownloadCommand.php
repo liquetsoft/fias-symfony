@@ -88,25 +88,18 @@ final class DownloadCommand extends Command
      */
     private function findVersion(string $version): FiasInformerResponse
     {
-        $informerResponse = null;
-
         if ($version === self::LATEST_VERSION_NAME) {
-            $informerResponse = $this->informer->getLatestVersion();
+            return $this->informer->getLatestVersion();
         } else {
             $version = (int) $version;
             foreach ($this->informer->getAllVersions() as $allVersionsItem) {
                 if ($allVersionsItem->getVersion() === $version) {
-                    $informerResponse = $allVersionsItem;
-                    break;
+                    return $allVersionsItem;
                 }
             }
         }
 
-        if ($informerResponse === null) {
-            throw new \RuntimeException("Can't find url for '{$version}' version");
-        }
-
-        return $informerResponse;
+        throw new \RuntimeException("Can't find url for '{$version}' version");
     }
 
     /**

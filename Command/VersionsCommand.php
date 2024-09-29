@@ -44,10 +44,10 @@ final class VersionsCommand extends Command
     {
         $output->writeln('');
 
-        $currentVersion = [
-            $this->versionManager->getCurrentVersion(),
-        ];
-        $this->renderTable('Current version of FIAS', $currentVersion, $output);
+        $currentVersion = $this->versionManager->getCurrentVersion();
+        if ($currentVersion !== null) {
+            $this->renderTable('Current version of FIAS', [$currentVersion], $output);
+        }
 
         $output->writeln('');
 
