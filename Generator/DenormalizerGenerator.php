@@ -91,7 +91,7 @@ class DenormalizerGenerator extends AbstractGenerator
             $denormalizeBody .= "    \$data = \$this->setDataTo{$className}Entity(\$entity, \$data);\n";
             $denormalizeBody .= '}';
             $supportsBody .= ($key > 0 ? '        || ' : '        ') . "is_subclass_of(\$type, {$className}::class)\n";
-            $getSupportedTypesBody .= "    {$className}::class => true,\n";
+            $getSupportedTypesBody .= "    {$className}::class => false,\n";
         }
         $supportsBody .= "    )\n;";
         $denormalizeBody .= " else {\n";
@@ -110,7 +110,7 @@ class DenormalizerGenerator extends AbstractGenerator
             ->addComment('@psalm-suppress MissingParamType')
             ->setVisibility('public')
             ->setBody($supportsBody);
-        $supports->addParameter('data');
+        $supports->addParameter('data')->setType('mixed');
         $supports->addParameter('type')->setType('string');
         $supports->addParameter('format', new PhpLiteral('null'))->setType('string');
         $supports->addParameter('context', new PhpLiteral('[]'))->setType('array');

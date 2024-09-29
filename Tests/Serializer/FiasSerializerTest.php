@@ -26,7 +26,8 @@ final class FiasSerializerTest extends BaseCase
         $updateDate = '2024-10-10';
         $testDate = '2024-11-11';
         $operTypeId = 321;
-        $uuidString = 'f81d4fae-qqqq-11d0-a765-00a0c91e6bf6';
+        $uuidString = '550e8400-e29b-41d4-a716-446655440000';
+
         $data = <<<EOT
 <OBJECT
     ID="{$id}"
@@ -41,22 +42,16 @@ final class FiasSerializerTest extends BaseCase
 EOT;
 
         $serializer = new FiasSerializer();
-
         $object = $serializer->deserialize($data, FiasSerializerObject::class, 'xml');
-        $testObjectGUID = (string) $object->getObjectguid();
-        $testUpdateDate = $object->getUpdatedate()->format('Y-m-d');
-        $testTestDate = $object->getTestDate();
-        $testTestDate = $testTestDate ? $testTestDate->format('Y-m-d') : null;
-        $testUuid = (string) $object->getUuid();
 
         $this->assertInstanceOf(FiasSerializerObject::class, $object);
         $this->assertSame($id, $object->getId());
         $this->assertSame($name, $object->getName());
         $this->assertSame($operTypeId, $object->getOpertypeid());
-        $this->assertSame($updateDate, $testUpdateDate);
-        $this->assertSame($uuidString, $testUuid);
-        $this->assertSame($objectGUID, $testObjectGUID);
+        $this->assertSame($updateDate, $object->getUpdatedate()->format('Y-m-d'));
+        $this->assertSame($uuidString, (string) $object->getUuid());
+        $this->assertSame($objectGUID, (string) $object->getObjectguid());
         $this->assertNull($object->getNextid());
-        $this->assertSame($testDate, $testTestDate);
+        $this->assertSame($testDate, $object->getTestDate()?->format('Y-m-d'));
     }
 }

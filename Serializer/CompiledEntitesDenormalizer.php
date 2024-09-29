@@ -46,7 +46,7 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
      *
      * @psalm-suppress MissingParamType
      */
-    public function supportsDenormalization($data, string $type, ?string $format = null, array $context = []): bool
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         return empty($context['fias_compiled_data_set'])
             && (
@@ -157,29 +157,29 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
     public function getSupportedTypes(?string $format): array
     {
         return [
-            Apartments::class => true,
-            AddrObjDivision::class => true,
-            NormativeDocsTypes::class => true,
-            RoomTypes::class => true,
-            ObjectLevels::class => true,
-            NormativeDocsKinds::class => true,
-            Rooms::class => true,
-            ApartmentTypes::class => true,
-            AddrObjTypes::class => true,
-            Steads::class => true,
-            NormativeDocs::class => true,
-            OperationTypes::class => true,
-            Houses::class => true,
-            AdmHierarchy::class => true,
-            Carplaces::class => true,
-            ChangeHistory::class => true,
-            AddrObj::class => true,
-            ParamTypes::class => true,
-            Param::class => true,
-            ReestrObjects::class => true,
-            HouseTypes::class => true,
-            MunHierarchy::class => true,
-            FiasVersion::class => true,
+            Apartments::class => false,
+            AddrObjDivision::class => false,
+            NormativeDocsTypes::class => false,
+            RoomTypes::class => false,
+            ObjectLevels::class => false,
+            NormativeDocsKinds::class => false,
+            Rooms::class => false,
+            ApartmentTypes::class => false,
+            AddrObjTypes::class => false,
+            Steads::class => false,
+            NormativeDocs::class => false,
+            OperationTypes::class => false,
+            Houses::class => false,
+            AdmHierarchy::class => false,
+            Carplaces::class => false,
+            ChangeHistory::class => false,
+            AddrObj::class => false,
+            ParamTypes::class => false,
+            Param::class => false,
+            ReestrObjects::class => false,
+            HouseTypes::class => false,
+            MunHierarchy::class => false,
+            FiasVersion::class => false,
         ];
     }
 
