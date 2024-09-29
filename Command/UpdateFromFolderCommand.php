@@ -16,6 +16,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Команда, которая запускает обновление ФИАС из xml файлов,
  * сохраненных на локальном диске.
+ *
+ * @internal
  */
 final class UpdateFromFolderCommand extends Command
 {

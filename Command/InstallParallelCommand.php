@@ -13,6 +13,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Команда, которая запускает полную установку ФИАС в параллельных процессах.
+ *
+ * @internal
  */
 final class InstallParallelCommand extends Command
 {

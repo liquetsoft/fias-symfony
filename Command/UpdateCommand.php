@@ -15,6 +15,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Команда, которая обновляет ФИАС с текущей версии до самой свежей.
+ *
+ * @internal
  */
 final class UpdateCommand extends Command
 {

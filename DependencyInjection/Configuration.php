@@ -9,6 +9,8 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * Класс с описанием настроек бандла.
+ *
+ * @internal
  */
 final class Configuration implements ConfigurationInterface
 {
@@ -27,9 +29,6 @@ final class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder(self::CONFIG_NAME);
         $treeBuilder->getRootNode()
             ->children()
-                ->scalarNode('informer_wsdl')
-                    ->defaultValue('http://fias.nalog.ru/WebServices/Public/DownloadService.asmx?WSDL')
-                ->end()
                 ->scalarNode('registry_path')
                     ->defaultValue(null)
                 ->end()
@@ -55,12 +54,6 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue('liquetsoft:fias:update_parallel_running')
                 ->end()
                 ->arrayNode('entity_bindings')
-                    ->useAttributeAsKey('name')
-                        ->prototype('scalar')
-                    ->end()
-                    ->defaultValue([])
-                ->end()
-                ->arrayNode('download_curl_settings')
                     ->useAttributeAsKey('name')
                         ->prototype('scalar')
                     ->end()

@@ -15,6 +15,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Консольная команда, которая отображает текущую версию, полную версию
  * и список версий на обновление.
+ *
+ * @internal
  */
 final class VersionsCommand extends Command
 {

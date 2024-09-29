@@ -14,6 +14,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Команда, которая очищает хранилища для всех сущностей проекта, привязанных
  * к сущностям ФИАС.
+ *
+ * @internal
  */
 final class TruncateCommand extends Command
 {

@@ -14,6 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Команда для параллельных процессов, в которых идет установка ФИАС.
+ *
+ * @internal
  */
 final class InstallParallelRunningCommand extends Command
 {

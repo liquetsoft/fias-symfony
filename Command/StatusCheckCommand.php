@@ -13,6 +13,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Консольная команда, которая отображает текущий статус всех сервисов ФИАС.
+ *
+ * @internal
  */
 final class StatusCheckCommand extends Command
 {

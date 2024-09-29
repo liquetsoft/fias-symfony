@@ -15,6 +15,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Консольная команда, которая принудительно задает номер текущей версии ФИАС.
+ *
+ * @internal
  */
 final class VersionSetCommand extends Command
 {

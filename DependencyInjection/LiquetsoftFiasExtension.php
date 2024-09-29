@@ -11,6 +11,8 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * Класс расширения для предоставления бандлом сервисов.
+ *
+ * @internal
  */
 final class LiquetsoftFiasExtension extends Extension
 {

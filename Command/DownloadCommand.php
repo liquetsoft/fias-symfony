@@ -19,6 +19,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Консольная команда, которая загружает указанную версию ФИАС в указанную папку.
+ *
+ * @internal
  */
 final class DownloadCommand extends Command
 {
