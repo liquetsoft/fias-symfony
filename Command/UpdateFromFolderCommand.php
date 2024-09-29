@@ -34,8 +34,8 @@ final class UpdateFromFolderCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Updates version of FIAS from set folder.')
-            ->addArgument('folder', InputArgument::REQUIRED, 'Path to folder on local system with FIAS xmls.')
+            ->setDescription('Updates version of FIAS from the provided folder.')
+            ->addArgument('folder', InputArgument::REQUIRED, 'Path to the folder on local file system with FIAS xmls')
         ;
     }
 
@@ -52,13 +52,13 @@ final class UpdateFromFolderCommand extends Command
         }
         $folder = (string) $folder;
 
-        $io->note("Updating version of FIAS from '{$folder}' folder.");
+        $io->note("Updating FIAS from the '{$folder}' folder");
 
         $state = new ArrayState();
-        $state->setAndLockParameter(StateParameter::EXTRACT_TO_FOLDER, new \SplFileInfo($folder));
+        $state = $state->setAndLockParameter(StateParameter::PATH_TO_EXTRACT_FOLDER, $folder);
         $this->pipeline->run($state);
 
-        $io->success("FIAS updated from '{$folder}' folder.");
+        $io->success("FIAS updated from the '{$folder}' folder");
 
         return 0;
     }

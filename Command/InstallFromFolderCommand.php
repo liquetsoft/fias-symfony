@@ -56,10 +56,7 @@ final class InstallFromFolderCommand extends Command
         $start = microtime(true);
 
         $state = new ArrayState();
-        $state->setAndLockParameter(
-            StateParameter::PATH_TO_EXTRACT_FOLDER,
-            new \SplFileInfo($folder)
-        );
+        $state = $state->setAndLockParameter(StateParameter::PATH_TO_EXTRACT_FOLDER, $folder);
         $this->pipeline->run($state);
 
         $total = round(microtime(true) - $start, 4);
