@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
-use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
+use Liquetsoft\Fias\Component\FiasInformer\FiasInformerResponse;
 use Liquetsoft\Fias\Component\VersionManager\VersionManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -34,7 +34,7 @@ final class VersionsCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Shows information about current version, delta versions and full version.');
+        $this->setDescription('Shows information about current version, delta versions and full version');
     }
 
     /**
@@ -44,17 +44,21 @@ final class VersionsCommand extends Command
     {
         $output->writeln('');
 
-        $currentVersion = [$this->versionManager->getCurrentVersion()];
+        $currentVersion = [
+            $this->versionManager->getCurrentVersion(),
+        ];
         $this->renderTable('Current version of FIAS', $currentVersion, $output);
 
         $output->writeln('');
 
-        $completeVersion = [$this->informer->getCompleteInfo()];
+        $completeVersion = [
+            $this->informer->getLatestVersion(),
+        ];
         $this->renderTable('Complete version of FIAS', $completeVersion, $output);
 
         $output->writeln('');
 
-        $deltaVersions = \array_slice($this->informer->getDeltaList(), 0, 15);
+        $deltaVersions = \array_slice($this->informer->getAllVersions(), 0, 15);
         $this->renderTable('Delta versions of FIAS', $deltaVersions, $output);
 
         $output->writeln('');
@@ -65,25 +69,23 @@ final class VersionsCommand extends Command
     /**
      * Отображает список версий в виде таблицы.
      *
-     * @param InformerResponse[] $versions
+     * @param FiasInformerResponse[] $versions
      */
     private function renderTable(string $header, array $versions, OutputInterface $output): void
     {
         $rows = [];
         foreach ($versions as $version) {
-            if (!$version->hasResult()) {
-                continue;
-            }
             $rows[] = [
                 'Version' => $version->getVersion(),
-                'Url' => $version->getUrl(),
+                'Full url' => $version->getFullUrl(),
+                'Delta url' => $version->getDeltaUrl(),
             ];
         }
 
         $table = new Table($output);
         $table->setHeaderTitle($header);
-        $table->setColumnWidths([10, 80]);
-        $table->setHeaders(['Version', 'Url'])->setRows($rows);
+        $table->setColumnWidths([10, 80, 80]);
+        $table->setHeaders(['Version', 'Full url', 'Delta url'])->setRows($rows);
         $table->render();
     }
 }
