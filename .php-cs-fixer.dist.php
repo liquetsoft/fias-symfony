@@ -27,7 +27,7 @@ $rules = [
         'order' => 'alpha',
         'direction' => 'ascend',
     ],
-    'date_time_immutable' => true,
+    'date_time_immutable' => false,
     'native_constant_invocation' => true,
     'combine_nested_dirname' => true,
     'native_function_invocation' => [
