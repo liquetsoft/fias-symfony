@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
-use Ramsey\Uuid\UuidInterface;
 
 /**
  * Объект, который сохраняет данные ФИАС с помощью Doctrine.
@@ -182,8 +181,6 @@ class DoctrineStorage implements Storage
             return $data;
         } elseif ($data instanceof \DateTimeInterface) {
             return $data->format('Y-m-d H:i:s');
-        } elseif ($data instanceof UuidInterface) {
-            return $data->toString();
         } elseif (\is_object($data) && method_exists($data, '__toString')) {
             return (string) $data;
         }
