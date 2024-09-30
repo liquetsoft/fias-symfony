@@ -1,9 +1,9 @@
 ФИАС bundle
 ===========
 
-[![Latest Stable Version](https://poser.pugx.org/liquetsoft/fias-symfony/v/stable.png)](https://packagist.org/packages/liquetsoft/fias-symfony)
-[![Total Downloads](https://poser.pugx.org/liquetsoft/fias-symfony/downloads.png)](https://packagist.org/packages/liquetsoft/fias-symfony)
-[![License](https://poser.pugx.org/liquetsoft/fias-symfony/license.svg)](https://packagist.org/packages/liquetsoft/fias-symfony)
+[![Latest Stable Version](https://poser.pugx.org/liquetsoft/fias-symfony/v)](https://packagist.org/packages/liquetsoft/fias-symfony)
+[![Total Downloads](https://poser.pugx.org/liquetsoft/fias-symfony/downloads)](https://packagist.org/packages/liquetsoft/fias-symfony)
+[![License](https://poser.pugx.org/liquetsoft/fias-symfony/license)](https://packagist.org/packages/liquetsoft/fias-symfony)
 [![Build Status](https://github.com/liquetsoft/fias-symfony/workflows/liquetsoft_fias/badge.svg)](https://github.com/liquetsoft/fias-symfony/actions?query=workflow%3A%22liquetsoft_fias%22)
 
 Бандл symfony для установки данных из [ФИАС](https://fias.nalog.ru/).
