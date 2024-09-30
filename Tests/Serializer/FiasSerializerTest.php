@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Serializer;
 
+use Liquetsoft\Fias\Component\Serializer\FiasSerializerFormat;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\BaseCase;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\FiasSerializerObject;
@@ -16,7 +17,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\FiasSerializ
 final class FiasSerializerTest extends BaseCase
 {
     /**
-     * Проверяет, что объект правильно разберет данные их xml в объект.
+     * Проверяет, что объект правильно разберет данные из xml в объект.
      */
     public function testDenormalize(): void
     {
@@ -42,7 +43,7 @@ final class FiasSerializerTest extends BaseCase
 EOT;
 
         $serializer = new FiasSerializer();
-        $object = $serializer->deserialize($data, FiasSerializerObject::class, 'xml');
+        $object = $serializer->deserialize($data, FiasSerializerObject::class, FiasSerializerFormat::XML->value);
 
         $this->assertInstanceOf(FiasSerializerObject::class, $object);
         $this->assertSame($id, $object->getId());
