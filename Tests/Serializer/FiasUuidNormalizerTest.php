@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Serializer;
 
-use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\UuidNormalizer;
+use Liquetsoft\Fias\Component\Serializer\FiasSerializerFormat;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\FiasUuidNormalizer;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\BaseCase;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
@@ -15,7 +16,7 @@ use Symfony\Component\Uid\Uuid;
  *
  * @internal
  */
-final class UuidNormalizerTest extends BaseCase
+final class FiasUuidNormalizerTest extends BaseCase
 {
     /**
      * Проверяет, что объект правильно нормализуется в строку.
@@ -25,9 +26,10 @@ final class UuidNormalizerTest extends BaseCase
         $uuidString = 'f81d4fae-7dec-11d0-a765-00a0c91e6bf6';
         $uuid = Uuid::fromString($uuidString);
 
-        $normalizer = new UuidNormalizer();
+        $normalizer = new FiasUuidNormalizer();
+        $res = $normalizer->normalize($uuid, FiasSerializerFormat::XML->value);
 
-        $this->assertSame($uuidString, $normalizer->normalize($uuid));
+        $this->assertSame($uuidString, $res);
     }
 
     /**
@@ -36,10 +38,10 @@ final class UuidNormalizerTest extends BaseCase
      */
     public function testNormalizeWrongObjectException(): void
     {
-        $normalizer = new UuidNormalizer();
+        $normalizer = new FiasUuidNormalizer();
 
         $this->expectException(InvalidArgumentException::class);
-        $normalizer->normalize('123');
+        $normalizer->normalize('123', FiasSerializerFormat::XML->value);
     }
 
     /**
@@ -48,10 +50,10 @@ final class UuidNormalizerTest extends BaseCase
      *
      * @dataProvider provideSupportsNormalization
      */
-    public function testSupportsNormalization(mixed $item, bool $expected): void
+    public function testSupportsNormalization(mixed $item, string $format, bool $expected): void
     {
-        $normalizer = new UuidNormalizer();
-        $res = $normalizer->supportsNormalization($item);
+        $normalizer = new FiasUuidNormalizer();
+        $res = $normalizer->supportsNormalization($item, $format);
 
         $this->assertSame($expected, $res);
     }
@@ -61,18 +63,27 @@ final class UuidNormalizerTest extends BaseCase
         return [
             'uuid' => [
                 Uuid::v6(),
+                FiasSerializerFormat::XML->value,
+                true,
+            ],
+            'uuid and json' => [
+                Uuid::v6(),
+                'json',
                 true,
             ],
             'any object' => [
                 new \stdClass(),
+                FiasSerializerFormat::XML->value,
                 false,
             ],
             'string' => [
                 'string',
+                FiasSerializerFormat::XML->value,
                 false,
             ],
             'null' => [
                 null,
+                FiasSerializerFormat::XML->value,
                 false,
             ],
         ];
@@ -85,8 +96,8 @@ final class UuidNormalizerTest extends BaseCase
     {
         $uuidString = 'f81d4fae-7dec-11d0-a765-00a0c91e6bf6';
 
-        $normalizer = new UuidNormalizer();
-        $uuid = $normalizer->denormalize($uuidString, 'test');
+        $normalizer = new FiasUuidNormalizer();
+        $uuid = $normalizer->denormalize($uuidString, 'test', FiasSerializerFormat::XML->value);
 
         $this->assertInstanceOf(Uuid::class, $uuid);
         $this->assertSame($uuidString, (string) $uuid);
@@ -98,10 +109,10 @@ final class UuidNormalizerTest extends BaseCase
      */
     public function testDenormalizeEmptyStringException(): void
     {
-        $normalizer = new UuidNormalizer();
+        $normalizer = new FiasUuidNormalizer();
 
         $this->expectException(NotNormalizableValueException::class);
-        $normalizer->denormalize('', 'test');
+        $normalizer->denormalize('', 'test', FiasSerializerFormat::XML->value);
     }
 
     /**
@@ -110,10 +121,10 @@ final class UuidNormalizerTest extends BaseCase
      */
     public function testDenormalizeWrongStringException(): void
     {
-        $normalizer = new UuidNormalizer();
+        $normalizer = new FiasUuidNormalizer();
 
         $this->expectException(NotNormalizableValueException::class);
-        $normalizer->denormalize('test', 'test');
+        $normalizer->denormalize('test', 'test', FiasSerializerFormat::XML->value);
     }
 
     /**
@@ -121,10 +132,10 @@ final class UuidNormalizerTest extends BaseCase
      */
     public function testDenormalizeNullException(): void
     {
-        $normalizer = new UuidNormalizer();
+        $normalizer = new FiasUuidNormalizer();
 
         $this->expectException(NotNormalizableValueException::class);
-        $normalizer->denormalize(null, 'test');
+        $normalizer->denormalize(null, 'test', FiasSerializerFormat::XML->value);
     }
 
     /**
@@ -133,10 +144,10 @@ final class UuidNormalizerTest extends BaseCase
      *
      * @dataProvider provideSupportsDenormalization
      */
-    public function testSupportsDenormalization(string $data, string $type, bool $expected): void
+    public function testSupportsDenormalization(string $data, string $type, string $format, bool $expected): void
     {
-        $normalizer = new UuidNormalizer();
-        $res = $normalizer->supportsDenormalization($data, $type);
+        $normalizer = new FiasUuidNormalizer();
+        $res = $normalizer->supportsDenormalization($data, $type, $format);
 
         $this->assertSame($expected, $res);
     }
@@ -144,19 +155,28 @@ final class UuidNormalizerTest extends BaseCase
     public static function provideSupportsDenormalization(): array
     {
         return [
-            'uuid' => [
+            'uuid and xml' => [
                 'f81d4fae-7dec-11d0-a765-00a0c91e6bf6',
                 Uuid::class,
+                FiasSerializerFormat::XML->value,
                 true,
             ],
-            'any string with correct type' => [
+            'uuid and json' => [
+                'f81d4fae-7dec-11d0-a765-00a0c91e6bf6',
+                Uuid::class,
+                'json',
+                true,
+            ],
+            'any string with correct type and xml' => [
                 'test',
                 Uuid::class,
+                FiasSerializerFormat::XML->value,
                 true,
             ],
             'uuid with wrong type' => [
                 'f81d4fae-7dec-11d0-a765-00a0c91e6bf6',
                 \stdClass::class,
+                FiasSerializerFormat::XML->value,
                 false,
             ],
         ];
@@ -164,18 +184,39 @@ final class UuidNormalizerTest extends BaseCase
 
     /**
      * Проверяет, что объект вернет корректный список поддерживаемых объектов.
+     *
+     * @dataProvider provideGetSupportedTypes
      */
-    public function testGetSupportedTypes(): void
+    public function testGetSupportedTypes(?string $format, array $expected): void
     {
-        $normalizer = new UuidNormalizer();
+        $normalizer = new FiasUuidNormalizer();
 
-        $res = $normalizer->getSupportedTypes(null);
+        $res = $normalizer->getSupportedTypes($format);
 
-        $this->assertSame(
-            [
-                Uuid::class => true,
+        $this->assertSame($expected, $res);
+    }
+
+    public static function provideGetSupportedTypes(): array
+    {
+        return [
+            'xml type' => [
+                FiasSerializerFormat::XML->value,
+                [
+                    Uuid::class => true,
+                ],
             ],
-            $res
-        );
+            'null type' => [
+                null,
+                [
+                    Uuid::class => true,
+                ],
+            ],
+            'other type' => [
+                'json',
+                [
+                    Uuid::class => true,
+                ],
+            ],
+        ];
     }
 }

@@ -13,7 +13,7 @@ use Symfony\Component\Uid\Uuid;
 /**
  * Нормализатор для объектов uuid.
  */
-final class UuidNormalizer implements DenormalizerInterface, NormalizerInterface
+final class FiasUuidNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     /**
      * {@inheritDoc}
