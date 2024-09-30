@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator;
 
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
+use Liquetsoft\Fias\Component\Serializer\FiasSerializerFormat;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\PhpFile;
@@ -57,6 +58,7 @@ class DenormalizerGenerator extends AbstractGenerator
         $namespace->addUse(InvalidArgumentException::class);
         $namespace->addUse(DenormalizerAwareInterface::class);
         $namespace->addUse(DenormalizerAwareTrait::class);
+        $namespace->addUse(FiasSerializerFormat::class);
 
         $descriptors = $this->getRegistry()->getDescriptors();
         foreach ($descriptors as $descriptor) {
@@ -79,9 +81,12 @@ class DenormalizerGenerator extends AbstractGenerator
         $class->addComment('Скомпилированный класс для денормализации сущностей ФИАС в модели.');
 
         $compiledDataSet = 'fias_compiled_data_set';
-        $supportsBody = "return empty(\$context['{$compiledDataSet}'])\n    && (\n";
+        $supportsBody = "return empty(\$context['{$compiledDataSet}'])\n    && FiasSerializerFormat::XML->isEqual(\$format)\n    && (\n";
         $getSupportedTypesBody = '';
-        $denormalizeBody = '$data = \\is_array($data) ? $data : [];' . "\nunset(\$data['#']);\n";
+        $denormalizeBody = "if (!is_array(\$data)) {\n";
+        $denormalizeBody .= "    throw new InvalidArgumentException('Bad data parameter. Array instance is required');\n";
+        $denormalizeBody .= "}\n\n";
+        $denormalizeBody .= "unset(\$data['#']);\n\n";
         $denormalizeBody .= '$type = trim($type, " \t\n\r\0\x0B/");' . "\n\n";
         $denormalizeBody .= "\$entity = \$context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new \$type();\n\n";
         $descriptors = $this->registry->getDescriptors();
@@ -131,7 +136,7 @@ class DenormalizerGenerator extends AbstractGenerator
             ->addComment('@return array<string, bool|null>')
             ->setReturnType('array')
             ->setVisibility('public')
-            ->setBody("return [\n{$getSupportedTypesBody}];");
+            ->setBody("return !FiasSerializerFormat::XML->isEqual(\$format) ? [] : [\n{$getSupportedTypesBody}];");
         $getSupportedTypes->addParameter('format')->setType('string')->setNullable(true);
 
         foreach ($descriptors as $descriptor) {

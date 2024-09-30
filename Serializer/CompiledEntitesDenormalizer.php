@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer;
 
+use Liquetsoft\Fias\Component\Serializer\FiasSerializerFormat;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddrObj;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddrObjDivision;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddrObjTypes;
@@ -49,6 +50,7 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
     public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         return empty($context['fias_compiled_data_set'])
+            && FiasSerializerFormat::XML->isEqual($format)
             && (
                 is_subclass_of($type, Apartments::class)
                 || is_subclass_of($type, AddrObjDivision::class)
@@ -84,8 +86,12 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
      */
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        $data = \is_array($data) ? $data : [];
+        if (!\is_array($data)) {
+            throw new InvalidArgumentException('Bad data parameter. Array instance is required');
+        }
+
         unset($data['#']);
+
         $type = trim($type, " \t\n\r\0\x0B/");
 
         $entity = $context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new $type();
@@ -156,7 +162,7 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
      */
     public function getSupportedTypes(?string $format): array
     {
-        return [
+        return !FiasSerializerFormat::XML->isEqual($format) ? [] : [
             Apartments::class => false,
             AddrObjDivision::class => false,
             NormativeDocsTypes::class => false,
