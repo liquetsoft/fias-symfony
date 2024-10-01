@@ -33,12 +33,12 @@
 
     use Doctrine\ORM\Mapping as ORM;
     use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddrObj as LiquetsoftAddrObj;
+    use App\Repository\AddressObjectRepository;
 
     /**
      * Адреса.
-     *
-     * @ORM\Entity(repositoryClass="App\Repository\AddressObjectRepository")
      */
+    #[ORM\Entity(repositoryClass: AddressObjectRepository::class)]
     class AddrObj extends LiquetsoftAddrObj
     {
     }
@@ -82,9 +82,8 @@
 
     /**
      * Сущность, которая хранит текущую версию ФИАС.
-     *
-     * @ORM\Entity
      */
+    #[ORM\Entity()]
     class FiasVersion extends LiquetsoftFiasVersion
     {
     }
@@ -177,7 +176,7 @@
 5. Загрузка и распаковка архива с полной версией ФИАС
 
     ```bash
-    bin/console liquetsoft:fias:download /path/to/download full --extract
+    bin/console liquetsoft:fias:download /path/to/download latest --extract
     ```
 
 6. Установка ФИАС из указанного каталога
