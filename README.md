@@ -33,6 +33,7 @@
 
     use Doctrine\ORM\Mapping as ORM;
     use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\AddrObj as LiquetsoftAddrObj;
+    use App\Repository\AddressObjectRepository;
 
     /**
      * Адреса.
