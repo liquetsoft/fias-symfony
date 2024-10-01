@@ -19,7 +19,7 @@ final class HttpTransportSymfonyTest extends BaseCase
 {
     private const REQUEST_URL = 'https://test.test/url';
 
-    private const RESPONSE_STATUS_CODE = 201;
+    private const RESPONSE_STATUS_CODE = 200;
 
     private const RESPONSE_SYMFONY_HEADERS = [
         'Test-Header' => [
