@@ -136,7 +136,13 @@ final class BulkInsertDoctrineStorage extends DoctrineStorage
         $dataSample = reset($data);
 
         if ($dataSample !== false) {
-            $paramNames = implode(', ', array_map([$this->em->getConnection(), 'quoteIdentifier'], array_keys($dataSample)));
+            $paramNames = implode(
+                ', ',
+                array_map(
+                    fn (string $id): string => $this->em->getConnection()->quoteIdentifier($id),
+                    array_keys($dataSample)
+                )
+            );
             $paramValues = implode(', ', array_fill(0, \count($dataSample), '?'));
             $dataValues = '(' . implode('), (', array_fill(0, \count($data), $paramValues)) . ')';
             $sql = "INSERT INTO {$tableName} ({$paramNames}) VALUES {$dataValues}";
