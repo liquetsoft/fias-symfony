@@ -175,7 +175,7 @@
 5. Загрузка и распаковка архива с полной версией ФИАС
 
     ```bash
-    bin/console liquetsoft:fias:download /path/to/download full --extract
+    bin/console liquetsoft:fias:download /path/to/download latest --extract
     ```
 
 6. Установка ФИАС из указанного каталога
