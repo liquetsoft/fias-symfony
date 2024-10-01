@@ -36,9 +36,8 @@
 
     /**
      * Адреса.
-     *
-     * @ORM\Entity(repositoryClass="App\Repository\AddressObjectRepository")
      */
+    #[ORM\Entity(repositoryClass: AddressObjectRepository::class)]
     class AddrObj extends LiquetsoftAddrObj
     {
     }
@@ -82,9 +81,8 @@
 
     /**
      * Сущность, которая хранит текущую версию ФИАС.
-     *
-     * @ORM\Entity
      */
+    #[ORM\Entity()]
     class FiasVersion extends LiquetsoftFiasVersion
     {
     }
