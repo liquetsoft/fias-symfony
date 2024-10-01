@@ -115,7 +115,7 @@ final class BulkInsertDoctrineStorage extends DoctrineStorage
             } catch (\Exception $e) {
                 $this->log(
                     LogLevel::ERROR,
-                    "Error while inserting item to '{$tableName}' table. Item wasn't proceed.",
+                    "Error while inserting item to '{$tableName}' table. Item wasn't processed",
                     [
                         'table' => $tableName,
                         'error_message' => $e->getMessage(),

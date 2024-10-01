@@ -53,8 +53,8 @@ final class HttpTransportSymfony implements HttpTransport
             );
             $status = $response->getStatusCode();
             $headers = $this->grabHeadersFromSymfonyResponse($response);
-            $content = $response->getContent(true);
-            $jsonContent = $response->toArray(true);
+            $content = $response->getContent(false);
+            $jsonContent = $response->toArray(false);
         } catch (\Throwable $e) {
             throw HttpTransportException::wrap($e);
         }
@@ -75,13 +75,13 @@ final class HttpTransportSymfony implements HttpTransport
         try {
             $response = $this->symfonyHttpClient->request('GET', $url, $params);
             $statusCode = $response->getStatusCode();
+            $headers = $this->grabHeadersFromSymfonyResponse($response);
             if ($statusCode < 200 || $statusCode >= 300) {
-                return HttpTransportResponseFactory::create($statusCode);
+                return HttpTransportResponseFactory::create($statusCode, $headers);
             }
             foreach ($this->symfonyHttpClient->stream($response) as $chunk) {
                 fwrite($destination, $chunk->getContent());
             }
-            $headers = $this->grabHeadersFromSymfonyResponse($response);
         } catch (\Throwable $e) {
             throw HttpTransportException::wrap($e);
         }
@@ -98,7 +98,7 @@ final class HttpTransportSymfony implements HttpTransport
     private function grabHeadersFromSymfonyResponse(ResponseInterface $response): array
     {
         $return = [];
-        foreach ($response->getHeaders() as $name => $value) {
+        foreach ($response->getHeaders(false) as $name => $value) {
             $headerName = (string) $name;
             $headerValue = (string) end($value);
             $return[$headerName] = $headerValue;
