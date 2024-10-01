@@ -114,7 +114,7 @@ final class DownloadCommand extends Command
 
         $this->unpacker->unpack($archive, $extractTo);
 
-        unlink($archive->getRealPath());
+        $this->fs->removeIfExists($archive);
     }
 
     /**
