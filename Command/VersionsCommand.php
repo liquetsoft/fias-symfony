@@ -48,9 +48,8 @@ final class VersionsCommand extends Command
         $currentVersion = $this->versionManager->getCurrentVersion();
         if ($currentVersion !== null) {
             $this->renderTable('Current version of FIAS', [$currentVersion], $output);
+            $output->writeln('');
         }
-
-        $output->writeln('');
 
         $completeVersion = [
             $this->informer->getLatestVersion(),
@@ -59,7 +58,7 @@ final class VersionsCommand extends Command
 
         $output->writeln('');
 
-        $deltaVersions = \array_slice($this->informer->getAllVersions(), 0, 15);
+        $deltaVersions = \array_slice($this->informer->getAllVersions(), -15);
         $this->renderTable('Delta versions of FIAS', $deltaVersions, $output);
 
         $output->writeln('');
@@ -85,7 +84,7 @@ final class VersionsCommand extends Command
 
         $table = new Table($output);
         $table->setHeaderTitle($header);
-        $table->setColumnWidths([10, 80, 80]);
+        $table->setColumnWidths([9, 50, 50]);
         $table->setHeaders(['Version', 'Full url', 'Delta url'])->setRows($rows);
         $table->render();
     }
