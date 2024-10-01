@@ -21,6 +21,8 @@ final class HttpTransportSymfonyTest extends BaseCase
 
     private const RESPONSE_STATUS_CODE = 200;
 
+    private const RESPONSE_STATUS_CODE_ERROR = 500;
+
     private const RESPONSE_SYMFONY_HEADERS = [
         'Test-Header' => [
             'test_header_1',
@@ -58,6 +60,27 @@ final class HttpTransportSymfonyTest extends BaseCase
         $this->assertSame(self::REQUEST_URL, $mockResponse->getRequestUrl());
 
         $this->assertSame(self::RESPONSE_STATUS_CODE, $res->getStatusCode());
+        $this->assertSame(self::RESPONSE_LOCAL_HEADERS, $res->getHeaders());
+    }
+
+    /**
+     * Проверяет, что объект правильно обработает ошибочный HTTP статус.
+     */
+    public function testHeadWrongStatus(): void
+    {
+        $mockResponse = new MockResponse(
+            '[]',
+            [
+                'http_code' => self::RESPONSE_STATUS_CODE_ERROR,
+                'response_headers' => self::RESPONSE_SYMFONY_HEADERS,
+            ]
+        );
+        $httpClient = new MockHttpClient($mockResponse, self::REQUEST_URL);
+
+        $client = new HttpTransportSymfony($httpClient);
+        $res = $client->head(self::REQUEST_URL);
+
+        $this->assertSame(self::RESPONSE_STATUS_CODE_ERROR, $res->getStatusCode());
         $this->assertSame(self::RESPONSE_LOCAL_HEADERS, $res->getHeaders());
     }
 
@@ -106,6 +129,27 @@ final class HttpTransportSymfonyTest extends BaseCase
         $this->assertSame(self::RESPONSE_LOCAL_HEADERS, $res->getHeaders());
         $this->assertSame($body, $res->getPayload());
         $this->assertSame($jsonBody, $res->getJsonPayload());
+    }
+
+    /**
+     * Проверяет, что объект правильно обработает ошибочный HTTP статус.
+     */
+    public function testGetWrongStatus(): void
+    {
+        $mockResponse = new MockResponse(
+            '[]',
+            [
+                'http_code' => self::RESPONSE_STATUS_CODE_ERROR,
+                'response_headers' => self::RESPONSE_SYMFONY_HEADERS,
+            ]
+        );
+        $httpClient = new MockHttpClient($mockResponse, self::REQUEST_URL);
+
+        $client = new HttpTransportSymfony($httpClient);
+        $res = $client->get(self::REQUEST_URL);
+
+        $this->assertSame(self::RESPONSE_STATUS_CODE_ERROR, $res->getStatusCode());
+        $this->assertSame(self::RESPONSE_LOCAL_HEADERS, $res->getHeaders());
     }
 
     /**
@@ -188,6 +232,31 @@ final class HttpTransportSymfonyTest extends BaseCase
         $this->assertSame(self::RESPONSE_STATUS_CODE, $res->getStatusCode());
         $this->assertSame(self::RESPONSE_LOCAL_HEADERS, $res->getHeaders());
         $this->assertSame($body, file_get_contents($destination));
+    }
+
+    /**
+     * Проверяет, что объект правильно обработает ошибочный HTTP статус.
+     */
+    public function testDownloadWrongStatus(): void
+    {
+        $destination = $this->getPathToTestFile('testDownload', 'qwe');
+        $destinationResource = fopen($destination, 'wb');
+
+        $mockResponse = new MockResponse(
+            '',
+            [
+                'http_code' => self::RESPONSE_STATUS_CODE_ERROR,
+                'response_headers' => self::RESPONSE_SYMFONY_HEADERS,
+            ]
+        );
+        $httpClient = new MockHttpClient($mockResponse, self::REQUEST_URL);
+
+        $client = new HttpTransportSymfony($httpClient);
+        $res = $client->download(self::REQUEST_URL, $destinationResource);
+        fclose($destinationResource);
+
+        $this->assertSame(self::RESPONSE_STATUS_CODE_ERROR, $res->getStatusCode());
+        $this->assertSame(self::RESPONSE_LOCAL_HEADERS, $res->getHeaders());
     }
 
     /**
