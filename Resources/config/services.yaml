@@ -65,6 +65,16 @@ services:
         tags:
             - { name: 'serializer.normalizer' }
 
+    liquetsoft_fias.serializer.pipeline_state_normalizer:
+        class: Liquetsoft\Fias\Component\Serializer\FiasPipelineStateNormalizer
+        tags:
+            - { name: 'serializer.normalizer' }
+
+    liquetsoft_fias.serializer.pipeline_state_denormalizer:
+        class: Liquetsoft\Fias\Component\Serializer\FiasPipelineStateDenormalizer
+        tags:
+            - { name: 'serializer.normalizer' }
+
     liquetsoft_fias.serializer.compiled_denormalizer:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\CompiledEntitesDenormalizer
         tags:
@@ -326,6 +336,7 @@ services:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\InstallParallelRunningCommand
         arguments:
             - '@liquetsoft_fias.pipe.install_parallel_running'
+            - '@serializer'
         tags:
             - { name: 'console.command' }
 
@@ -354,6 +365,7 @@ services:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command\UpdateParallelRunningCommand
         arguments:
             - '@liquetsoft_fias.pipe.update_parallel_running'
+            - '@serializer'
         tags:
             - { name: 'console.command' }
 

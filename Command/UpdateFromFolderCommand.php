@@ -53,8 +53,11 @@ final class UpdateFromFolderCommand extends Command
 
         $io->note("Updating FIAS from the '{$folder}' folder");
 
-        $state = new ArrayState();
-        $state = $state->setAndLockParameter(StateParameter::PATH_TO_EXTRACT_FOLDER, $folder);
+        $state = new ArrayState(
+            [
+                StateParameter::PATH_TO_EXTRACT_FOLDER->value => $folder,
+            ]
+        );
         $this->pipeline->run($state);
 
         $io->success("FIAS updated from the '{$folder}' folder");

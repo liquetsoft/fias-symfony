@@ -63,12 +63,15 @@ final class UpdatePipelineTest extends DoctrineTestCase
         $versionEntity->setFullurl($versionFullUrl);
         $versionEntity->setDeltaurl($versionDeltaUrl);
 
-        $state = new ArrayState();
-        $state->setAndLockParameter(StateParameter::PATH_TO_DOWNLOAD_FILE, $testArchive);
-        $state->setAndLockParameter(StateParameter::PATH_TO_EXTRACT_FOLDER, $testDir);
-        $state->setAndLockParameter(StateParameter::FIAS_NEXT_VERSION_NUMBER, $version);
-        $state->setAndLockParameter(StateParameter::FIAS_NEXT_VERSION_FULL_URL, $versionFullUrl);
-        $state->setAndLockParameter(StateParameter::FIAS_NEXT_VERSION_DELTA_URL, $versionDeltaUrl);
+        $state = new ArrayState(
+            [
+                StateParameter::PATH_TO_DOWNLOAD_FILE->value => $testArchive,
+                StateParameter::PATH_TO_EXTRACT_FOLDER->value => $testDir,
+                StateParameter::FIAS_NEXT_VERSION_NUMBER->value => $version,
+                StateParameter::FIAS_NEXT_VERSION_FULL_URL->value => $versionFullUrl,
+                StateParameter::FIAS_NEXT_VERSION_DELTA_URL->value => $versionDeltaUrl,
+            ]
+        );
 
         $pipeline = $this->createPipeLine();
         $pipeline->run($state);

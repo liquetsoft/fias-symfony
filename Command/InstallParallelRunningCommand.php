@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Command;
 
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
-use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
-use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
+use Liquetsoft\Fias\Component\Pipeline\State\State;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Команда для параллельных процессов, в которых идет установка ФИАС.
@@ -19,8 +18,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class InstallParallelRunningCommand extends Command
 {
-    public function __construct(private readonly Pipe $pipeline)
-    {
+    public function __construct(
+        private readonly Pipe $pipeline,
+        private readonly SerializerInterface $serializer,
+    ) {
         parent::__construct();
     }
 
@@ -32,7 +33,6 @@ final class InstallParallelRunningCommand extends Command
         $this
             ->setName('liquetsoft:fias:install_parallel_running')
             ->setDescription('Command for running one single thread of installation process')
-            ->addArgument('files', InputArgument::OPTIONAL, 'Json encoded list of files to process')
         ;
     }
 
@@ -41,20 +41,13 @@ final class InstallParallelRunningCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $files = $input->getArgument('files');
-        if (\is_array($files)) {
-            $files = reset($files);
+        $stdIn = file_get_contents('php://stdin');
+        if ($stdIn === false || $stdIn === '') {
+            return 1;
         }
 
-        if ($files !== null && $files !== '') {
-            $files = json_decode((string) $files, true);
-        } else {
-            $stdIn = file_get_contents('php://stdin');
-            $files = $stdIn !== false ? json_decode($stdIn, true) : [];
-        }
+        $state = $this->serializer->deserialize($stdIn, State::class, 'json');
 
-        $state = new ArrayState();
-        $state->setAndLockParameter(StateParameter::FILES_TO_PROCEED, $files);
         $this->pipeline->run($state);
 
         return 0;
