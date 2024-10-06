@@ -242,6 +242,7 @@ services:
         class: Liquetsoft\Fias\Component\Pipeline\Task\ProcessSwitchTask
         arguments:
             $filesDispatcher: '@liquetsoft_fias.files.paralleling_dispatcher'
+            $serializer: '@serializer'
             $pathToBin: '%liquetsoft_fias.path_to_console_bin%'
             $commandName: '%liquetsoft_fias.update_running_command%'
             $numberOfParallel: '%liquetsoft_fias.number_of_parallel%'
