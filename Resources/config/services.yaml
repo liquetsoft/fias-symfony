@@ -45,7 +45,7 @@ services:
 
 
     liquetsoft_fias.unpacker.service:
-        class: Liquetsoft\Fias\Component\Unpacker\ZipUnpacker
+        class: Liquetsoft\Fias\Component\Unpacker\UnpackerZip
 
     Liquetsoft\Fias\Component\Unpacker\Unpacker:
         alias: liquetsoft_fias.unpacker.service
