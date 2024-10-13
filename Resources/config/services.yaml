@@ -85,12 +85,12 @@ services:
             - { name: 'serializer.normalizer' }
 
     liquetsoft_fias.serializer.unpacker_file_denormalizer:
-        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\FiasUnpackerFileDenormalizer
+        class: Liquetsoft\Fias\Component\Serializer\FiasUnpackerFileDenormalizer
         tags:
             - { name: 'serializer.normalizer' }
 
     liquetsoft_fias.serializer.unpacker_file_normalizer:
-        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\FiasUnpackerFileNormalizer
+        class: Liquetsoft\Fias\Component\Serializer\FiasUnpackerFileNormalizer
         tags:
             - { name: 'serializer.normalizer' }
 
