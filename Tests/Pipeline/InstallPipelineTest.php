@@ -8,18 +8,24 @@ use Liquetsoft\Fias\Component\EntityDescriptor\BaseEntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\BaseEntityField;
 use Liquetsoft\Fias\Component\EntityManager\BaseEntityManager;
 use Liquetsoft\Fias\Component\EntityRegistry\ArrayEntityRegistry;
+use Liquetsoft\Fias\Component\FiasFileSelector\FiasFileSelectorImpl;
+use Liquetsoft\Fias\Component\FilesDispatcher\FilesDispatcherImpl;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
+use Liquetsoft\Fias\Component\Pipeline\State\State;
 use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
+use Liquetsoft\Fias\Component\Pipeline\Task\ApplyNestedPipelineToFileTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\CleanUpFilesToProceedTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataDeleteTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataInsertTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\SelectFilesToProceedTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use Liquetsoft\Fias\Component\Pipeline\Task\TruncateTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\UnpackTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\VersionSetTask;
-use Liquetsoft\Fias\Component\Unpacker\ZipUnpacker;
+use Liquetsoft\Fias\Component\Unpacker\UnpackerZip;
 use Liquetsoft\Fias\Component\XmlReader\BaseXmlReader;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\BulkInsertDoctrineStorage;
@@ -135,24 +141,47 @@ final class InstallPipelineTest extends DoctrineTestCase
                 'mock' => PipelineTestMockEntity::class,
             ]
         );
-
         $storage = new BulkInsertDoctrineStorage($this->getEntityManager());
-
+        $unpacker = new UnpackerZip();
+        $filesSelector = new FiasFileSelectorImpl($unpacker, $fiasEntityManager);
+        $filesDispatcher = new FilesDispatcherImpl($fiasEntityManager);
         $xmlReader = new BaseXmlReader();
-
         $serializer = new FiasSerializer();
-
         $versionManager = new DoctrineVersionManager(
             $this->getEntityManager(),
             VersionManagerTestMockEntity::class
         );
 
+        $nestedTasksPipeline = new ArrayPipe(
+            [
+                new UnpackTask($unpacker),
+                new DataInsertTask($fiasEntityManager, $xmlReader, $storage, $serializer),
+                new DataDeleteTask($fiasEntityManager, $xmlReader, $storage, $serializer),
+            ],
+            new CleanUpFilesToProceedTask(),
+        );
+
+        $dispatchFilesTask = new class($filesDispatcher) implements Task {
+            public function __construct(private readonly FilesDispatcherImpl $filesDispatcher)
+            {
+            }
+
+            /**
+             * @psalm-suppress MixedArgument
+             */
+            public function run(State $state): State
+            {
+                $dispatchedFiles = $this->filesDispatcher->dispatch($state->getParameter(StateParameter::FILES_TO_PROCEED), 1);
+
+                return $state->setParameter(StateParameter::FILES_TO_PROCEED, $dispatchedFiles[0]);
+            }
+        };
+
         $tasks = [
-            new UnpackTask(new ZipUnpacker()),
             new TruncateTask($fiasEntityManager, $storage),
-            new SelectFilesToProceedTask($fiasEntityManager),
-            new DataInsertTask($fiasEntityManager, $xmlReader, $storage, $serializer),
-            new DataDeleteTask($fiasEntityManager, $xmlReader, $storage, $serializer),
+            new SelectFilesToProceedTask($filesSelector),
+            $dispatchFilesTask,
+            new ApplyNestedPipelineToFileTask($nestedTasksPipeline),
             new VersionSetTask($versionManager),
         ];
 

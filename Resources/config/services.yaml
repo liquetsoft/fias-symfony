@@ -52,6 +52,25 @@ services:
 
 
 
+    liquetsoft_fias.filter.files_filter:
+        class: Liquetsoft\Fias\Component\Filter\RegexpFilter
+        arguments:
+            - '%liquetsoft_fias.files_filter%'
+
+
+
+    liquetsoft_fias.file_selector.service:
+        class: Liquetsoft\Fias\Component\FiasFileSelector\FiasFileSelectorImpl
+        arguments:
+            - '@liquetsoft_fias.unpacker.service'
+            - '@liquetsoft_fias.entity_manager.service'
+            - '@liquetsoft_fias.filter.files_filter'
+
+    Liquetsoft\Fias\Component\FiasFileSelector\FiasFileSelector:
+        alias: liquetsoft_fias.file_selector.service
+
+
+
     liquetsoft_fias.xml_reader.service:
         class: Liquetsoft\Fias\Component\XmlReader\BaseXmlReader
 
@@ -62,6 +81,16 @@ services:
 
     liquetsoft_fias.serializer.uuid_denormalizer:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\FiasUuidNormalizer
+        tags:
+            - { name: 'serializer.normalizer' }
+
+    liquetsoft_fias.serializer.unpacker_file_denormalizer:
+        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\FiasUnpackerFileDenormalizer
+        tags:
+            - { name: 'serializer.normalizer' }
+
+    liquetsoft_fias.serializer.unpacker_file_normalizer:
+        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\FiasUnpackerFileNormalizer
         tags:
             - { name: 'serializer.normalizer' }
 
@@ -134,7 +163,7 @@ services:
 
 
     liquetsoft_fias.files.paralleling_dispatcher:
-        class: Liquetsoft\Fias\Component\FilesDispatcher\EntityFileDispatcher
+        class: Liquetsoft\Fias\Component\FilesDispatcher\FilesDispatcherImpl
         arguments:
             $entityManager: '@liquetsoft_fias.entity_manager.service'
 
@@ -143,15 +172,11 @@ services:
 
 
 
-    liquetsoft_fias.filter.files_filter:
-        class: Liquetsoft\Fias\Component\Filter\RegexpFilter
-        arguments:
-            - '%liquetsoft_fias.files_filter%'
-
-
-
     liquetsoft_fias.task.cleanup:
         class: Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask
+
+    liquetsoft_fias.task.cleanup_files:
+        class: Liquetsoft\Fias\Component\Pipeline\Task\CleanUpFilesToProceedTask
 
     liquetsoft_fias.task.status.check:
         class: Liquetsoft\Fias\Component\Pipeline\Task\CheckStatusTask
@@ -192,8 +217,7 @@ services:
     liquetsoft_fias.task.data.select_files:
         class: Liquetsoft\Fias\Component\Pipeline\Task\SelectFilesToProceedTask
         arguments:
-            - '@liquetsoft_fias.entity_manager.service'
-            - '@liquetsoft_fias.filter.files_filter'
+            - '@liquetsoft_fias.file_selector.service'
 
     liquetsoft_fias.task.data.insert:
         class: Liquetsoft\Fias\Component\Pipeline\Task\DataInsertTask
@@ -247,7 +271,22 @@ services:
             $commandName: '%liquetsoft_fias.update_running_command%'
             $numberOfParallel: '%liquetsoft_fias.number_of_parallel%'
 
+    liquetsoft_fias.task.apply_nested_pipeline_to_file:
+        class: Liquetsoft\Fias\Component\Pipeline\Task\ApplyNestedPipelineToFileTask
+        arguments:
+            - '@liquetsoft_fias.pipe.proceed_file'
 
+
+
+    liquetsoft_fias.pipe.proceed_file:
+        class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
+        arguments:
+            $tasks:
+                - '@liquetsoft_fias.task.unpack'
+                - '@liquetsoft_fias.task.data.insert'
+                - '@liquetsoft_fias.task.data.delete'
+            $cleanupTask: '@liquetsoft_fias.task.cleanup_files'
+            $logger: '@logger'
 
     liquetsoft_fias.pipe.install:
         class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
@@ -257,7 +296,6 @@ services:
                 - '@liquetsoft_fias.task.prepare.folder'
                 - '@liquetsoft_fias.task.inform.full'
                 - '@liquetsoft_fias.task.download'
-                - '@liquetsoft_fias.task.unpack'
                 - '@liquetsoft_fias.task.data.truncate'
                 - '@liquetsoft_fias.task.data.select_files'
                 - '@liquetsoft_fias.task.process_switcher_install'
@@ -279,8 +317,7 @@ services:
         class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
         arguments:
             $tasks:
-                - '@liquetsoft_fias.task.data.insert'
-                - '@liquetsoft_fias.task.data.delete'
+                - '@liquetsoft_fias.task.apply_nested_pipeline_to_file'
             $cleanupTask: null
             $logger: '@logger'
 
@@ -293,7 +330,6 @@ services:
                 - '@liquetsoft_fias.task.prepare.folder'
                 - '@liquetsoft_fias.task.inform.delta'
                 - '@liquetsoft_fias.task.download'
-                - '@liquetsoft_fias.task.unpack'
                 - '@liquetsoft_fias.task.data.select_files'
                 - '@liquetsoft_fias.task.process_switcher_update'
                 - '@liquetsoft_fias.task.version.set'
@@ -313,8 +349,7 @@ services:
         class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
         arguments:
             $tasks:
-                - '@liquetsoft_fias.task.data.upsert'
-                - '@liquetsoft_fias.task.data.delete'
+                - '@liquetsoft_fias.task.apply_nested_pipeline_to_file'
             $cleanupTask: null
             $logger: '@logger'
 
