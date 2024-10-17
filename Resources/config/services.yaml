@@ -322,7 +322,7 @@ services:
 
 
 
-    liquetsoft_fias.pipe.apply_nested_pipeline_to_file_insert:
+    liquetsoft_fias.pipe.proceed_file_insert:
         class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
         arguments:
             $tasks:
@@ -332,7 +332,7 @@ services:
             $cleanupTask: '@liquetsoft_fias.task.cleanup_files'
             $logger: '@logger'
 
-    liquetsoft_fias.pipe.apply_nested_pipeline_to_file_update:
+    liquetsoft_fias.pipe.proceed_file_update:
         class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
         arguments:
             $tasks:
