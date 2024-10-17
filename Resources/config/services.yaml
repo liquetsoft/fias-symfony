@@ -310,19 +310,34 @@ services:
             $commandName: '%liquetsoft_fias.update_running_command%'
             $numberOfParallel: '%liquetsoft_fias.number_of_parallel%'
 
-    liquetsoft_fias.task.apply_nested_pipeline_to_file:
+    liquetsoft_fias.task.apply_nested_pipeline_to_file_insert:
         class: Liquetsoft\Fias\Component\Pipeline\Task\ApplyNestedPipelineToFileTask
         arguments:
-            - '@liquetsoft_fias.pipe.proceed_file'
+            - '@liquetsoft_fias.pipe.proceed_file_insert'
+
+    liquetsoft_fias.task.apply_nested_pipeline_to_file_update:
+        class: Liquetsoft\Fias\Component\Pipeline\Task\ApplyNestedPipelineToFileTask
+        arguments:
+            - '@liquetsoft_fias.pipe.proceed_file_update'
 
 
 
-    liquetsoft_fias.pipe.proceed_file:
+    liquetsoft_fias.pipe.proceed_file_insert:
         class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
         arguments:
             $tasks:
                 - '@liquetsoft_fias.task.unpack'
                 - '@liquetsoft_fias.task.data.insert'
+                - '@liquetsoft_fias.task.data.delete'
+            $cleanupTask: '@liquetsoft_fias.task.cleanup_files'
+            $logger: '@logger'
+
+    liquetsoft_fias.pipe.proceed_file_update:
+        class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
+        arguments:
+            $tasks:
+                - '@liquetsoft_fias.task.unpack'
+                - '@liquetsoft_fias.task.data.upsert'
                 - '@liquetsoft_fias.task.data.delete'
             $cleanupTask: '@liquetsoft_fias.task.cleanup_files'
             $logger: '@logger'
@@ -356,7 +371,7 @@ services:
         class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
         arguments:
             $tasks:
-                - '@liquetsoft_fias.task.apply_nested_pipeline_to_file'
+                - '@liquetsoft_fias.task.apply_nested_pipeline_to_file_insert'
             $cleanupTask: null
             $logger: '@logger'
 
@@ -388,7 +403,7 @@ services:
         class: Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe
         arguments:
             $tasks:
-                - '@liquetsoft_fias.task.apply_nested_pipeline_to_file'
+                - '@liquetsoft_fias.task.apply_nested_pipeline_to_file_update'
             $cleanupTask: null
             $logger: '@logger'
 
