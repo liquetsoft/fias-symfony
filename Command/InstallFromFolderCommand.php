@@ -56,7 +56,7 @@ final class InstallFromFolderCommand extends Command
 
         $state = new ArrayState(
             [
-                StateParameter::PATH_TO_EXTRACT_FOLDER->value => $folder,
+                StateParameter::PATH_TO_SOURCE->value => $folder,
             ]
         );
         $this->pipeline->run($state);

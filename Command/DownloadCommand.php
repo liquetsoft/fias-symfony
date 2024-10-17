@@ -8,8 +8,7 @@ use Liquetsoft\Fias\Component\Downloader\Downloader;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformerResponse;
 use Liquetsoft\Fias\Component\Unpacker\Unpacker;
-use Marvin255\FileSystemHelper\FileSystemFactory;
-use Marvin255\FileSystemHelper\FileSystemHelperInterface;
+use Marvin255\FileSystemHelper\FileSystemHelper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,15 +25,12 @@ final class DownloadCommand extends Command
 {
     private const LATEST_VERSION_NAME = 'latest';
 
-    private readonly FileSystemHelperInterface $fs;
-
     public function __construct(
         private readonly Downloader $downloader,
         private readonly Unpacker $unpacker,
         private readonly FiasInformer $informer,
+        private readonly FileSystemHelper $fs,
     ) {
-        $this->fs = FileSystemFactory::create();
-
         parent::__construct();
     }
 

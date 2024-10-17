@@ -2,6 +2,14 @@ services:
 
 
 
+    liquetsoft_fias.fs.service:
+        class: Marvin255\FileSystemHelper\FileSystemHelperImpl
+
+    Marvin255\FileSystemHelper\FileSystemHelper:
+        alias: liquetsoft_fias.fs.service
+
+
+
     liquetsoft_fias.http_transport.service:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\HttpTransport\HttpTransportSymfony
         arguments:
@@ -59,12 +67,28 @@ services:
 
 
 
-    liquetsoft_fias.file_selector.service:
-        class: Liquetsoft\Fias\Component\FiasFileSelector\FiasFileSelectorImpl
+    liquetsoft_fias.file_selector.archive_selector:
+        class: Liquetsoft\Fias\Component\FiasFileSelector\FiasFileSelectorArchive
         arguments:
             - '@liquetsoft_fias.unpacker.service'
             - '@liquetsoft_fias.entity_manager.service'
             - '@liquetsoft_fias.filter.files_filter'
+        tags:
+            - { name: 'liquetsoft_fias.file_selector' }
+
+    liquetsoft_fias.file_selector.dir_selector:
+        class: Liquetsoft\Fias\Component\FiasFileSelector\FiasFileSelectorDir
+        arguments:
+            - '@liquetsoft_fias.entity_manager.service'
+            - '@liquetsoft_fias.fs.service'
+            - '@liquetsoft_fias.filter.files_filter'
+        tags:
+            - { name: 'liquetsoft_fias.file_selector' }
+
+    liquetsoft_fias.file_selector.service:
+        class: Liquetsoft\Fias\Component\FiasFileSelector\FiasFileSelectorComposite
+        arguments:
+            - !tagged_iterator liquetsoft_fias.file_selector
 
     Liquetsoft\Fias\Component\FiasFileSelector\FiasFileSelector:
         alias: liquetsoft_fias.file_selector.service
@@ -79,18 +103,13 @@ services:
 
 
 
+    liquetsoft_fias.serializer.compiled_denormalizer:
+        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\CompiledEntitesDenormalizer
+        tags:
+            - { name: 'serializer.normalizer' }
+
     liquetsoft_fias.serializer.uuid_denormalizer:
         class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\FiasUuidNormalizer
-        tags:
-            - { name: 'serializer.normalizer' }
-
-    liquetsoft_fias.serializer.unpacker_file_denormalizer:
-        class: Liquetsoft\Fias\Component\Serializer\FiasUnpackerFileDenormalizer
-        tags:
-            - { name: 'serializer.normalizer' }
-
-    liquetsoft_fias.serializer.unpacker_file_normalizer:
-        class: Liquetsoft\Fias\Component\Serializer\FiasUnpackerFileNormalizer
         tags:
             - { name: 'serializer.normalizer' }
 
@@ -104,8 +123,23 @@ services:
         tags:
             - { name: 'serializer.normalizer' }
 
-    liquetsoft_fias.serializer.compiled_denormalizer:
-        class: Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer\CompiledEntitesDenormalizer
+    liquetsoft_fias.serializer.unpacker_file_denormalizer:
+        class: Liquetsoft\Fias\Component\Serializer\FiasUnpackerFileDenormalizer
+        tags:
+            - { name: 'serializer.normalizer' }
+
+    liquetsoft_fias.serializer.unpacker_file_normalizer:
+        class: Liquetsoft\Fias\Component\Serializer\FiasUnpackerFileNormalizer
+        tags:
+            - { name: 'serializer.normalizer' }
+
+    liquetsoft_fias.serializer.file_denormalizer:
+        class: Liquetsoft\Fias\Component\Serializer\FiasFileDenormalizer
+        tags:
+            - { name: 'serializer.normalizer' }
+
+    liquetsoft_fias.serializer.file_normalizer:
+        class: Liquetsoft\Fias\Component\Serializer\FiasFileNormalizer
         tags:
             - { name: 'serializer.normalizer' }
 
@@ -174,9 +208,13 @@ services:
 
     liquetsoft_fias.task.cleanup:
         class: Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask
+        arguments:
+            - '@liquetsoft_fias.fs.service'
 
     liquetsoft_fias.task.cleanup_files:
-        class: Liquetsoft\Fias\Component\Pipeline\Task\CleanUpFilesToProceedTask
+        class: Liquetsoft\Fias\Component\Pipeline\Task\CleanupFilesUnpacked
+        arguments:
+            - '@liquetsoft_fias.fs.service'
 
     liquetsoft_fias.task.status.check:
         class: Liquetsoft\Fias\Component\Pipeline\Task\CheckStatusTask
@@ -187,6 +225,7 @@ services:
         class: Liquetsoft\Fias\Component\Pipeline\Task\PrepareFolderTask
         arguments:
             - '%liquetsoft_fias.temp_dir%'
+            - '@liquetsoft_fias.fs.service'
 
     liquetsoft_fias.task.inform.full:
         class: Liquetsoft\Fias\Component\Pipeline\Task\InformFullTask
@@ -428,6 +467,7 @@ services:
             - '@liquetsoft_fias.downloader.service'
             - '@liquetsoft_fias.unpacker.service'
             - '@liquetsoft_fias.informer.service'
+            - '@liquetsoft_fias.fs.service'
         tags:
             - { name: 'console.command' }
 
