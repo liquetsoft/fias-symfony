@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Serializer;
 
+use Liquetsoft\Fias\Component\Serializer\FiasFileDenormalizer;
+use Liquetsoft\Fias\Component\Serializer\FiasFileNormalizer;
 use Liquetsoft\Fias\Component\Serializer\FiasNameConverter;
 use Liquetsoft\Fias\Component\Serializer\FiasPipelineStateDenormalizer;
 use Liquetsoft\Fias\Component\Serializer\FiasPipelineStateNormalizer;
+use Liquetsoft\Fias\Component\Serializer\FiasUnpackerFileDenormalizer;
+use Liquetsoft\Fias\Component\Serializer\FiasUnpackerFileNormalizer;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
@@ -33,9 +37,13 @@ final class FiasSerializer implements SerializerInterface
             $normalizers = [
                 new CompiledEntitesDenormalizer(),
                 new FiasUuidNormalizer(),
+                new DateTimeNormalizer(),
                 new FiasPipelineStateNormalizer(),
                 new FiasPipelineStateDenormalizer(),
-                new DateTimeNormalizer(),
+                new FiasUnpackerFileNormalizer(),
+                new FiasUnpackerFileDenormalizer(),
+                new FiasFileNormalizer(),
+                new FiasFileDenormalizer(),
                 new ObjectNormalizer(
                     nameConverter: new FiasNameConverter(),
                     propertyTypeExtractor: new ReflectionExtractor(),

@@ -8,7 +8,7 @@ use Liquetsoft\Fias\Component\EntityDescriptor\BaseEntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\BaseEntityField;
 use Liquetsoft\Fias\Component\EntityManager\BaseEntityManager;
 use Liquetsoft\Fias\Component\EntityRegistry\ArrayEntityRegistry;
-use Liquetsoft\Fias\Component\FiasFileSelector\FiasFileSelectorImpl;
+use Liquetsoft\Fias\Component\FiasFileSelector\FiasFileSelectorArchive;
 use Liquetsoft\Fias\Component\FilesDispatcher\FilesDispatcherImpl;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
@@ -16,7 +16,7 @@ use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\State\State;
 use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
 use Liquetsoft\Fias\Component\Pipeline\Task\ApplyNestedPipelineToFileTask;
-use Liquetsoft\Fias\Component\Pipeline\Task\CleanUpFilesToProceedTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\CleanupFilesUnpacked;
 use Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataDeleteTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataUpsertTask;
@@ -32,6 +32,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\DoctrineTestCase;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\PipelineTestMockEntity;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\MockEntities\VersionManagerTestMockEntity;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\VersionManager\DoctrineVersionManager;
+use Marvin255\FileSystemHelper\FileSystemFactory;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -73,6 +74,7 @@ final class UpdatePipelineTest extends DoctrineTestCase
             [
                 StateParameter::PATH_TO_DOWNLOAD_FILE->value => $testArchive,
                 StateParameter::PATH_TO_EXTRACT_FOLDER->value => $testDir,
+                StateParameter::PATH_TO_SOURCE->value => $testArchive,
                 StateParameter::FIAS_NEXT_VERSION_NUMBER->value => $version,
                 StateParameter::FIAS_NEXT_VERSION_FULL_URL->value => $versionFullUrl,
                 StateParameter::FIAS_NEXT_VERSION_DELTA_URL->value => $versionDeltaUrl,
@@ -141,9 +143,10 @@ final class UpdatePipelineTest extends DoctrineTestCase
                 'mock' => PipelineTestMockEntity::class,
             ]
         );
+        $fs = FileSystemFactory::create();
         $storage = new BulkInsertDoctrineStorage($this->getEntityManager());
         $unpacker = new UnpackerZip();
-        $filesSelector = new FiasFileSelectorImpl($unpacker, $fiasEntityManager);
+        $filesSelector = new FiasFileSelectorArchive($unpacker, $fiasEntityManager);
         $filesDispatcher = new FilesDispatcherImpl($fiasEntityManager);
         $xmlReader = new BaseXmlReader();
         $serializer = new FiasSerializer();
@@ -158,7 +161,7 @@ final class UpdatePipelineTest extends DoctrineTestCase
                 new DataUpsertTask($fiasEntityManager, $xmlReader, $storage, $serializer),
                 new DataDeleteTask($fiasEntityManager, $xmlReader, $storage, $serializer),
             ],
-            new CleanUpFilesToProceedTask(),
+            new CleanupFilesUnpacked($fs),
         );
 
         $dispatchFilesTask = new class($filesDispatcher) implements Task {
@@ -184,6 +187,6 @@ final class UpdatePipelineTest extends DoctrineTestCase
             new VersionSetTask($versionManager),
         ];
 
-        return new ArrayPipe($tasks, new CleanupTask());
+        return new ArrayPipe($tasks, new CleanupTask($fs));
     }
 }
