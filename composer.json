@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": ">=8.2",
-        "liquetsoft/fias-component": "dev-master",
+        "liquetsoft/fias-component": "^14.0",
         "symfony/uid": "^5.0|^6.0|^7.0",
         "symfony/framework-bundle": "^5.0|^6.0|^7.0",
         "symfony/http-client": "^5.0|^6.0|^7.0",
