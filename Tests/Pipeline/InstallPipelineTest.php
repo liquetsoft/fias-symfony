@@ -57,7 +57,7 @@ final class InstallPipelineTest extends DoctrineTestCase
         $existEntity->setTestName('to insert');
         $existEntity->setStartdate(new \DateTimeImmutable('2019-11-11 11:11:11'));
         $existEntity->setUuid(Uuid::fromString('123e4567-e89b-12d3-a456-426655440001'));
-        $existEntity->setStringCode("227010000010000016740025000000000");
+        $existEntity->setStringCode('227010000010000016740025000000000');
 
         $deletedEntity = new PipelineTestMockEntity();
         $deletedEntity->setTestId(123);
