@@ -26,6 +26,9 @@ class PipelineTestMockEntity
     #[ORM\Column(type: 'uuid', nullable: true)]
     private ?Uuid $uuid = null;
 
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $stringCode = null;
+
     public function setTestId(int $testId): self
     {
         $this->testId = $testId;
@@ -72,5 +75,17 @@ class PipelineTestMockEntity
     public function getUuid(): ?Uuid
     {
         return $this->uuid;
+    }
+
+    public function setStringCode(?string $stringCode): self
+    {
+        $this->stringCode = $stringCode;
+
+        return $this;
+    }
+
+    public function getStringCode(): ?string
+    {
+        return $this->stringCode;
     }
 }
