@@ -18,18 +18,20 @@ final class FiasUuidNormalizer implements DenormalizerInterface, NormalizerInter
     /**
      * {@inheritDoc}
      */
-    public function normalize(mixed $object, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
+    #[\Override]
+    public function normalize(mixed $data, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
     {
-        if (!($object instanceof Uuid)) {
+        if (!($data instanceof Uuid)) {
             throw new InvalidArgumentException('The object must implement the "' . Uuid::class . '"');
         }
 
-        return (string) $object;
+        return (string) $data;
     }
 
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof Uuid;
@@ -38,6 +40,7 @@ final class FiasUuidNormalizer implements DenormalizerInterface, NormalizerInter
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function denormalize($data, string $type, ?string $format = null, array $context = []): mixed
     {
         if ('' === $data || null === $data) {
@@ -61,6 +64,7 @@ final class FiasUuidNormalizer implements DenormalizerInterface, NormalizerInter
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function supportsDenormalization($data, string $type, ?string $format = null, array $context = []): bool
     {
         return Uuid::class === $type || is_subclass_of($type, Uuid::class);

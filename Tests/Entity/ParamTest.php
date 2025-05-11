@@ -12,11 +12,12 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
  *
  * @internal
  */
-class ParamTest extends EntityCase
+final class ParamTest extends EntityCase
 {
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function createEntity(): object
     {
         return new Param();
@@ -25,6 +26,7 @@ class ParamTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function accessorsProvider(): array
     {
         return [

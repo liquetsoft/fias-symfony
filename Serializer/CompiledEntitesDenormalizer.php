@@ -38,7 +38,7 @@ use Symfony\Component\Uid\Uuid;
 /**
  * Скомпилированный класс для денормализации сущностей ФИАС в модели.
  */
-class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, DenormalizerInterface
+final class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, DenormalizerInterface
 {
     use DenormalizerAwareTrait;
 
@@ -47,8 +47,13 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
      *
      * @psalm-suppress MissingParamType
      */
-    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
-    {
+    #[\Override]
+    public function supportsDenormalization(
+        mixed $data,
+        string $type,
+        ?string $format = null,
+        array $context = [],
+    ): bool {
         return empty($context['fias_compiled_data_set'])
             && FiasSerializerFormat::XML->isEqual($format)
             && (
@@ -84,6 +89,7 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
      *
      * @psalm-suppress InvalidStringClass
      */
+    #[\Override]
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
         if (!\is_array($data)) {

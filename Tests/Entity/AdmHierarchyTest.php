@@ -12,11 +12,12 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
  *
  * @internal
  */
-class AdmHierarchyTest extends EntityCase
+final class AdmHierarchyTest extends EntityCase
 {
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function createEntity(): object
     {
         return new AdmHierarchy();
@@ -25,6 +26,7 @@ class AdmHierarchyTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function accessorsProvider(): array
     {
         return [

@@ -11,6 +11,6 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Entity\FiasVersion;
  * Сущность для тестов менеджера версий с использованием doctrine.
  */
 #[ORM\Entity]
-class VersionManagerTestMockEntity extends FiasVersion
+final class VersionManagerTestMockEntity extends FiasVersion
 {
 }

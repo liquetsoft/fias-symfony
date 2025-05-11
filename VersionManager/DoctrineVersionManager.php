@@ -25,6 +25,7 @@ final class DoctrineVersionManager implements VersionManager
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setCurrentVersion(FiasInformerResponse $info): void
     {
         $entity = $this->getEntity();
@@ -45,6 +46,7 @@ final class DoctrineVersionManager implements VersionManager
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function getCurrentVersion(): ?FiasInformerResponse
     {
         $entity = $this->getEntityRepository()->findOneBy([], ['created' => 'DESC']);

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Сущность для тестов хранилища с использованием doctrine.
  */
 #[ORM\Entity]
-class StorageTestMockEntity
+final class StorageTestMockEntity
 {
     #[ORM\Column(type: 'integer', nullable: false)]
     #[ORM\Id]

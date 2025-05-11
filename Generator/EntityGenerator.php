@@ -22,7 +22,7 @@ use Symfony\Component\Uid\Uuid;
  * Объект, который генерирует классы сущностей doctrine на основани описаний
  * сущностей ФИАС.
  */
-class EntityGenerator extends AbstractGenerator
+final class EntityGenerator extends AbstractGenerator
 {
     /**
      * Создает классы сущностей в указанной папке с указанным пространством имен.

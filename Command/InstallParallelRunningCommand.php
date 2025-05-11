@@ -28,6 +28,7 @@ final class InstallParallelRunningCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     protected function configure(): void
     {
         $this
@@ -39,6 +40,7 @@ final class InstallParallelRunningCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $stdIn = file_get_contents('php://stdin');

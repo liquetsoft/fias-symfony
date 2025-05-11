@@ -13,11 +13,12 @@ use Symfony\Component\Uid\Uuid;
  *
  * @internal
  */
-class ReestrObjectsTest extends EntityCase
+final class ReestrObjectsTest extends EntityCase
 {
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function createEntity(): object
     {
         return new ReestrObjects();
@@ -26,6 +27,7 @@ class ReestrObjectsTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function accessorsProvider(): array
     {
         return [

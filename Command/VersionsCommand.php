@@ -30,6 +30,7 @@ final class VersionsCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     protected function configure(): void
     {
         $this
@@ -41,6 +42,7 @@ final class VersionsCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('');

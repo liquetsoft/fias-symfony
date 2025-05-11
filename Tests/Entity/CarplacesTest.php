@@ -13,11 +13,12 @@ use Symfony\Component\Uid\Uuid;
  *
  * @internal
  */
-class CarplacesTest extends EntityCase
+final class CarplacesTest extends EntityCase
 {
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function createEntity(): object
     {
         return new Carplaces();
@@ -26,6 +27,7 @@ class CarplacesTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function accessorsProvider(): array
     {
         return [

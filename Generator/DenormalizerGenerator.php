@@ -7,9 +7,9 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Generator;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Component\Serializer\FiasSerializerFormat;
 use Nette\PhpGenerator\ClassType;
+use Nette\PhpGenerator\Literal;
 use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\PhpFile;
-use Nette\PhpGenerator\PhpLiteral;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
@@ -22,7 +22,7 @@ use Symfony\Component\Uid\Uuid;
 /**
  * Объект, который генерирует класс денормализатора.
  */
-class DenormalizerGenerator extends AbstractGenerator
+final class DenormalizerGenerator extends AbstractGenerator
 {
     /**
      * Создает объект денормализатора для базовых сущностей.
@@ -39,7 +39,8 @@ class DenormalizerGenerator extends AbstractGenerator
         $this->decorateNamespace($namespace);
 
         $class = $namespace->addClass($name);
-        $class->addImplement(DenormalizerInterface::class)
+        $class->setFinal()
+            ->addImplement(DenormalizerInterface::class)
             ->addImplement(DenormalizerAwareInterface::class)
             ->addTrait(DenormalizerAwareTrait::class)
         ;
@@ -114,22 +115,24 @@ class DenormalizerGenerator extends AbstractGenerator
             ->addComment("{@inheritDoc}\n")
             ->addComment('@psalm-suppress MissingParamType')
             ->setVisibility('public')
+            ->addAttribute('Override')
             ->setBody($supportsBody);
         $supports->addParameter('data')->setType('mixed');
         $supports->addParameter('type')->setType('string');
-        $supports->addParameter('format', new PhpLiteral('null'))->setType('string');
-        $supports->addParameter('context', new PhpLiteral('[]'))->setType('array');
+        $supports->addParameter('format', new Literal('null'))->setType('string');
+        $supports->addParameter('context', new Literal('[]'))->setType('array');
 
         $denormalize = $class->addMethod('denormalize')
             ->addComment('{@inheritDoc}')
             ->addComment('@psalm-suppress InvalidStringClass')
             ->setReturnType('mixed')
             ->setVisibility('public')
+            ->addAttribute('Override')
             ->setBody($denormalizeBody);
         $denormalize->addParameter('data')->setType('mixed');
         $denormalize->addParameter('type')->setType('string');
-        $denormalize->addParameter('format', new PhpLiteral('null'))->setType('string');
-        $denormalize->addParameter('context', new PhpLiteral('[]'))->setType('array');
+        $denormalize->addParameter('format', new Literal('null'))->setType('string');
+        $denormalize->addParameter('context', new Literal('[]'))->setType('array');
 
         $getSupportedTypes = $class->addMethod('getSupportedTypes')
             ->addComment('{@inheritDoc}')

@@ -11,7 +11,7 @@ use Symfony\Component\Uid\Uuid;
  * Сущность для тестов пайплайнов с использованием doctrine.
  */
 #[ORM\Entity]
-class PipelineTestMockEntity
+final class PipelineTestMockEntity
 {
     #[ORM\Column(type: 'integer', nullable: false)]
     #[ORM\Id]

@@ -10,7 +10,7 @@ use Symfony\Component\Uid\Uuid;
 /**
  * Мок для проверки сериализатора.
  */
-class FiasSerializerObject extends AddrObj
+final class FiasSerializerObject extends AddrObj
 {
     private ?Uuid $uuid = null;
 

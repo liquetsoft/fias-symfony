@@ -39,6 +39,7 @@ final class BulkInsertDoctrineStorage extends DoctrineStorage
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function stop(): void
     {
         parent::stop();
@@ -48,6 +49,7 @@ final class BulkInsertDoctrineStorage extends DoctrineStorage
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function insert(object $entity): void
     {
         try {
