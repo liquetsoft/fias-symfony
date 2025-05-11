@@ -107,7 +107,7 @@ final class HttpTransportSymfonyTest extends BaseCase
             'body_key_1' => 'body_value_1',
             'body_key_2' => 'body_value_2',
         ];
-        $body = json_encode($jsonBody);
+        $body = json_encode($jsonBody, \JSON_THROW_ON_ERROR);
 
         $mockResponse = new MockResponse(
             $body,
@@ -173,7 +173,7 @@ final class HttpTransportSymfonyTest extends BaseCase
     {
         $body = 'test body';
         $destination = $this->getPathToTestFile('testDownload', 'qwe');
-        $destinationResource = fopen($destination, 'wb');
+        $destinationResource = $this->getDestinationResource($destination);
 
         $mockResponse = new MockResponse(
             $body,
@@ -203,7 +203,7 @@ final class HttpTransportSymfonyTest extends BaseCase
     {
         $body = 'test body';
         $destination = $this->getPathToTestFile('testDownload', 'qwe');
-        $destinationResource = fopen($destination, 'wb');
+        $destinationResource = $this->getDestinationResource($destination);
         $bytesFrom = 100;
         $bytesTo = 200;
 
@@ -240,7 +240,7 @@ final class HttpTransportSymfonyTest extends BaseCase
     public function testDownloadWrongStatus(): void
     {
         $destination = $this->getPathToTestFile('testDownload', 'qwe');
-        $destinationResource = fopen($destination, 'wb');
+        $destinationResource = $this->getDestinationResource($destination);
 
         $mockResponse = new MockResponse(
             '',
@@ -265,7 +265,7 @@ final class HttpTransportSymfonyTest extends BaseCase
     public function testDownloadException(): void
     {
         $destination = $this->getPathToTestFile('testDownload', 'qwe');
-        $destinationResource = fopen($destination, 'wb');
+        $destinationResource = $this->getDestinationResource($destination);
 
         $mockResponse = new MockResponse(info: ['error' => 'host unreachable']);
         $httpClient = new MockHttpClient($mockResponse, self::REQUEST_URL);
@@ -274,5 +274,19 @@ final class HttpTransportSymfonyTest extends BaseCase
 
         $this->expectException(HttpTransportException::class);
         $client->download(self::REQUEST_URL, $destinationResource);
+    }
+
+    /**
+     * @return resource
+     */
+    private function getDestinationResource(string $path): mixed
+    {
+        $destinationResource = fopen($path, 'wb');
+
+        if ($destinationResource === false) {
+            throw new \RuntimeException("Can't open file to test download");
+        }
+
+        return $destinationResource;
     }
 }
