@@ -47,9 +47,8 @@ final class FiasUuidNormalizerTest extends BaseCase
     /**
      * Проверяет, что объект верно определяет поддерживается указанный тип
      * данных для нормализации или нет.
-     *
-     * @dataProvider provideSupportsNormalization
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideSupportsNormalization')]
     public function testSupportsNormalization(mixed $item, string $format, bool $expected): void
     {
         $normalizer = new FiasUuidNormalizer();
@@ -141,9 +140,8 @@ final class FiasUuidNormalizerTest extends BaseCase
     /**
      * Проверяет, что объект верно определяет поддерживается указанный тип
      * данных для денормализации или нет.
-     *
-     * @dataProvider provideSupportsDenormalization
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideSupportsDenormalization')]
     public function testSupportsDenormalization(string $data, string $type, string $format, bool $expected): void
     {
         $normalizer = new FiasUuidNormalizer();
@@ -184,9 +182,8 @@ final class FiasUuidNormalizerTest extends BaseCase
 
     /**
      * Проверяет, что объект вернет корректный список поддерживаемых объектов.
-     *
-     * @dataProvider provideGetSupportedTypes
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideGetSupportedTypes')]
     public function testGetSupportedTypes(?string $format, array $expected): void
     {
         $normalizer = new FiasUuidNormalizer();

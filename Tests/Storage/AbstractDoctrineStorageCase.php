@@ -21,9 +21,8 @@ abstract class AbstractDoctrineStorageCase extends DoctrineTestCase
 
     /**
      * Проверяет, что хранилище верно определяет сущности doctrine.
-     *
-     * @dataProvider provideSupports
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideSupports')]
     public function testSupports(object $entity, bool $expected): void
     {
         $storage = $this->createStorage();
@@ -48,9 +47,8 @@ abstract class AbstractDoctrineStorageCase extends DoctrineTestCase
 
     /**
      * Проверяет, что хранилище верно определяет классы ущностей doctrine.
-     *
-     * @dataProvider provideSupportsClass
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideSupportsClass')]
     public function testSupportsClass(string $class, bool $expected): void
     {
         $storage = $this->createStorage();
