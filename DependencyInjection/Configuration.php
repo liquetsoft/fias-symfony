@@ -22,6 +22,7 @@ final class Configuration implements ConfigurationInterface
      * @psalm-suppress UndefinedMethod
      * @psalm-suppress MixedMethodCall
      */
+    #[\Override]
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $rootDir = $this->getPathToRootDir();

@@ -35,6 +35,7 @@ class DoctrineStorage implements Storage
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function start(): void
     {
     }
@@ -42,6 +43,7 @@ class DoctrineStorage implements Storage
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function stop(): void
     {
         $this->checkAndFlushUpsert(true);
@@ -50,6 +52,7 @@ class DoctrineStorage implements Storage
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function supports(object $entity): bool
     {
         return $this->supportsClass(
@@ -60,6 +63,7 @@ class DoctrineStorage implements Storage
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function supportsClass(string $class): bool
     {
         if (!isset($this->supportedClasses[$class])) {
@@ -77,6 +81,7 @@ class DoctrineStorage implements Storage
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function insert(object $entity): void
     {
         try {
@@ -91,6 +96,7 @@ class DoctrineStorage implements Storage
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function delete(object $entity): void
     {
         try {
@@ -111,6 +117,7 @@ class DoctrineStorage implements Storage
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function upsert(object $entity): void
     {
         $meta = $this->getEntityMeta($entity);
@@ -127,6 +134,7 @@ class DoctrineStorage implements Storage
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function truncate(string $entityClassName): void
     {
         try {

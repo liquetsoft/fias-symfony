@@ -18,6 +18,7 @@ class HousesTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function createEntity(): object
     {
         return new Houses();
@@ -26,6 +27,7 @@ class HousesTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function accessorsProvider(): array
     {
         return [

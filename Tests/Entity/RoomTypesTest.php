@@ -17,6 +17,7 @@ class RoomTypesTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function createEntity(): object
     {
         return new RoomTypes();
@@ -25,6 +26,7 @@ class RoomTypesTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function accessorsProvider(): array
     {
         return [

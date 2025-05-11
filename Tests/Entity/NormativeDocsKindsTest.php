@@ -17,6 +17,7 @@ class NormativeDocsKindsTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function createEntity(): object
     {
         return new NormativeDocsKinds();
@@ -25,6 +26,7 @@ class NormativeDocsKindsTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function accessorsProvider(): array
     {
         return [

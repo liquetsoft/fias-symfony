@@ -18,6 +18,7 @@ class SteadsTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function createEntity(): object
     {
         return new Steads();
@@ -26,6 +27,7 @@ class SteadsTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function accessorsProvider(): array
     {
         return [

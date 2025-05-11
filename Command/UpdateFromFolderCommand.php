@@ -29,6 +29,7 @@ final class UpdateFromFolderCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     protected function configure(): void
     {
         $this
@@ -41,6 +42,7 @@ final class UpdateFromFolderCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

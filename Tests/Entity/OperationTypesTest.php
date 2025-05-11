@@ -17,6 +17,7 @@ class OperationTypesTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function createEntity(): object
     {
         return new OperationTypes();
@@ -25,6 +26,7 @@ class OperationTypesTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function accessorsProvider(): array
     {
         return [

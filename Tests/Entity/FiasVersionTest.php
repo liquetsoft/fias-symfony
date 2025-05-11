@@ -17,6 +17,7 @@ class FiasVersionTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function createEntity(): object
     {
         return new FiasVersion();
@@ -25,6 +26,7 @@ class FiasVersionTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function accessorsProvider(): array
     {
         return [

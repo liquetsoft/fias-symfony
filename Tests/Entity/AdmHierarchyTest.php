@@ -17,6 +17,7 @@ class AdmHierarchyTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function createEntity(): object
     {
         return new AdmHierarchy();
@@ -25,6 +26,7 @@ class AdmHierarchyTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function accessorsProvider(): array
     {
         return [

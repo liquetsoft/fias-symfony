@@ -18,6 +18,7 @@ class AddrObjTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function createEntity(): object
     {
         return new AddrObj();
@@ -26,6 +27,7 @@ class AddrObjTest extends EntityCase
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function accessorsProvider(): array
     {
         return [

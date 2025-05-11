@@ -173,6 +173,7 @@ final class UpdatePipelineTest extends DoctrineTestCase
             /**
              * @psalm-suppress MixedArgument
              */
+            #[\Override]
             public function run(State $state): State
             {
                 $dispatchedFiles = $this->filesDispatcher->dispatch($state->getParameter(StateParameter::FILES_TO_PROCEED), 1);

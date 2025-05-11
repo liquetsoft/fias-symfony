@@ -47,6 +47,7 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
      *
      * @psalm-suppress MissingParamType
      */
+    #[\Override]
     public function supportsDenormalization(
         mixed $data,
         string $type,
@@ -88,6 +89,7 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
      *
      * @psalm-suppress InvalidStringClass
      */
+    #[\Override]
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
         if (!\is_array($data)) {
@@ -164,6 +166,7 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
      *
      * @return array<string, bool|null>
      */
+    #[\Override]
     public function getSupportedTypes(?string $format): array
     {
         return !FiasSerializerFormat::XML->isEqual($format) ? [] : [

@@ -76,6 +76,7 @@ class TestGenerator extends AbstractGenerator
         $createEntityMethod->setVisibility('protected');
         $createEntityMethod->setBody("return new {$baseName}();");
         $createEntityMethod->setReturnType('object');
+        $createEntityMethod->addAttribute('Override');
 
         $accessors = "return [\n";
         foreach ($descriptor->getFields() as $field) {
@@ -97,6 +98,7 @@ class TestGenerator extends AbstractGenerator
         $accessorsProviderMethod->setReturnType('array');
         $accessorsProviderMethod->setBody($accessors);
         $accessorsProviderMethod->addComment("{@inheritDoc}\n");
+        $accessorsProviderMethod->addAttribute('Override');
 
         file_put_contents($fullPath, (new PsrPrinter())->printFile($phpFile));
     }
