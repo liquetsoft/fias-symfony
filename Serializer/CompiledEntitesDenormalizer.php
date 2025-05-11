@@ -47,8 +47,12 @@ class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, Denorma
      *
      * @psalm-suppress MissingParamType
      */
-    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
-    {
+    public function supportsDenormalization(
+        mixed $data,
+        string $type,
+        ?string $format = null,
+        array $context = [],
+    ): bool {
         return empty($context['fias_compiled_data_set'])
             && FiasSerializerFormat::XML->isEqual($format)
             && (
