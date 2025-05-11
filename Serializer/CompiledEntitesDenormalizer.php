@@ -166,7 +166,6 @@ final class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, D
      *
      * @return array<string, bool|null>
      */
-    #[\Override]
     public function getSupportedTypes(?string $format): array
     {
         return !FiasSerializerFormat::XML->isEqual($format) ? [] : [

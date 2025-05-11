@@ -23,6 +23,11 @@
                 <directory name="Entity"/>
             </errorLevel>
         </ClassMustBeFinal>
+        <MissingOverrideAttribute>
+            <errorLevel type="suppress">
+                <directory name="Serializer"/>
+            </errorLevel>
+        </MissingOverrideAttribute>
     </issueHandlers>
 
     <plugins>

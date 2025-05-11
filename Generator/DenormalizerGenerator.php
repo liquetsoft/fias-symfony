@@ -139,7 +139,6 @@ final class DenormalizerGenerator extends AbstractGenerator
             ->addComment('@return array<string, bool|null>')
             ->setReturnType('array')
             ->setVisibility('public')
-            ->addAttribute('Override')
             ->setBody("return !FiasSerializerFormat::XML->isEqual(\$format) ? [] : [\n{$getSupportedTypesBody}];");
         $getSupportedTypes->addParameter('format')->setType('string')->setNullable(true);
 

@@ -75,7 +75,6 @@ final class FiasUuidNormalizer implements DenormalizerInterface, NormalizerInter
      *
      * @return array<string, bool|null>
      */
-    #[\Override]
     public function getSupportedTypes(?string $format): array
     {
         return [
