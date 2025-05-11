@@ -38,7 +38,7 @@ use Symfony\Component\Uid\Uuid;
 /**
  * Скомпилированный класс для денормализации сущностей ФИАС в модели.
  */
-class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, DenormalizerInterface
+final class CompiledEntitesDenormalizer implements DenormalizerAwareInterface, DenormalizerInterface
 {
     use DenormalizerAwareTrait;
 

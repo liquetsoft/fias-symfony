@@ -13,7 +13,7 @@ use Symfony\Component\Uid\Uuid;
  *
  * @internal
  */
-class CarplacesTest extends EntityCase
+final class CarplacesTest extends EntityCase
 {
     /**
      * {@inheritDoc}

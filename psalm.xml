@@ -18,6 +18,11 @@
 
     <issueHandlers>
         <MixedAssignment errorLevel="suppress"/>
+        <ClassMustBeFinal>
+            <errorLevel type="suppress">
+                <directory name="Entity"/>
+            </errorLevel>
+        </ClassMustBeFinal>
     </issueHandlers>
 
     <plugins>

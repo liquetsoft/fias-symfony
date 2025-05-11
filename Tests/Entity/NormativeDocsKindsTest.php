@@ -12,7 +12,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
  *
  * @internal
  */
-class NormativeDocsKindsTest extends EntityCase
+final class NormativeDocsKindsTest extends EntityCase
 {
     /**
      * {@inheritDoc}

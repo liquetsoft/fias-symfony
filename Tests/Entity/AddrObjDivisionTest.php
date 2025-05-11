@@ -12,7 +12,7 @@ use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\EntityCase;
  *
  * @internal
  */
-class AddrObjDivisionTest extends EntityCase
+final class AddrObjDivisionTest extends EntityCase
 {
     /**
      * {@inheritDoc}

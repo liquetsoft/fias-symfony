@@ -22,7 +22,7 @@ use Symfony\Component\Uid\Uuid;
 /**
  * Объект, который генерирует класс денормализатора.
  */
-class DenormalizerGenerator extends AbstractGenerator
+final class DenormalizerGenerator extends AbstractGenerator
 {
     /**
      * Создает объект денормализатора для базовых сущностей.
@@ -39,7 +39,8 @@ class DenormalizerGenerator extends AbstractGenerator
         $this->decorateNamespace($namespace);
 
         $class = $namespace->addClass($name);
-        $class->addImplement(DenormalizerInterface::class)
+        $class->setFinal()
+            ->addImplement(DenormalizerInterface::class)
             ->addImplement(DenormalizerAwareInterface::class)
             ->addTrait(DenormalizerAwareTrait::class)
         ;

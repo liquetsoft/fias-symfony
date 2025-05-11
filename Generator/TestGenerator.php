@@ -16,7 +16,7 @@ use Symfony\Component\Uid\Uuid;
  * Объект, который генерирует классы тестов для сущностей doctrine на основани описаний
  * сущностей ФИАС.
  */
-class TestGenerator extends AbstractGenerator
+final class TestGenerator extends AbstractGenerator
 {
     /**
      * Создает классы сущностей в указанной папке с указанным пространством имен.
@@ -126,6 +126,7 @@ class TestGenerator extends AbstractGenerator
     protected function decorateClass(ClassType $class, EntityDescriptor $descriptor): void
     {
         $class->setExtends(EntityCase::class);
+        $class->setFinal();
         $description = trim($descriptor->getDescription(), " \t\n\r\0\x0B.");
         if ($description) {
             $class->addComment("Тест для сущности '{$description}'.\n\n@internal");

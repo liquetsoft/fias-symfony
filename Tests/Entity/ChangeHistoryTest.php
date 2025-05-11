@@ -13,7 +13,7 @@ use Symfony\Component\Uid\Uuid;
  *
  * @internal
  */
-class ChangeHistoryTest extends EntityCase
+final class ChangeHistoryTest extends EntityCase
 {
     /**
      * {@inheritDoc}
